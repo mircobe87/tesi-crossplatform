@@ -1,0 +1,13 @@
+#!/bin/bash
+
+src_dir=tex/
+name='tesi'
+
+cd tex
+pdflatex "$name.tex"
+pdflatex "$name-frn.tex"
+pdflatex "$name.tex"
+
+mv "$name.pdf" ../
+
+exit 0

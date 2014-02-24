@@ -1,0 +1,32 @@
+\documentclass[12pt, a4paper, twoside, openright, titlepage]{book}
+
+% soliti pacchetti per la lingua italia 
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+
+% pacchetto potente per il frontespizio
+\usepackage[write]{frontespizio}
+
+% per settare l'interlinea a una line a e mezzo tramite il comando \onehalfspacing
+\usepackage{setspace}
+
+% definisco l'ambiente "abstract" per la classe "book" che si sta usando.
+\usepackage{fancyhdr}
+\newcommand{\fncyblank}{\fancyhf{}}
+\newenvironment{abstract}{\cleardoublepage\fncyblank\null\vfill\begin{center}\bfseries\abstractname\end{center}}{\vfill\null}
+
+
+\begin{document}
+\onehalfspacing % imposta l'interlinea ad una riga e mezzo
+
+	\include{frontespizio} % includo il frontespizio
+	\include{dedica}       % includo la dedica
+	\include{sommario}     % include il sommario
+	
+	\tableofcontents       % ecco l'indice
+	
+	\include{scheletro}    % includo uno scheletro di anteprima di tutta la relazione
+	                       % ma poi questo verrà sostituito con l'inclusione di tutti
+	                       % i capitoli.
+	
+\end{document}
