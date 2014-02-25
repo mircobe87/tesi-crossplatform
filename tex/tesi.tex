@@ -15,6 +15,9 @@
 \newcommand{\fncyblank}{\fancyhf{}}
 \newenvironment{abstract}{\cleardoublepage\fncyblank\null\vfill\begin{center}\bfseries\abstractname\end{center}}{\vfill\null}
 
+% pacchetto per la personalizzazione della bibliografia
+\usepackage[numbers]{natbib}
+\usepackage{url}
 
 \begin{document}
 \onehalfspacing % imposta l'interlinea ad una riga e mezzo
@@ -28,5 +31,10 @@
 	\include{scheletro}    % includo uno scheletro di anteprima di tutta la relazione
 	                       % ma poi questo verrà sostituito con l'inclusione di tutti
 	                       % i capitoli.
+	
+	% un po' di capitoli...
+	
+	\bibliography{../bib/biblio}
+	\bibliographystyle{plainnat}
 	
 \end{document}

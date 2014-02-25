@@ -1,10 +1,27 @@
 #!/bin/bash
 
+function clearEnv(){
+	echo "Pulizia ambiente di compilazione"
+	rm *~ *.aux *.dvi *.log *.pdf *.bbl *.blg *.toc tesi-frn.tex
+}
+
 src_dir=tex/
 name='tesi'
 
 cd tex
-pdflatex "$name.tex"
+
+if [ "$1" = "-c" ]; then
+	clearEnv
+	exit 0
+fi
+
+clearEnv
+
+latex "$name.tex"
+bibtex "$name"
+latex "$name.tex"
+latex "$name.tex"
+
 pdflatex "$name-frn.tex"
 pdflatex "$name.tex"
 
