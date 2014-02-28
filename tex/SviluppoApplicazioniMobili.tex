@@ -2,33 +2,41 @@
 	Vista la grande diffusione di dispositivi mobili, come smartphone e tablet, in grado di eseguire applicazioni scritte da terze parti, un'azienda potrebbe essere intenzionata a fornire i propri servizi anche attraverso queste applicazioni.
 	
 	Diversamente dalle applicazioni per desktop, dove per molto tempo la piattaforma di riferimento è stata Windows, il panorama delle piattaforme mobili è molto frammentato.
-	I principali sistemi operativi mobili sono: iOS, Android e Windows Phone, seguiti dai meno diffusi Blackberry e Symbyan, inoltre ne stanno nascendo anche di nuovi.
+	I principali sistemi operativi mobili sono: iOS, Android e Windows Phone, seguiti dai meno diffusi Blackberry e Symbian, inoltre ne stanno nascendo continuamente di nuovi.
 	
 	Quando si decide di sviluppare un'applicazione mobile, è quindi necessario scegliere se sviluppare per una o più di queste piattaforme.
-	Lo sviluppo su una sola piattaforma (single-platorm), è appropriato se si ha intenzione di sviluppare applicazioni che avranno un uso interno dove i dispositivi sono controllati o se per un strategia di mercato si è deciso di concentrarci sullo sviluppo per un unico produttore che adotta un unica piattaforma.
+	Lo sviluppo su una sola piattaforma (sviluppo Single-platform), è appropriato se si ha intenzione di sviluppare applicazioni che avranno un uso interno dove i dispositivi sono controllati o se per un strategia di mercato si è deciso di concentrarci sullo sviluppo per un unico produttore che adotta un unica piattaforma.
 	Anche se sviluppare per una singola piattaforma semplifica di molto il lavoro, questo pone dei rischi in quanto il successo dell'applicazione è legato al mantenimento del grado di preferenza degli utenti della piattaforma supportata.
-	L'alternativa è quella di sviluppare l'applicazione supportando diverse piattaforme (Cross platform), col vantaggio di raggiungere un bacino di utenza più ampio.
+	L'alternativa è quella di sviluppare l'applicazione supportando diverse piattaforme (Sviluppo Cross-platform), col vantaggio di raggiungere un bacino di utenza più ampio.
 	
-	Ci sono molti approcci differenti per lo sviluppo cross-platform, ognuno con differenti vantaggi ma la caratteristica che tutti hanno in comune è la possibilità di sviluppare la stessa (o molto simile) applicazione per diverse piattaforme mobili.
+	Ci sono molti approcci differenti per lo sviluppo Cross-platform, ognuno con differenti vantaggi, ma la caratteristica che tutti hanno in comune è la possibilità di sviluppare la stessa (o molto simile) applicazione per diverse piattaforme mobili.
 	 
-	Cosa prendere in considerazione nel momento in cui si decide di sviluppare
-	una app; dalle piattaforme da supportare ai tempi e costi che si intendono
-	affrontare.
+	Principalmente è possibile sviluppare tre tipi di applicazioni, ognuno dei quali può essere usato sia per lo sviluppo single-platform, sia per quello cross-platform: Web App, Ibride, Native.
+	Nei successivi paragrafi verranno spiegati nel dettaglio, e per ognuno saranno affrontati i pro e i contro, con particolare attenzione per lo sviluppo cross-platform.
 	
 	\section{Applicazioni Native}
-		Cosa è una app nativa. Cosa comporta lo sviluppo di app native
-		nell'ottica di supportare diverse piattaforme. Presentazione
-		dell'approccio "Titanium" che permette la realizzazione di app nativa a
-		partire da codice comune javaScript.
+		Lo sviluppo nativo di applicazioni si basa sull'utilizzo di SDK e di linguaggi di programmazione specifici per ogni piattaforma. Per esempio, le applicazioni native per iOS usano le API di Apple, Objectiv C e UIKit; su Android si utilizzano le API di Google, Java e la specifica sintassi XML per la UI; su Windows Phone si utilizzano le API di Microsoft, .NET e XAML.
+
+Sviluppare applicazioni native permette di creare applicazioni molto performanti, tale caratteristica rende questa tecnica la più opportuna per lo sviluppo di giochi con una ricca grafica. Inoltre grazie alle API, fornite direttamente dal produttore, si ha un completo accesso al dispositivo, con la possibilità quindi di sfruttare i vari sensori (Fotocamera, GPS, Accelerometro). Infine è possibile distribuire l'applicazione sfruttando i vari store delle piattaforme, questo permette di avere maggiore pubblicità per l'applicazione grazie all'enorme ecosistema che si è venuto a creare intorno ad essi.
+
+Di contro questa tecnica non è molto adatta allo sviluppo di applicazioni cross-platform. Sviluppare la stessa applicazione per diverse piattaforme richiede che diversi team di sviluppatori scrivano la stessa applicazione più volte in linguaggi diversi e in ambienti di sviluppo differenti.
+Il problema inoltre cresce con il numero di piattaforme che si intende supportare. Un azienda, per ogni piattaforma, deve spendere lo stesso tempo, sforzo e denaro per produrre e testare l'applicazione. E lo stesso vale anche per il mantenimento della app.
+Un' altro importante fattore in ogni progetto di sviluppo di applicazioni native cross-plaftorm è la disponibilità di programmatori con le giuste conoscenze. Lo sviluppo di applicazioni native richiede l'assunzione di sviluppatori che conoscano molti linguaggi diversi, oppure l'assunzione di molti sviluppatori con conoscenze opportune per ogni piattaforma.
+ 
+Esistono strumenti di cross-compiling che possono essere una soluzione parziale del problema consentendo di scrivere l'applicazione in un solo linguaggio (per esempio .NET) e poi compilarla in applicazione nativa. Questa soluzione aiuta a ridurre il numero di differenti linguaggi di programmazione che gli sviluppatori devo saper maneggiare ma comunque non elimina la necessità di dover compilare differenti applicazioni per ogni piattaforma. Cross-compiling inoltre introduce un nuovo livello di astrazione tra il codice della app e il runtime; di questo bisogna tenere conto quando si vanno a fare operazione di ottimizzazione, testing e di debugging.
+
+	\section{Applicazioni Web}
+		Le Applicazioni Web (chiamate anche Browser App o Web App) utilizzano la potenza di HTML5, CSS e JavaScript per la loro realizzazione. Vengono utilizzate in moderni browser mobili come Mobile Safari (sui dispositivi iOS), Google Chrome per Android (disponibile su Android 4+) e Internet Explorer 10 (disponibile su Windows Phone 8).
+Anche se ci si riferisce a questa tecnica come "Applicazioni Web", app realizzate in questo modo non richiedono necessariamente una connessione a Internet attiva per funzionare (dopo il download iniziale). Sfruttando opportunamente CSS, HTML e JavaScript, queste app possono comportarsi e avere un aspetto molto simile alle Applicazioni Native.
+Questa tecnica è la maniera più veloce per realizzare app mobili cross-platform. Non richiedono ne installazione ne particolari pacchetti e vengono eseguite su ogni browser mobile. Gli sviluppatori possono comunque ottimizzare la loro applicazione per la specifica piattaforma presentando diversi aspetti a seconda del sistema operativo mobile del dispositivo o possono progettare un unica interfaccia grafica che viene utilizzata su ogni dispositivo.
+Il più grande svantaggio di questo genere di applicazioni è che non possono accedere ad una vasta gamma di sensori e API dei vari dispositivi e non possono essere distribuite attraverso i più popolari app store.
 		
 	\section{Applicazioni Ibride}
 		Cosa si intente per app ibrida. Cosa comporta lo sviluppo di questo
 		genere di app. Pro e contro.
 		
-	\section{Applicazioni Web}
-		Cosa sono le applicazioni web. Pro e contro.
-		
 	\section{Conclusioni}
+	NOTA: Browser App e App Ibride girano “nativamente” sui dispositivi. Anche se il termine “app nativa” si riferisce allo SDK nativo, è importante notare che le Browser App e le App Ibride girano su runtimes mobili nativi e non su plug-in.
 		Visti i pro e contro derivanti dai diversi approcci, considerazioni su
 		quale di questi metodi scegliere a seconda dei proprio obiettivi.
 		
