@@ -35,6 +35,7 @@
 	contro, con particolare attenzione per lo sviluppo cross-platform.
 	
 	\section{Applicazioni Native}
+	\label{sec:nativapp}
 		Lo sviluppo nativo di applicazioni si basa sull'utilizzo di SDK e di 
 		linguaggi di programmazione specifici per ogni piattaforma. Per esempio, 
 		le applicazioni native per iOS usano le API di Apple, Objective C e 
@@ -98,31 +99,32 @@
 		HTML5, CSS3 e JavaScript. HTML5 è la quinta versione del linguaggio 
 		HTML, il quale fornisce gli elementi di base che costituiscono le pagine 
 		web. HTML5 supporta i contenuti multimediali, ed è stato creato con 
-		l'obiettivo di poter essere eseguito da qualsiasi browser mobile. Una 
-		delle tante novità di HTML5 è la cosiddetta ``application cache'': 
-		attraverso questo strumento è possibile dire al browser quali file 
-		salvare (non nella cache ``normale'' ma in un cache apposita, definita 
-		per l'appunto ``application cache''). Il funzionamento dell'application 
-		cache è piuttosto semplice: sostanzialmente, si crea un file all'interno 
-		del quale si specifica la lista di file che il browser deve salvare 
-		nella sua ``memoria'' e che deve mostrare anche quando si è offline. Di 
-		conseguenza il vantaggio principale della ``application cache'', 
-		rispetto a quella tradizionale, è il controllo: mentre nella cache 
-		``normale'' è il browser a decidere (più o meno) quali sono i file da 
-		salvare e tenere in cache, con lo strumento offerto da HTML5 possiamo 
-		dire noi con precisione quali risorse tenere in memoria, possiamo 
-		infatti decidere di memorizzare pagine sulle quali non si è ancora 
-		navigato, fino addirittura a memorizzare interi script. In questo modo 
-		le applicazioni web sono in grado di essere eseguite anche quando il 
-		dispositivo mobile è offline.
+		l'obiettivo di poter essere eseguito da qualsiasi browser 
+		mobile\citep{White:Native-vs-Html}. Una delle tante novità di HTML5 è la 
+		cosiddetta ``application cache'': attraverso questo strumento è 
+		possibile dire al browser quali file salvare (non nella cache 
+		``normale'' ma in un cache apposita, definita per l'appunto 
+		``application cache''). Il funzionamento dell'application cache è 
+		piuttosto semplice: sostanzialmente, si crea un file all'interno del 
+		quale si specifica la lista di file che il browser deve salvare nella 
+		sua ``memoria'' e che deve mostrare anche quando si è offline. Il 
+		vantaggio principale della ``application cache'', rispetto a quella 
+		tradizionale, è il controllo: mentre nella cache ``normale'' è il 
+		browser a decidere (più o meno) quali sono i file da salvare e tenere in 
+		cache, con lo strumento offerto da HTML5 possiamo dire noi con 
+		precisione quali risorse tenere in memoria, possiamo infatti decidere di 
+		memorizzare pagine sulle quali non si è ancora navigato, fino 
+		addirittura a memorizzare interi script. In questo modo le applicazioni 
+		web sono in grado di essere eseguite anche quando il dispositivo mobile 
+		è offline.
 
 		Scrivere un'applicazione web di successo, non è solo una questione di
 		rispettare le specifiche, ma dipende anche dall'implementazione del 
-		browser del dispositivo. E' da vedere quanto sia nell'interesse di case 
-		come Apple e Google tenere i loro browser aggiornati continuamente con 
-		gli standard, infatti ci sarebbe poi il rischio che HTML5 diventi uno 
-		standard per le applicazioni e che quindi ci rimettano gli 
-		store\citep{White:Native-vs-Html}. 
+		browser del dispositivo. È da vedere quanto sia nell'interesse di 
+		aziende come Apple e Google tenere i loro browser aggiornati 
+		continuamente con gli standard, infatti ci sarebbe poi il rischio che 
+		HTML5 diventi uno standard per le applicazioni e che quindi ci rimettano 
+		gli store\citep{White:Native-vs-Html}. 
 
 		Sfruttando opportunamente CSS3, HTML5 e JavaScript, gli sviluppatori 
 		possono ottimizzare la loro applicazione presentandola con un aspetto 
@@ -130,7 +132,7 @@
 		in modo da rendere l'esperienza utente il più possibile simile a quella 
 		attesa, oppure possono progettare un'unica interfaccia grafica che viene 
 		utilizzata su ogni piattaforma. A tale scopo sono nati numerosi 
-		framework (\hyperref[sec:frameworkui]{vedi~\ref{sec:frameworkui}}).
+		framework (\hyperref[sec:frameworkwebapp]{vedi~\ref{sec:frameworkwebapp}}).
 
 		HTML5 promette che scrivendo un unico codice per l'applicazione, 
 		questa sia direttamente funzionante su ogni piattaforma, questa e le 
@@ -154,7 +156,7 @@
 		ovunque non è totalmente rispettata, infatti, essendoci molti browser 
 		diversi e molte versioni degli stessi browser (chrome è stato aggiornato 
 		21 volte in due anni, con conseguente modifica dell'interpretazione di 
-		web app)\citep{White:Native-vs-Html} i vari dispositivi accedono in modo 
+		web app\citep{White:Native-vs-Html}) i vari dispositivi accedono in modo 
 		diverso alle applicazioni web. La conseguenza è che gli sviluppatori 
 		devono creare versioni diverse per browser diversi, con la conseguente 
 		perdita di parte dei benefici argomentati per lo sviluppo di web app. Un 

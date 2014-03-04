@@ -1,13 +1,29 @@
 \chapter{Framework Valutati}
-	All'azienda in particolare interessava lo studio di framework che
-	permettessero di creare applicazioni distribuibili sui vari store.
-	Ci è stato così chiesto di valutare: Titanium Appcelerator, Phonegap,
-	Icenium, Sencha Touch, KendoUI Mobile, PhoneJS, Rho Mobile, jQuery Mobile.
+	Il primo passo necessario nella valutazione di questi framework è stato 
+	chiarire bene il fine del loro impiego. Durante la fase di ricerca abbiamo 
+	notato una gran confusione nell'attribuire a ciascun framework il tipo di
+	applicazione che permetteva di realizzare. Spesso il fatto che 
+	l'applicazione venisse eseguita all'interno di una componente nativa veniva 
+	interpretato come se l'intera applicazione fosse nativa; in altri casi 
+	veniva confuso il concetto di 
+	cross-compiling\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}} con quello 
+	di applicazione ibrida; a volte ancora non è chiara la separazione 
+	concettuale che vi è tra framework utili per la sola costruzione della 
+	logica e dell'interfaccia grafica dell'applicazione e framework che 
+	permettono d'incapsulare il contenuto web in una componente nativa creando 
+	così un'applicazione ibrida.
 	
-	Dobbiamo fare una distinzione, perchè alcuni framework permettono di
-	scrivere applicazioni native (sfruttando i linguaggi del web).
+	Allo scopo di dare ordine per descrivere al meglio le differenze tra i vari 
+	framework abbiamo ritenuto opportuno suddividerli a seconda del tipo di 
+	applicazioni che sono in grado di produrre.
 	
-	\section{Framework Applicazioni Native}
+	Abbiamo così classificato Titanium Appcellerator come framework per la 
+	realizzazione di applicazioni native; Phonegap/Cordova, Rho Mobile e Sencha 
+	Touch come quelli dediti alla creazione di applicazioni ibride; jQuery 
+	Mobile, KendoUI Mobile e PhoneJS utili per implementare complete 
+	applicazioni web.
+
+	\section{Framework per Applicazioni Native}
 	
 		\subsection{Titanium Appcelerator}
 		\label{sec:titanium}
@@ -15,13 +31,13 @@
 			applicazioni native nonostante l'applicazione venga scritta in
 			linguaggio non nativo
 			
-	\section{Framework Applicazioni Ibride}
+	\section{Framework per Applicazioni Ibride}
 		Facciamo chiarezza sulla distinzione che esiste tra framework che
 		permettono di fare il build di un'applicazione e che forniscono le API
 		per l'accesso al dispositivo, e quelli che servono per gestire
 		l'interfaccia grafica.
 	
-		\subsection{Framework Accesso al dispositivo}
+		\subsection{Framework di Accesso al dispositivo}
 	
 			\subsubsection{Phonegap}
 				Descrizione Phonegap
@@ -32,17 +48,17 @@
 			\subsubsection{Sencha Touch}
 				Descrizione Sencha Touch
 	
-			\subsection{Framework per UI}
-			\label{sec:frameworkui}
+	\section{Framework per Applicazioni Web}
+	\label{sec:frameworkwebapp}
 	
-				\subsubsection{JQuery Mobile}
-					Descrizione JQuery Mobile
+		\subsection{JQuery Mobile}
+			Descrizione JQuery Mobile
 	
-				\subsubsection{KendoUI Mobile}
-					Descrizione KendoUI Mobile
+		\subsection{KendoUI Mobile}
+			Descrizione KendoUI Mobile
 	
-				\subsubsection{PhoneJS}
-					Descrizione PhoneJS
+		\subsection{PhoneJS}
+			Descrizione PhoneJS
 
 	\section{Conclusioni}
 		Per questo motivo e quello... abbiamo scelto di realizzare una app di 
