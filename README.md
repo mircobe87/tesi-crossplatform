@@ -11,6 +11,7 @@
   - **Introduzione.tex** : sorgente del capitolo *Introduzione*
   - **SviluppoApplicazioniMobili.tex** : sorgente del capitolo *Sviluppo Applicazioni Mobili*
   - **FrameworkValutati** : sorgente del capitolo *Framework Valutati*
+  - **Applicazione.tex**  : sorgente del capitolo *L'Applicazione*
   - **Conclusioni.tex**   : sorgente del capitolo *Conclusioni*
 - **graphics/** : contiene gli elementi grafici utilizzati.
   - **unipi.pdf** : logo dell'università
