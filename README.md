@@ -8,6 +8,10 @@
   - **dedica.tex**       : sorgente della pagine della dedica
   - **sommario.tex**     : sorgente del sommario
   - **scheletro.tex**    : anteprima della struttura della relazione
+  - **Introduzione.tex** : sorgente del capitolo *Introduzione*
+  - **SviluppoApplicazioniMobili.tex** : sorgente del capitolo *Sviluppo Applicazioni Mobili*
+  - **FrameworkValutati** : sorgente del capitolo *Framework Valutati*
+  - **Conclusioni.tex**   : sorgente del capitolo *Conclusioni*
 - **graphics/** : contiene gli elementi grafici utilizzati.
   - **unipi.pdf** : logo dell'università
 - **maketesi** : semplice script *bash* per compilare la relazione in formato pdf.
