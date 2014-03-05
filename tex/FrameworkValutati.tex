@@ -95,7 +95,8 @@
 			compilato per la tale piattaforma target e null'altro}.
 			
 			\noindent Detto questo passiamo ad elencare cosa Titanium offre da 
-			una visione più ad alto livello:
+			una visione più ad alto livello\citep[Cap.2 - Titanium 
+			Mobile Overview]{Book:Ti}:
 			\begin{itemize}
 				\item Strumenti dello SDK Titanium
 				\item APIs Mobile
@@ -105,15 +106,79 @@
 			\end{itemize}
 	
 			\subsubsection{Strumenti dello SDK Titanium}
-				Per permettere la costruzione dell'applicazione l'sdk fornisce,
-				oltre che a un insieme di script python, degli strumenti di 
-				supporto che lavorano insieme alla catena degli strumenti degli
-				sdk nativi.
+				Come strumenti per compilare l'applicazione in un pacchetto 
+				installabile contenente codice nativo, Titanium SDK utilizza un 
+				insieme di script Python e altri strumenti di supporto che 
+				lavoreranno insieme a quelli forniti dagli SDK per lo sviluppo 
+				nativo\footnote{Da qui la necessità di lavorare in un ambiente 
+				configurato con gli SDK nativi delle piattaforme per le quali si 
+				desidera realizzare l'applicazione}. Tutto questo è trasparente 
+				agli occhi di uno sviluppatore che può così concentrarsi solo 
+				nella realizzazione della propria applicazione.
+				
 			\subsubsection{APIs Mobili}
+				Titanium fornisce un ricco insieme di API JavaScript che danno 
+				accesso a centinaia tra componenti native per l'interfaccia 
+				utente e componenti non visuali. Queste API sono suddivise in 
+				vari insiemi come Titanium.UI (per quanto riguarda l'interfaccia 
+				utente) o Titanium.Network (per quanto riguarda il networking).
+				 
 			\subsubsection{Titanium Studio}
+				Appcelerator mette anche a disposizione un IDE gratuito per lo 
+				sviluppo tramite Titanium SDK. Titanium Studio, appunto, è un 
+				ambiente di sviluppo integrato derivato da Eclipse, uno degli 
+				IDE open-source più utilizzati. Con Titanium Studio è possibile 
+				scrivere, fare testing e debugging delle proprie applicazioni; 
+				inoltre sono presenti anche vari templates e applicazioni di 
+				esempio per rendere più semplice incominciare a creare 
+				applicazioni con Titanium SDK. Titanium Studio permette anche di 
+				gestire gli aggiornamenti dello SDK.
+				
+				L'uso di questo strumento non è obbligatorio, Titanium SDK 
+				ha una propria interfaccia a linea di comando che permette di 
+				gestire ogni aspetto dello sviluppo: inizializzare un 
+				nuovo progetto, compilarlo, eseguirlo e permette anche di 
+				installare nuovi aggiornamenti dello SDK nonché di configurarlo.
+				Ovviamente se si rinuncia a Titanium Studio non è garantito che 
+				si riescano a trovare i medesimi tool per il debugging in altri 
+				IDE che si possono trovare in quello fornito da Appcelerator.
+				
 			\subsubsection{Moduli}
+				Titanium è composto da una serie di moduli che estendono alcune 
+				funzioni principali delle API. Se si controlla la documentazioni 
+				relativa di può trovare una lista di moduli base che estendono 
+				il nucleo del sistema e, inoltre, Appcelerator pubblica 
+				campioni di moduli gratuiti sul proprio repository git su 
+				\mbox{github.com}\footnote{Il repository ufficiale di tutti i 
+				moduli pubblicati è	raggiungibile all'indirizzo 
+				\url{https://github.com/appcelerator/titanium_modules}}. 
+				Ovviamente ogni sviluppatore è libero di creare e distribuire 
+				gratuitamente o vendere i proprio moduli attraverso il 
+				Marketplace\footnote{\url{https://marketplace.appcelerator.com/}} 
+				di Appcelerator. Titanium SDK supporta l'impiego dei moduli 
+				anche nello sviluppo delle applicazioni web, in questo caso la 
+				loro realizzazione consiste nello scrivere un puro modulo 
+				JavaScript e non qualcosa scritto in Java o Objective-C.
+				
 			\subsubsection{Servizi cloud di Appcelerator}
-			
+				Appcelerator fornisce svariati servizi ACS (Appcelerator Cloud 
+				Services) che sono inclusi nella lista delle varie componenti 
+				fruibili attraverso le API. Alcune delle funzionalità offerte da 
+				questi servizi sono:
+				\begin{itemize}
+					\item Invio di notifiche push
+					\item Gestione dell'utente
+					\item Salvataggio e manipolazione di foto
+					\item Integrazioni con i social network
+					\item Memorizzazione di file
+					\item Chat
+					\item Memorizzazione di dati in formato chiave-valore
+				\end{itemize}
+				Per poter usufruire dei servizi ACS nella propria applicazione, 
+				otre che ad utilizzare le relative API fornite è necessario 
+				registrare la propria app online sul sistema di gestione dei 
+				servizi ACS di Appcelerator.
+		
 	\section{Framework per Applicazioni Web}
 	
 	\label{sec:frameworkwebapp}
