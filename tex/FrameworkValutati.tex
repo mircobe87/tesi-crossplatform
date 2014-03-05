@@ -5,12 +5,12 @@
 	applicazione che permetteva di realizzare. Spesso il fatto che 
 	l'applicazione venisse eseguita all'interno di una componente nativa veniva 
 	pubblicizzato come se il framework fosse in grado di creare una completa 
-	applicazione nativa (anzichè ibrida); in altri casi 
+	applicazione nativa (anziché ibrida); in altri casi 
 	veniva confuso il concetto di 
-	cross-compiling\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}} con quello 
-	di applicazione ibrida; in altri ancora non veniva mostrata la separazione 
-	concettuale che vi è tra framework utili per la sola costruzione della 
-	logica e dell'interfaccia grafica dell'applicazione e framework che 
+	cross-compiling (\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con
+	quello di applicazione ibrida; in altri ancora non veniva mostrata la
+	separazione concettuale che vi è tra framework utili per la sola costruzione
+	della logica e dell'interfaccia grafica dell'applicazione e framework che 
 	permettono d'incapsulare il contenuto web in una componente nativa creando 
 	così un'applicazione ibrida.
 	
@@ -30,22 +30,81 @@
 		\subsection{Titanium Appcelerator}
 		\label{sec:titanium}
 			Titanium è una piattaforma gratis e open source di sviluppo di 
-			applicazioni mobili, che permette la creazione di applicazioni native
+			applicazioni mobili che permette la creazione di applicazioni native
 			cross-platform per iOS, Android, BlackBerry e Tizen usando il 
 			linguaggio JavaScript.
 			
+			Titanium è descritto come un framework che adotta l'approccio 
+			cross-compiling nel risolvere il problema dello sviluppo per più 
+			piattaforme anche se l'uso che si fa di questo appellativo in 
+			questo caso non è del tutto corretto. Come spiega lo stesso 
+			amministratore delegato di Appcelerator Inc. in un intervento 
+			online su \mbox{stackoverflow.com}\footnote{In quell'occasione era 
+			stato chiesto proprio come Titanium potesse funzionare riguardo alla 
+			creazione del codice nativo. L'intera discussione è consultabile 
+			all'indirizzo 
+			\url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}},
+			Jeff Haynie, il modo di operare di Titanium è il seguente:
+			\begin{quotation}
+				Titanium takes your Javascript code, analyzes and preprocesses 
+				it and then pre-compiles it into a set of symbols that are 
+				resolved based on your applications uses of Titanium APIs. From 
+				this symbol hierarchy we can build a symbol dependency matrix 
+				that maps to the underlying Titanium library symbols to 
+				understand which APIs (and related dependencies, frameworks, 
+				etc) specifically your app needs. I'm using the word symbol in a 
+				semi-generic way since it's a little different based on the 
+				language. In iPhone, the symbol maps to a true C symbol that 
+				ultimately maps to a compiled .o file that has been compiled for 
+				ARM/i386 architectures. For Java, well, it's more or less a 
+				.class file, etc. Once the front end can understand your 
+				dependency matrix, we then invoke the SDK compiler (i.e. GCC for 
+				iPhone, Java for Android) to then compile your application into 
+				the final native binary.
+				
+				So, a simple way to think about it is that your JS code is 
+				compiled almost one to one into the representative symbols in 
+				nativeland. There's still an interpreter running in interpreted 
+				mode otherwise things like dynamic code wouldn't work. However, 
+				its much faster, much more compact and it's about as close to 
+				pure native mapping as you can get.
+				
+				\ldots
+			\end{quotation}
+			Ciò significa che il sistema fa tutto il possibile per creare codice 
+			nativo che rappresenti uno a uno quello che si è descritto in 
+			JavaScript ma parte del nostro sorgente dovrà ancora essere 
+			interpretato a tempo di esecuzione. Per questo il termine 
+			cross-compiling non è del tutto appropriato in quanto con tale 
+			aggettivo ci si riferisce ad una tecnica che permette, a partire da 
+			un certo sistema, di creare codice eseguibile per un secondo sistema 
+			avente caratteristiche e proprietà differenti da quello di 
+			partenza\citep{Web:Wiki.cross-compiling}.
 			
+			In ogni caso possiamo pensare di utilizzare il termine 
+			cross-compiling per indicare che Titanium al termine del processo di 
+			compilazione dell'applicazione produce un pacchetto che per la 
+			maggior parte contiene codice nativo e specifico per una data 
+			piattaforma il che è diverso da quello che si ottiene al termine 
+			della compilazione di un'applicazione ibrida dove il pacchetto 
+			installabile racchiude tutto il codice sorgente web (JavaScript, 
+			HTML e CSS) che verrà poi interpretato completamente a tempo di 
+			esecuzione da una ``web view'' realizzata 
+			\textit{ad~hoc}\footnote{All'interno di questo pacchetto è solo il 
+			codice della web view ad essere realizzato in codice nativo e 
+			compilato per la tale piattaforma target e null'altro}.
 			
-			\noindent Titanium è una combinazione di:
+			\noindent Detto questo passiamo ad elencare cosa Titanium offre da 
+			una visione più ad alto livello:
 			\begin{itemize}
-				\item Gli strumenti di Titanium SDK
-				\item APIs Mobili
+				\item Strumenti dello SDK Titanium
+				\item APIs Mobile
 				\item Titanium Studio
 				\item Moduli
 				\item Servizi cloud di Appcelerator
 			\end{itemize}
 	
-			\subsubsection{Gli strumenti di Titanium SDK}
+			\subsubsection{Strumenti dello SDK Titanium}
 				Per permettere la costruzione dell'applicazione l'sdk fornisce,
 				oltre che a un insieme di script python, degli strumenti di 
 				supporto che lavorano insieme alla catena degli strumenti degli
@@ -60,7 +119,7 @@
 	\label{sec:frameworkwebapp}
 		Come descritto più volte questi framework hanno una duplice funzionalità.
 		Ognuno di essi può essere utilizzato indipendentemente per realizzare
-		applicazioni web\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}, oppure 
+		applicazioni web (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}), oppure 
 		può essere combinato ai framework descritti nella 
 		sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
 		realizzare un'applicazione ibrida più soddisfacente. 
