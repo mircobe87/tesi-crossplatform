@@ -28,6 +28,7 @@ installato nel proprio sistema i seguenti pacchetti:
  - [frontespizio](http://ctan.org/pkg/frontespizio "Create a frontispiece for Italian theses")
  - [hyperref](http://ctan.org/pkg/hyperref "Extensive support for hypertext in LATEX")
  - [inputenc](http://ctan.org/pkg/inputenc "Accept different input encodings")
+ - [mathptmx](http://ctan.org/pkg/mathptmx "Use Times as default text font, and provide maths support")
  - [natbib](http://ctan.org/pkg/natbib "Flexible bibliography support")
  - [setspace](http://ctan.org/pkg/setspace "Set space between lines")
  - [url](http://ctan.org/pkg/url "Verbatim with URL-sensitive line breaks")
