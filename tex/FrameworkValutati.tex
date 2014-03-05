@@ -4,10 +4,11 @@
 	notato una gran confusione nell'attribuire a ciascun framework il tipo di
 	applicazione che permetteva di realizzare. Spesso il fatto che 
 	l'applicazione venisse eseguita all'interno di una componente nativa veniva 
-	interpretato come se l'intera applicazione fosse nativa; in altri casi 
+	pubblicizzato come se il framework fosse in grado di creare una completa 
+	applicazione nativa (anzichè ibrida); in altri casi 
 	veniva confuso il concetto di 
 	cross-compiling\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}} con quello 
-	di applicazione ibrida; a volte ancora non è chiara la separazione 
+	di applicazione ibrida; in altri ancora non veniva mostrata la separazione 
 	concettuale che vi è tra framework utili per la sola costruzione della 
 	logica e dell'interfaccia grafica dell'applicazione e framework che 
 	permettono d'incapsulare il contenuto web in una componente nativa creando 
@@ -17,40 +18,52 @@
 	framework abbiamo ritenuto opportuno suddividerli a seconda del tipo di 
 	applicazioni che sono in grado di produrre.
 	
-	Abbiamo così classificato Titanium Appcellerator come framework per la 
+	Abbiamo così classificato Titanium Appcelerator come framework per la 
 	realizzazione di applicazioni native; Phonegap/Cordova, Rho Mobile e Sencha 
 	Touch come quelli dediti alla creazione di applicazioni ibride; jQuery 
 	Mobile, KendoUI Mobile e PhoneJS utili per implementare complete 
-	applicazioni web.
+	applicazioni web e per la logica e l'interfaccia grafica di applicazioni 
+	ibride.
 
 	\section{Framework per Applicazioni Native}
-	
+		
 		\subsection{Titanium Appcelerator}
 		\label{sec:titanium}
-			Descrivere come funziona titanium e come riesce a creare
-			applicazioni native nonostante l'applicazione venga scritta in
-			linguaggio non nativo
+			Titanium è una piattaforma gratis e open source di sviluppo di 
+			applicazioni mobili, che permette la creazione di applicazioni native
+			cross-platform per iOS, Android, BlackBerry e Tizen usando il 
+			linguaggio JavaScript.
 			
-	\section{Framework per Applicazioni Ibride}
-		Facciamo chiarezza sulla distinzione che esiste tra framework che
-		permettono di fare il build di un'applicazione e che forniscono le API
-		per l'accesso al dispositivo, e quelli che servono per gestire
-		l'interfaccia grafica.
+			
+			
+			\noindent Titanium è una combinazione di:
+			\begin{itemize}
+				\item Gli strumenti di Titanium SDK
+				\item APIs Mobili
+				\item Titanium Studio
+				\item Moduli
+				\item Servizi cloud di Appcelerator
+			\end{itemize}
 	
-		\subsection{Framework di Accesso al dispositivo}
-	
-			\subsubsection{Phonegap}
-				Descrizione Phonegap
-	
-			\subsubsection{Rho Mobile}
-				Descrizione Rho Mobile
-	
-			\subsubsection{Sencha Touch}
-				Descrizione Sencha Touch
-	
+			\subsubsection{Gli strumenti di Titanium SDK}
+				Per permettere la costruzione dell'applicazione l'sdk fornisce,
+				oltre che a un insieme di script python, degli strumenti di 
+				supporto che lavorano insieme alla catena degli strumenti degli
+				sdk nativi.
+			\subsubsection{APIs Mobili}
+			\subsubsection{Titanium Studio}
+			\subsubsection{Moduli}
+			\subsubsection{Servizi cloud di Appcelerator}
+			
 	\section{Framework per Applicazioni Web}
-	\label{sec:frameworkwebapp}
 	
+	\label{sec:frameworkwebapp}
+		Come descritto più volte questi framework hanno una duplice funzionalità.
+		Ognuno di essi può essere utilizzato indipendentemente per realizzare
+		applicazioni web\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}, oppure 
+		può essere combinato ai framework descritti nella 
+		sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
+		realizzare un'applicazione ibrida più soddisfacente. 
 		\subsection{JQuery Mobile}
 			Descrizione JQuery Mobile
 	
@@ -60,6 +73,18 @@
 		\subsection{PhoneJS}
 			Descrizione PhoneJS
 
+			
+	\section{Framework per Applicazioni Ibride}
+	\label{sec:frameworkhybrid}
+		\subsection{Phonegap}
+			Descrizione Phonegap
+
+		\subsection{Rho Mobile}
+			Descrizione Rho Mobile
+
+		\subsection{Sencha Touch}
+			Descrizione Sencha Touch
+	
 	\section{Conclusioni}
 		Per questo motivo e quello... abbiamo scelto di realizzare una app di 
 		prova con Phonegap e Titanium.
