@@ -17,13 +17,13 @@ fi
 
 clearEnv
 
-latex "$name.tex"
+latex -shell-escape "$name.tex"
 bibtex "$name"
-latex "$name.tex"
-latex "$name.tex"
+latex -shell-escape "$name.tex"
+latex -shell-escape "$name.tex"
 
-pdflatex "$name-frn.tex"
-pdflatex "$name.tex"
+pdflatex -shell-escape "$name-frn.tex"
+pdflatex -shell-escape "$name.tex"
 
 mv "$name.pdf" ../
 

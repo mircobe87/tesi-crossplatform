@@ -83,8 +83,11 @@
 
 # Mantengo la cartella con le grafiche
 !/graphics/*.pdf
+!/graphics/*.eps
 
 # Ignoro file temporaneri e di backup
 *~
 \#*\#
 
+## file generati per l'inclusione di immagini eps
+*converted-to.pdf
