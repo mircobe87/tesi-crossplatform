@@ -120,14 +120,14 @@
 			completamente dal motore del browser a tempo di esecuzione.
 			
 			Titanium richiede che sulla macchina usata per lo sviluppo vengano 
-			installati e configurati gli SDK nativi per le piattaforme di destinazione.
-			In particolare per le applicazioni Android bisogna installare 
-			l'Android SDK, mentre serve Xcode per le applicazioni iOS.
-			Questo perchè dopo la prima fase di elaborazione dei sorgenti fatta
-			dallo SDK di Titanium (descritte nell'intervento succitato) serve 
-			usare l'SDK nativo per creare il pacchetto finale da installare sul 
-			dispositivo.
-			 
+			installati e configurati gli SDK nativi per le piattaforme di 
+			destinazione. In particolare per le applicazioni Android bisogna 
+			installare l'Android SDK, mentre serve Xcode per le applicazioni 
+			iOS. Questo perchè dopo la prima fase di elaborazione dei sorgenti 
+			fatta dallo SDK di Titanium (descritta nell'intervento succitato) 
+			serve usare l'SDK nativo per creare il pacchetto finale da 
+			installare sul dispositivo.
+			
 			\noindent Detto questo passiamo ad elencare cosa Titanium offre da 
 			una visione più ad alto livello\citep[Cap.2 - Titanium 
 			Mobile Overview]{Book:Ti}:
@@ -158,15 +158,21 @@
 				utente) o Titanium.Network (per quanto riguarda il networking).
 				 
 			\paragraph{Titanium Studio}
-				Appcelerator mette anche a disposizione un IDE gratuito per lo 
-				sviluppo tramite Titanium SDK. Titanium Studio, appunto, è un 
-				ambiente di sviluppo integrato derivato da Eclipse, uno degli 
+				Appcelerator mette anche a disposizione un proprio IDE gratuito 
+				per rendere più agevole lo sviluppo. Titanium Studio, appunto, è 
+				un ambiente di sviluppo integrato derivato da Eclipse, uno degli 
 				IDE open-source più utilizzati. Con Titanium Studio è possibile 
 				scrivere, fare testing e debugging delle proprie applicazioni; 
 				inoltre sono presenti anche vari templates e applicazioni di 
 				esempio per rendere più semplice incominciare a creare 
-				applicazioni con Titanium SDK. Titanium Studio permette anche di 
-				gestire gli aggiornamenti dello SDK.
+				applicazioni con Titanium SDK. Titanium Studio è stato 
+				pensato per essere l'unico software di cui si ha bisogno (oltre 
+				agli SDK nativi delle diverse piattaforme) per incominciare a 
+				sviluppare con Titanium SDK; per questo motivo dal suo interno 
+				si ha la possibilità di installare e configurare l'SDK (al primo 
+				avvio) e successivamente eseguire aggiornamenti. In più è
+				integrata la funzionalità che permette di scaricare nuovi moduli 
+				per	estendere l'insimeme delle APIs.
 				
 				L'uso di questo strumento non è obbligatorio, Titanium SDK 
 				ha una propria interfaccia a linea di comando che permette di 
@@ -179,8 +185,8 @@
 				
 			\paragraph{Moduli}
 				Titanium è composto da una serie di moduli che estendono alcune 
-				funzioni principali delle API. Se si controlla la documentazioni 
-				relativa di può trovare una lista di moduli base che estendono 
+				funzioni principali delle API. Se si controlla la documentazione 
+				relativa si può trovare una lista di moduli base che estendono 
 				il nucleo del sistema e, inoltre, Appcelerator pubblica 
 				campioni di moduli gratuiti sul proprio repository git su 
 				\mbox{github.com}\footnote{Il repository ufficiale di tutti i 
@@ -214,10 +220,28 @@
 				servizi ACS di Appcelerator.
 			
 			\subsubsection{Titanium SDK e il paradigma MVC}
+				Appcelerator fornisce il framework Alloy che consente agli 
+				sfiluppatori di strutturare le loro applicazioni secondo 
+				paradigma MVC (Model-View-Controler)\footnote{Per approfondire 
+				si può consultare l'indirizzo 
+				\url{http://en.wikipedia.org/wiki/Mode-view-controller}}. Con 
+				questo framework l'interfaccia viene costruita combinando file 
+				sorgenti scritti con i linguaggi XML e CSS mentre il codice che 
+				riguarda la logica dell'applicazione è ancora JavaScript. 
+				L'uso di Alloy necessita di un passaggio in più durante il 
+				processo di compilazione: i vari file sorgenti di 
+				un'applicazione Alloy vengono ``pre-compilati'' per generare 
+				tradizionali sorgenti JavaScript di un'applicazione Titanium.
+				
+				In fase di inzializzazione di un nuovo progetto, Titanium Studio 
+				permette di impiegareo meno Alloy nello sviluppare 
+				l'applicazione; in ogni caso il processo di compilazione è, come 
+				già detto, completamente gestito da Titanium SDK e rimane 
+				invisibile allo	sviluppatore.
 			
-	\section{Framework per Applicazioni Web}
-	
+	\section{Framework per Applicazioni Web}	
 	\label{sec:frameworkwebapp}
+	
 		Come descritto più volte questi framework hanno una duplice funzionalità.
 		Ognuno di essi può essere utilizzato indipendentemente per realizzare
 		applicazioni web (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}), oppure 
