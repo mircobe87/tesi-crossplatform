@@ -3,6 +3,7 @@
 function clearEnv(){
 	echo "Pulizia ambiente di compilazione"
 	rm *~ *.aux *.dvi *.log *.pdf *.bbl *.blg *.toc *.out tesi-frn.tex
+	rm graphics/*converted-to.pdf
 }
 
 src_dir=tex/
