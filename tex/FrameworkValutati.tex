@@ -6,11 +6,11 @@
 	l'applicazione venisse eseguita all'interno di una componente nativa veniva 
 	pubblicizzato come se il framework fosse in grado di creare una completa 
 	applicazione nativa (anziché ibrida); in altri casi 
-	veniva confuso il concetto di 
-	\crosscomp (\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con
-	quello di applicazione ibrida; in altri ancora non veniva mostrata la
-	separazione concettuale che vi è tra framework utili per la sola costruzione
-	della logica e dell'interfaccia grafica dell'applicazione e framework che 
+	veniva confuso il concetto di \crosscomp 
+	(\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con quello di 
+	applicazione ibrida; in altri ancora non veniva mostrata la separazione 
+	concettuale che vi è tra framework utili per la sola costruzione della 
+	logica e dell'interfaccia grafica dell'applicazione e framework che 
 	permettono d'incapsulare il contenuto web in una componente nativa creando 
 	così un'applicazione ibrida.
 	
@@ -31,18 +31,36 @@
 		\label{sec:titanium}
 			Titanium è una piattaforma gratis e open source di sviluppo di 
 			applicazioni mobili che permette la creazione di applicazioni native
-			\crossplat per iOS, Android, BlackBerry e Tizen usando il 
+			\crossplat{} per iOS, Android, BlackBerry e Tizen usando il 
 			linguaggio JavaScript. Usando JavaScript e HTML è anche possibile
 			creare semplici applicazioni Web.
 			
-			Titanium è descritto come un framework che adotta l'approccio 
-			\crosscomp \citep{Web:peptechlearn.blogspot.it} nel risolvere il
-			problema dello sviluppo per più 
-			piattaforme anche se l'uso che si fa di questo appellativo in 
-			questo caso non è del tutto corretto. Come spiega lo stesso 
-			amministratore delegato di Appcelerator Inc., Jeff Haynie, in un intervento 
-			online su \mbox{stackoverflow.com}\footnote{In quell'occasione era 
-			stato chiesto proprio come Titanium potesse funzionare riguardo alla 
+			Titanium agisce come un ponte tra i sistemi operativi nativi e il 
+			codice dell'applicazione. La figura \ref{fig:ti_stack} illustra 
+			questa architettura.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=12cm]{titanium-stack.eps}
+				\caption{
+					Architettura nello sviluppo di un applicazione \crossplat{} 
+					mediante Titanium Studio.
+				}
+				\label{fig:ti_stack}
+			\end{figure}
+			In fondo alla pila si trova il sistema 
+			operativo di destinazione: Android, iOS o il browser (per quanto 
+			riguarda le applicazioni web); sulla cima troviamo il codice 
+			dell'applicazione scritta in JavaScript e in mezzo trova posto
+			Titanium SDK insieme alle proprie APIs. Utilizzando tali interfacce 
+			nella propria applicazione è possibile fare azioni come mostrare la 
+			fotocamera,	aprire nuove finestre, disegnare pulsanti, ecc. 
+			
+			Titanium è descritto come un framework \crosscomp{}\citep{Web:peptechlearn.blogspot.it} anche se l'uso che si fa di 
+			questo appellativo in questo caso non è del tutto corretto. Come 
+			spiega lo stesso amministratore delegato di Appcelerator Inc., Jeff 
+			Haynie, in un intervento online su 
+			\mbox{stackoverflow.com}\footnote{In quell'occasione era stato 
+			chiesto proprio come Titanium potesse funzionare riguardo alla 
 			creazione del codice nativo. L'intera discussione è consultabile 
 			all'indirizzo 
 			\url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}}
@@ -74,14 +92,14 @@
 			Ciò significa che il sistema fa tutto il possibile per creare codice 
 			nativo che rappresenti uno a uno quello che si è descritto in 
 			JavaScript ma parte del nostro sorgente dovrà ancora essere 
-			interpretato a tempo di esecuzione.
-			
-			Come spiegato nel post di Kevin Whinnery\footnote{Kevin Whinnery è uno 
-			sviluppatore che ha lavorato su Titanium} l'interprete 
-			JavaScript viene inserito nel pacchetto in fase di compilazione.
-			Inoltre a seconda della piattaforma di destinazione vengono usati 
-			due tipi diversi di interprete: JavaScriptCore per iOS, Rhino per 
-			Android e BlackBerry.
+			interpretato a tempo di esecuzione. L'interprete JavaScript viene 
+			inserito nel pacchetto in fase di compilazione e, a seconda della 
+			piattaforma di destinazione, sarà inserito 
+			JavaScriptCore\footnote{Maggiori dettagli e informazioni si possono 
+			trovare online all'indirizzo \url{http://webkit.org/projects/javascript/}} 
+			per iOS o Rhino\footnote{Maggiori dettagli e informazioni si possono trovare 
+			online all'indirizzo \url{https://developer.mozilla.org/it/docs/Rhino}} 
+			per Android e BlackBerry\citep{Web:KevinPost}.
 			
 			Visto che il codice JavaScript viene ancora in parte interpretato, 
 			\crosscomp{} non è del tutto appropriato in quanto con tale 
@@ -106,18 +124,9 @@
 			In particolare per le applicazioni Android bisogna installare 
 			l'Android SDK, mentre serve Xcode per le applicazioni iOS.
 			Questo perchè dopo la prima fase di elaborazione dei sorgenti fatta
-			dallo SDK di Tianium (descritte nell'intervento succitato) serve usare
-			lo SDK nativo per creare il pacchetto finale da installare sul 
+			dallo SDK di Titanium (descritte nell'intervento succitato) serve 
+			usare l'SDK nativo per creare il pacchetto finale da installare sul 
 			dispositivo.
-			\begin{figure}[h]
-				\centering
-				\includegraphics[keepaspectratio=true, width=12cm]{titanium-stack.eps}
-				\caption{
-					Architettura nello sviluppo di un applicazione \crossplat{} 
-					mediante Titanium Studio.
-				}
-				\label{fig:ti_stack}
-			\end{figure}
 			 
 			\noindent Detto questo passiamo ad elencare cosa Titanium offre da 
 			una visione più ad alto livello\citep[Cap.2 - Titanium 
