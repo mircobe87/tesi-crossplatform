@@ -7,7 +7,7 @@
 	pubblicizzato come se il framework fosse in grado di creare una completa 
 	applicazione nativa (anziché ibrida); in altri casi 
 	veniva confuso il concetto di 
-	cross-compiling (\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con
+	\crosscomp (\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con
 	quello di applicazione ibrida; in altri ancora non veniva mostrata la
 	separazione concettuale che vi è tra framework utili per la sola costruzione
 	della logica e dell'interfaccia grafica dell'applicazione e framework che 
@@ -31,20 +31,22 @@
 		\label{sec:titanium}
 			Titanium è una piattaforma gratis e open source di sviluppo di 
 			applicazioni mobili che permette la creazione di applicazioni native
-			cross-platform per iOS, Android, BlackBerry e Tizen usando il 
-			linguaggio JavaScript.
+			\crossplat per iOS, Android, BlackBerry e Tizen usando il 
+			linguaggio JavaScript. Usando JavaScript e HTML è anche possibile
+			creare semplici applicazioni Web.
 			
 			Titanium è descritto come un framework che adotta l'approccio 
-			cross-compiling nel risolvere il problema dello sviluppo per più 
+			\crosscomp \citep{Web:peptechlearn.blogspot.it} nel risolvere il
+			problema dello sviluppo per più 
 			piattaforme anche se l'uso che si fa di questo appellativo in 
 			questo caso non è del tutto corretto. Come spiega lo stesso 
-			amministratore delegato di Appcelerator Inc. in un intervento 
+			amministratore delegato di Appcelerator Inc., Jeff Haynie, in un intervento 
 			online su \mbox{stackoverflow.com}\footnote{In quell'occasione era 
 			stato chiesto proprio come Titanium potesse funzionare riguardo alla 
 			creazione del codice nativo. L'intera discussione è consultabile 
 			all'indirizzo 
-			\url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}},
-			Jeff Haynie, il modo di operare di Titanium è il seguente:
+			\url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}}
+			il modo di operare di Titanium è il seguente:
 			\begin{quotation}
 				Titanium takes your Javascript code, analyzes and preprocesses 
 				it and then pre-compiles it into a set of symbols that are 
@@ -67,33 +69,47 @@
 				nativeland. There's still an interpreter running in interpreted 
 				mode otherwise things like dynamic code wouldn't work. However, 
 				its much faster, much more compact and it's about as close to 
-				pure native mapping as you can get.
-				
-				\ldots
+				pure native mapping as you can get. [\ldots]
 			\end{quotation}
 			Ciò significa che il sistema fa tutto il possibile per creare codice 
 			nativo che rappresenti uno a uno quello che si è descritto in 
 			JavaScript ma parte del nostro sorgente dovrà ancora essere 
-			interpretato a tempo di esecuzione. Per questo il termine 
-			cross-compiling non è del tutto appropriato in quanto con tale 
+			interpretato a tempo di esecuzione.
+			
+			Come spiegato nel post di Kevin Whinnery\footnote{Kevin Whinnery è uno 
+			sviluppatore che ha lavorato su Titanium} l'interprete 
+			JavaScript viene inserito nel pacchetto in fase di compilazione.
+			Inoltre a seconda della piattaforma di destinazione vengono usati 
+			due tipi diversi di interprete: JavaScriptCore per iOS, Rhino per 
+			Android e BlackBerry.
+			
+			Visto che il codice JavaScript viene ancora in parte interpretato, 
+			\crosscomp{} non è del tutto appropriato in quanto con tale 
 			aggettivo ci si riferisce ad una tecnica che permette, a partire da 
 			un certo sistema, di creare codice eseguibile per un secondo sistema 
 			avente caratteristiche e proprietà differenti da quello di 
 			partenza\citep{Web:Wiki.cross-compiling}.
 			
 			In ogni caso possiamo pensare di utilizzare il termine 
-			cross-compiling per indicare che Titanium al termine del processo di 
-			compilazione dell'applicazione produce un pacchetto che per la 
+			\crosscomp{} per indicare che Titanium, al termine del processo di 
+			compilazione, produce un pacchetto che per la 
 			maggior parte contiene codice nativo e specifico per una data 
-			piattaforma il che è diverso da quello che si ottiene al termine 
-			della compilazione di un'applicazione ibrida dove il pacchetto 
-			installabile racchiude tutto il codice sorgente web (JavaScript, 
-			HTML e CSS) che verrà poi interpretato completamente a tempo di 
-			esecuzione da una ``web view'' realizzata 
-			\textit{ad~hoc}\footnote{All'interno di questo pacchetto è solo il 
-			codice della web view ad essere realizzato in codice nativo e 
-			compilato per la tale piattaforma target e null'altro}.
+			piattaforma. Questa è una differenza sostanziale rispetto a quello 
+			che avviene nella compilazione di un'applicazione ibrida, dove nel 
+			pacchetto risultante è solo il codice della web view ad essere 
+			realizzato in codice nativo, mentre il codice sorgente web 
+			(JavaScript, HTML e CSS) rimane intatto e viene poi interpretato 
+			completamente dal motore del browser a tempo di esecuzione.
 			
+			Titanium richiede che sulla macchina usata per lo sviluppo vengano 
+			installati e configurati gli SDK nativi per le piattaforme di destinazione.
+			In particolare per le applicazioni Android bisogna installare 
+			l'Android SDK, mentre serve Xcode per le applicazioni iOS.
+			Questo perchè dopo la prima fase di elaborazione dei sorgenti fatta
+			dallo SDK di Tianium (descritte nell'intervento succitato) serve usare
+			lo SDK nativo per creare il pacchetto finale da installare sul 
+			dispositivo.
+			 
 			\noindent Detto questo passiamo ad elencare cosa Titanium offre da 
 			una visione più ad alto livello\citep[Cap.2 - Titanium 
 			Mobile Overview]{Book:Ti}:
