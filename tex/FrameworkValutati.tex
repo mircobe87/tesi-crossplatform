@@ -249,7 +249,60 @@
 		sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
 		realizzare un'applicazione ibrida più soddisfacente. 
 		\subsection{JQuery Mobile}
-			Descrizione JQuery Mobile
+			jQuery Mobile è un framework per lo sviluppo di applicazioni mobili web
+			che sono accessibili da tutti i dispositivi: smartphone, tablet e 
+			computer desktop. Esso è stato costruito sopra i robusti framework
+			jQuery e jQuery UI, che erano stati sviluppati per potenziare e agevolare
+			la creazione dei tradizionali siti web. 
+			
+			Per usare jQuery Mobile 
+			è sufficiente scaricare dal sito del produttore\footnote{\url{http://jquerymobile.com/download/}}
+			il pacchetto in formato .zip contenente tutti i file javascript, css
+			e png necessari\footnote{Dallo stesso sito c'è la possibilità di personalizzare
+			il contenuto del pacchetto .zip in base alle proprie preferenze. Ad esempio
+			è possibile alleggerire il pacchetto eliminando il supporto per le
+			animazioni di transizione tra le pagine}.
+			Una volta ottenuti, questi file vanno inclusi nella pagina HTML che 
+			conterrà il codice della struttura dell'applicazione.
+			A questo punto è sufficiente scrivere i normali tag HTML decorati
+			con particolari attributi data-* per definire i vari componenti 
+			dell'interfaccia grafica dell'applicazione.
+			
+			jQuery Mobile in fase di 
+			inizializzazione seleziona gli elementi in base ai loro
+			attributi data-* e gli potenzia inserendo dei markup aggiuntivi, 
+			aggiungendo nuove classi CSS e applicando gestori per gli eventi.
+			Questo permette allo sviluppatore di scrivere velocemente una pagina
+			con una certa base semantica, sarà poi jQuery Mobile a dare 
+			all'applicazione una più complessa interfaccia utente.
+			Se l'applicazine è composta da più schermate jQuery Mobile fornisce 
+			il concetto di pagina per poter modellare questi elementi, e implementa
+			anche un sistema di navigazione AJAX (Asynchronous JavaScript and XML) 
+			per supportare un ricco insieme di animazioni nella transizione tra le pagine.
+			
+			questa può essere suddivisa in pagine, ognuna
+			delle quali definisce una schermata diversa da mostrare all'utente. 
+			Per definire una pagina è sufficiente racchiuderne il contenuto in
+			un tag \verb+<div>+ con l'attributo personalizzato data-role=``page''.
+			
+			
+			La possibilità di definire attributi personalizzati per qualsiasi tag 
+			è stata introdotta con HTML5.
+			jQuery Mobile fa uso intensivo degli attributi data-* 
+			per personalizzare aspetto e comportamento dei vari elementi HTML.
+			
+			HTML5 permette di creare attributi personalizzati per qualsiasi tag,
+			purchè il nome dell'attributo inizi con 
+			data-\footnote{Informazioni più dettagliate sono disponibili
+			all'indirizzo \url{http://www.w3.org/TR/html5/dom.html\#custom-data-attribute}}
+			
+			Quando un qualsiasi link viene cliccato, viene generato un evento 
+			catturato automaticamente dal sistema di navigazione Ajax che esegue
+			una richiesta basata sul valore dell'attributo href, anzichè ricaricare
+			la pagina. Mentre il framework aspetta la risposta Ajax viene mostrata
+			un'animazione di caricamento. Durante il caricamento della pagina richiesta
+			jQuery Mobile cerca gli elementi html con l'attributo data-role="page"
+			e inserisce il codice della pagina nel dom e potenziata.
 	
 		\subsection{KendoUI Mobile}
 			Descrizione KendoUI Mobile
