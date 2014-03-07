@@ -278,13 +278,33 @@
 			Se l'applicazine è composta da più schermate jQuery Mobile fornisce 
 			il concetto di pagina per poter modellare questi elementi, e implementa
 			anche un sistema di navigazione AJAX (Asynchronous JavaScript and XML) 
-			per supportare un ricco insieme di animazioni nella transizione tra le pagine.
-			
-			questa può essere suddivisa in pagine, ognuna
-			delle quali definisce una schermata diversa da mostrare all'utente. 
+			per supportare un ricco insieme di animazioni nella transizione tra le pagine. 
 			Per definire una pagina è sufficiente racchiuderne il contenuto in
 			un tag \verb+<div>+ con l'attributo personalizzato data-role=``page''.
-			
+			In uno stesso file HTML possono essere inserite più pagine, ma questo 
+			non è obbligatorio, è infatti possibile usare file HTML specifici 
+			per ogni pagina. Quando un utente che sta visualizzando una pagina
+			naviga verso un'altra viene generato un evento 
+			catturato automaticamente dal sistema di navigazione Ajax che esegue
+			una richiesta per la nuova pagina. Se la pagina di destinazione è stata
+			definita nello stesso file dove è presente la pagina di partenza si 
+			parla di navigazione interna, altrimenti si parla di navigazione esterna.
+			Nel primo caso essendo già stato caricato il file HTML entrambe le pagine
+			sono presenti nel DOM\footnote{Spiego DOM} e si avrà una veloce transizione 
+			animata dagli effetti forniti da Ajax; invece nel caso di navigazione esterna
+			si dovrà attendere il caricamento del nuovo documento, durante il quale
+			jQuery Mobile cerca gli elementi HTML con l'attributo data-role="page"
+			crea il relativo modello a oggetti e lo inserisce nel DOM. 
+			In entrambi i tipi di navigazione il DOM viene solo aggiornato In questo modo la transizione
+			sarà più veloce rispetto al sistema di navigazione tradizionale che 
+			prevede la    
+			Mentre il framework aspetta la risposta Ajax viene mostrata
+			un'animazione di caricamento. Durante il caricamento della pagina richiesta
+			jQuery Mobile cerca gli elementi html con l'attributo data-role="page"
+			e inserisce il codice della pagina nel dom e potenziata.
+			La navigazione tra pagine contenute nello stesso file
+			è chiamata interna, mentre quella tra pagine dislocate tra file diversi 
+			è detta esterna.  
 			
 			La possibilità di definire attributi personalizzati per qualsiasi tag 
 			è stata introdotta con HTML5.
