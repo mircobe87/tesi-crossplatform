@@ -252,6 +252,7 @@
 		sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
 		realizzare un'applicazione ibrida più soddisfacente. 
 		\subsection{JQuery Mobile}
+		\label{subsec:jQuery}
 			jQuery Mobile è un framework per lo sviluppo di applicazioni mobili
 			web	che sono accessibili da tutti i dispositivi: smartphone, tablet
 			e computer desktop. Esso è stato costruito sopra i robusti framework
@@ -337,9 +338,85 @@
 				\label{fig:jquery}
 			\end{figure}
 	
-		\subsection{KendoUI Mobile}
-			Descrizione KendoUI Mobile
+		\subsection{Kendo UI Mobile}
+			Kendo UI Mobile è un framework mobile completo che adatta automaticamente
+			l'aspetto dell'applicazione alla piattaforma sulla quale è eseguita.
+			Consiste di estensioni fondamentali per un framework
+			mobile come layouts, views, animazioni di transizione, ecc. 
+			oltre ad un insieme di widgets per
+			l'interfaccia grafica che includono bottoni, widgets per la navigazione,
+			e altro. Non è però solo per queste caratteristiche che viene 
+			definito un framework completo, infatti Kendo UI Mobile offre anche:
+			un solido componente DataSource, strumenti di validazione, 
+			API per la globalizzazione e un framework MVVM (Model View ViewModel). 
+			Come jQuery Mobile, Kendo è basato sulla libreria jQuery.
+			
+			Kendo UI Mobile in versione di prova è scaricabile dal sito 
+			\url{http://www.telerik.com/download/kendo-ui-mobile}, quello che si 
+			ottiene è un pacchetto zip contenente tutti i file JavaScript e CSS 
+			necessari. La versione di prova
+			può essere usata per apprendere l'uso di Kendo ma non può essere usata 
+			per scopi commerciali, quindi a differenza di jQuery Mobile è necessario 
+			mettere in conto una spesa se si intende commercializzare l'applicazione.
+			I file JavaScript e CSS scaricati devono essere inseriti nel file HTML
+			che costituisce l'applicazione, esattamente come è stato descritto per 
+			jQuery Mobile\footnote{Informazioni aggiuntive per iniziare a 
+			lavorare con kendo UI Mobile si possono trovare nel sito 
+			\url{http://docs.telerik.com/kendo-ui/getting-started/introduction}}.
+			
+			Il punto di forza di Kendo UI Mobile è la 
+			possibilità di creare applicazioni con aspetto nativo scrivendo codice 
+			una sola volta, sarà infatti il framework, all'avvio dell'applicazione,
+			ad occuparsi di identificare la piattaforma e di applicare il tema corretto, 
+			ovviamente è comunque possibile forzare l'utilizzo dello stesso tema 
+			su piattaforme diverse. Attualmente le piattaforme che hanno un tema 
+			personalizzato sono Android, iOS, BlackBerry e Windows Phone 8.
+			
+			Come precedentemente detto Kendo UI Mobile non offre solo elementi di 
+			personalizzazione per l'interfaccia grafica.
+			Il componente DataSource (Kendo UI DataSource)è un'astrazione per usare dati locali (array
+			di oggetti JavaScript) o remoti (XML, JSON, JSONP). Esso supporta 
+			completamente il CRUD (Create, Read, Update, Destroy), cioè fornisce
+			la funzioni per creare, leggere, aggiornare e distruggere dati, e  
+			permette sia alla parte locale che alla parte server di ordinare,
+			impaginare, filtrare, raggruppare e aggregare questi dati.
+			Molti widgets di Kendo UI supportano il data binding, cioè l'associazione
+			dei dati agli elementi grafici, grazie a questo è possibile ad esempio
+			mostrare in una lista i dati letti da un server o caricati localmente.
+
+			Grazie al framework che Kendo UI offre per il modello di progettazione
+			MVVM è possibile separare i dati dall'interfaccia grafica, ottenendo 
+			così un'applicazione più strutturata che si traduce in codice 
+			più manutenibile e più leggibile. (scrivere che però questo mvvm  
+			non struttura benissimo il codice?).
+			
+			Kendo fornisce un modo per internazionalizzare le pagine che 
+			compongono l'applicazione. Attraverso un particolare metodo offerto
+			dalle API di Kendo è possibile selezionare un particolare paese in 
+			modo da adottare formato dei numeri, nomi dei mesi, formato 
+			di data e ora e altro conformemente agli standard dello stesso.
 	
+			HTML5 ha introdotto gli attributi di validazione, questi particolari 
+			attributi hanno la capacità di avvisare l'utente che un certo elemento
+			di input contenuto in un form debba essere compilato obbligatoriamente.
+			Kendo UI Validator offre un modo facile per gestire la validazione 
+			per gli elementi input di un form, permettendo di personalizzare la 
+			gestione della validazione ad esempio accettando in input solo stringhe 
+			contenenti certe parole, o numeri compresi in un dato intervallo.
+			
+			Come in jQuery Mobile è possibile realizzare l'intera applicazione 
+			in una singola pagina HTML, che attraverso il widgets view è in grado 
+			di essere suddivisa in più schermate dando la percezione che l'applicazione 
+			sia composta da più pagine. Ad ogni view può essere data una particolare 
+			struttura, in particolare è possibile suddividerla in un'intestazione 
+			e un corpo, la stessa struttura può essere condivisa tra più views 
+			permettendo di usare l'intestazione per navigare tra le schermate in 
+			quei dispositivi (es. iPhone) dove non esistono tasti fisici per la
+			navigazione. Tutto questo contribuisce ad avvicinare l'esperienza utente
+			a quella di una reale applicazione nativa. I vantaggi di scrivere 
+			l'applicazione all'interno
+			di una sola pagina HTML sono gli stessi discussi per jQuery Mobile 
+			\hyperref[subsec:jQuery]{(vedi~\ref{subsec:jQuery})}.
 		\subsection{PhoneJS}
 			Descrizione PhoneJS
 
