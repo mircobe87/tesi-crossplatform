@@ -225,9 +225,9 @@
 			\subsubsection{Titanium SDK e il paradigma MVC}
 				Appcelerator fornisce il framework Alloy che consente agli 
 				sfiluppatori di strutturare le loro applicazioni secondo 
-				paradigma MVC (Model-View-Controler)\footnote{Per approfondire 
+				paradigma MVC (Model-View-Controller)\footnote{Per approfondire 
 				si può consultare l'indirizzo\\
-				\url{http://en.wikipedia.org/wiki/Mode-view-controller}}. Con 
+				\url{http://en.wikipedia.org/wiki/Model-view-controller}}. Con 
 				questo framework l'interfaccia viene costruita combinando file 
 				sorgenti scritti con i linguaggi XML e CSS mentre il codice che 
 				riguarda la logica dell'applicazione è ancora JavaScript. 
@@ -237,7 +237,7 @@
 				tradizionali sorgenti JavaScript di un'applicazione Titanium.
 				
 				In fase di inzializzazione di un nuovo progetto, Titanium Studio 
-				permette di impiegareo meno Alloy nello sviluppare 
+				permette di impiegare o meno Alloy nello sviluppare 
 				l'applicazione; in ogni caso il processo di compilazione è, come 
 				già detto, completamente gestito da Titanium SDK e rimane 
 				invisibile allo	sviluppatore.
@@ -374,7 +374,7 @@
 			
 			Come precedentemente detto Kendo UI Mobile non offre solo elementi di 
 			personalizzazione per l'interfaccia grafica.
-			Il componente DataSource (Kendo UI DataSource)è un'astrazione per usare dati locali (array
+			Il componente DataSource (Kendo UI DataSource) è un'astrazione per usare dati locali (array
 			di oggetti JavaScript) o remoti (XML, JSON, JSONP). Esso supporta 
 			completamente il CRUD (Create, Read, Update, Destroy), cioè fornisce
 			la funzioni per creare, leggere, aggiornare e distruggere dati, e  
@@ -384,20 +384,32 @@
 			dei dati agli elementi grafici, grazie a questo è possibile ad esempio
 			mostrare in una lista i dati letti da un server o caricati localmente.
 
-			Grazie al framework che Kendo UI offre per il modello di progettazione
-			MVVM è possibile separare i dati dall'interfaccia grafica, ottenendo 
+			Un'applicazione manipola certe entità, ad esempio un'app che gestisce 
+			le domande di laurea dovrà trattare studenti, dove uno studente avrà 
+			particolari caratteristiche come nome, cognome e numero di matricola.
+			Questo avrà due rappresentazioni, una mediante strutture dati opportune 
+			che modellano questa entità in memoria, e un'altra grafica dove i dati
+			dello studente, saranno mostrati all'utente attraverso elementi grafici.
+			L'utente può inoltre compiere determinate azioni su queste entità sempre 
+			attraverso elementi grafici (es. sottoporre la domanda di laurea attraverso
+			il tocco di un apposito tasto). Il paradigma Mo\-del-\-View-\-View\-Mo\-del 
+			formalizza le due rappresentazioni rispettivamente come Model e come 
+			View, inoltre introduce il ViewModel, un terzo elemento che le mette 
+			in relazione, consentendo che le azioni e le modifiche fatte da parte dell'utente 
+			sulla View si ripercuotano sul relativo Model, e viceversa.
+			Kendo UI fornisce il framework MVVM proprio con lo scopo di separare 
+			i dati dall'interfaccia grafica, ottenendo 
 			così un'applicazione più strutturata che si traduce in codice 
-			più manutenibile e più leggibile. (scrivere che però questo mvvm  
-			non struttura benissimo il codice?).
+			più manutenibile e più leggibile.
 			
 			Kendo fornisce un modo per internazionalizzare le pagine che 
 			compongono l'applicazione. Attraverso un particolare metodo offerto
 			dalle API di Kendo è possibile selezionare un particolare paese in 
 			modo da adottare formato dei numeri, nomi dei mesi, formato 
-			di data e ora e altro conformemente agli standard dello stesso.
+			di data e ora e altro conformemente agli standard locali.
 	
 			HTML5 ha introdotto gli attributi di validazione, questi particolari 
-			attributi hanno la capacità di avvisare l'utente che un certo elemento
+			attributi hanno la capacità di forzare il browser ad avvisare l'utente che un certo elemento
 			di input contenuto in un form debba essere compilato obbligatoriamente.
 			Kendo UI Validator offre un modo facile per gestire la validazione 
 			per gli elementi input di un form, permettendo di personalizzare la 
