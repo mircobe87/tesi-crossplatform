@@ -339,6 +339,7 @@
 			\end{figure}
 	
 		\subsection{Kendo UI Mobile}
+		\label{subsec:kendo}
 			Kendo UI Mobile è un framework mobile completo che adatta
 			automaticamente	l'aspetto dell'applicazione alla piattaforma sulla
 			quale è eseguita. Consiste di estensioni fondamentali per un
@@ -458,13 +459,146 @@
 			\hyperref[subsec:jQuery]{(vedi~\ref{subsec:jQuery})}.
 			
 		\subsection{PhoneJS}
-			Descrizione PhoneJS
-
+			PhoneJS è un framework per realizzare applicazioni mobili 
+			single page application (SPA), che promette di fornire: un'
+			esperienza utente ottimizzata per i dispositivi touch, widgets con 
+			aspetto nativo, agili strumenti di navigazione tra le schermate dell'
+			applicazione, facile gestione delle schermate e un livello di accesso 
+			ai dati.
+			
+			La libreria PhoneJS sfrutta completamente jQuery e opzionalmente 
+			supporta KnockoutJS, per sviluppare l'applicazione attraverso il paradigma 
+			MVVM\hyperref[subsec:kendo]{(vedi~\ref{subsec:kendo})}.
+			L'obiettivo è sempre quello di realizzare un'applicazione web cross-platform 
+			riusando completamente il codice.
+			
+			Come Kendo UI, questo framework è in grado di fornire all'applicazione 
+			un aspetto differente a seconda del dispositivo senza scrivere codice aggiuntivo.
+			PhoneJS, infatti, identifica la piattaforma a tempo di esecuzione 
+			e applica automaticamente 
+			lo stile "nativo" appropriato a tutti i widgets e a tutti gli elementi 
+			di navigazione (riferimento a immagine)
+			
+			PhoneJS include un vasto insieme di widgets (elementi UI). Tipicamente, 
+			un widget è associato a dei dati e fornisce un'interazione con l'utente.
+			Esso è rappresentato da un elemento HTML (contenitore), da un codice 
+			JavaScript per definirne il comportamento e dei fogli di stile CSS. 
+			Ogni widget include un plugin jQuery e un legame Knockout, è così 
+			possibile scegliere se creare un widget attraverso l'approccio jQuery 
+			oppure usare le funzionalità di tracciamento delle dipendeze (?) fornito 
+			da KnockoutJS. 
+			
+			PhoneJS fornisce tutti gli strumenti necessari per realizzare un'applicazione 
+			SPA: gestione e rendering delle schermate, navigazione attraverso url, 
+			layout specifico per il dispositivo, caching delle view e gestione degli stati.
+			Il framework usa le familiari regole di navigazione per definire la 
+			relazione tra l'URL nel quale l'utente naviga e la corrispondente schermata 
+			da caricare. Lo sviluppatore deve specificare la regola di navigazione e definire 
+			la schermata dell'applicazione, il framework a run-time si occuperà di effettuare la 
+			navigazione.
+			Quando si naviga in una view, questa sarà resa visibile attraverso un 
+			animazione di transizione, inoltre il framework tiene traccia dell'avvenuta 
+			navigazione e aggiunge un bottone per tornare indietro. Questo comportamento 
+			di default può comunque essere cancellato.
+			
+			Per migliorare l'esperienza di sviluppo con PhoneJS è possibile usare 
+			il pacchetto DXTREME. Esso include le librerie PhoneJS e ChartJS e il 
+			supporto per Visual Studio 2012. Inoltre include un emulatore basato 
+			su browser che permette di fare debugging direttamente da Visual Studio.
+			DXTREME non è gratis, ma è possibile usarne una versione di prova per 
+			30 giorni.
 			
 	\section{Framework per Applicazioni Ibride}
 	\label{sec:frameworkhybrid}
 		\subsection{Phonegap}
-			Descrizione Phonegap
+			Lo scopo di PhoneGap è di permettere alle applicazioni web di essere 
+			installate sui dispositivi come avviene per le applicazioni native. 
+			Phonegap crea un'applicazione nativa consistente principalmente in 
+			una web view, e al suo interno ci racchiude l'applicazione web. Il pacchetto 
+			risultante è un file che può essere installato attraverso gli app stores
+			proprio come le applicazioni native.
+			Addizionalmente, PhoneGap fornisce un insieme di API che comunemente non 
+			sono disponibili alle applicazioni web, come: accesso alla fotocamera, 
+			ai contatti e ai sensori.
+			
+			Per sviluppare le applicazioni con PhoneGap, gli sviluppatori devono 
+			creare un'applicazione web, questo può essere fatto usando i framework 
+			descritti sopra.  
+			
+			Per eseguire un'applicazione su un emulatore (simulatore per iOS), 
+			lo sviluppatore deve generare il pacchetto per ogni piattaforma che 
+			vuole supportare utilizzando gli SDK opportuni.
+			
+			Per alleviare la necessità di dover installare localmente 
+			tutti gli SDKs nativi 
+			per le piattaforme per cui si intende sviluppare, Nitobi (recentemente 
+			aquistata da Adobe) ha creato un servizio chiamato PhoneGap Build. 
+			Inviando i sorgenti HTML, CSS e JavaScript al servizio, attraverso un 
+			pacchetto .zip o attraverso il repository GitHub, è possibile ottenere 
+			l'applicazione installabile sulle varie piattaforme.
+			L'attuale versione di PhoneGap Build è la 3.1.0 ed è in grado di compilare 
+			applicazioni per iOS, Android e WindowsPhone 8. Per iOS serve comunque 
+			essere registrati tra gli sviluppatori Apple questo consentirà di 
+			testare le app su iPhone e iPad. Per essere uno sviluppatore 
+			registrato Apple, occorre pagare una tassa di iscrizione annuale 
+			pari a 79 euro.
+			Oltre alla possibilità di fare compilazione PhoneGap Build fornisce 
+			il cosiddetto Hydration, un'opzione di compilazione che se abilitata 
+			permette di testare le modifiche fatte all'applicazione senza doverla 
+			reinstallare sul dispositivo (attenzione non tutte le modifiche 
+			funzionano). Infine PhoneGap Build offre un server weinre per fare 
+			debugging in remoto, usando gli strumenti di debug tipici dello 
+			sviluppo web.
+			 
+			Il processo di sviluppo con PhoneGap Build da una parte permette di 
+			poter iniziare a realizzare l'applicazione senza perder tempo a 
+			installare e configurare tutti gli SDK nativi, ma allo stesso tempo 
+			abbiamo notato che il servizio è molto lento, sia per il tempo speso  
+			ad inviare il codice sorgente e a scaricare il pacchetto, sia perchè 
+			il processo 
+			di build non sembra essere molto performante e spesso il sito mostra 
+			dei disservizi. Inoltre bisogna tener conto che non tutti i plugin 
+			esistenti per PhoneGap/Cordova sono utilizzabili con il servizio 
+			PhoneGap Build, anche se la possibilità di aggiungere plugin di terze 
+			parti sta facendo crescere il numero di quelli disponibili.
+			
+			Come menzionato precedentemente, un'applicazione PhoneGap è un 
+			"contenitore nativo" di un'applicazione web. Proviamo a spiegarci 
+			meglio.
+			Molti SDKs nativi forniscono un particolare elemento grafico chiamato 
+			"Web View", all'interno del quale è possibile caricare del contenuto 
+			HTML, CSS e JavaScript che viene interpretato come se fosse stato aperto in 
+			un Browser. 
+			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
+			in uno di questi Web View. L'applicazione nativa che crea il web view 
+			è in grado di (in maniera differente a seconda della piattaforma) 
+			comunicare in maniera asincrona col codice JavaScript eseguito nel 
+			web view. 
+			PhoneGap sfrutta questa funzionalità per creare API JavaScript 
+			che sono in grado di scambiare mesaggi asincroni col codice 
+			nativo da dentro la web view.  
+			Il modo in cui tutto questo è implementato è diverso a seconda della 
+			piattaforma, e non è scopo di questa relazione scenderne troppo nei 
+			dettagli, dettagli più significativi possono essere trovati su 
+			(mettere un link a dove sono spiegati).
+			
+			La principale forza di PhoneGap risiede nella sua semplicità. 
+			Il team di sviluppatori di PhoneGap ha intenzionalmente implementato 
+			solo il minimo comune denominatore delle APIs native. In questo modo 
+			è facile per PhoneGap supportare molte piattaforme. Potenzialmente 
+			una qualsiasi piattaforma che offre una web view può essere supportata 
+			da PhoneGap.
+			Inoltre le API di PhoneGap possono essere estese con dei plug-in, cioè 
+			è possibile implementare personalmente l'accesso a particolare API native.
+			(citazione di qualche plugin)
+			
+			La qualità dell'intefaccia untente in un'applicazione PhoneGap 
+			varia in base al framework usato per realizzare la web app, e al 
+			motore di rendering delle pagine web della piattaforma.
+			Il motore di rendering WebKit su iOS fornisce buone performance, le 
+			Android Web View sono funzionali, ma ha qualche notabile limitazione 
+			(citare fonte).
+			
 
 		\subsection{Rho Mobile}
 			Descrizione Rho Mobile
