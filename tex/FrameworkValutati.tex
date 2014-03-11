@@ -20,8 +20,8 @@
 	
 	Abbiamo così classificato Titanium Appcelerator come framework per la 
 	realizzazione di applicazioni native; Phonegap/Cordova, Rho Mobile e Sencha 
-	Touch come quelli dediti alla creazione di applicazioni ibride; jQuery 
-	Mobile, KendoUI Mobile e PhoneJS utili per implementare complete 
+	Touch come quelli dediti alla creazione di applicazioni ibride; \jqm{},
+	\kendomob{} e \phonejs{} utili per implementare complete 
 	applicazioni web e per la logica e l'interfaccia grafica di applicazioni 
 	ibride.
 
@@ -32,7 +32,7 @@
 			Titanium è una piattaforma gratis e open source di sviluppo di 
 			applicazioni mobili che permette la creazione di applicazioni native
 			\crossplat{} per iOS, Android, BlackBerry e Tizen usando il 
-			linguaggio JavaScript. Usando JavaScript e HTML è anche possibile
+			linguaggio \js{}. Usando \js{} e \html{} è anche possibile
 			creare semplici applicazioni Web.
 			
 			Titanium agisce come un ponte tra i sistemi operativi nativi e il 
@@ -50,7 +50,7 @@
 			In fondo alla pila si trova il sistema 
 			operativo di destinazione: Android, iOS o il browser (per quanto 
 			riguarda le applicazioni web); sulla cima troviamo il codice 
-			dell'applicazione scritta in JavaScript e in mezzo trova posto
+			dell'applicazione scritta in \js{} e in mezzo trova posto
 			Titanium SDK insieme alle proprie APIs. Utilizzando tali interfacce 
 			nella propria applicazione è possibile fare azioni come mostrare la 
 			fotocamera,	aprire nuove finestre, disegnare pulsanti, ecc. 
@@ -66,7 +66,7 @@
 			\url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}}
 			il modo di operare di Titanium è il seguente:
 			\begin{quotation}
-				Titanium takes your Javascript code, analyzes and preprocesses 
+				Titanium takes your \js{} code, analyzes and preprocesses 
 				it and then pre-compiles it into a set of symbols that are 
 				resolved based on your applications uses of Titanium APIs. From 
 				this symbol hierarchy we can build a symbol dependency matrix 
@@ -91,17 +91,17 @@
 			\end{quotation}
 			Ciò significa che il sistema fa tutto il possibile per creare codice 
 			nativo che rappresenti uno a uno quello che si è descritto in 
-			JavaScript ma parte del nostro sorgente dovrà ancora essere 
-			interpretato a tempo di esecuzione. L'interprete JavaScript viene 
+			\js{} ma parte del nostro sorgente dovrà ancora essere 
+			interpretato a tempo di esecuzione. L'interprete \js{} viene 
 			inserito nel pacchetto in fase di compilazione e, a seconda della 
 			piattaforma di destinazione, sarà inserito 
-			JavaScriptCore\footnote{Maggiori dettagli e informazioni si possono 
+			\js{}Core\footnote{Maggiori dettagli e informazioni si possono 
 			trovare online all'indirizzo\\ \url{http://webkit.org/projects/javascript/}} 
 			per iOS o Rhino\footnote{Maggiori dettagli e informazioni si possono trovare 
 			online all'indirizzo\\ \url{https://developer.mozilla.org/it/docs/Rhino}} 
 			per Android e BlackBerry\citep{Web:KevinPost}.
 			
-			Visto che il codice JavaScript viene ancora in parte interpretato, 
+			Visto che il codice \js{} viene ancora in parte interpretato, 
 			\crosscomp{} non è del tutto appropriato in quanto con tale 
 			aggettivo ci si riferisce ad una tecnica che permette, a partire da 
 			un certo sistema, di creare codice eseguibile per un secondo sistema 
@@ -116,7 +116,7 @@
 			che avviene nella compilazione di un'applicazione ibrida, dove nel 
 			pacchetto risultante è solo il codice della web view ad essere 
 			realizzato in codice nativo, mentre il codice sorgente web 
-			(JavaScript, HTML e CSS) rimane intatto e viene poi interpretato 
+			(\js{}, \html{} e \css{}) rimane intatto e viene poi interpretato 
 			completamente dal motore del browser a tempo di esecuzione.
 			
 			Titanium richiede che sulla macchina usata per lo sviluppo vengano 
@@ -152,7 +152,7 @@
 				nella realizzazione della propria applicazione.
 				
 			\paragraph{APIs Mobili}
-				Titanium fornisce un ricco insieme di API JavaScript che danno 
+				Titanium fornisce un ricco insieme di API \js{} che danno 
 				accesso a centinaia tra componenti native per l'interfaccia 
 				utente e componenti non visuali. Queste API sono suddivise in 
 				vari insiemi come Titanium.UI (per quanto riguarda l'interfaccia 
@@ -200,7 +200,7 @@
 				di Appcelerator. Titanium SDK supporta l'impiego dei moduli 
 				anche nello sviluppo delle applicazioni web, in questo caso la 
 				loro realizzazione consiste nello scrivere un puro modulo 
-				JavaScript e non qualcosa scritto in Java o Objective-C.
+				\js{} e non qualcosa scritto in Java o Objective-C.
 			
 			\clearpage
 			\paragraph{Servizi cloud di Appcelerator}
@@ -229,12 +229,12 @@
 				si può consultare l'indirizzo\\
 				\url{http://en.wikipedia.org/wiki/Model-view-controller}}. Con 
 				questo framework l'interfaccia viene costruita combinando file 
-				sorgenti scritti con i linguaggi XML e CSS mentre il codice che 
-				riguarda la logica dell'applicazione è ancora JavaScript. 
+				sorgenti scritti con i linguaggi XML e \css{} mentre il codice che 
+				riguarda la logica dell'applicazione è ancora \js{}. 
 				L'uso di Alloy necessita di un passaggio in più durante il 
 				processo di compilazione: i vari file sorgenti di 
 				un'applicazione Alloy vengono ``pre-compilati'' per generare 
-				tradizionali sorgenti JavaScript di un'applicazione Titanium.
+				tradizionali sorgenti \js{} di un'applicazione Titanium.
 				
 				In fase di inzializzazione di un nuovo progetto, Titanium Studio 
 				permette di impiegare o meno Alloy nello sviluppare 
@@ -250,57 +250,89 @@
 		applicazioni web (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}), oppure 
 		può essere combinato ai framework descritti nella 
 		sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
-		realizzare un'applicazione ibrida più soddisfacente. 
+		realizzare un'applicazione ibrida più soddisfacente.
+		
 		\subsection{JQuery Mobile}
 		\label{subsec:jQuery}
-			jQuery Mobile è un framework per lo sviluppo di applicazioni mobili
+			\jqm{} è un framework per lo sviluppo di applicazioni mobili
 			web	che sono accessibili da tutti i dispositivi: smartphone, tablet
 			e computer desktop. Esso è stato costruito sopra i robusti framework
-			jQuery e jQuery UI, che erano stati sviluppati per potenziare e
+			\jq{} e \jq{} UI, che erano stati sviluppati per potenziare e
 			agevolare la creazione dei tradizionali siti web. 
 			
-			Per usare jQuery Mobile è sufficiente scaricare dal sito del
+			Per usare \jqm{} è sufficiente scaricare dal sito del
 			produttore\footnote{\url{http://jquerymobile.com/download/}} il
-			pacchetto in formato .zip contenente tutti i file javascript, css e
-			png necessari\footnote{Dallo stesso sito c'è la possibilità di
+			pacchetto in formato .zip contenente tutti i file \js{}, \css{} e
+			PNG necessari\footnote{Dallo stesso sito c'è la possibilità di
 			personalizzare il contenuto del pacchetto .zip in base alle proprie
 			preferenze. Ad esempio è possibile alleggerire il pacchetto
 			eliminando il supporto per le animazioni di transizione tra le
 			pagine}. Una volta ottenuti, questi file vanno inclusi nella pagina
-			HTML che conterrà il codice della struttura dell'applicazione. A
-			questo punto è sufficiente scrivere i normali tag HTML decorati con
+			\html{} che conterrà il codice della struttura dell'applicazione. A
+			questo punto è sufficiente scrivere i normali tag \html{} decorati con
 			particolari attributi \verb|data-*| per definire i vari componenti
-			dell'interfaccia grafica dell'applicazione.
-			
-			jQuery Mobile in fase di inizializzazione seleziona gli elementi in
+			dell'interfaccia grafica dell'applicazione. Nel esempio \ref{cod:jquery}
+			viene mostrata l'implementazione di un'applicazione composta da
+			una sola schermata che al suo interno contiene un'intestazione con
+			il titolo dell'applicazione e un semplice bottone con un icona a
+			forma di ingranaggio.\clearpage
+			\begin{lstlisting}[
+				label={cod:jquery},
+				caption={
+					Semplice applicazione jQuery Mobile. Da notare i riferimenti
+					aggiunti nell'intestazione del documento HTML necessari per
+					l'uso del framework.
+				}
+			]
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+			<link
+				rel="stylesheet"
+				href="jquery.mobile-1.4.2.min.css" />
+			<script src="jquery-1.9.1.min.js"></script>
+			<script src="jquery.mobile-1.4.2.min.js"></script>
+		</head>
+		<body>
+			<div data-role="page">
+				<div data-role="header">
+					<h1>jQuery Mob. App</h1>
+				</div>
+				<a data-icon="gear" class="ui-btn">Options</a>
+			</div>
+		</body>
+	</html>
+			\end{lstlisting}
+			\jqm{} in fase di inizializzazione seleziona gli elementi in
 			base ai loro attributi \verb|data-*| e li potenzia inserendo dei markup
-			aggiuntivi aggiungendo nuove classi CSS e applicando gestori per gli
+			aggiuntivi aggiungendo nuove classi \css{} e applicando gestori per gli
 			eventi.	Questo permette allo sviluppatore di scrivere velocemente
-			una pagina con una certa base semantica, sarà poi jQuery Mobile a
+			una pagina con una certa base semantica, sarà poi \jqm{} a
 			dare all'applicazione una più complessa interfaccia utente.	Se
-			l'applicazione è composta da più schermate jQuery Mobile fornisce 
+			l'applicazione è composta da più schermate \jqm{} fornisce 
 			il concetto di pagina per poter modellare questi elementi e
-			implementa anche un sistema di navigazione AJAX (Asynchronous
-			JavaScript and XML) per supportare un ricco insieme di animazioni
+			implementa anche un sistema di navigazione \ajax{} (Asynchronous
+			\js{} and XML) per supportare un ricco insieme di animazioni
 			nella transizione tra le pagine. Per definire una pagina è
 			sufficiente racchiuderne il contenuto in un tag \verb|<div>| con
 			l'attributo personalizzato \verb|data-role="page"|.	In uno stesso
-			file HTML possono essere inserite più pagine ma questo non è
-			obbligatorio; è possibile usare file HTML specifici per ogni pagina.
+			file \html{} possono essere inserite più pagine ma questo non è
+			obbligatorio; è possibile usare file \html{} specifici per ogni pagina.
 			Quando un utente che sta visualizzando una pagina naviga verso
 			un'altra viene generato un evento catturato automaticamente dal
-			sistema di navigazione Ajax che esegue una richiesta di caricamento
+			sistema di navigazione \ajax{} che esegue una richiesta di caricamento
 			per la nuova pagina. Se la pagina di destinazione è stata definita
 			nello stesso file dove è presente la pagina di partenza si parla di
 			navigazione interna, altrimenti si parla di navigazione esterna. Nel
-			primo caso essendo già stato caricato il file HTML entrambe le
+			primo caso essendo già stato caricato il file \html{} entrambe le
 			pagine sono presenti nel DOM\footnote{Document Object Model: è il
-			modello a oggetti JavaScript generato dal browser che rappresenta la
-			struttura dell'attuale documento HTML caricato.} e si avrà una
+			modello a oggetti \js{} generato dal browser che rappresenta la
+			struttura dell'attuale documento \html{} caricato.} e si avrà una
 			veloce transizione animata dagli effetti forniti dal framework;
 			nel caso di navigazione esterna si dovrà attendere il caricamento
-			del nuovo documento, durante il quale jQuery Mobile cerca gli
-			elementi HTML con l'attributo \verb|data-role="page"|, crea il
+			del nuovo documento, durante il quale \jqm{} cerca gli
+			elementi \html{} con l'attributo \verb|data-role="page"|, crea il
 			relativo modello a oggetti e lo inserisce nell'attuale DOM.	In
 			entrambi i tipi di navigazione il DOM viene aggiornato con i
 			contenuti relativi alla pagina da mostrare e non viene mai
@@ -310,7 +342,7 @@
 			sovrapposizione alla pagina che si stà lasciando fino all'effettiva
 			navigazione nella nuova pagina.
 			
-			jQuery Mobile mette a disposizione dello sviluppatore numerosi
+			\jqm{} mette a disposizione dello sviluppatore numerosi
 			widgets (come bottoni, liste scorrevoli, switch, ecc...) per
 			comporre l'interfaccia grafica. L'aspetto dell'applicazione può
 			essere personalizzato utilizzando molti temi già forniti dal
@@ -331,88 +363,142 @@
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{jQuery-ios}
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{jQuery-wp8}
 				\caption{
-					Un esempio di applicazione web realizzata con jQuery Mobile.
+					Un esempio di applicazione web realizzata con \jqm{}.
 					Da sinistra a destra l'anteprima su piattaforma Android, iOS
 					e WindowsPhone8.
 				}
 				\label{fig:jquery}
 			\end{figure}
 	
-		\subsection{Kendo UI Mobile}
+		\subsection{KendoUI Mobile}
 		\label{subsec:kendo}
-			Kendo UI Mobile è un framework mobile completo che adatta
+			\kendomob{} è un framework mobile completo che adatta
 			automaticamente	l'aspetto dell'applicazione alla piattaforma sulla
 			quale è eseguita. Consiste di estensioni fondamentali per un
 			framework mobile come layouts, views, animazioni di transizione,
-			ecc. oltre ad un insieme di widgets per	l'interfaccia grafica che
-			includono bottoni, widgets per la navigazione, e altro. Non è però
-			solo per queste caratteristiche che viene definito un framework
-			completo, infatti Kendo UI Mobile offre anche: un solido componente
-			DataSource, strumenti di validazione, API per la globalizzazione e
-			un framework MVVM (Model View ViewModel). Come jQuery Mobile, Kendo
-			è basato sulla libreria jQuery.
+			e fornisce un ricco insieme di widgets per la costruzione
+			dell'interfaccia grafica tra cui bottoni, liste, aree di input di
+			testo e altro. Non è però solo per queste caratteristiche che viene
+			definito un framework completo, infatti \kendomob{} offre anche
+			un utile componente per la gestione di sorgenti data, strumenti di
+			validazione degli input, API per la globalizzazione e un framework
+			MVVM (Model View ViewModel). Come \jqm{}, \kendomob{} è
+			basato sulla libreria \js{} \jq{}.
 			
-			Kendo UI Mobile in versione di prova è scaricabile dal sito 
+			\kendomob{} in versione di prova è scaricabile dal sito 
 			\url{http://www.telerik.com/download/kendo-ui-mobile}, quello che si 
-			ottiene è un pacchetto zip contenente tutti i file JavaScript e CSS 
+			ottiene è un pacchetto zip contenente tutti i file \js{} e \css{} 
 			necessari. La versione di prova	può essere usata per apprendere
-			l'uso del frameworck ma non può essere usata per scopi commerciali 
-			quindi, a differenza di jQuery Mobile, è necessario	mettere in conto
+			l'uso del framework ma non può essere usata per scopi commerciali 
+			quindi, a differenza di \jqm{}, è necessario	mettere in conto
 			la spesa di acquisto della licenza se si intende commercializzare
-			l'applicazione.	I file JavaScript e CSS scaricati devono essere
-			inseriti nel file HTML che costituisce l'applicazione esattamente
-			come è stato descritto per jQuery Mobile\footnote{Informazioni
-			aggiuntive per iniziare a lavorare con kendo UI Mobile si possono
-			trovare nel sito \url{http://docs.telerik.com/kendo-ui/getting-started/introduction}}.
+			l'applicazione.	I file \js{} e \css{} scaricati devono essere
+			inseriti nel file \html{} che costituisce l'applicazione esattamente
+			come è stato descritto per \jqm{}\footnote{Informazioni
+			aggiuntive per iniziare a lavorare con \kendomob{} si possono
+			trovare nel sito \url{http://docs.telerik.com/kendo-ui/getting-started/introduction}},
+			inoltre, è necessario aggiungere uno script di inizializzazione che
+			istruisce \kendomob{} su quale parte della pagina \html{} contiene il
+			codice che implementa l'applicazione come mostrato nel frammento di
+			codice \ref{cod:kendoinit}.
+			\begin{lstlisting}[label={cod:kendoinit},caption={Esempio di inizializzazione di un'applicazione KendoUI Mobile}]
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<link href="kendo.mobile.all.min.css" rel="stylesheet" />
+			<script src="jquery.min.js"></script>
+			<script src="kendo.mobile.min.js"></script>
+		</head>
+		<body>
+			<div data-role="view" data-title="Home"> ... </div>
+			<div data-role="view" data-title="Opzioni"> ... </div>
+			...
+			<script>
+				// Inizializza la nuova applicazione KendoUI Mobile
+				var app = new kendo.mobile.Application(
+					$(document.body)
+				);
+			</script>
+		</body>
+	</html>
+			\end{lstlisting} 
+			Anche \kendomob{} sfrutta gli attributi \verb|data-*| per
+			caratterizzare i vari tag \html{} dando loro un particolare aspetto
+			grafico relativo al widget che si vuole definire; la stessa
+			operazione può essere fatta direttamente da codice \js{}: nel
+			framework sono presenti le varie API per poter inizializzare ogni
+			widget su un particolare elemento \html{}. Per esempio il frammento di
+			codice \ref{cod:htmlbutton} mostra come definire direttamente in
+			\html{} un pulsante \kendomob{} mentre nel listato \ref{cod:jsbutton}
+			viene definito lo stesso widget ma tramite uno script \js{} che
+			può essere anche inserito in un file separato.
+			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in HTML tramite attributo data-*.},label={cod:htmlbutton}]
+	...
+	<div id="foo" data-role="view">
+		...
+		<a data-role="button">Click Me</a>
+	</div>
+			\end{lstlisting}
+			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in JavaScript tramite l'uso delle apposite API.},label={cod:jsbutton}]
+	...
+	<div id="foo" data-role="view">
+		...
+		<a id="btnClickMe">Click Me</a>
+	</div>
+	<script>
+		$("#btnClickMe").kendoMobileButton();
+	</script>
+			\end{lstlisting}
 			
-			Il punto di forza di Kendo UI Mobile è la possibilità di creare
+			Il punto di forza di \kendomob{} è la possibilità di creare
 			applicazioni con aspetto nativo. Scrivendo codice una sola volta
 			sarà infatti il framework, all'avvio dell'applicazione, ad occuparsi
 			di identificare la piattaforma e a applicare il tema corretto. A
 			prescindere da questa funzionalità è comunque possibile forzare
 			l'utilizzo di uno stesso tema su piattaforme diverse. Attualmente
-			Kendo UI Mobile fornisce temi di aspetto nativo per le piattaforme
-			Android, iOS, BlackBerry e Windows Phone 8 come mostrato in figura~
-			\ref{fig:kendoui} ma, se si ha la necessità, è disponibile uno
-			strumento online per la realizzazione dei propri temi
+			\kendomob{} fornisce temi di aspetto nativo per le piattaforme
+			Android, iOS, BlackBerry e Windows Phone 8 come mostrato in
+			figura~\ref{fig:kendoui} ma, se si ha la necessità, è disponibile
+			uno strumento online per la realizzazione dei propri temi
 			personalizzati.
-			\begin{figure}
+			\begin{figure}[h]
 				\centering
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{kendoui-and}
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{kendoui-ios}
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{kendoui-wp8}
 				\caption{
-					Un esempio di applicazione web realizzata con KendoUI Mobile.
+					Un esempio di applicazione web realizzata con \kendomob{}.
 					Da sinistra a destra l'anteprima su piattaforma Android, iOS
 					e WindowsPhone8.
 				}
 				\label{fig:kendoui}
 			\end{figure}
 			ThemeBuilder\footnote{Disponibile online sul sito web del produttore
-			all'indirizzo \url{http://demos.telerik.com/kendo-ui/themebuilder/mobile.html}}
-			con una semplice interfaccia grafica permette di modificare colori e
-			sfondi alle componenti grafiche dell'applicazione mostrando
+			all'indirizzo \url{http://demos.telerik.com/kendo-ui/themebuilder/mobile.html}},
+			con una semplice interfaccia grafica, consente di modificare colori e
+			sfondi delle componenti grafiche dell'applicazione mostrando
 			un'anteprima per ogni piattaforma supportata; una volta ottenuto il
-			risultato desiderato è possibile esportare il tema in un file CSS da
+			risultato desiderato è possibile esportare il tema in un file \css{} da
 			utilizzare poi nella nostra app.
 			
-			Come precedentemente detto Kendo UI Mobile non offre solo elementi
+			Come precedentemente detto \kendomob{} non offre solo elementi
 			di personalizzazione per l'interfaccia grafica. Il componente
-			DataSource (Kendo UI DataSource) è un'astrazione per usare dati
-			locali (array di oggetti JavaScript) o remoti (XML, JSON, JSONP).
-			Esso supporta completamente il CRUD (Create, Read, Update, Destroy)
-			cioè fornisce la funzioni per creare, leggere, aggiornare e
-			distruggere dati e permette, sia alla parte locale che alla parte
-			server, di ordinare	impaginare, filtrare, raggruppare e aggregare
-			questi dati. Molti widgets di Kendo UI supportano il data binding,
-			cioè l'associazione dei dati agli elementi grafici; grazie a questo
-			è possibile ad esempio mostrare in una lista i dati letti da un
-			server o caricati localmente.
+			\mbox{DataSource} (KendoUI \mbox{DataSource}) è un'astrazione per la gestione e
+			l'impiego di dati locali (array di oggetti \js{}) o remoti
+			(XML, JSON, JSONP).	Esso supporta completamente il CRUD (Create,
+			Read, Update, Destroy) cioè fornisce le funzioni per creare,
+			leggere, aggiornare e distruggere dati e consente sia alla parte
+			locale che alla parte server di ordinare, impaginare, filtrare e
+			raggruppare questi dati. Molti widgets di \kendomob{} supportano
+			il data binding, cioè l'associazione dei dati agli elementi grafici;
+			grazie a questo	è possibile ad esempio mostrare in una lista i dati
+			letti da un	server o caricati localmente specificando non molto di
+			più del formato con	cui questi sono strutturati.
 
-			Come detto poco fa KendoUI Mobile fornisce un framework per lo
+			Come detto poco fa \kendomob{} fornisce un framework per lo
 			sviluppo seguendo il paradigma MVVM; per provare a spiegare in cosa
-			consiste tale modello ci serviamo di un esempio: in un qualsiasi
-			genere di programma o applicazione tipicamente è cosa comune dover
+			consiste tale modello ci serviamo di un esempio. Tipicamente in un
+			qualsiasi genere di programma o applicazione è cosa comune dover
 			manipolare certe entità; un'app che gestisce domande di laurea dovrà
 			ragionevolmente trattare studenti, dove uno studente avrà 
 			particolari caratteristiche come nome, cognome e numero di matricola.
@@ -426,37 +512,36 @@
 			View, inoltre introduce il ViewModel, un terzo elemento che le mette 
 			in relazione, consentendo che le azioni e le modifiche fatte da
 			parte dell'utente sulla View si ripercuotano sul relativo Model e
-			viceversa. Strutturare un applicazione separandola in queste parti
-			si ottiene un codice più strutturato, più manutenibile nonché più
-			leggibile.
+			viceversa. Impostare un'applicazione individuando queste parti
+			porta alla scrittura di un codice più strutturato, più manutenibile
+			nonché più leggibile.
 			
-			Kendo fornisce un modo per internazionalizzare le pagine che 
+			\kendomob{} fornisce un modo per internazionalizzare le pagine che 
 			compongono l'applicazione. Attraverso un particolare metodo offerto
-			dalle API di Kendo è possibile selezionare un particolare paese in 
-			modo da adottare formato dei numeri, nomi dei mesi, formato 
-			di data e ora e altro conformemente agli standard locali.
+			dalle API è possibile selezionare un particolare paese in modo da
+			adottarne il formato di rappresentazione dei numeri, nomi dei mesi,  
+			di data e ora in maniera conforme agli standard locali.
 	
-			HTML5 ha introdotto gli attributi di validazione, questi particolari 
+			\html 5 ha introdotto gli attributi di validazione, questi particolari 
 			attributi hanno la capacità di forzare il browser ad avvisare
 			l'utente che un certo elemento di input contenuto in un form debba
-			essere compilato obbligatoriamente.	Kendo UI Validator offre un modo
+			essere compilato obbligatoriamente.	KendoUI Validator offre un modo
 			facile per gestire la validazione per gli elementi input di un form
 			permettendo di personalizzare la gestione della validazione, ad
 			esempio, accettando in input solo stringhe contenenti certe parole o
 			numeri compresi in un dato intervallo.
 			
-			Come in jQuery Mobile è possibile realizzare l'intera applicazione 
-			in una singola pagina HTML che, attraverso il widgets view, si è in 
-			grado di suddividere in più schermate. Ad ogni view può essere data
-			una particolare struttura, in particolare è possibile suddividerla
-			in un'intestazione e un corpo. La stessa struttura può essere
-			condivisa tra più views	permettendo di usare l'intestazione per
-			navigare tra le schermate in quei dispositivi (es. iPhone) dove non
-			esistono tasti fisici appositi. Tutto questo contribuisce ad
-			avvicinare l'esperienza utente a quella di una reale applicazione
-			nativa. I vantaggi di scrivere l'applicazione all'interno di una
-			sola pagina	HTML sono gli stessi discussi per jQuery Mobile 
+			Come in \jqm{} è possibile realizzare un'intera applicazione
+			composta da più schermate in una singola pagina \html{} attraverso l'uso
+			del widgets view. Avendo la completa applicazione all'interno di un
+			unico file si hanno ovvi vantaggi nella navigazione tra le sue schermate
+			come già descritto per \jqm{}
 			\hyperref[subsec:jQuery]{(vedi~\ref{subsec:jQuery})}.
+			Per accelerare ulteriormente il caricamento delle views, se queste
+			presentano la medesima struttura (per esempio sono composte da una
+			intestazione contente una barra di navigazione e da un corpo),
+			questa può essere definita in un particolare oggetto chiamato layout
+			condiviso tra più views.
 			
 		\subsection{PhoneJS}
 			PhoneJS è un framework per realizzare applicazioni mobili 
