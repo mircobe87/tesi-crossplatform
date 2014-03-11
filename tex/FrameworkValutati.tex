@@ -338,44 +338,94 @@
 				\label{fig:jquery}
 			\end{figure}
 	
-		\subsection{Kendo UI Mobile}
-			Kendo UI Mobile è un framework mobile completo che adatta
+		\subsection{KendoUI Mobile}
+			KendoUI Mobile è un framework mobile completo che adatta
 			automaticamente	l'aspetto dell'applicazione alla piattaforma sulla
 			quale è eseguita. Consiste di estensioni fondamentali per un
 			framework mobile come layouts, views, animazioni di transizione,
 			ecc. oltre ad un insieme di widgets per	l'interfaccia grafica che
 			includono bottoni, widgets per la navigazione, e altro. Non è però
 			solo per queste caratteristiche che viene definito un framework
-			completo, infatti Kendo UI Mobile offre anche: un solido componente
+			completo, infatti KendoUI Mobile offre anche: un solido componente
 			DataSource, strumenti di validazione, API per la globalizzazione e
-			un framework MVVM (Model View ViewModel). Come jQuery Mobile, Kendo
-			è basato sulla libreria jQuery.
+			un framework MVVM (Model View ViewModel). Come jQuery Mobile, KendoUI
+			Mobile è basato sulla libreria jQuery.
 			
-			Kendo UI Mobile in versione di prova è scaricabile dal sito 
+			KendoUI Mobile in versione di prova è scaricabile dal sito 
 			\url{http://www.telerik.com/download/kendo-ui-mobile}, quello che si 
 			ottiene è un pacchetto zip contenente tutti i file JavaScript e CSS 
 			necessari. La versione di prova	può essere usata per apprendere
-			l'uso del frameworck ma non può essere usata per scopi commerciali 
+			l'uso del framework ma non può essere usata per scopi commerciali 
 			quindi, a differenza di jQuery Mobile, è necessario	mettere in conto
 			la spesa di acquisto della licenza se si intende commercializzare
 			l'applicazione.	I file JavaScript e CSS scaricati devono essere
 			inseriti nel file HTML che costituisce l'applicazione esattamente
 			come è stato descritto per jQuery Mobile\footnote{Informazioni
-			aggiuntive per iniziare a lavorare con kendo UI Mobile si possono
-			trovare nel sito \url{http://docs.telerik.com/kendo-ui/getting-started/introduction}}.
+			aggiuntive per iniziare a lavorare con KendoUI Mobile si possono
+			trovare nel sito \url{http://docs.telerik.com/kendo-ui/getting-started/introduction}},
+			inoltre, è necessario aggiungere uno script di inizializzazione che
+			istruisce KendoUI Mobile su quale parte della pagina HTML contiene il
+			codice che implementa l'applicazione come mostrato nel frammento di
+			codice \ref{cod:kendoinit}.
+			\begin{lstlisting}[label={cod:kendoinit},caption={Esempio di inizializzazione di un'applicazione KendoUI Mobile}]
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="kendo.mobile.all.min.css" rel="stylesheet" />
+		<script src="jquery.min.js"></script>
+		<script src="kendo.mobile.min.js"></script>
+	</head>
+	<body>
+		<div data-role="view" data-title="Home"> ... </div>
+		<div data-role="view" data-title="Opzioni"> ... </div>
+		...
+		<script>
+			// Inizializza la nuova applicazione KendoUI Mobile
+			var app = new kendo.mobile.Application();
+		</script>
+	</body>
+</html>
+			\end{lstlisting} 
+			Anche KendoUI Mobile sfrutta gli attributi \verb|data-*| per
+			caratterizzare i vari tag HTML dando loro un particolare aspetto
+			grafico relativo al widget che si vuole definire; la stessa
+			operazione può essere fatta direttamente da codice JavaScript: nel
+			framework sono presenti le varie API per poter inizializzare ogni
+			widget su un particolare elemento HTML. Per esempio il frammento di
+			codice \ref{cod:htmlbutton} mostra come definire direttamente in
+			HTML un pulsante KendoUI Mobile mentre nel listato \ref{cod:jsbutton}
+			viene definito lo stesso widget ma tramite uno script JavaScript che
+			può essere anche inserito in un file separato.
+			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in HTML tramite attributo data-*.},label={cod:htmlbutton}]
+...
+<div id="foo" data-role="view">
+	...
+	<a data-role="button">Click Me</a>
+</div>
+			\end{lstlisting}
+			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in JavaScript tramite l'uso delle apposite API.},label={cod:jsbutton}]
+...
+<div id="foo" data-role="view">
+	...
+	<a id="btnClickMe">Click Me</a>
+</div>
+<script>
+	$("#btnClickMe").kendoMobileButton();
+</script>
+			\end{lstlisting}
 			
-			Il punto di forza di Kendo UI Mobile è la possibilità di creare
+			Il punto di forza di KendoUI Mobile è la possibilità di creare
 			applicazioni con aspetto nativo. Scrivendo codice una sola volta
 			sarà infatti il framework, all'avvio dell'applicazione, ad occuparsi
 			di identificare la piattaforma e a applicare il tema corretto. A
 			prescindere da questa funzionalità è comunque possibile forzare
 			l'utilizzo di uno stesso tema su piattaforme diverse. Attualmente
-			Kendo UI Mobile fornisce temi di aspetto nativo per le piattaforme
+			KendoUI Mobile fornisce temi di aspetto nativo per le piattaforme
 			Android, iOS, BlackBerry e Windows Phone 8 come mostrato in figura~
 			\ref{fig:kendoui} ma, se si ha la necessità, è disponibile uno
 			strumento online per la realizzazione dei propri temi
 			personalizzati.
-			\begin{figure}
+			\begin{figure}[h]
 				\centering
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{kendoui-and}
 				\includegraphics[keepaspectratio=true, width=0.32\textwidth]{kendoui-ios}
@@ -395,15 +445,15 @@
 			risultato desiderato è possibile esportare il tema in un file CSS da
 			utilizzare poi nella nostra app.
 			
-			Come precedentemente detto Kendo UI Mobile non offre solo elementi
+			Come precedentemente detto KendoUI Mobile non offre solo elementi
 			di personalizzazione per l'interfaccia grafica. Il componente
-			DataSource (Kendo UI DataSource) è un'astrazione per usare dati
+			DataSource (KendoUI DataSource) è un'astrazione per usare dati
 			locali (array di oggetti JavaScript) o remoti (XML, JSON, JSONP).
 			Esso supporta completamente il CRUD (Create, Read, Update, Destroy)
 			cioè fornisce la funzioni per creare, leggere, aggiornare e
 			distruggere dati e permette, sia alla parte locale che alla parte
 			server, di ordinare	impaginare, filtrare, raggruppare e aggregare
-			questi dati. Molti widgets di Kendo UI supportano il data binding,
+			questi dati. Molti widgets di KendoUI Mobile supportano il data binding,
 			cioè l'associazione dei dati agli elementi grafici; grazie a questo
 			è possibile ad esempio mostrare in una lista i dati letti da un
 			server o caricati localmente.
@@ -425,20 +475,20 @@
 			View, inoltre introduce il ViewModel, un terzo elemento che le mette 
 			in relazione, consentendo che le azioni e le modifiche fatte da
 			parte dell'utente sulla View si ripercuotano sul relativo Model e
-			viceversa. Strutturare un applicazione separandola in queste parti
-			si ottiene un codice più strutturato, più manutenibile nonché più
-			leggibile.
+			viceversa. Impostare un'applicazione individuando queste parti
+			porta alla scrittura di un codice più strutturato, più manutenibile
+			nonché più leggibile.
 			
-			Kendo fornisce un modo per internazionalizzare le pagine che 
+			KendoUI Mobile fornisce un modo per internazionalizzare le pagine che 
 			compongono l'applicazione. Attraverso un particolare metodo offerto
-			dalle API di Kendo è possibile selezionare un particolare paese in 
+			dalle API è possibile selezionare un particolare paese in 
 			modo da adottare formato dei numeri, nomi dei mesi, formato 
 			di data e ora e altro conformemente agli standard locali.
 	
 			HTML5 ha introdotto gli attributi di validazione, questi particolari 
 			attributi hanno la capacità di forzare il browser ad avvisare
 			l'utente che un certo elemento di input contenuto in un form debba
-			essere compilato obbligatoriamente.	Kendo UI Validator offre un modo
+			essere compilato obbligatoriamente.	KendoUI Validator offre un modo
 			facile per gestire la validazione per gli elementi input di un form
 			permettendo di personalizzare la gestione della validazione, ad
 			esempio, accettando in input solo stringhe contenenti certe parole o
