@@ -613,8 +613,142 @@
 	\section{Framework per Applicazioni Ibride}
 	\label{sec:frameworkhybrid}
 		\subsection{Phonegap}
-			Lo scopo di PhoneGap è di permettere alle applicazioni web di essere 
-			installate sui dispositivi come avviene per le applicazioni native. 
+			PhoneGap è un mobile development framework prodotto da Nitobi, e 
+			acquistato da Adobe System il 4 ottobre 2011.
+			Spesso ci si riferisce a PhoneGap col nome di Apache Cordova, ma è 
+			necessario fare una distinzione. 
+			Nel momento dell'acquisto della Nitobi da parte di Adobe, il codice 
+			di PhoneGap è stato donato all'Apache Software Foundation (ASF), 
+			questo per fare in modo che lo sviluppo del framework godesse di 
+			tutti i benefici derivanti dalla licenza open source.
+			Quello che avviene in sostanza è che sia le grandi compagnie, sia 
+			gli sviluppatori indipendenti contribuiscono a potenziare il codice 
+			di Apache Cordova che viene difatto usato come incubatrice per PhoneGap.
+			PhoneGap è diventato così una distribuzione di Apache Cordova\footnote{
+			L'ipotesi più accreditata sulla scelta del nome Cordova
+			è che quando il progetto PhoneGap è nato la Nitobi aveva gli uffici 
+			nella Cordova Street di Vancouver.}. All'inizio la differenza tra 
+			i due era solo nel nome, ma nel tempo PhoneGap ha reso disponibili 
+			strumenti addizionali per collegarsi ai servizi di Adobe, un esempio 
+			di questo sono i servizi PhoneGap Build e Adobe Shadow che verranno 
+			descritti successivamente. Apache Cordova è ottenibile dal sito 
+			\url{https://cordova.apache.org/}, mentre PhoneGap dal sito 
+			\url{http://phonegap.com/}. Dal punto di vista dello sviluppatore di 
+			applicazioni mobili usare Apache Cordova o PhoneGap differisce solo 
+			per l'integrazione dei suddetti servizi, per il resto non ci sono 
+			differenze.
+			
+			PhoneGap è principalmente un insieme di APIs che permettono ad uno 
+			sviluppatore di applicazioni mobili 
+			di accedere alle funzioni native come la fotocamera o l'accelerometro 
+			usando JavaScript. Combinato con un framework UI come quelli descritti 
+			nel paragrafo\hyperref[sec:frameworkwebapp]{~\ref{sec:frameworkwebapp}}
+			permette di realizzare applicazioni mobili che sono distribuibili
+			attraverso gli app store delle varie piattaforme sviluppando 
+			semplicemente con HTML, CSS e JavaScript.
+
+			Le APIs di PhoneGap sono consistenti tra le varie piattaforme mobili, 
+			l'applicazione può essere quindi portata su più dispositivi con 
+			sistemi operativi diversi attraverso piccoli accorgimenti.
+			Attualmente PhoneGap è disponibile per le seguenti piattaforme: 
+			Amazon-Fireos, Android, Blackberry10, iOS, Windows Phone 7, 
+			Windows Phone 8, Tizen, Ubuntu \hyperref[fig:platformsupport]{(Vedi 
+			Fig.~\ref{fig:platformsupport}).}
+			{\footnotesize
+				\begin{table}
+					\begin{tabularx}{\textwidth}{|l*{7}{|s}|}
+						\hline
+						  & Android & Black\-Berry10 & iOS & WP7/8 
+						& Tizen
+						\tabularnewline
+						\hline
+						Cordova CLI &\sprt{} Mac, Windows, Linux &
+						\sprt{} Mac, Windows & \sprt{} Mac & \sprt{} Windows & \notsprt{}
+						\tabularnewline
+						\hline
+						Embedded WebView & \sprt{} & \notsprt{} & \sprt{} &\notsprt{} 
+						& \notsprt{}
+						\tabularnewline
+						\hline
+						Plug-in Interface & \sprt{} & \sprt{} & \sprt{} & \sprt{} & 
+						\notsprt{}
+						\tabularnewline
+						\hline
+						Accelerometer & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Camera & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Capture & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \notsprt{}
+						\tabularnewline
+						\hline
+						Compass & \sprt{} & \sprt{} & \sprt{} (3GS+)& \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Connection & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Contacts & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \notsprt{}
+						\tabularnewline
+						\hline
+						Device & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Events & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						File & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \notsprt{}
+						\tabularnewline
+						\hline
+						Geolocation & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Globalization & \sprt{} & \notsprt{} & \sprt{} & \sprt{} & 
+						\notsprt{}
+						\tabularnewline
+						\hline
+						InAppBrowser & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \notsprt{}
+						\tabularnewline
+						\hline
+						Media & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline 
+						Notification & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \sprt{}
+						\tabularnewline
+						\hline
+						Splashcreen & \sprt{} & \sprt{} & \sprt{} & \sprt{} & \notsprt{}
+						\tabularnewline
+						\hline
+						Storage & \sprt{} & \sprt{} & \sprt{} & \sprt{} localStorage 
+						\& indexedDB & \notsprt{}
+						\tabularnewline
+						\hline
+					\end{tabularx}
+					\caption{Insieme degli strumenti e le 
+					APIs disponibili per alcune delle piattaforme supportate. 
+					La tabella completa è disponibile nella documentazione 
+					di PhoneGap alla pagina \url{http://docs.phonegap.com/en/3.3.0/guide_support_index.md.html\#Platform\%20Support}}
+					\label{fig:platformsupport}				
+				\end{table}
+			}
+			
+			Molti SDKs nativi forniscono un particolare elemento grafico chiamato 
+			"Web View", all'interno del quale è possibile caricare del contenuto 
+			HTML, CSS e JavaScript che viene interpretato come se fosse stato aperto in 
+			un Browser. 
+			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
+			in uno di questi Web View. L'applicazione nativa che crea il web view 
+			è in grado di (in maniera differente a seconda della piattaforma) 
+			comunicare in maniera asincrona col codice JavaScript eseguito nel 
+			web view. 
+			PhoneGap sfrutta questa funzionalità per creare API JavaScript 
+			che sono in grado di scambiare mesaggi asincroni col codice 
+			nativo da dentro la web view.  
+			Il modo in cui tutto questo è implementato è diverso a seconda della 
+			piattaforma, e non è scopo di questa relazione scenderne troppo nei 
+			dettagli, dettagli più significativi possono essere trovati su 
+			(mettere un link a dove sono spiegati).
 			Phonegap crea un'applicazione nativa consistente principalmente in 
 			una web view, e al suo interno ci racchiude l'applicazione web. Il pacchetto 
 			risultante è un file che può essere installato attraverso gli app stores
@@ -667,22 +801,7 @@
 			Come menzionato precedentemente, un'applicazione PhoneGap è un 
 			"contenitore nativo" di un'applicazione web. Proviamo a spiegarci 
 			meglio.
-			Molti SDKs nativi forniscono un particolare elemento grafico chiamato 
-			"Web View", all'interno del quale è possibile caricare del contenuto 
-			HTML, CSS e JavaScript che viene interpretato come se fosse stato aperto in 
-			un Browser. 
-			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
-			in uno di questi Web View. L'applicazione nativa che crea il web view 
-			è in grado di (in maniera differente a seconda della piattaforma) 
-			comunicare in maniera asincrona col codice JavaScript eseguito nel 
-			web view. 
-			PhoneGap sfrutta questa funzionalità per creare API JavaScript 
-			che sono in grado di scambiare mesaggi asincroni col codice 
-			nativo da dentro la web view.  
-			Il modo in cui tutto questo è implementato è diverso a seconda della 
-			piattaforma, e non è scopo di questa relazione scenderne troppo nei 
-			dettagli, dettagli più significativi possono essere trovati su 
-			(mettere un link a dove sono spiegati).
+			
 			
 			La principale forza di PhoneGap risiede nella sua semplicità. 
 			Il team di sviluppatori di PhoneGap ha intenzionalmente implementato 
