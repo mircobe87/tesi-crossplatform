@@ -63,6 +63,13 @@
 % per inserire codice sorgente
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Codice}% Listing -> Codice
+\lstdefinelanguage{mybash}{
+  language=bash,
+  sensitive=true,
+  otherkeywords={
+    sencha, phonegap, titanium, ti
+  }
+}
 % JavaScript
 \lstdefinelanguage{JavaScript}{
   morekeywords={
@@ -174,6 +181,8 @@
 \newcommand{\ajax}[0]{\mbox{AJAX}}
 \newcommand{\pg}[0]{\mbox{PhoneGap}}
 \newcommand{\pgb}[0]{\mbox{PhoneGap Build}}
+\newcommand{\senchat}[0]{Sencha Touch}
+\newcommand{\senchacmd}[0]{Sencha Cmd}
 
 % pacchetto per l'inclusione di immagini
 \usepackage{graphicx}
