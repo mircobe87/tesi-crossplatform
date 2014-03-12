@@ -177,6 +177,28 @@
 \usepackage{graphicx}
 \graphicspath{ {../graphics/} } % specifica dovre trovare le immagini
 
+% pacchetto per la creazione di tabelle
+\usepackage{tabularx}
+
+% pacchetto per caratteri speciali
+\usepackage{pifont}
+
+% pacchetto per colorare le celle delle tabelle
+\usepackage[table]{xcolor}
+
+% colori per le celle della tabella phonegap
+\definecolor{pggreen}{rgb}{0.564705882,0.93,0.564705882}
+\definecolor{pgpink}{rgb}{1,0.75,0.79}
+
+% stili per il contenuto delle celle della tabella phonegap
+\newcolumntype{s}{>{\centering}X}
+\def\tabularxcolumn#1{m{#1}}
+\setlength{\tabcolsep}{6.8pt}
+% colora la cella di una tabella di verde e vi inserisce il carattere speciale "v"
+\newcommand{\sprt}[0]{\cellcolor{pggreen}\ding{51}}
+% colora la cella di una tabella di rosa e vi inserisce il carattere speciale "x"
+\newcommand{\notsprt}[0]{\cellcolor{pgpink}\ding{55}}
+
 \begin{document}
 \onehalfspacing % imposta l'interlinea ad una riga e mezzo
 
