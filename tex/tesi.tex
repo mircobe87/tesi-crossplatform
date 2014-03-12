@@ -63,6 +63,13 @@
 % per inserire codice sorgente
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Codice}% Listing -> Codice
+\lstdefinelanguage{mybash}{
+  language=bash,
+  sensitive=true,
+  otherkeywords={
+    sencha, phonegap, titanium, ti
+  }
+}
 % JavaScript
 \lstdefinelanguage{JavaScript}{
   morekeywords={
@@ -168,10 +175,14 @@
 \newcommand{\css}[0]{\mbox{CSS}}
 \newcommand{\js}[0]{\mbox{JavaScript}}
 \newcommand{\jq}[0]{\mbox{jQuery}}
-\newcommand{\jqm}[0]{\mbox{jQuery Mobile}}
-\newcommand{\kendomob}[0]{\mbox{KendoUI Mobile}}
+\newcommand{\jqm}[0]{jQuery Mo\-bile}
+\newcommand{\kendomob}[0]{Kendo UI Mo\-bile}
 \newcommand{\phonejs}[0]{\mbox{PhoneJS}}
 \newcommand{\ajax}[0]{\mbox{AJAX}}
+\newcommand{\pg}[0]{\mbox{PhoneGap}}
+\newcommand{\pgb}[0]{\mbox{PhoneGap Build}}
+\newcommand{\senchat}[0]{Sencha Touch}
+\newcommand{\senchacmd}[0]{Sencha Cmd}
 
 % pacchetto per l'inclusione di immagini
 \usepackage{graphicx}

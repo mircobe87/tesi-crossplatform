@@ -401,7 +401,12 @@
 			istruisce \kendomob{} su quale parte della pagina \html{} contiene il
 			codice che implementa l'applicazione come mostrato nel frammento di
 			codice \ref{cod:kendoinit}.
-			\begin{lstlisting}[label={cod:kendoinit},caption={Esempio di inizializzazione di un'applicazione KendoUI Mobile}]
+			\begin{lstlisting}[
+				label={cod:kendoinit},
+				caption={
+					Esempio di inizializzazione di un'applicazione KendoUI Mobile
+				}
+			]
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -432,14 +437,26 @@
 			\html{} un pulsante \kendomob{} mentre nel listato \ref{cod:jsbutton}
 			viene definito lo stesso widget ma tramite uno script \js{} che
 			può essere anche inserito in un file separato.
-			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in HTML tramite attributo data-*.},label={cod:htmlbutton}]
+			\begin{lstlisting}[
+				label={cod:htmlbutton},
+				caption={
+					Definizione di un bottone KendoUI Mobile in HTML tramite
+					attributo {\texttt{data-*}}.
+				}
+			]
 	...
 	<div id="foo" data-role="view">
 		...
 		<a data-role="button">Click Me</a>
 	</div>
 			\end{lstlisting}
-			\begin{lstlisting}[caption={Definizione di un bottone KendoUI Mobile in JavaScript tramite l'uso delle apposite API.},label={cod:jsbutton}]
+			\begin{lstlisting}[
+				label={cod:jsbutton},
+				caption={
+					Definizione di un bottone KendoUI Mobile in JavaScript
+					tramite l'uso delle apposite API.
+				}
+			]
 	...
 	<div id="foo" data-role="view">
 		...
@@ -808,7 +825,100 @@
 			Descrizione Rho Mobile
 
 		\subsection{Sencha Touch}
-			Descrizione Sencha Touch
+			\senchat{} è un framework per lo sviluppo \crossplat{} di
+			applicazioni ad	alte performance che impiega le medesime tecnologie
+			della programmazione Web; le applicazioni prodotte sono
+			impacchettate in file installabili proprio come quelle native ma
+			sono implementate in codice \html{}5, \css{} e \js{}. Con \senchat{}
+			si possono produrre applicazione per dispositivi Android, iOS,
+			Windows Phone, Microsoft Surface Pro and RT e BlackBerry ma, essendo
+			basato sulle tecnologie web, possono essere realizzate applicazioni
+			riguardanti anche per questo settore.
+			
+			Il produttore distribuisce \senchat{} con due diverse licenze d'uso:
+			una per uso commerciale e l'altra per lo sviluppo i progetti open 
+			source. In quest'ultimo caso è possibile scaricare il pacchetto
+			software senza spese\footnote{Il download in licenza open source è
+			disponibile all'indirizzo \url{http://www.sencha.com/products/touch/download/}.}
+			ottenendo così il framework completo.
+			
+			Oltre al framework, il produttore fornisce \senchacmd{}\footnote{
+			Questo strumento è scaricabile gratuitamente indipendentemente dalla
+			licenza d'uso di \senchat{}. Il pacchetto d'installazione è
+			disponibile all'indirizzo \url{http://www.sencha.com/products/sencha-cmd/download}},
+			un'interfaccia utente a linea di comando indispensabile per la
+			creazione, la configurazione e l'impacchettamento delle applicazioni.
+			Tale strumento è disponibile per piattaforme Windows, Mac OS X, e Linux;
+			una volta installato il nuovo comando \verb|sencha| sarà disponibile
+			dalla linea di comando.
+			
+			Di seguito elenchiamo il principale contenuto della cartella di un
+			progetto creato attraverso \senchacmd{}:
+			\begin{description}
+				\item[app/]\hfill \\
+					La cartella contenente i models, le views, i controllers e
+					gli stores dell'applicazione. Ognuno di questi elementi sono
+					definiti in file \js{} separati e suddivisi in specifiche
+					sottocartelle.
+				\item[app.js]\hfill \\
+					File \js{} principale;i l codice al	suo interno definisce
+					l'applicazione indicando il suo nome, le icone utilizzate,
+					il codice da eseguire all'avvio e altri	dettagli. 
+				\item[app.json]\hfill \\
+					Il file di configurazione dell'applicazione.
+				\item[index.html]\hfill \\
+					Il file \html{} dell'applicazione
+				\item[packager.json]\hfill \\
+					File di configurazione utilizzato da \senchacmd{} per creare
+					i pacchetti nativi dell'applicazione.
+				\item[resurces/]\hfill \\
+					La cartella contenente i file \css{} e le immagini utilizzati
+					dall'applicazione.
+			\end{description}
+			Si parla di models, views e controllers perché \senchat{} segue
+			il modello MVC stendendolo con altre componenti traendone tutti i
+			relativi vantaggi. Quindi, come mostrato in figura \ref{fig:sencha_mvc},
+			un applicazione sarà un insieme di:
+			\begin{description}
+				\item[Models]\hfill \\
+					rappresenta un tipo di dato nell'applicazione, per esempio un
+					applicazione di e-commerce avrà modelli per utenti, prodotti
+					e ordinazioni.
+				\item[Views]\hfill \\
+					sono responsabili della visualizzazione dei dati da parte
+					degli utenti sfruttando le componenti di \senchat{}.
+				\item[Controllers]\hfill \\
+					gestiscono le interazioni con l'applicazione ascoltando le
+					azioni intraprese dall'utente, come tocchi e swipe, ed eseguendo
+					il giusto codice.
+				\item[Stores]\hfill \\
+					sono responsabili del caricamento dei dati all'interno
+					dell'applicazione alimentando componenti come List e DataView.
+				\item[Profiles]\hfill \\
+					permettono di personalizzare facilmente l'interfaccia grafica
+					dell'applicazione per telefoni e tablet condividendo il più
+					codice possibile.
+			\end{description}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=\textwidth]{sencha-mvc}
+				\caption{
+					Un applicazione \senchat{} è composta da Models, Views,
+					Controllers, Stores e Profiles
+				}
+				\label{fig:sencha_mvc}
+			\end{figure}
+			Come tutte le applicazioni ibride, anche quelle realizzate con
+			\senchat{} hanno la possibilità di accedere a funzionalità proprie
+			dei dispositivi come utilizzare la fotocamera, ottenere la posizione
+			dal GPS, avere accesso al file sys\-tem tramite le opportune API
+			fornite del framework.
+			
+			A questo punto vale la pena spendere qualche parola in più per
+			chiarire alcuni dettagli sul sistema di impacchettamento delle
+			applicazioni. \senchat{}, senza altri software agg
+			
+			
 	
 	\section{Conclusioni}
 		Per questo motivo e quello... abbiamo scelto di realizzare una app di 
