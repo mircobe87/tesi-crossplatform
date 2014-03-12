@@ -717,7 +717,7 @@
 			riguardanti anche per questo settore.
 			
 			Il produttore distribuisce \senchat{} con due diverse licenze d'uso:
-			una per uso commerciale e l'altra per lo sviluppo i progetti open 
+			una per uso commerciale e l'altra per lo sviluppo di progetti open 
 			source. In quest'ultimo caso è possibile scaricare il pacchetto
 			software senza spese\footnote{Il download in licenza open source è
 			disponibile all'indirizzo \url{http://www.sencha.com/products/touch/download/}.}
@@ -730,10 +730,16 @@
 			un'interfaccia utente a linea di comando indispensabile per la
 			creazione, la configurazione e l'impacchettamento delle applicazioni.
 			Tale strumento è disponibile per piattaforme Windows, Mac OS X, e Linux;
-			una volta installato il nuovo comando \verb|sencha| sarà disponibile
-			dalla linea di comando.
-			
-			Di seguito elenchiamo il principale contenuto della cartella di un
+			una volta installato con il semplice comando \ref{cod:appsencha}
+			si crea una nuova applicazione di nome ``MyApp'' nella cartella ``./MyAppDir''.
+			\begin{lstlisting}[
+				label={cod:appsencha},
+				caption={Comando Bash per creare lo scheletro di un'applicazione Sencha Touch per Android.},
+				language=MyBash
+			]
+	sencha generate app MyApp ./MyApp
+			\end{lstlisting}
+			Di seguito elenchiamo il principale contenuto della cartella del
 			progetto creato attraverso \senchacmd{}:
 			\begin{description}
 				\item[app/]\hfill \\
@@ -742,7 +748,7 @@
 					definiti in file \js{} separati e suddivisi in specifiche
 					sottocartelle.
 				\item[app.js]\hfill \\
-					File \js{} principale;i l codice al	suo interno definisce
+					File \js{} principale; il codice al suo interno definisce
 					l'applicazione indicando il suo nome, le icone utilizzate,
 					il codice da eseguire all'avvio e altri	dettagli. 
 				\item[app.json]\hfill \\
@@ -756,8 +762,19 @@
 					La cartella contenente i file \css{} e le immagini utilizzati
 					dall'applicazione.
 			\end{description}
-			Si parla di models, views e controllers perché \senchat{} segue
-			il modello MVC stendendolo con altre componenti traendone tutti i
+			A questo punto, una volta modificato il file \verb|packager.json| con
+			le proprio preferenze è sufficiente dare il comando \ref{cod:buildsencha}
+			per creare il pacchetto per la piattaforma desiderata.
+			\begin{lstlisting}[
+				label={cod:buildsencha},
+				caption={Crea il pacchetto installabile per la piattaforma specificata nel file \texttt{packager.json}.},
+				language=MyBash
+			]
+	sencha app package build packager.json
+			\end{lstlisting}
+			
+			Dalla struttura delle cartelle del progetto si evince che \senchat{} segue
+			il modello MVC estendendolo con altre componenti traendone tutti i
 			relativi vantaggi. Quindi, come mostrato in figura \ref{fig:sencha_mvc},
 			un applicazione sarà un insieme di:
 			\begin{description}
@@ -789,15 +806,33 @@
 				}
 				\label{fig:sencha_mvc}
 			\end{figure}
+			
 			Come tutte le applicazioni ibride, anche quelle realizzate con
 			\senchat{} hanno la possibilità di accedere a funzionalità proprie
 			dei dispositivi come utilizzare la fotocamera, ottenere la posizione
 			dal GPS, avere accesso al file sys\-tem tramite le opportune API
-			fornite del framework.
-			
-			A questo punto vale la pena spendere qualche parola in più per
-			chiarire alcuni dettagli sul sistema di impacchettamento delle
-			applicazioni. \senchat{}, senza altri software agg
+			della famiglia \verb|Ext.device.*|. A questo punto vale la pena
+			spendere qualche parola in più per chiarire alcuni dettagli sul
+			sistema di impacchettamento delle applicazioni. Per poter compilare
+			l'applicazione in un pacchetto nativo installabile è necessario
+			avere a disposizione gli SDK relativi alle piattaforme di destinazione.
+			\senchacmd{}, una volta configurato, è in grado di creare pacchetti
+			solo per piattaforme Android e iOS, ma dalla versione 2.3 è stato
+			inserito il supporto per lavorare insieme a \pg{} e Cordova così da
+			riuscire a supportare anche Windows Phone e BlackBerry. Un aspetto
+			importante da sottolineare è che se si decide di lavorare con uno
+			qualunque di questi framework, l'uso delle API \verb|Ext.device.*| per
+			l'accesso al dispositivo rimane ancora valido; sarà \senchacmd{} che
+			durante il processo di compilazione si occuperà di utilizzare le
+			relative API Cordova o \pg{} necessarie. Un altro aspetto da
+			tenere in considerazione è il fatto che se si utilizza Cordova è
+			ancora necessario lavorare insieme agli SDK di Windows Phone e BlackBerry
+			che devo essere presenti in locale; se invece si utilizza \pg{} è
+			possibile ovviare a questo inconveniente utilizzando il suo servizio
+			di compilazione online \pgb{}. Qualunque soluzione si scelga di
+			adottare, dopo aver create un progetto, è sufficiente utilizzare
+			ancora \senchacmd{} per abilitare il supporto di Cordova o \pg{} e,
+			fatto questo, i comandi per la compilazione rimarranno gli stessi.
 			
 			
 	
