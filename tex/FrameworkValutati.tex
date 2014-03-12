@@ -756,22 +756,39 @@
 					La cartella contenente i file \css{} e le immagini utilizzati
 					dall'applicazione.
 			\end{description}
-			Si parla di models, views e controllers perchè \senchat{} segue
-			il modello MVC e stendendolo con altre componenti traendone tutti i
-			relativi vantaggi. Quindi un applicazione sarà un insieme di:
+			Si parla di models, views e controllers perché \senchat{} segue
+			il modello MVC stendendolo con altre componenti traendone tutti i
+			relativi vantaggi. Quindi, come mostrato in figura \ref{fig:sencha_mvc},
+			un applicazione sarà un insieme di:
 			\begin{description}
 				\item[Models]\hfill \\
-					
+					rappresenta un tipo di dato nell'applicazione, per esempio un
+					applicazione di e-commerce avrà modelli per utenti, prodotti
+					e ordinazioni.
 				\item[Views]\hfill \\
-					
+					sono responsabili della visualizzazione dei dati da parte
+					degli utenti sfruttando le componenti di \senchat{}.
 				\item[Controllers]\hfill \\
-					
+					gestiscono le interazioni con l'applicazione ascoltando le
+					azioni intraprese dall'utente, come tocchi e swipe, ed eseguendo
+					il giusto codice.
 				\item[Stores]\hfill \\
-					
+					sono responsabili del caricamento dei dati all'interno
+					dell'applicazione alimentando componenti come List e DataView.
 				\item[Profiles]\hfill \\
-					
-			\end{}
-			
+					permettono di personalizzare facilmente l'interfaccia grafica
+					dell'applicazione per telefoni e tablet condividendo il più
+					codice possibile.
+			\end{description}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=\textwidth]{sencha-mvc}
+				\caption{
+					Un applicazione \senchat{} è composta da Models, Views,
+					Controllers, Stores e Profiles
+				}
+				\label{fig:sencha_mvc}
+			\end{figure}
 			Come tutte le applicazioni ibride, anche quelle realizzate con
 			\senchat{} hanno la possibilità di accedere a funzionalità proprie
 			dei dispositivi come utilizzare la fotocamera, ottenere la posizione
