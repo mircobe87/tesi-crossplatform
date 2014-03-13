@@ -638,6 +638,8 @@
 			per l'integrazione dei suddetti servizi, per il resto non ci sono 
 			differenze.
 			
+			%descrivere che phonegap ha un CLI con vari comandi per creare e compilare l'applicazione
+			
 			PhoneGap è principalmente un insieme di APIs che permettono ad uno 
 			sviluppatore di applicazioni mobili 
 			di accedere alle funzioni native come la fotocamera o l'accelerometro 
@@ -645,7 +647,7 @@
 			nel paragrafo\hyperref[sec:frameworkwebapp]{~\ref{sec:frameworkwebapp}}
 			permette di realizzare applicazioni mobili che sono distribuibili
 			attraverso gli app store delle varie piattaforme sviluppando 
-			semplicemente con HTML, CSS e JavaScript.
+			semplicemente con HTML5, CSS3 e JavaScript.
 
 			Le APIs di PhoneGap sono consistenti tra le varie piattaforme mobili, 
 			l'applicazione può essere quindi portata su più dispositivi con 
@@ -733,51 +735,55 @@
 				\end{table}
 			}
 			
-			Molti SDKs nativi forniscono un particolare elemento grafico chiamato 
-			"Web View", all'interno del quale è possibile caricare del contenuto 
-			HTML, CSS e JavaScript che viene interpretato come se fosse stato aperto in 
-			un Browser. 
+			Molti SDKs nativi forniscono una particolare componente chiamata 
+			"Web View", all'interno della quale è possibile caricare del contenuto 
+			web che viene interpretato come se fosse stato aperto in 
+			un Browser.
 			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
-			in uno di questi Web View. L'applicazione nativa che crea il web view 
-			è in grado di (in maniera differente a seconda della piattaforma) 
-			comunicare in maniera asincrona col codice JavaScript eseguito nel 
-			web view. 
-			PhoneGap sfrutta questa funzionalità per creare API JavaScript 
-			che sono in grado di scambiare mesaggi asincroni col codice 
-			nativo da dentro la web view.  
-			Il modo in cui tutto questo è implementato è diverso a seconda della 
-			piattaforma, e non è scopo di questa relazione scenderne troppo nei 
-			dettagli, dettagli più significativi possono essere trovati su 
-			(mettere un link a dove sono spiegati).
-			Phonegap crea un'applicazione nativa consistente principalmente in 
-			una web view, e al suo interno ci racchiude l'applicazione web. Il pacchetto 
-			risultante è un file che può essere installato attraverso gli app stores
-			proprio come le applicazioni native.
-			Addizionalmente, PhoneGap fornisce un insieme di API che comunemente non 
-			sono disponibili alle applicazioni web, come: accesso alla fotocamera, 
-			ai contatti e ai sensori.
+			in una di queste Web View, all'interno della quale è possibile
+			usare (differentemente a seconda della piattaforma) 
+			codice JavaScript per eseguire codice nativo.
+			Ad esempio su Android la Web View è realizzata con una classe Java 
+			che fornisce il metodo
+	\begin{lstlisting}[language=Java]
+	addJavascriptInterface(Object object, String name)
+	\end{lstlisting}
+			per permettere 
+			l'accesso ai metodi Java del parametro object attraverso JavaScript.
+			Questo viene fatto con l'uso del metodo
+	\begin{lstlisting}[language=Java]
+	loadUrl(String javascriptCode)
+	\end{lstlisting}			
+			dove la stringa javascriptCode deve essere del tipo 
+			``javascript: codice javascript da eseguire''.
+						
+			PhoneGap sfrutta questa funzionalità per creare le API JavaScript 
+			che sono in grado di accedere alle funzionalità native del dispositivo. 
 			
-			Per sviluppare le applicazioni con PhoneGap, gli sviluppatori devono 
-			creare un'applicazione web, questo può essere fatto usando i framework 
-			descritti sopra.  
+			%integrarci il discorso dei plugin
+			Il processo di compilazione di Phonegap crea un'applicazione nativa 
+			consistente principalmente in una Web View estesa con le API JavaScript 
+			per l'accesso al dispositivo, e al suo interno ci racchiude 
+			l'applicazione web. Il pacchetto 
+			risultante è un file che può essere installato attraverso gli stores
+			delle varie priattaforme.
 			
-			Per eseguire un'applicazione su un emulatore (simulatore per iOS), 
-			lo sviluppatore deve generare il pacchetto per ogni piattaforma che 
-			vuole supportare utilizzando gli SDK opportuni.
+			Per creare il pacchetto nativo PhoneGap usa gli strumenti di compilazione 
+			degli SDKs nativi, è quindi necessario avere installato e configurato, 
+			sulla macchina 
+			usata per lo sviluppo, i Software Development Kits delle piattaforme 
+			di destinazione dell'applicazione.
 			
-			Per alleviare la necessità di dover installare localmente 
-			tutti gli SDKs nativi 
-			per le piattaforme per cui si intende sviluppare, Nitobi (recentemente 
-			aquistata da Adobe) ha creato un servizio chiamato PhoneGap Build. 
-			Inviando i sorgenti HTML, CSS e JavaScript al servizio, attraverso un 
-			pacchetto .zip o attraverso il repository GitHub, è possibile ottenere 
-			l'applicazione installabile sulle varie piattaforme.
-			L'attuale versione di PhoneGap Build è la 3.1.0 ed è in grado di compilare 
+			Per superare questa necessità Adobe ha creato un servizio chiamato 
+			PhoneGap Build. 
+			Inviando i sorgenti HTML5, CSS3 e JavaScript al servizio, attraverso un 
+			pacchetto .zip o attraverso il repository GitHub, il processo di 
+			compilazione sarà eseguito direttamente da PhoneGap Build, permettendo 
+			poi di scaricare l'applicazione installabile sulle varie piattaforme.
+			L'attuale versione di PhoneGap Build è la 3.3.0 ed è in grado di compilare 
 			applicazioni per iOS, Android e WindowsPhone 8. Per iOS serve comunque 
 			essere registrati tra gli sviluppatori Apple questo consentirà di 
-			testare le app su iPhone e iPad. Per essere uno sviluppatore 
-			registrato Apple, occorre pagare una tassa di iscrizione annuale 
-			pari a 79 euro.
+			testare le app su iPhone e iPad. 
 			Oltre alla possibilità di fare compilazione PhoneGap Build fornisce 
 			il cosiddetto Hydration, un'opzione di compilazione che se abilitata 
 			permette di testare le modifiche fatte all'applicazione senza doverla 
@@ -788,20 +794,15 @@
 			 
 			Il processo di sviluppo con PhoneGap Build da una parte permette di 
 			poter iniziare a realizzare l'applicazione senza perder tempo a 
-			installare e configurare tutti gli SDK nativi, ma allo stesso tempo 
+			installare e configurare tutti gli SDKs nativi, ma allo stesso tempo 
 			abbiamo notato che il servizio è molto lento, sia per il tempo speso  
 			ad inviare il codice sorgente e a scaricare il pacchetto, sia perchè 
 			il processo 
 			di build non sembra essere molto performante e spesso il sito mostra 
 			dei disservizi. Inoltre bisogna tener conto che non tutti i plugin 
-			esistenti per PhoneGap/Cordova sono utilizzabili con il servizio 
+			esistenti per PhoneGap sono utilizzabili con il servizio 
 			PhoneGap Build, anche se la possibilità di aggiungere plugin di terze 
 			parti sta facendo crescere il numero di quelli disponibili.
-			
-			Come menzionato precedentemente, un'applicazione PhoneGap è un 
-			"contenitore nativo" di un'applicazione web. Proviamo a spiegarci 
-			meglio.
-			
 			
 			La principale forza di PhoneGap risiede nella sua semplicità. 
 			Il team di sviluppatori di PhoneGap ha intenzionalmente implementato 
