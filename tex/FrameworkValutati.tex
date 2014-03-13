@@ -849,11 +849,12 @@
 			un'interfaccia utente a linea di comando indispensabile per la
 			creazione, la configurazione e l'impacchettamento delle applicazioni.
 			Tale strumento è disponibile per piattaforme Windows, Mac OS X, e Linux;
-			una volta installato con il semplice comando \ref{cod:appsencha}
-			si crea una nuova applicazione di nome ``MyApp'' nella cartella ``./MyAppDir''.
+			una volta installato, con il semplice comando \ref{cod:appsencha} è
+			possibile creare, per esempio, una nuova applicazione di nome
+			``MyApp'' nella cartella ``./MyAppDir''.
 			\begin{lstlisting}[
 				label={cod:appsencha},
-				caption={Comando Bash per creare lo scheletro di un'applicazione Sencha Touch per Android.},
+				caption={Comando Bash per creare lo scheletro di un'applicazione Sencha Touch.},
 				language=MyBash
 			]
 	sencha generate app MyApp ./MyApp
@@ -882,7 +883,7 @@
 					dall'applicazione.
 			\end{description}
 			A questo punto, una volta modificato il file \verb|packager.json| con
-			le proprio preferenze è sufficiente dare il comando \ref{cod:buildsencha}
+			le proprie preferenze è sufficiente dare il comando \ref{cod:buildsencha}
 			per creare il pacchetto per la piattaforma desiderata.
 			\begin{lstlisting}[
 				label={cod:buildsencha},
@@ -892,10 +893,12 @@
 	sencha app package build packager.json
 			\end{lstlisting}
 			
-			Dalla struttura delle cartelle del progetto si evince che \senchat{} segue
-			il modello MVC estendendolo con altre componenti traendone tutti i
-			relativi vantaggi. Quindi, come mostrato in figura \ref{fig:sencha_mvc},
-			un applicazione sarà un insieme di:
+			Dalla struttura delle cartelle del progetto si evince che \senchat{} adotta
+			l'architettura MVC nelle proprie applicazioni estesa con nuove componenti;
+			questo approccio rende il codice più chiaro, testabile, facile da mantenere.
+			Come mostrato in figura	\ref{fig:sencha_mvc}, un applicazione è
+			composta dunque da nuovi elementi introdotti in \senchat{} e da
+			classici dell'architettura MVC:
 			\begin{description}
 				\item[Models]\hfill \\
 					rappresenta un tipo di dato nell'applicazione, per esempio un
@@ -928,8 +931,8 @@
 			
 			Come tutte le applicazioni ibride, anche quelle realizzate con
 			\senchat{} hanno la possibilità di accedere a funzionalità proprie
-			dei dispositivi come utilizzare la fotocamera, ottenere la posizione
-			dal GPS, avere accesso al file sys\-tem tramite le opportune API
+			dei dispositivi (come utilizzare la fotocamera, ottenere la posizione
+			dal GPS e avere accesso al file sys\-tem) tramite le opportune API
 			della famiglia \verb|Ext.device.*|. A questo punto vale la pena
 			spendere qualche parola in più per chiarire alcuni dettagli sul
 			sistema di impacchettamento delle applicazioni. Per poter compilare
@@ -952,6 +955,16 @@
 			adottare, dopo aver create un progetto, è sufficiente utilizzare
 			ancora \senchacmd{} per abilitare il supporto di Cordova o \pg{} e,
 			fatto questo, i comandi per la compilazione rimarranno gli stessi.
+			
+			\senchat{}, a differenza di altri della sua categoria, non è un
+			framework che offre	solo la propria shell nativa per creare
+			applicazioni ibride: tra le	proprie APIs sono disponibili numerosi
+			widgets per creare una consistente interfaccia grafica così da non
+			dover ricorrere a framework aggiuntivi come nel caso di \pg{} e \rhom{}.
+			Sono anche forniti numerosi temi con aspetto nativo per le piattaforme
+			che supporta e all'interno del file di configurazione
+			dell'applicazione \verb|app.json| è possibile specificare quale tema
+			caricare a seconda della piattaforma rilevata in fase di caricamento.
 			
 			
 	
