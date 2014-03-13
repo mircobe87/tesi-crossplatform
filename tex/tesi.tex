@@ -64,6 +64,15 @@
 % per inserire codice sorgente
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Codice}% Listing -> Codice
+%Java personalizzato
+\lstdefinelanguage{MyJava}{
+  language=Java,
+  sensitive=true,
+  otherkeywords={
+    Object, String
+  }
+}
+%Bash esteso con i comandi per sencha, phonegap e titanium
 \lstdefinelanguage{MyBash}{
   language=bash,
   sensitive=true,

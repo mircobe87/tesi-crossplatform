@@ -655,7 +655,7 @@
 			Attualmente PhoneGap è disponibile per le seguenti piattaforme: 
 			Amazon-Fireos, Android, Blackberry10, iOS, Windows Phone 7, 
 			Windows Phone 8, Tizen, Ubuntu \hyperref[fig:platformsupport]{(Vedi 
-			Fig.~\ref{fig:platformsupport}).}
+			tab.~\ref{fig:platformsupport}).}
 			{\footnotesize
 				\begin{table}
 					\begin{tabularx}{\textwidth}{|l*{7}{|s}|}
@@ -745,7 +745,7 @@
 			codice JavaScript per eseguire codice nativo.
 			Ad esempio su Android la Web View è realizzata con una classe Java 
 			che fornisce il metodo
-	\begin{lstlisting}[language=Java]
+	\begin{lstlisting}[language=MyJava]
 	addJavascriptInterface(Object object, String name)
 	\end{lstlisting}
 			per permettere 
@@ -954,7 +954,7 @@
 			che devo essere presenti in locale; se invece si utilizza \pg{} è
 			possibile ovviare a questo inconveniente utilizzando il suo servizio
 			di compilazione online \pgb{}. Qualunque soluzione si scelga di
-			adottare, dopo aver create un progetto, è sufficiente utilizzare
+			adottare, dopo aver creato un progetto, è sufficiente utilizzare
 			ancora \senchacmd{} per abilitare il supporto di Cordova o \pg{} e,
 			fatto questo, i comandi per la compilazione rimarranno gli stessi.
 			
@@ -966,9 +966,9 @@
 			framework aggiuntivi come nel caso di \pg{} e \rhom{}. Sono anche
 			forniti numerosi temi con aspetto nativo per le piattaforme che
 			supporta, e all'interno del file di configurazione dell'applicazione
-			\verb|app.json| è possibile specificare quale tema caricare a
+			\verb|app.json| è possibile specificare quale tema utilizzare a
 			seconda della piattaforma rilevata in fase di caricamento.
-			\begin{figure}
+			\begin{figure}[h]
 				\centering
 				\includegraphics[keepaspectratio=true, width=0.45\textwidth]{sencha-ui-1}
 				\includegraphics[keepaspectratio=true, width=0.45\textwidth]{sencha-ui-2}
