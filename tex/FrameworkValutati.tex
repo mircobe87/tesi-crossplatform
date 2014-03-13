@@ -741,7 +741,7 @@
 			un Browser.
 			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
 			in una di queste Web View, all'interno della quale è possibile
-			usare (differentemente a seconda della piattaforma) 
+			usare (in modo diverso a seconda della piattaforma) 
 			codice JavaScript per eseguire codice nativo.
 			Ad esempio su Android la Web View è realizzata con una classe Java 
 			che fornisce il metodo
@@ -750,21 +750,25 @@
 	\end{lstlisting}
 			per permettere 
 			l'accesso ai metodi Java del parametro object attraverso JavaScript.
-			Questo viene fatto con l'uso del metodo
-	\begin{lstlisting}[language=Java]
-	loadUrl(String javascriptCode)
-	\end{lstlisting}			
-			dove la stringa javascriptCode deve essere del tipo 
-			``javascript: codice javascript da eseguire''.
 						
-			PhoneGap sfrutta questa funzionalità per creare le API JavaScript 
-			che sono in grado di accedere alle funzionalità native del dispositivo. 
-			
-			%integrarci il discorso dei plugin
+			PhoneGap sfrutta tutto ciò per creare una particolare 
+			Web View estesa con un livello che funge da ponte
+			tra codice JavaScript e codice nativo, è quindi possibile esporre 
+			agli sviluppatori dell'applicazione mobile un'interfaccia JavaScript 
+			che sfruttando il ponte sia in grado di invocare codice nativo.
+			Questo sistema rende la piattaforma PhoneGap estendibile tramite i cosidetti
+			plugins, cioè pacchetti creati per accedere al dispositivo e a quelle 
+			funzionalità che normalmente non sono disponibili per le applicazioni 
+			web. Un plugin è composto da un'interfaccia JavaScript che 
+			verrà usata per tutte le piattaforme, e da un'implementazione 
+			in codice nativo (ovviamente diversa per ogni piattaforma)
+			della funzionalità offerta.
+			E' importante notare che tutte le principali API di PhoneGap sono 
+			implementate come plugins.
+
 			Il processo di compilazione di Phonegap crea un'applicazione nativa 
-			consistente principalmente in una Web View estesa con le API JavaScript 
-			per l'accesso al dispositivo, e al suo interno ci racchiude 
-			l'applicazione web. Il pacchetto 
+			consistente principalmente in una Web View estesa con le API JavaScript. 
+			Il pacchetto 
 			risultante è un file che può essere installato attraverso gli stores
 			delle varie priattaforme.
 			
@@ -810,9 +814,6 @@
 			è facile per PhoneGap supportare molte piattaforme. Potenzialmente 
 			una qualsiasi piattaforma che offre una web view può essere supportata 
 			da PhoneGap.
-			Inoltre le API di PhoneGap possono essere estese con dei plug-in, cioè 
-			è possibile implementare personalmente l'accesso a particolare API native.
-			(citazione di qualche plugin)
 			
 			La qualità dell'intefaccia untente in un'applicazione PhoneGap 
 			varia in base al framework usato per realizzare la web app, e al 
