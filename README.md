@@ -43,13 +43,26 @@ Eseguire il comando
 per avviare il processo di compilazione. Se tutto ha successo,
 si troverà nella root del repo git il file `tesi.pdf`.
 
-### Ripulire la cartella dei sorgenti
+### Ripulire l'ambiente
+Usando questi comandi non viene eseguito nessun processo di compilazione ma
+vengono solo eliminati i file indesiderati.
+
+#### Ripulire la cartella dei sorgenti
 Il processo di compilazione genera un sacco di file intermedi
 nella cartella `./tex/`, se si desidera questi file possono essere rimossi con il comando
 
-`./maketesi -c`
+`./maketesi -c-tex`
 
-**nota** che in questo modo non viene eseguito nessun processo di compilazione ma viene solo ripulita la cartella dei sorgenti.
+#### Ripulire la cartella delle grafiche
+Durante la compilazione i file `.epf` vengono convertiti in `.pdf`, è possibile
+rimuovere questi file superflui con il comando
+
+`./maketesi -c-gfx`
+
+#### Ripulire la cartella dei sorgenti e delle grafiche
+E' possibile ripulire entrambe le cartelle con il comando
+
+`./maketesi -c`
 
 ## Contribuire
 Sarebbe opportuno mantenere ogni capito della relazione in un file `.tex` separato incluso poi nel file principale tramite il comando `/include{...}`.

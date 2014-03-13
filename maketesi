@@ -1,22 +1,45 @@
 #!/bin/bash
 
-function clearEnv(){
-	echo "Pulizia ambiente di compilazione"
+function clearTex(){
+	echo "Ripulisco \"tex/\" ..."
+	cd tex
 	rm *~ *.aux *.dvi *.log *.pdf *.bbl *.blg *.toc *.out tesi-frn.tex
-	rm ../graphics/*-converted-to.pdf
+	cd ..
+	echo "Fatto"
+}
+
+function clearGfx(){
+	echo "Ripulisco \"graphics\" ..."
+	cd graphics
+	rm *-converted-to.pdf
+	cd ..
+	echo "Fatto"
+}
+
+function clearAll(){
+	echo "Pulizie di primavera in corso ..."
+	clearTex
+	clearGfx
+	echo "Ok, godiamoci il tepore primaverile"
 }
 
 src_dir=tex/
 name='tesi'
 
-cd tex
-
 if [ "$1" = "-c" ]; then
-	clearEnv
+	clearAll
+	exit 0
+elif [ "$1" = "-c-tex" ]; then
+	clearTex
+	exit 0
+elif [ "$1" = "-c-gfx" ]; then
+	clearGfx
 	exit 0
 fi
 
-clearEnv
+clearTex
+
+cd tex
 
 latex -shell-escape "$name.tex"
 bibtex "$name"
@@ -29,3 +52,4 @@ pdflatex -shell-escape "$name.tex"
 mv "$name.pdf" ../
 
 exit 0
+
