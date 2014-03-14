@@ -102,6 +102,19 @@
   alsoletter={:},
   alsodigit={-}
 }
+
+% XML
+\lstdefinelanguage{XML}{
+	language=xml,
+	sensitive=true,
+	alsoletter={<>=-},
+	keywords={
+	% General
+	/>, >,
+	% Standard tags
+	<, gap:plugin
+	},
+}
 \lstdefinelanguage{HTML5}{
   language=html,
   sensitive=true,	
