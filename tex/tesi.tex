@@ -57,6 +57,7 @@
 \definecolor{purple}{rgb}{0.38,0.18,0.81}
 \definecolor{lightblue}{rgb}{0.1,0.57,0.7}
 \definecolor{lightred}{rgb}{1,0.4,0.5}
+\definecolor{bordeaux}{rgb}{0.7,0.1,0.4}
 
 % Show "realistic" quotes in verbatim
 \usepackage{upquote}
@@ -65,12 +66,20 @@
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Codice}% Listing -> Codice
 %Java personalizzato
+\lstdefinestyle{MyJavaStyle}{
+	keywordstyle=\color{bordeaux}\bfseries,
+  	ndkeywordstyle=\color{blue}\bfseries
+}
 \lstdefinelanguage{MyJava}{
   language=Java,
   sensitive=true,
   otherkeywords={
     Object, String
-  }
+  },
+  ndkeywords={
+    addJavascriptInterface
+  },
+  style={MyJavaStyle}
 }
 %Bash esteso con i comandi per sencha, phonegap e titanium
 \lstdefinelanguage{MyBash}{
