@@ -774,7 +774,7 @@
 			Descriviamo ora il processo di sviluppo da usare con PhoneGap.
 			La prima cosa da fare è usare il CLI con il comando 
 	\begin{lstlisting}[language=MyBash]
-	phonegap create hello com.example.hello HelloWorld
+	phonegap create "hello" "com.example.hello" "HelloWorld"
 	\end{lstlisting}
 			per creare l'applicazione di nome \verb|HelloWorld| all'interno della cartella 
 			\verb|hello|. Il parametro \verb|com.example.hello| serve per 
@@ -788,7 +788,7 @@
 			Per usare le API bisogna aggiungerle al progetto come plugin. Ad 
 			esempio per ottenere l'accesso alla fotocamera bisogna usare il comando 
 	\begin{lstlisting}[language=MyBash]
-	phonegap local plugin add org.apache.cordova.camera
+	phonegap local plugin add "org.apache.cordova.camera"
 	\end{lstlisting}
 	
 			Dopo aver aggiunto tutti i plugin necessari l'applicazione può 
@@ -796,7 +796,7 @@
 			In questo caso è necessario specificare la piattaforma di destinazione, 
 			quindi se si vuole installare l'applicazione su Android il comando è 
 	\begin{lstlisting}[language=MyBash]
-	phonegap run android
+	phonegap run "android"
 	\end{lstlisting}
 	
 			Il processo di compilazione di Phonegap come detto 
@@ -826,9 +826,10 @@
 			vengono aggiunti i plugin: anzichè usare il CLI occorre modificare 
 			il file \verb|config.xml|. Riferendosi sempre all'uso dell'API per 
 			l'accesso alla fotocamera, la riga da inserire nel file è la seguente
-	\begin{lstlisting}[language=XML]
+	\begin{lstlisting}[]
 	<gap:plugin name="org.apache.cordova.camera"/>
 	\end{lstlisting} 
+	
 			Oltre alla possibilità di fare compilazione PhoneGap Build fornisce 
 			il cosiddetto Hydration, un'opzione di compilazione che se abilitata 
 			permette di testare le modifiche fatte all'applicazione senza doverla 
@@ -960,7 +961,7 @@
 				caption={Comando Bash per creare lo scheletro di un'applicazione Sencha Touch.},
 				language=MyBash
 			]
-	sencha generate app MyApp ./MyApp
+	sencha generate app 'MyApp' './MyApp'
 			\end{lstlisting}
 			Di seguito elenchiamo il principale contenuto della cartella del
 			progetto creato attraverso \senchacmd{}:

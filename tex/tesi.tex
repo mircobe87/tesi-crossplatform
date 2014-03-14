@@ -78,6 +78,13 @@
   sensitive=true,
   otherkeywords={
     sencha, phonegap, titanium, ti
+  },
+  deletekeywords={local},
+  morestring=[b]',
+  morestring=[b]",
+  morecomment=[l]\#,
+  ndkeywords={
+  	create, local, plugin, add, run, generate, app, package, build
   }
 }
 % JavaScript
@@ -103,18 +110,6 @@
   alsodigit={-}
 }
 
-% XML
-\lstdefinelanguage{XML}{
-	language=xml,
-	sensitive=true,
-	alsoletter={<>=-},
-	keywords={
-	% General
-	/>, >,
-	% Standard tags
-	<, gap:plugin
-	},
-}
 \lstdefinelanguage{HTML5}{
   language=html,
   sensitive=true,	
@@ -140,7 +135,7 @@
   % More tags...
   <canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video,
   <source, <iframe, </iframe>, </video>, <image, </image>, <header, </header,
-  <article, </article, <span>, </span>, <a, </a
+  <article, </article, <span>, </span>, <a, </a, <gap:plugin
   },
   ndkeywords={
   % General
