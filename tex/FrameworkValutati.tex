@@ -953,16 +953,13 @@
 			un'interfaccia utente a linea di comando indispensabile per la
 			creazione, la configurazione e l'impacchettamento delle applicazioni.
 			Tale strumento è disponibile per piattaforme Windows, Mac OS X, e Linux;
-			una volta installato, con il semplice comando \ref{cod:appsencha} è
-			possibile creare, per esempio, una nuova applicazione di nome
-			``MyApp'' nella cartella ``./MyAppDir''.
-			\begin{lstlisting}[
-				label={cod:appsencha},
-				caption={Comando Bash per creare lo scheletro di un'applicazione Sencha Touch.},
-				language=MyBash
-			]
+			una volta installato, con il semplice comando
+			\begin{lstlisting}[language=MyBash]
 	sencha generate app 'MyApp' './MyApp'
 			\end{lstlisting}
+			è possibile creare, per esempio, una nuova applicazione di nome
+			\verb|MyApp| nella cartella \verb|./MyAppDir|.
+			
 			Di seguito elenchiamo il principale contenuto della cartella del
 			progetto creato attraverso \senchacmd{}:
 			\begin{description}
@@ -987,15 +984,11 @@
 					dall'applicazione.
 			\end{description}
 			A questo punto, una volta modificato il file \verb|packager.json| con
-			le proprie preferenze è sufficiente dare il comando \ref{cod:buildsencha}
-			per creare il pacchetto per la piattaforma desiderata.
-			\begin{lstlisting}[
-				label={cod:buildsencha},
-				caption={Crea il pacchetto installabile per la piattaforma specificata nel file \texttt{packager.json}.},
-				language=MyBash
-			]
-	sencha app package build packager.json
+			le proprie preferenze è sufficiente dare il comando
+			\begin{lstlisting}[language=MyBash]
+	sencha app package build 'packager.json'
 			\end{lstlisting}
+			per creare il pacchetto per la piattaforma desiderata.
 			
 			Dalla struttura delle cartelle del progetto si evince che \senchat{} adotta
 			l'architettura MVC nelle proprie applicazioni estesa con nuove componenti;
