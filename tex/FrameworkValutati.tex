@@ -630,28 +630,35 @@
 			nella Cordova Street di Vancouver.}. All'inizio la differenza tra 
 			i due era solo nel nome, ma nel tempo PhoneGap ha reso disponibili 
 			strumenti addizionali per collegarsi ai servizi di Adobe, un esempio 
-			di questo sono i servizi PhoneGap Build e Adobe Shadow che verranno 
-			descritti successivamente. Apache Cordova è ottenibile dal sito 
-			\url{https://cordova.apache.org/}, mentre PhoneGap dal sito 
+			di questo sono è PhoneGap Build che verrà 
+			descritto successivamente. Le istruzioni per iniziare ad usare 
+			Apache Cordova e PhoneGap sono presenti rispettivamente su 
+			\url{https://cordova.apache.org/} e su 
 			\url{http://phonegap.com/}. Dal punto di vista dello sviluppatore di 
 			applicazioni mobili usare Apache Cordova o PhoneGap differisce solo 
 			per l'integrazione dei suddetti servizi, per il resto non ci sono 
 			differenze.
 			
-			%descrivere che phonegap ha un CLI con vari comandi per creare e compilare l'applicazione
-			
-			PhoneGap è principalmente un insieme di APIs che permettono ad uno 
-			sviluppatore di applicazioni mobili 
-			di accedere alle funzioni native come la fotocamera o l'accelerometro 
-			usando JavaScript. Combinato con un framework UI come quelli descritti 
+			Con PhoneGap come detto è possibile creare applicazioni ibride e quindi 
+			applicazioni in grado di sfruttare fotocamera, GPS, file system e 
+			altri sensori del dispositivo. Per fare questo il framework offre 
+			delle API JavaScript che combinate con un framework UI come quelli descritti 
 			nel paragrafo\hyperref[sec:frameworkwebapp]{~\ref{sec:frameworkwebapp}}
-			permette di realizzare applicazioni mobili che sono distribuibili
+			permettono di realizzare applicazioni mobili che sono distribuibili
 			attraverso gli app store delle varie piattaforme sviluppando 
 			semplicemente con HTML5, CSS3 e JavaScript.
-
+			
+			Questo framework fornisce inoltre un'interfaccia da riga di comando (CLI)
+			che permette di usare i comandi per: creare l'applicazione, aggiungervi 
+			plugin, compilarla e installarla su un dispositivo o su un emulatore. 
+			Se si usa PhoneGap saranno inoltre disponibili comandi per eseguire 
+			la compilazione remota attraverso PhoneGap Build.
+			
 			Le APIs di PhoneGap sono consistenti tra le varie piattaforme mobili, 
 			l'applicazione può essere quindi portata su più dispositivi con 
-			sistemi operativi diversi attraverso piccoli accorgimenti.
+			sistemi operativi diversi attraverso piccoli accorgimenti, questa 
+			caratteristica rende quindi particolarmente semplice scrivere 
+			applicazioni mobili cross-platform.
 			Attualmente PhoneGap è disponibile per le seguenti piattaforme: 
 			Amazon-Fireos, Android, Blackberry10, iOS, Windows Phone 7, 
 			Windows Phone 8, Tizen, Ubuntu \hyperref[fig:platformsupport]{(Vedi 
@@ -664,12 +671,8 @@
 						& Tizen
 						\tabularnewline
 						\hline
-						Cordova CLI &\sprt{} Mac, Windows, Linux &
+						PhoneGap CLI &\sprt{} Mac, Windows, Linux &
 						\sprt{} Mac, Windows & \sprt{} Mac & \sprt{} Windows & \notsprt{}
-						\tabularnewline
-						\hline
-						Embedded WebView & \sprt{} & \notsprt{} & \sprt{} &\notsprt{} 
-						& \notsprt{}
 						\tabularnewline
 						\hline
 						Plug-in Interface & \sprt{} & \sprt{} & \sprt{} & \sprt{} & 
@@ -735,21 +738,23 @@
 				\end{table}
 			}
 			
+			E' interessante vedere come PhoneGap è riuscito a realizzare le API 
+			JavaScript.
 			Molti SDKs nativi forniscono una particolare componente chiamata 
-			"Web View", all'interno della quale è possibile caricare del contenuto 
+			Web View, all'interno della quale è possibile caricare del contenuto 
 			web che viene interpretato come se fosse stato aperto in 
 			un Browser.
-			PhoneGap fondamentalmente carica le pagine HTML dell'applicazione web 
-			in una di queste Web View, all'interno della quale è possibile
-			usare (in modo diverso a seconda della piattaforma) 
-			codice JavaScript per eseguire codice nativo.
+			Inoltre il linguaggio nativo delle piattaforma offre la possibilità 
+			di usare, all'interno di queste Web View, codice JavaScript per 
+			eseguire codice nativo.
 			Ad esempio su Android la Web View è realizzata con una classe Java 
 			che fornisce il metodo
 	\begin{lstlisting}[language=MyJava]
 	addJavascriptInterface(Object object, String name)
 	\end{lstlisting}
 			per permettere 
-			l'accesso ai metodi Java del parametro object attraverso JavaScript.
+			di scrivere codice JavaScript che attraverso la stringa name ha accesso 
+			ai metodi Java del parametro object.
 						
 			PhoneGap sfrutta tutto ciò per creare una particolare 
 			Web View estesa con un livello che funge da ponte
@@ -765,11 +770,39 @@
 			della funzionalità offerta.
 			E' importante notare che tutte le principali API di PhoneGap sono 
 			implementate come plugins.
-
-			Il processo di compilazione di Phonegap crea un'applicazione nativa 
-			consistente principalmente in una Web View estesa con le API JavaScript. 
-			Il pacchetto 
-			risultante è un file che può essere installato attraverso gli stores
+			
+			Descriviamo ora il processo di sviluppo da usare con PhoneGap.
+			La prima cosa da fare è usare il CLI con il comando 
+	\begin{lstlisting}[language=MyBash]
+	phonegap create hello com.example.hello HelloWorld
+	\end{lstlisting}
+			per creare l'applicazione di nome \verb|HelloWorld| all'interno della cartella 
+			\verb|hello|. Il parametro \verb|com.example.hello| serve per 
+			specificare l'identificatore univoco dell'applicazione.
+			La cartella \verb|hello| conterrà la sottocartella \verb|www| dove 
+			vanno inserite le risorse necessarie al funzionamento dell'applicazione, 
+			quindi ci saranno: file HTML, CSS, JavaScript, immagini e il file 
+			\verb|config.xml| che contiene i metadati necessari per generare e 
+			distribuire l'applicazione.
+			
+			Per usare le API bisogna aggiungerle al progetto come plugin. Ad 
+			esempio per ottenere l'accesso alla fotocamera bisogna usare il comando 
+	\begin{lstlisting}[language=MyBash]
+	phonegap local plugin add org.apache.cordova.camera
+	\end{lstlisting}
+	
+			Dopo aver aggiunto tutti i plugin necessari l'applicazione può 
+			essere compilata e installata sul dispositivo (o su un emulatore).
+			In questo caso è necessario specificare la piattaforma di destinazione, 
+			quindi se si vuole installare l'applicazione su Android il comando è 
+	\begin{lstlisting}[language=MyBash]
+	phonegap run android
+	\end{lstlisting}
+	
+			Il processo di compilazione di Phonegap come detto 
+			crea un'applicazione nativa consistente principalmente in una 
+			Web View estesa con le API JavaScript. Il pacchetto 
+			risultante è un file che può essere distribuito attraverso gli stores
 			delle varie priattaforme.
 			
 			Per creare il pacchetto nativo PhoneGap usa gli strumenti di compilazione 
@@ -779,15 +812,23 @@
 			di destinazione dell'applicazione.
 			
 			Per superare questa necessità Adobe ha creato un servizio chiamato 
-			PhoneGap Build. 
-			Inviando i sorgenti HTML5, CSS3 e JavaScript al servizio, attraverso un 
+			PhoneGap Build~\footnote{Il servizio è accessibile dal sito 
+			\url{https://build.phonegap.com}}. 
+			Inviando i file sorgenti al servizio, attraverso un 
 			pacchetto .zip o attraverso il repository GitHub, il processo di 
 			compilazione sarà eseguito direttamente da PhoneGap Build, permettendo 
 			poi di scaricare l'applicazione installabile sulle varie piattaforme.
 			L'attuale versione di PhoneGap Build è la 3.3.0 ed è in grado di compilare 
 			applicazioni per iOS, Android e WindowsPhone 8. Per iOS serve comunque 
 			essere registrati tra gli sviluppatori Apple questo consentirà di 
-			testare le app su iPhone e iPad. 
+			testare le app su iPhone e iPad.
+			Se si intende usare questo servizio bisogna cambiare il modo in cui 
+			vengono aggiunti i plugin: anzichè usare il CLI occorre modificare 
+			il file \verb|config.xml|. Riferendosi sempre all'uso dell'API per 
+			l'accesso alla fotocamera, la riga da inserire nel file è la seguente
+	\begin{lstlisting}[language=XML]
+	<gap:plugin name="org.apache.cordova.camera"/>
+	\end{lstlisting} 
 			Oltre alla possibilità di fare compilazione PhoneGap Build fornisce 
 			il cosiddetto Hydration, un'opzione di compilazione che se abilitata 
 			permette di testare le modifiche fatte all'applicazione senza doverla 
@@ -798,11 +839,15 @@
 			 
 			Il processo di sviluppo con PhoneGap Build da una parte permette di 
 			poter iniziare a realizzare l'applicazione senza perder tempo a 
-			installare e configurare tutti gli SDKs nativi, ma allo stesso tempo 
+			installare e configurare tutti gli SDKs nativi~\footnote{Si pensi 
+			che tecnicamente non è nemmeno necessario usare il comando 
+			phonegap create per inizializzare l'applicazione, ma semplicemente 
+			basta creare una cartella con tutti i file necessari, comprimerla 
+			in formato .zip e inviarla al servizio}, ma allo stesso tempo 
 			abbiamo notato che il servizio è molto lento, sia per il tempo speso  
 			ad inviare il codice sorgente e a scaricare il pacchetto, sia perchè 
-			il processo 
-			di build non sembra essere molto performante e spesso il sito mostra 
+			il processo di compilazione non sembra essere molto performante e 
+			spesso il sito mostra 
 			dei disservizi. Inoltre bisogna tener conto che non tutti i plugin 
 			esistenti per PhoneGap sono utilizzabili con il servizio 
 			PhoneGap Build, anche se la possibilità di aggiungere plugin di terze 
@@ -819,8 +864,8 @@
 			varia in base al framework usato per realizzare la web app, e al 
 			motore di rendering delle pagine web della piattaforma.
 			Il motore di rendering WebKit su iOS fornisce buone performance, le 
-			Android Web View sono funzionali, ma ha qualche notabile limitazione 
-			(citare fonte).
+			Android Web View sono funzionali, ma ha qualche notabile 
+			limitazione~\citep{Web:KevinSite}
 			
 
 		\subsection{Rho Mobile}
