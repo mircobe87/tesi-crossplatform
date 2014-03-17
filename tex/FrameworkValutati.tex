@@ -563,7 +563,8 @@
 		\subsection{PhoneJS}
 			PhoneJS è un framework per realizzare applicazioni mobili 
 			single page application (SPA), che promette di fornire: un'
-			esperienza utente ottimizzata per i dispositivi touch, widgets con 
+			esperienza utente ottimizzata per i dispositivi touch, elementi 
+			grafici (widgets) con 
 			aspetto nativo, agili strumenti di navigazione tra le schermate dell'
 			applicazione, facile gestione delle schermate e un livello di accesso 
 			ai dati.
@@ -581,10 +582,11 @@
 			lo stile "nativo" appropriato a tutti i widgets e a tutti gli elementi 
 			di navigazione (riferimento a immagine)
 			
-			PhoneJS include un vasto insieme di widgets (elementi UI). Tipicamente, 
+			PhoneJS include un vasto insieme di widget. Tipicamente, 
 			un widget è associato a dei dati e fornisce un'interazione con l'utente.
 			Esso è rappresentato da un elemento HTML (contenitore), da un codice 
-			JavaScript per definirne il comportamento e dei fogli di stile CSS. 
+			JavaScript per definirne il comportamento e da fogli di stile CSS 
+			per personalizzarne l'aspetto. 
 			Ogni widget include un plugin jQuery e un legame Knockout, è così 
 			possibile scegliere se creare un widget attraverso l'approccio jQuery 
 			oppure usare le funzionalità di tracciamento delle dipendeze (?) fornito 
@@ -1088,5 +1090,19 @@
 			
 	
 	\section{Conclusioni}
+		Alla luce delle nostre ricerche, abbiamo potuto notare che i framework 
+		per creare applicazioni ibride si affidano tutti alla stesse risorse offerte 
+		dal dispositivo per quanto riguarda l'esecuzione e la visualizzazione 
+		dei contenuti Web. Le prestazioni di queste applicazioni sono quindi vincolate 
+		alla potenza della Web View e del relativo interprete JavaScript della 
+		piattaforma. Ad ogni modo le shell messe a disposizione da questo genere 
+		di framework non sono tutte uguali, per esempio quella di PhoneGap permette 
+		come detto la realizzazione di plugin per estendere le proprie funzionalità. 
+		L'altra differenza riscontrata è stata che SenchaTouch fornisce anche 
+		il framework per la realizzazione dell'interfaccia grafica.
+		RhoMobile Suite offre molte interessanti caratteristiche come il servizio 
+		RhoHub, però la controindicazione più grande che abbiamo trovato è stata 
+		l'impossibilità di accedere a tutte le API attraverso JavaScript, molte 
+		di queste sono infatti utilizzabili solo in Ruby.
 		Per questo motivo e quello... abbiamo scelto di realizzare una app di 
 		prova con Phonegap e Titanium.
