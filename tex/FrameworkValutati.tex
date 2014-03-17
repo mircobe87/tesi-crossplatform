@@ -738,8 +738,9 @@
 				\end{table}
 			}
 			
-			E' interessante vedere come PhoneGap è riuscito a realizzare le API 
-			JavaScript.
+			E' interessante vedere come PhoneGap è riuscito a permettere la 
+			realizzazione di API JavaScript per accedere alle funzionalità 
+			dei dispositivi.
 			Molti SDKs nativi forniscono una particolare componente chiamata 
 			Web View, all'interno della quale è possibile caricare del contenuto 
 			web che viene interpretato come se fosse stato aperto in 
@@ -756,12 +757,13 @@
 			di scrivere codice JavaScript che attraverso la stringa name ha accesso 
 			ai metodi Java del parametro object.
 						
-			PhoneGap sfrutta tutto ciò per creare una particolare 
+			PhoneGap sfrutta tutto ciò per creare in fase di compilazione la 
+			cosiddetta shell, cioè una particolare 
 			Web View estesa con un livello che funge da ponte
-			tra codice JavaScript e codice nativo, è quindi possibile esporre 
+			tra codice JavaScript e codice nativo, rendendo così possibile esporre 
 			agli sviluppatori dell'applicazione mobile un'interfaccia JavaScript 
 			che sfruttando il ponte sia in grado di invocare codice nativo.
-			Questo sistema rende la piattaforma PhoneGap estendibile tramite i cosidetti
+			La shell rende la piattaforma PhoneGap estendibile tramite i cosidetti
 			plugins, cioè pacchetti creati per accedere al dispositivo e a quelle 
 			funzionalità che normalmente non sono disponibili per le applicazioni 
 			web. Un plugin è composto da un'interfaccia JavaScript che 
@@ -800,8 +802,8 @@
 	\end{lstlisting}
 	
 			Il processo di compilazione di Phonegap come detto 
-			crea un'applicazione nativa consistente principalmente in una 
-			Web View estesa con le API JavaScript. Il pacchetto 
+			crea la shell nativa nella quale vengono interpretati i file HTML5, CSS3, e 
+			JavaScript che compongono l'applicazione. Il pacchetto 
 			risultante è un file che può essere distribuito attraverso gli stores
 			delle varie priattaforme.
 			
@@ -861,11 +863,11 @@
 			una qualsiasi piattaforma che offre una web view può essere supportata 
 			da PhoneGap.
 			
-			La qualità dell'intefaccia untente in un'applicazione PhoneGap 
+			La qualità dell'intefaccia utente in un'applicazione PhoneGap 
 			varia in base al framework usato per realizzare la web app, e al 
 			motore di rendering delle pagine web della piattaforma.
-			Il motore di rendering WebKit su iOS fornisce buone performance, le 
-			Android Web View sono funzionali, ma ha qualche notabile 
+			Il motore di rendering WebKit su iOS fornisce buone prestazioni, le 
+			Android Web View sono funzionali, ma hanno qualche notabile 
 			limitazione~\citep{Web:KevinSite}
 			
 
