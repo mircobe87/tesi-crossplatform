@@ -62,8 +62,48 @@
 	impiegate, nonché il modo in cui è stato realizzato.
 	
 	\section{Lato Server}
-		descrizione funzionalità del server e dei software utilizzati per la sua
-		realizzazione.
+		Lo scopo principale del lato server di questa applicazione è quello di
+		gestire un data-base che andrà a contenere tutte le segnalazioni inviate
+		dagli utenti che vi interagiranno attraverso il lato client. Il
+		data-base dovrà essere in grado di rispondere a query riguardanti
+		certamente le coordinate geografiche, ma anche i nickname e la data e
+		ora delle varie segnalazioni. Un secondo compito importante che dovrà
+		svolgere sarà quello di gestire le identità dei diversi utenti e di
+		controllare l'univocità del nickname utilizzato in fase di
+		registrazione.
+		
+		Una caratteristica in più che non era richiesta ma che ci sembrava
+		opportuno avere era l'indipendenza della realizzazione del server
+		rispoetto ai due framework utilizzati nell'implementare il lato client.
+		In questo modo entrambe le implementazioni del lato client avrebbero
+		dialogato con la stessa implementazione del lato server.
+		
+		Per la realizzazione di tutto questo, dopo una fase di ricerca, abbiamo
+		mirato a due prodotti open source vista la loro semplicità d'uso:
+		Apache CouchDB\texttrademark{} e Node.js.
+		\begin{description}
+			\item[Apache CouchDB\texttrademark{}] è un data-base non relazionale
+				implementato sul paradigma Map-Reduce. La comunicazione con esso
+				avviene mediante opportuni messaggi HTTP rendondo semplice la
+				richista di risoluzione di query. Sempre attraverso HTTP è
+				possibile inviare date e ricevere dati strutturandoli in
+				formato JSON; inoltre è possibile allegare a documenti JSON
+				file multimendiali di ogni genere. Questo data-base fornisce
+				anche un interfaccia utente Web così da semplificare molto la
+				sua configurazione iniziale. Apache CouchDB\texttrademark{} non
+				consente nativamente di eseguire query spaziali ma grazie
+				all'estenzione Geocouch anche questa funzionalità è stata resa
+				disponibile.
+			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
+				Google Chrome per la realizzazione facile e veloce di
+				applicazioni di rete. La potenza di questa piattaforma è anche
+				nel fatto che è supportata da una enorme quantità di moduli
+				che permettono di realizzare con poco codice applicazioni piuttosto
+				complesse. In più, come Apache CouchDB\texttrademark{}, tutto 
+				questo è open source.
+		\end{description}
+		
+		
 	
 	\section{Lato Client}
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
