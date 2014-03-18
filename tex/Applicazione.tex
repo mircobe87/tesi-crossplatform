@@ -1,8 +1,4 @@
 \chapter{L'Applicazione}
-	Per avere un confronto più significativo il tutore aziendale ci ha proposto 
-	un'applicazione che dimostri l'interazione con il dispositivo e che quindi 
-	usi le varie API dei framework.
-	
 	Per avere un confronto più significativo, il tutore aziendale ci ha proposto
 	la realizzazione di un'applicazione che interagisse, in maniera sostanziale,
 	con le funzionalità offerte dal dispositivo in modo da poter valutare meglio
@@ -21,9 +17,9 @@
 		      degrado scattata con il dispositivo;
 		\item visualizzare una lista riassuntiva delle proprie segnalazioni
 		      inviate;
-		\item sceglere un segnalazione e visualizzarne i dettagli.
+		\item scegliere un segnalazione e visualizzarne i dettagli.
 	\end{itemize}
-	Durante la fase di sviluppo però, in occasine della revisione periodica del
+	Durante la fase di sviluppo però, in occasione della revisione periodica del
 	nostro lavoro svolto, sono state richieste nuove funzionalità aggiuntive; in
 	particolare ci è stato chiesto di aggiungere:
 	\begin{itemize}
@@ -41,15 +37,15 @@
 	utilizzando come credenziali di accesso il codice IMEI o il numero di
 	telefono, che dovevano essere letti automaticamente dall'applicazione,
 	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
-	dare all'utente, che si stà registrando, la possibilità di sceglersi un
+	dare all'utente, che si sta registrando, la possibilità di sceglersi un
 	``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
-	al lato server e verrà descritto più in dettaglio nella sezione appostita.}
+	al lato server e verrà descritto più in dettaglio nella sezione apposita.}
 	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere
-	succesivamente queste informazioni in tutte le sue segnalazioni; in questo
+	successivamente queste informazioni in tutte le sue segnalazioni; in questo
 	modo un altro utente che visualizza una certa segnalazione può vedere chi
-	l'ha realizzata e, se vuole, sarà in grado di conttattarlo tramime posta
+	l'ha realizzata e, se vuole, sarà in grado di contattarlo tramite posta
 	elettronica. Per semplicità abbiamo deciso che una volta scelto il nickname
-	questo sarà permantente, diversamente abbiamo aggiunto nell'applicazione una
+	questo sarà permanente, diversamente abbiamo aggiunto nell'applicazione una
 	schermata tramite la quale sarà possibile aggiornare il proprio indirizzo
 	e-mail.
 	
@@ -58,14 +54,14 @@
 	mostreremo come sono state implementate le funzionalità richieste
 	utilizzando i due framework presi in esame. L'analisi del lato server non
 	è scopo di questa attività di tirocinio e quindi ne daremo solo una
-	semplice descrizzione indicando il modo di funzionamento e le tecnologie
+	semplice descrizione indicando il modo di funzionamento e le tecnologie
 	impiegate, nonché il modo in cui è stato realizzato.
 	
 	\section{Lato Server}
 		Lo scopo principale del lato server di questa applicazione è quello di
-		gestire un data-base che andrà a contenere tutte le segnalazioni inviate
+		gestire un database che andrà a contenere tutte le segnalazioni inviate
 		dagli utenti che vi interagiranno attraverso il lato client. Il
-		data-base dovrà essere in grado di rispondere a query riguardanti
+		database dovrà essere in grado di rispondere a query riguardanti
 		certamente le coordinate geografiche, ma anche i nickname e la data e
 		ora delle varie segnalazioni. Un secondo compito importante che dovrà
 		svolgere sarà quello di gestire le identità dei diversi utenti e di
@@ -74,7 +70,7 @@
 		
 		Una caratteristica in più che non era richiesta ma che ci sembrava
 		opportuno avere era l'indipendenza della realizzazione del server
-		rispoetto ai due framework utilizzati nell'implementare il lato client.
+		rispetto ai due framework utilizzati nell'implementare il lato client.
 		In questo modo entrambe le implementazioni del lato client avrebbero
 		dialogato con la stessa implementazione del lato server.
 		
@@ -82,17 +78,17 @@
 		mirato a due prodotti open source vista la loro semplicità d'uso:
 		Apache CouchDB\texttrademark{} e Node.js.
 		\begin{description}
-			\item[Apache CouchDB\texttrademark{}] è un data-base non relazionale
+			\item[Apache CouchDB\texttrademark{}] è un database non relazionale
 				implementato sul paradigma Map-Reduce. La comunicazione con esso
-				avviene mediante opportuni messaggi HTTP rendondo semplice la
-				richista di risoluzione di query. Sempre attraverso HTTP è
-				possibile inviare date e ricevere dati strutturandoli in
-				formato JSON; inoltre è possibile allegare a documenti JSON
-				file multimendiali di ogni genere. Questo data-base fornisce
+				avviene mediante opportuni messaggi HTTP rendendo semplice la
+				richiesta di risoluzione di query. Sempre attraverso HTTP è
+				possibile inviare e ricevere dati strutturandoli in formato JSON; 
+				inoltre è possibile allegare a documenti JSON
+				file multimediali di ogni genere. Questo database fornisce
 				anche un interfaccia utente Web così da semplificare molto la
 				sua configurazione iniziale. Apache CouchDB\texttrademark{} non
 				consente nativamente di eseguire query spaziali ma grazie
-				all'estenzione Geocouch anche questa funzionalità è stata resa
+				all'estensione Geocouch anche questa funzionalità è stata resa
 				disponibile.
 			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
 				Google Chrome per la realizzazione facile e veloce di
