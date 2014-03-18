@@ -43,6 +43,7 @@ cd tex
 
 latex -shell-escape "$name.tex"
 bibtex "$name"
+biber "$name"
 latex -shell-escape "$name.tex"
 latex -shell-escape "$name.tex"
 

@@ -24,12 +24,12 @@ Prima di compilare il documento con il comando `./maketesi` assicurarsi di avere
 installato nel proprio sistema i seguenti pacchetti:
 
  - [babel](http://ctan.org/pkg/babel "Multilingual support for Plain TEX or LATEX")
+ - [biblatex](http://www.ctan.org/pkg/biblatex "Bibliographies in LATEX using BibTEX for sorting only")
  - [fancyhdr](http://ctan.org/pkg/fancyhdr "Extensive control of page headers and footers in LATEX2ε")
  - [frontespizio](http://ctan.org/pkg/frontespizio "Create a frontispiece for Italian theses")
  - [hyperref](http://ctan.org/pkg/hyperref "Extensive support for hypertext in LATEX")
  - [inputenc](http://ctan.org/pkg/inputenc "Accept different input encodings")
  - [mathptmx](http://ctan.org/pkg/mathptmx "Use Times as default text font, and provide maths support")
- - [natbib](http://ctan.org/pkg/natbib "Flexible bibliography support")
  - [setspace](http://ctan.org/pkg/setspace "Set space between lines")
  - [url](http://ctan.org/pkg/url "Verbatim with URL-sensitive line breaks")
 

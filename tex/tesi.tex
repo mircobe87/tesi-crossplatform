@@ -24,7 +24,9 @@
 \newenvironment{abstract}{\cleardoublepage\fncyblank\null\vfill\begin{center}\bfseries\abstractname\end{center}}{\vfill\null}
 
 % pacchetto per la personalizzazione della bibliografia
-\usepackage[numbers]{natbib}
+\usepackage[bibstyle=numeric,citestyle=numeric-comp,safeinputenc,firstinits]{biblatex}
+\addglobalbib{../bib/biblio.bib}
+%\usepackage[numbers]{natbib}
 \usepackage{url}
 
 % pacchetto per link ipertestuali cliccabili in documento pdf, seguito dalle impostazioni
@@ -257,7 +259,8 @@
 	\include{Conclusioni}
 	% un po' di capitoli...
 	
-	\bibliography{../bib/biblio}
-	\bibliographystyle{plainnat}
+	\phantomsection % solo se si è caricato hyperref
 	\addcontentsline{toc}{chapter}{\bibname}
+	\nocite{*}
+	\printbibliography
 \end{document}
