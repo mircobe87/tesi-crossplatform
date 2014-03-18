@@ -5,7 +5,7 @@
 	applicazione che permetteva di realizzare. Spesso il fatto che 
 	l'applicazione venisse eseguita all'interno di una componente nativa veniva 
 	pubblicizzato come se il framework fosse in grado di creare una completa 
-	applicazione nativa (anziché ibrida); in altri casi 
+	applicazione nativa anziché ibrida; in altri casi 
 	veniva confuso il concetto di \crosscomp 
 	(\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con quello di 
 	applicazione ibrida; in altri ancora non veniva mostrata la separazione 
@@ -1087,24 +1087,20 @@
 					non specifico per nessuna piattaforma.
 				}
 			\end{figure}
-			
-	
+				
 	\section{Conclusioni}
-		Alla luce delle nostre ricerche, abbiamo potuto notare che i framework 
-		per creare applicazioni ibride si affidano tutti alla stesse risorse offerte 
-		dal dispositivo per quanto riguarda l'esecuzione e la visualizzazione 
-		dei contenuti Web. Le prestazioni di queste applicazioni sono quindi vincolate 
-		alla potenza della Web View e del relativo interprete JavaScript della 
-		piattaforma. Ad ogni modo le shell messe a disposizione da questo genere 
-		di framework non sono tutte uguali, per esempio quella di PhoneGap permette 
-		come detto la realizzazione di plugin per estendere le proprie funzionalità. 
-		L'altra differenza riscontrata è stata che SenchaTouch fornisce anche 
-		il framework per la realizzazione dell'interfaccia grafica.
-		RhoMobile Suite offre molte interessanti caratteristiche come il servizio 
-		RhoHub, però la controindicazione più grande che abbiamo trovato è stata 
-		l'impossibilità di accedere a tutte le API attraverso JavaScript, molte 
-		di queste sono infatti utilizzabili solo in Ruby.
-		Date le nostre considerazioni il tutore aziendale ci ha richiesto di 
-		approfondire il confronto tra PhoneGap e Titanium 
-		Per questo motivo e quello... abbiamo scelto di realizzare una app di 
-		prova con Phonegap e Titanium.
+		Classificare e valutare le funzionalità offerte da questi framework 
+		ha permesso, a noi e al nostro tutore aziendale, di fare chiarezza su cosa 
+		li distinguesse realmente, così 
+		da poter decidere con quali di questi realizzare un'applicazione di prova utile 
+		per un'analisi più approfondita.
+		La scelta naturale è stata quella di creare un'applicazione con due 
+		framework che adottassero approcci diversi: sono stati quindi scelti 
+		Titanium Appcelerator per la creazione di un'applicazione nativa, e 
+		PhoneGap per la realizzazione di quella ibrida.
+		Il tutore ci ha lasciato libera scelta sul framework per l'interfaccia 
+		grafica da usare assieme a PhoneGap. Colpiti dalla semplicità d'uso, 
+		dalla capacità di adattare l'aspetto a quello della piattaforma e 
+		dalle prestazioni osservate in applicazioni d'esempio, abbiamo deciso 
+		di utilizzare KendoUI Mobile.
+		

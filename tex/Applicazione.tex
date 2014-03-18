@@ -1,6 +1,41 @@
 \chapter{L'Applicazione}
-	Abbiamo concordato un app che fa questo e quello per testare cosa si riesce
-	a fare e cosa non con i framework scelti (phonegap, titanium).
+	Per avere un confronto più significativo il tutore aziendale ci ha proposto 
+	un'applicazione che dimostri l'interazione con il dispositivo e che quindi 
+	usi le varie API dei framework.
+	
+	L'applicazione che ci è stata commissionata permette all'utente di segnalare 
+	problemi di degrado ambientale con immagini e testo georeferenziati.
+	In particolare l'applicazione inizialmente doveva permette all'utente di:
+	\begin{itemize}
+	\item Registrarsi nel sistema al primo avvio e di autenticarsi in quelli successivi
+	\item Visualizzare su una mappa le proprie segnalazioni e quelle degli altri utenti
+	\item Comporre e inviare su un server una nuova segnalazione georeferenziata inserendo 
+	una descrizione testuale e una foto del degrado scattata con il dispositivo
+	\item Visualizzare una lista riassuntiva dalla quale poter accedere alle proprie segnalazioni
+	\end{itemize}
+	Durante lo sviluppo dell'applicazione ci sono state richieste di aggiungere 
+	nuove funzionalità:
+	\begin{itemize}
+	\item Una lista che mostrasse le ultime segnalazioni fatte da qualsiasi utente
+	\item Salvataggio in locale delle proprie segnalazioni e di quelle 
+	visualizzate, permettendo così all'applicazione un parziale funzionamento anche in 
+	assenza di connessione di rete
+	\item Ritrovare sulla mappa una segnalazione partendo dalla sua visualizzazione
+	\end{itemize}
+	
+	La registrazione e l'autenticazione dell'utente sul server doveva avvenire 
+	utilizzando come credenziali di accesso il codice IMEI o il numero di telefono, 
+	che dovevano essere letti automaticamente dall'applicazione, senza necessità 
+	di interazione con l'utente.
+	Abbiamo però modificato questo aspetto aggiungendo in fase di registrazione 
+	la possibilità di scegliere un nome utente univoco 
+	(che non potrà più essere cambiato) e un indirizzo mail (che potrà essere 
+	cambiato in qualsiasi momento). Le credenziali per l'accesso restano il codice 
+	IMEI o il numero di telefono, ma nome utente e mail compariranno automaticamente 
+	nelle segnalazioni in modo da poter contattare eventualmente un segnalatore per 
+	chiedere approfondimenti sul degrado segnalato.
+	
+	L'applicazione dunque si divide in una parte client e in una parte server.
 	
 	\section{Lato Server}
 		descrizione funzionalità del server e dei software utilizzati per la sua
