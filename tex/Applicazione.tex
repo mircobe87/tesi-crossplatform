@@ -3,39 +3,63 @@
 	un'applicazione che dimostri l'interazione con il dispositivo e che quindi 
 	usi le varie API dei framework.
 	
+	Per avere un confronto più significativo, il tutore aziendale ci ha proposto
+	la realizzazione di un'applicazione che interagisse, in maniera sostanziale,
+	con le funzionalità offerte dal dispositivo in modo da poter valutare meglio
+	la potenzialità delle API offerte dai due framework in analisi.
+	
 	L'applicazione che ci è stata commissionata permette all'utente di segnalare 
 	problemi di degrado ambientale con immagini e testo georeferenziati.
 	In particolare l'applicazione inizialmente doveva permette all'utente di:
 	\begin{itemize}
-	\item Registrarsi nel sistema al primo avvio e di autenticarsi in quelli successivi
-	\item Visualizzare su una mappa le proprie segnalazioni e quelle degli altri utenti
-	\item Comporre e inviare su un server una nuova segnalazione georeferenziata inserendo 
-	una descrizione testuale e una foto del degrado scattata con il dispositivo
-	\item Visualizzare una lista riassuntiva dalla quale poter accedere alle proprie segnalazioni
+		\item registrarsi nel sistema al primo avvio e di autenticarsi in quelli
+		      successivi;
+		\item visualizzare su una mappa le proprie segnalazioni e quelle inviate
+		      degli altri utenti;
+		\item comporre e inviare su un server una nuova segnalazione
+		      georeferenziata inserendo una descrizione testuale e una foto del
+		      degrado scattata con il dispositivo;
+		\item visualizzare una lista riassuntiva delle proprie segnalazioni
+		      inviate;
+		\item sceglere un segnalazione e visualizzarne i dettagli.
 	\end{itemize}
-	Durante lo sviluppo dell'applicazione ci sono state richieste di aggiungere 
-	nuove funzionalità:
+	Durante la fase di sviluppo però, in occasine della revisione periodica del
+	nostro lavoro svolto, sono state richieste nuove funzionalità aggiuntive; in
+	particolare ci è stato chiesto di aggiungere:
 	\begin{itemize}
-	\item Una lista che mostrasse le ultime segnalazioni fatte da qualsiasi utente
-	\item Salvataggio in locale delle proprie segnalazioni e di quelle 
-	visualizzate, permettendo così all'applicazione un parziale funzionamento anche in 
-	assenza di connessione di rete
-	\item Ritrovare sulla mappa una segnalazione partendo dalla sua visualizzazione
+		\item una lista generale che mostrasse le ultime segnalazioni inviate da
+		      qualsiasi utente;
+		\item un meccanismo di salvataggio locale delle proprie segnalazioni e
+		      di tutte quelle visualizzate in dettaglio permettendo così
+		      all'applicazione un parziale funzionamento anche in assenza di
+		      connessione Internet;
+		\item la possibilità di ritrovare sulla mappa una segnalazione partendo
+		      dalla visualizzazione dei suoi dettagli.
 	\end{itemize}
 	
 	La registrazione e l'autenticazione dell'utente sul server doveva avvenire 
-	utilizzando come credenziali di accesso il codice IMEI o il numero di telefono, 
-	che dovevano essere letti automaticamente dall'applicazione, senza necessità 
-	di interazione con l'utente.
-	Abbiamo però modificato questo aspetto aggiungendo in fase di registrazione 
-	la possibilità di scegliere un nome utente univoco 
-	(che non potrà più essere cambiato) e un indirizzo mail (che potrà essere 
-	cambiato in qualsiasi momento). Le credenziali per l'accesso restano il codice 
-	IMEI o il numero di telefono, ma nome utente e mail compariranno automaticamente 
-	nelle segnalazioni in modo da poter contattare eventualmente un segnalatore per 
-	chiedere approfondimenti sul degrado segnalato.
+	utilizzando come credenziali di accesso il codice IMEI o il numero di
+	telefono, che dovevano essere letti automaticamente dall'applicazione,
+	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
+	dare all'utente, che si stà registrando, la possibilità di sceglersi un
+	``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
+	al lato server e verrà descritto più in dettaglio nella sezione appostita.}
+	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere
+	succesivamente queste informazioni in tutte le sue segnalazioni; in questo
+	modo un altro utente che visualizza una certa segnalazione può vedere chi
+	l'ha realizzata e, se vuole, sarà in grado di conttattarlo tramime posta
+	elettronica. Per semplicità abbiamo deciso che una volta scelto il nickname
+	questo sarà permantente, diversamente abbiamo aggiunto nell'applicazione una
+	schermata tramite la quale sarà possibile aggiornare il proprio indirizzo
+	e-mail.
 	
-	L'applicazione dunque si divide in una parte client e in una parte server.
+	L'applicazione, come ovvio, sarà composta di una parte client e di una parte
+	server. Il lato client è la parte dove si concentrano i nostri studi e dove
+	mostreremo come sono state implementate le funzionalità richieste
+	utilizzando i due framework presi in esame. L'analisi del lato server non
+	è scopo di questa attività di tirocinio e quindi ne daremo solo una
+	semplice descrizzione indicando il modo di funzionamento e le tecnologie
+	impiegate, nonché il modo in cui è stato realizzato.
 	
 	\section{Lato Server}
 		descrizione funzionalità del server e dei software utilizzati per la sua
