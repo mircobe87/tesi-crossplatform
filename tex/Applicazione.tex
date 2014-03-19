@@ -88,8 +88,8 @@
 				indipendentemente dal linguaggio usato per realizzare l'applicazione.
 				
 				Un database document-oriented è composto da una serie di documenti
-				``auto-contenenti'', nei quali vengono inseriti dati, appunto, nel formato 
-				JSON. Questo significa che il documento in
+				``auto-contenenti'', nei quali vengono inseriti dati strutturati
+				in formato JSON. Questo significa che il documento in
 				questione è memorizzato nel documento stesso anziché in una tabella
 				come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
 				non esistono tabelle, righe, colonne e relazioni tra i
@@ -100,9 +100,9 @@
 				di testo, numeri e valori booleani, ma anche allegati multimediali, 
 				questo ci ha permesso di inserire le immagini e i dati di una 
 				segnalazione all'interno di un singolo documento.
-				Nella sua versione pura CouchDB non permette di eseguire interrogazioni 
-				su coordinate geografiche. Per sopperire a questa mancanza abbiamo 
-				utilizzato un'estensione chiamata GeoCouch\footnote{La documentazione 
+				Nella sua versione pura, CouchDB non permette di eseguire interrogazioni 
+				su coordinate geografiche; per sopperire a questa mancanza si è fatto
+				ricorso all'utilizzo dell'estensione GeoCouch\footnote{La documentazione 
 				è disponibile sul sito \url{https://github.com/couchbase/geocouch/}}.
 			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
 				Google Chrome per la realizzazione facile e veloce di
@@ -110,56 +110,86 @@
 				nel fatto che è supportata da una enorme quantità di moduli
 				che permettono di realizzare con poco codice applicazioni piuttosto
 				complesse. In più, come Apache CouchDB\texttrademark{}, tutto 
-				questo è open source.
-				Node.js è stato usato per creare un semplice web server 
-				che, comunicando col database CouchDB, sia in grado di eseguire la 
-				registrazione di un utente.
+				questo è open source. Node.js è stato usato per creare un
+				semplice web server che, comunicando col database Apache CouchDB\texttrademark{}
+				attraverso le proprie API HTTP, gestisse le richieste di
+				registrazione provenienti da nuovi utenti.
 		\end{description}
 		
-		Apache CouchDB\texttrademark{} è stato quindi utilizzato come database 
-		per le segnalazioni e per gli utenti.
+		Apache CouchDB\texttrademark{} è stato configurato per gestire l'insieme
+		degli utenti e delle segnalazioni. Ogni documento rappresentante una
+		segnalazione è composto dai campi:
+		\begin{description}
+			\item[Titolo] Stringa di poche parole per descrivere la segnalazione.
+				Questo valore verrà poi visualizzato nelle liste di segnalazioni
+				sul lato client.
+			\item[Descrizione] Una descrizione testuale più dettagliata sul
+				fenomeno di degrado segnalato. Questo valore verrà mostrato sul
+				lato clienti sono tra i dettagli di una segnalazione.
+			\item[Data] Stringa testuale che indica la data e l'ora dell'istante
+				in cui la segnalazione è stata creata dall'utente. Anche questo
+				valore sarà mostrato solo tra i dettagli.
+			\item[Coordinate] Valore composto da due campi che contengono la
+				latitudine nord e la longitudine est della posizione geografica
+				in cui l'utente di trovava quando ha creato il documento. Valore
+				che verrà mostrato solo tra i dettagli della segnalazione.
+			\item[Immagine] Una foto scattata dal dispositivo usata	per
+				documentare il degrado individuato che verrà mostrata all'utente
+				solo nella schermata dei dettagli della relativa segnalazione.
+			\item[UserId] Identificatore unico relativo all'utente che ha creato
+				questa segnalazione. Questo valore è necessario in quanto,
+				Apache CouchDB\texttrademark{} non essendo un database relazionale
+				non è possibile in altro modo mettere in relazione un utente con
+				tutte le sue segnalazioni. Con questo accorgimento si sta di fatto
+				creando tale relazione in modo che, una volta scaricate le
+				informazioni su una segnalazione, sarà possibili eseguire una
+				seconda query sul database degli utenti per ottenere i valori
+				di nickname e e-mail del suo creatore.
+			\item[Id] Questo valore è univoco e, scelto automaticamente da
+				Apache CouchDB\texttrademark{}, viene inserito al momento del
+				salvataggio della segnalazione sul server.
+		\end{description}
 		
-		Per le segnalazioni abbiamo deciso di creare un unico database, in cui 
-		ogni documento contiene tutti i campi necessari a rappresentare la segnalazione.
-		In particolare sono presenti i campi: Titolo, Descrizione, Data, Coordinate e 
-		Immagine, UserId. 
-		Il titolo sarà usato come anteprima nelle varie liste da mostrare all'utente; 
-		la descrizione è intesa come un messaggio più dettagliato che descrive il 
-		degrado; la data indica la data e l'ora nella quale è stata fatta la
-		segnalazione; le coordinate espresse in latitudine e longitudine servono 
-		per localizzare il degrado; l'immagine è una foto scattata dal dispositivo usata 
-		per documentare il degrado individuato.
-		Un discorso a parte va fatto per il campo UserId. Essendo CouchdDB un 
-		database non relazionale non è stato possibile creare un'associazione 
-		tra l'utente e le segnalazioni da lui effettuate. La soluzione è stata 
-		quella di inserire il campo UserId, in questo modo una volta scaricata 
-		la segnalazione è possibile fare una query al database degli utenti per 
-		ottenere il ``nickname" e la ``mail" dell'utente identificato da UserId.
+		Per quanto riguarda la rappresentazione di un utente, oltre ai campi
+		obbligatori imposti dal DBMS, abbiamo inserito due cambi pubblici:
+		\begin{description}
+			\item[nickname] Il nickname dell'utente mostrato poi nei dettagli
+				di tutte le sue segnalazioni.
+			\item[mail] Indirizzo di posta elettronica mostrato anche questo
+				nei dettagli di tutte le segnalazioni create dallo stesso utente.
+		\end{description}
 		
-		Un problema che ci siamo trovati a dover gestire è stato quello di
-		registrare e autenticare gli utenti. CouchDB fornisce la 
-		possibilità di creare tre tipi diversi di utente:
+		Continuando a parlare di utenti, un problema che ci siamo trovati a
+		dover gestire è stato quello di	registrarli e autenticarli. L'aspetto
+		più delicato era riuscire ad aggiungerne uno nuovo partendo da una
+		richiesta proveniente da un utente che per il momento era ancora ``anonimo''.
+		Apache CouchDB\texttrademark{} fornisce la possibilità di creare tre
+		tipi di utenti diversi:
 		\begin{itemize}
 			\item membri del database
 			\item amministratori del database
 			\item amministratori del server
 		\end{itemize}
-		I membri del database sono definiti per database e possono: leggere tutti
-		i tipi di documenti dal DB, scrivere ed editare documenti 
-		(tranne per i design documents).
-
-		Gli amministratori del database sono definiti per DB e hanno tutti i 
-		privilegi dei membri più: scrivere ed editare i design documents, 
-		aggiungere/rimuovere altri amministratori e membri del DB. 
-		Non può però creare e/o cancellare un DB.
-
-		Gli amministratori del server hanno tutti i privilegi.
+		I membri del database sono definiti per ogni DB (database) e possono:
+		leggere tutti i tipi di documenti dal DB, aggiungerne di nuovi ed editarli.
+		% in questo punto vediamo se poi è necessario parlare anche dei design document
+		Gli amministratori del database sono definiti ancora per DB e hanno,
+		oltre a tutti i privilegi dei membri, la possibilità di
+		aggiungere/rimuovere altri amministratori e membri dal database che
+		amministrano; non possono però creare e/o cancellare un DB.
+		% qui bisogna dire che possono anche modificare i design document se
+		% si decide di parlarne. 
+		Gli amministratori del server, invece, hanno tutti i privilegi dei
+		precedenti, possono creare e/o cancellare database e posso configurare
+		il comportamento dell'intero DBMS.
 		
-		Avevamo quindi di fatto tre possibilità:
+		\noindent Avevamo quindi individuato tre differenti soluzioni:
 		\begin{enumerate} 
+			% di questa soluzione non c'ho capito nulla, e siccome non me la
+			% ricordo nemmeno la rivediamo insieme (nota di Mirco).
 			\item creare un utente amministratore del server, un utente amministratore 
 				del database, e al primo avvio dell'app usare codice IMEI (o numero di telefono) 
-				sia come nome utente che come password, per far diventare l'utente un 
+				sia come nome utente che come password per far diventare l'utente un 
 				membro del database (con la conseguenza che ad ogni avvio dell'app 
 				sia necessaria un'autenticazione, che comunque potrebbe essere 
 				trasparente all'utente).
@@ -217,10 +247,11 @@
 		l'esito della registrazione viene comunicato da CouchDB a Node.js, che 
 		si occupa di inoltrarla all'applicazione. In particolare neel caso in cui il ``nickname"
 		scelto dall'utente in fase di registrazione non sia disponibile 
-		(ovvero esiste già un utente con lo stesso ``nickname"), il server CouchDB 
+		(ovvero esiste già un utente con lo stesso ``nickname''), il server CouchDB 
 		lo comunicherà a Node.js, il quale si occuperà di inviare un opportuno 
 		messaggio di errore all'applicazione. L'utente verrà così avvisato della 
-		necessità di scegliere un diverso ``nickname".
+		necessità di scegliere un diverso ``nickname''.
+		
 	\section{Lato Client}
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
 		si mostra il confronto tra i due framework. In questa sezione, se 
