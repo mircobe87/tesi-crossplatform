@@ -242,14 +242,19 @@
 \onehalfspacing % imposta l'interlinea ad una riga e mezzo
 
 	\include{frontespizio} % includo il frontespizio
+	
+	\setcounter{page}{1}
+	\pagenumbering{Roman}
+	
 	\include{dedica}       % includo la dedica
 	\include{sommario}     % include il sommario
 	
-	\tableofcontents       % ecco l'indice
 	
+	\tableofcontents       % ecco l'indice
 	%\include{scheletro}    % includo uno scheletro di anteprima di tutta la relazione
 	                       % ma poi questo verrà sostituito con l'inclusione di tutti
 	                       % i capitoli.
+	
 	\include{Introduzione}
 	\include{SviluppoApplicazioniMobili}
 	\include{FrameworkValutati}
