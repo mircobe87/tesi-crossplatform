@@ -79,7 +79,7 @@
 		Apache CouchDB\texttrademark{} e Node.js.
 		\begin{description}
 			\item[Apache CouchDB\texttrademark{}] è un DBMS (database-management
-				system) document-oriented accessibile mediante API RESTful\footnote{Il termine è usato
+				system) document-o\-rien\-ted accessibile mediante API RESTful\footnote{Il termine è usato
 				per descrivere un'interfaccia che trasmette dati su HTTP. Per una
 				descrizione più esaustiva vedere
 				\url{http://it.wikipedia.org/wiki/Representational_State_Transfer}}
@@ -88,7 +88,7 @@
 				indipendentemente dal linguaggio usato per realizzare l'applicazione.
 				
 				Un database document-oriented è composto da una serie di documenti
-				``auto-contenenti'', contenenti dati appunto nel formato 
+				``auto-contenenti'', nei quali vengono inseriti dati, appunto, nel formato 
 				JSON. Questo significa che il documento in
 				questione è memorizzato nel documento stesso anziché in una tabella
 				come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
@@ -111,13 +111,85 @@
 				che permettono di realizzare con poco codice applicazioni piuttosto
 				complesse. In più, come Apache CouchDB\texttrademark{}, tutto 
 				questo è open source.
-				Note.js è stato usato per creare un semplice web server 
-				che comunicando col database CouchDB sia in grado di eseguire la 
+				Node.js è stato usato per creare un semplice web server 
+				che, comunicando col database CouchDB, sia in grado di eseguire la 
 				registrazione di un utente.
 		\end{description}
 		
+		Apache CouchDB\texttrademark{} è stato quindi utilizzato come database 
+		per le segnalazioni e per gli utenti.
+		Il primo problema che ci siamo trovati a dover gestire è stata la gestione 
+		registrazione e autenticazione degli utenti. CouchDB fornisce la 
+		possibilità di creare tre tipi diversi di utente:
+		\begin{itemize}
+			\item membri del database
+			\item amministratori del database
+			\item amministratori del server
+		\end{itemize}
+		I membri del database sono definiti per database e possono: leggere tutti
+		i tipi di documenti dal DB, scrivere ed editare documenti 
+		(tranne per i design documents).
+
+		Gli amministratori del database sono definiti per DB e hanno tutti i 
+		privilegi dei membri più: scrivere ed editare i design documents, 
+		aggiungere\/rimuovere altri amministratori e membri del DB. 
+		Non può però creare e/o cancellare un DB.
+
+		Gli amministratori del server hanno tutti i privilegi.
 		
-	
+		Avevamo quindi di fatto tre possibilità:
+		\begin{enumerate} 
+			\item creare un utente amministratore del server, un'utente amministratore 
+				del database, e al primo avvio dell'app usare codice IMEI (o numero di telefono) 
+				sia come nome utente che come password, per far diventare l'utente un 
+				membro del database (con la conseguenza che ad ogni avvio dell'app 
+				sia necessaria un'autenticazione, che comunque potrebbe essere 
+				trasparente all'utente).
+			\item creare un utente amministratore del server e un utente amministratore 
+				del database, lasciando però la possibilità di accesso al database 
+				come utenti anonimi, e usare il codice IMEI (o numero di telefono) 
+				semplicemente come valore di un campo ``utent'' nel documento che 
+				rappresenta la segnalazione. In questo modo solo l'utente amministratore 
+				del server sarebbe stato in grado di eliminare il database, e solo 
+				l'utente amministratore del database avrebbe potuto modificare il 
+				design document, mentre non sarebbe stata necessaria nessuna 
+				autenticazione per leggere e scrivere segnalazioni.
+			\item non creare nessun account e quindi lasciare il server accessibile 
+				da chiunque. Come al punto 2 il codice IMEI (o il numero di telefono) 
+				sarebbe stato usato semplicemente come valore di un campo ``utente''
+				nel documento che rappresenta la segnalazione
+		\end{enumerate}
+		In accordo col tutore aziendale abbiamo deciso di adottare la prima soluzione, 
+		anche per rendere l'applicazione più vicina a quelle che si trovano sul 
+		mercato; sarebbe stato infatti poco sicuro lasciare l'accesso al server 
+		e/o al database aperto a qualsiasi utente esterno.
+		
+		I membri di un database devono essere inseriti in un particolare database 
+		fornito da CouchDB, il cui nome è _users\footnote{Volendo è possibile 
+		configurare CouchDB per modificare tale nome.}. In questo DB ogni documento 
+		rappresenta un utente e deve contenere un nome utente e una password da 
+		usare come credenziali di autenticazione; inoltre è possibile aggiungervi 
+		dei campi pubblici, ovvero dei campi che al contrario di nome utente e 
+		password saranno visibili agli altri utenti contenuti nel database _users.
+		E' stata questa caratteristica a permetterci di rendere pubblici il nickname 
+		l'indirizzo mail.
+		
+		CouchDB offre vari sistemi di autenticazione, per semplicità abbiamo scelto 
+		di usare il Basic Access Authentication\footnote{}; in questo modo il passaggio delle 
+		credenziali di accesso al database da client a server avviene attraverso 
+		l'url della richiesta HTTP come nell'esempio: 
+		\begin{lstlisting}[language=HTTP]
+		http://username:password@www.servercouchdb.com/database
+		\end{lstlisting}
+		oppure usando il campo Authorization dell'header della richiesta HTTP 
+		come nell'esempio 
+		\begin{lstlisting}[language=HTTP]
+		Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
+		\end{lstlisting}
+		dove dXNlcm5hbWU6cGFzc3dvcmQK è la codifica base64 della stringa 
+		``username:password''.
+		
+		
 	\section{Lato Client}
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
 		si mostra il confronto tra i due framework. In questa sezione, se 
