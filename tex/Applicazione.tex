@@ -118,8 +118,26 @@
 		
 		Apache CouchDB\texttrademark{} è stato quindi utilizzato come database 
 		per le segnalazioni e per gli utenti.
-		Il primo problema che ci siamo trovati a dover gestire è stata la gestione 
-		registrazione e autenticazione degli utenti. CouchDB fornisce la 
+		
+		Per le segnalazioni abbiamo deciso di creare un unico database, in cui 
+		ogni documento contiene tutti i campi necessari a rappresentare la segnalazione.
+		In particolare sono presenti i campi: Titolo, Descrizione, Data, Coordinate e 
+		Immagine, UserId. 
+		Il titolo sarà usato come anteprima nelle varie liste da mostrare all'utente; 
+		la descrizione è intesa come un messaggio più dettagliato che descrive il 
+		degrado; la data indica la data e l'ora nella quale è stata fatta la
+		segnalazione; le coordinate espresse in latitudine e longitudine servono 
+		per localizzare il degrado; l'immagine è una foto scattata dal dispositivo usata 
+		per documentare il degrado individuato.
+		Un discorso a parte va fatto per il campo UserId. Essendo CouchdDB un 
+		database non relazionale non è stato possibile creare un'associazione 
+		tra l'utente e le segnalazioni da lui effettuate. La soluzione è stata 
+		quella di inserire il campo UserId, in questo modo una volta scaricata 
+		la segnalazione è possibile fare una query al database degli utenti per 
+		ottenere il ``nickname" e la ``mail" dell'utente identificato da UserId.
+		
+		Un problema che ci siamo trovati a dover gestire è stato quello di
+		registrare e autenticare gli utenti. CouchDB fornisce la 
 		possibilità di creare tre tipi diversi di utente:
 		\begin{itemize}
 			\item membri del database
@@ -132,14 +150,14 @@
 
 		Gli amministratori del database sono definiti per DB e hanno tutti i 
 		privilegi dei membri più: scrivere ed editare i design documents, 
-		aggiungere\/rimuovere altri amministratori e membri del DB. 
+		aggiungere/rimuovere altri amministratori e membri del DB. 
 		Non può però creare e/o cancellare un DB.
 
 		Gli amministratori del server hanno tutti i privilegi.
 		
 		Avevamo quindi di fatto tre possibilità:
 		\begin{enumerate} 
-			\item creare un utente amministratore del server, un'utente amministratore 
+			\item creare un utente amministratore del server, un utente amministratore 
 				del database, e al primo avvio dell'app usare codice IMEI (o numero di telefono) 
 				sia come nome utente che come password, per far diventare l'utente un 
 				membro del database (con la conseguenza che ad ogni avvio dell'app 
@@ -148,7 +166,7 @@
 			\item creare un utente amministratore del server e un utente amministratore 
 				del database, lasciando però la possibilità di accesso al database 
 				come utenti anonimi, e usare il codice IMEI (o numero di telefono) 
-				semplicemente come valore di un campo ``utent'' nel documento che 
+				semplicemente come valore di un campo ``utente'' nel documento che 
 				rappresenta la segnalazione. In questo modo solo l'utente amministratore 
 				del server sarebbe stato in grado di eliminare il database, e solo 
 				l'utente amministratore del database avrebbe potuto modificare il 
@@ -159,37 +177,50 @@
 				sarebbe stato usato semplicemente come valore di un campo ``utente''
 				nel documento che rappresenta la segnalazione
 		\end{enumerate}
-		In accordo col tutore aziendale abbiamo deciso di adottare la prima soluzione, 
+		In accordo col tutore aziendale abbiamo deciso di adottare la prima soluzione
+		\footnote{Non abbiamo però creato l'utente amministratore del database, con 
+		la conseguenza che le sue funzioni vengono svolte dall'ammnisratore del server}, 
 		anche per rendere l'applicazione più vicina a quelle che si trovano sul 
 		mercato; sarebbe stato infatti poco sicuro lasciare l'accesso al server 
 		e/o al database aperto a qualsiasi utente esterno.
 		
 		I membri di un database devono essere inseriti in un particolare database 
-		fornito da CouchDB, il cui nome è _users\footnote{Volendo è possibile 
+		fornito da CouchDB, il cui nome è \_users\footnote{Volendo è possibile 
 		configurare CouchDB per modificare tale nome.}. In questo DB ogni documento 
 		rappresenta un utente e deve contenere un nome utente e una password da 
 		usare come credenziali di autenticazione; inoltre è possibile aggiungervi 
 		dei campi pubblici, ovvero dei campi che al contrario di nome utente e 
-		password saranno visibili agli altri utenti contenuti nel database _users.
+		password saranno visibili agli altri utenti contenuti nel database \_users.
 		E' stata questa caratteristica a permetterci di rendere pubblici il nickname 
 		l'indirizzo mail.
 		
 		CouchDB offre vari sistemi di autenticazione, per semplicità abbiamo scelto 
 		di usare il Basic Access Authentication\footnote{}; in questo modo il passaggio delle 
-		credenziali di accesso al database da client a server avviene attraverso 
-		l'url della richiesta HTTP come nell'esempio: 
-		\begin{lstlisting}[language=HTTP]
-		http://username:password@www.servercouchdb.com/database
-		\end{lstlisting}
-		oppure usando il campo Authorization dell'header della richiesta HTTP 
+		credenziali di accesso da client a server avviene attraverso 
+		il campo Authorization inserito nell'header della richiesta HTTP 
 		come nell'esempio 
-		\begin{lstlisting}[language=HTTP]
+		\begin{lstlisting}
 		Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
 		\end{lstlisting}
 		dove dXNlcm5hbWU6cGFzc3dvcmQK è la codifica base64 della stringa 
 		``username:password''.
+		Questo tipo di autenticazione non prevede protezione per le credenziali 
+		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
+		criptate. CouchDB permette l'uso del protocollo HTTPS, che non abbiamo adottato 
+		per semplicità.
 		
-		
+		Avendo adottato la soluzione descritta al punto 1, al primo avvio dell'applicazione 
+		è necessario registrare l'utente utilizzando le credenziali dell'amministratore 
+		del server. Per fare questo abbiamo creato un Web Server utilizzando Node.js; 
+		esso cattura la richiesta di registrazione proveniente dall'applicazione 
+		e la inoltra a CouchDB autenticandosi come amministratore del server, 
+		l'esito della registrazione viene comunicato da CouchDB a Node.js, che 
+		si occupa di inoltrarla all'applicazione. In particolare neel caso in cui il ``nickname"
+		scelto dall'utente in fase di registrazione non sia disponibile 
+		(ovvero esiste già un utente con lo stesso ``nickname"), il server CouchDB 
+		lo comunicherà a Node.js, il quale si occuperà di inviare un opportuno 
+		messaggio di errore all'applicazione. L'utente verrà così avvisato della 
+		necessità di scegliere un diverso ``nickname".
 	\section{Lato Client}
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
 		si mostra il confronto tra i due framework. In questa sezione, se 
