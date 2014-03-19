@@ -37,7 +37,7 @@
 	utilizzando come credenziali di accesso il codice IMEI o il numero di
 	telefono, che dovevano essere letti automaticamente dall'applicazione,
 	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
-	dare all'utente, che si sta registrando, la possibilità di sceglersi un
+	dare all'utente, che si sta registrando, la possibilità di scegliersi un
 	``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
 	al lato server e verrà descritto più in dettaglio nella sezione apposita.}
 	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere
@@ -78,18 +78,32 @@
 		mirato a due prodotti open source vista la loro semplicità d'uso:
 		Apache CouchDB\texttrademark{} e Node.js.
 		\begin{description}
-			\item[Apache CouchDB\texttrademark{}] è un database non relazionale
-				implementato sul paradigma Map-Reduce. La comunicazione con esso
-				avviene mediante opportuni messaggi HTTP rendendo semplice la
-				richiesta di risoluzione di query. Sempre attraverso HTTP è
-				possibile inviare e ricevere dati strutturandoli in formato JSON; 
-				inoltre è possibile allegare a documenti JSON
-				file multimediali di ogni genere. Questo database fornisce
-				anche un interfaccia utente Web così da semplificare molto la
-				sua configurazione iniziale. Apache CouchDB\texttrademark{} non
-				consente nativamente di eseguire query spaziali ma grazie
-				all'estensione Geocouch anche questa funzionalità è stata resa
-				disponibile.
+			\item[Apache CouchDB\texttrademark{}] è un DBMS (database-management
+				system) document-oriented accessibile mediante API RESTful\footnote{Il termine è usato
+				per descrivere un'interfaccia che trasmette dati su HTTP. Per una
+				descrizione più esaustiva vedere
+				\url{http://it.wikipedia.org/wiki/Representational_State_Transfer}}
+				con scambio di dati in formato \js{} Object Notation (JSON). Questa
+				caratteristica permette di eseguire facilmente operazioni sul database
+				indipendentemente dal linguaggio usato per realizzare l'applicazione.
+				
+				Un database document-oriented è composto da una serie di documenti
+				``auto-contenenti'', contenenti dati appunto nel formato 
+				JSON. Questo significa che il documento in
+				questione è memorizzato nel documento stesso anziché in una tabella
+				come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
+				non esistono tabelle, righe, colonne e relazioni tra i
+				documenti; è quindi possibile, ad esempio, aggiungere un nuovo
+				campo ad un documento senza influire negativamente sugli altri.
+				
+				Ogni documento può contenere tipi di dato, come stringhe 
+				di testo, numeri e valori booleani, ma anche allegati multimediali, 
+				questo ci ha permesso di inserire le immagini e i dati di una 
+				segnalazione all'interno di un singolo documento.
+				Nella sua versione pura CouchDB non permette di eseguire interrogazioni 
+				su coordinate geografiche. Per sopperire a questa mancanza abbiamo 
+				utilizzato un'estensione chiamata GeoCouch\footnote{La documentazione 
+				è disponibile sul sito \url{https://github.com/couchbase/geocouch/}}.
 			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
 				Google Chrome per la realizzazione facile e veloce di
 				applicazioni di rete. La potenza di questa piattaforma è anche
@@ -97,6 +111,9 @@
 				che permettono di realizzare con poco codice applicazioni piuttosto
 				complesse. In più, come Apache CouchDB\texttrademark{}, tutto 
 				questo è open source.
+				Note.js è stato usato per creare un semplice web server 
+				che comunicando col database CouchDB sia in grado di eseguire la 
+				registrazione di un utente.
 		\end{description}
 		
 		
