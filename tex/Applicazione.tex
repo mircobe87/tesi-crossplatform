@@ -190,7 +190,8 @@
 		questa soluzione avrebbe permesso a chiunque avesse accesso al codice
 		sorgente dell'applicazione di ottenere nome utente e password dell'amministratore.
 		Abbiamo quindi deciso di realizzare un semplice web server implementato
-		con Node.js che lavori a fianco di Apache CouchDB\texttrademark{} con il
+		con Node.js che lavori a fianco di Apache CouchDB\texttrademark{}
+		(vedi fig.~\ref{fig:latoserver}) con il
 		compito: di ascoltare richieste di registrazione provenienti dal lato
 		client, di inoltrarle al DBMS aggiungendovi le credenziali di amministratore
 		e di controllare che il \texttt{nickname} scelto dall'utente non sia già
@@ -198,12 +199,21 @@
 		del DBMS sono contenute all'interno del web server Node.js e non sono più
 		reperibili direttamente dal codice del lato client. 
 		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{lato-server}
+			\caption{
+				Architettura del lato server dell'applicazione.
+			}
+			\label{fig:latoserver}
+		\end{figure}
+		
 		Fin ora abbiamo detto che nelle varie richieste HTTP devo essere presenti
 		le credenziali di autenticazione. Apache CouchDB\texttrademark{} fornisce
 		vari meccanismi di autenticazione tra cui Basic Access Authentication\footnote{
 		Schema di autenticazione definito per HTTP nella RFC2617 consultabile al'indirizzo
 		\url{https://tools.ietf.org/html/rfc2617\#section-2}.}
-		che per semplicità abbiamo scelto di utilizzare. In questo modo il
+		che abbiamo scelto di utilizzare per la sua semplicità. In questo modo il
 		passaggio delle credenziali di accesso da client a server avviene attraverso 
 		il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP 
 		come nell'esempio 
@@ -226,3 +236,4 @@
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
 		si mostra il confronto tra i due framework. In questa sezione, se 
 		necessario, si inseriranno qualche screenshot delle 2 app.
+		
