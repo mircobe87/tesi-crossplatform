@@ -271,8 +271,41 @@
 			che dal server tornino le relative risposte; a questo punto verrà
 			eseguito l'opportuno codice che gestirà tale evento.
 			
-		
-		
+		\subsection{Registrazione al primo avvio}
+			Come avevamo già anticipato, la prima cosa di cui doveva occuparsi
+			il client era di registrare un nuovo utente al suo primo avvio. Per
+			poter distinguere ogni volta se siamo al primo avvio o meno c'è la
+			necessità di avere qualche informazione in grado di permanere una volta
+			che l'applicazione è stata chiusa.
+			
+			\pg{}, tramite il plugin
+			\texttt{FileSystem}, offre la possibilità di accedere al file system
+			del dispositivo così da poter creare ed	eliminare file; in questa
+			situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
+			di \html{}5 (sempre che la web view del dispositivo implementi questa
+			funzionalità). In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
+			è possibile memorizzare, in maniera permanente tra varie sessioni, coppie
+			chiave - valore di tipo \texttt{String - String}. Per esempio con il
+			codice
+			\begin{lstlisting}
+	localStorage.setItem("name", "goofy");
+	var n = localStorage.getItem("name");
+	localStorage.removeItem("name");
+			\end{lstlisting}
+			si memorizza la coppia ``name'' - ``goofy'', si recupera la stringa associata
+			alla chiave ``name'' e si elimina tale coppia definitivamente.
+			
+			La stessa funzionalità è presente anche in \tisdk{} offerta dal suo
+			modulo \texttt{Titanium.App.Properties} che però, a differenza di
+			quella standard di \html{}5, permette di memorizzare tutti i tipi di
+			dato di \js{} tranne che funzioni. Facendo riferimento all'esempio 
+			precedente, la stessa cosa è realizzabile con \tisdk mediante il
+			codice
+			\begin{lstlisting}
+	Titanium.App.Properties.setString("name", "goofy");
+	var n = Titanium.App.Properties.getString("name");
+	Titanium.App.Properties.removeProperty("name");
+			\end{lstlisting}
 		
 		
 		
