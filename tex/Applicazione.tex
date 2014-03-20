@@ -33,7 +33,7 @@
 		      dalla visualizzazione dei suoi dettagli.
 	\end{itemize}
 	
-	La registrazione e l'autenticazione dell'utente sul server doveva avvenire 
+	\noindent La registrazione e l'autenticazione dell'utente sul server doveva avvenire 
 	utilizzando come credenziali di accesso il codice IMEI o il numero di
 	telefono, che dovevano essere letti automaticamente dall'applicazione,
 	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
@@ -122,7 +122,7 @@
 				registrazione provenienti da nuovi utenti.
 		\end{description}
 		
-		Apache CouchDB\texttrademark{} è stato quindi configurato per gestire e
+		\noindent Apache CouchDB\texttrademark{} è stato quindi configurato per gestire e
 		memorizzare l'insieme degli utenti e delle segnalazioni.
 		Ogni documento rappresentante una segnalazione è composto dai campi:
 		\begin{description}
@@ -157,7 +157,7 @@
 				salvataggio della segnalazione sul server.
 		\end{description}
 		
-		Per quanto riguarda la rappresentazione di un utente bisogna approfondire
+		\noindent Per quanto riguarda la rappresentazione di un utente bisogna approfondire
 		un po' più l'argomento. Apache CouchDB\texttrademark{} fornisce un
 		particolare database di nome \verb|_users| in cui, ogni documento 
 		rappresenta un utente e deve contenere i campi \texttt{name} e \texttt{password}, i cui
@@ -177,7 +177,7 @@
 				nei dettagli di tutte le sue segnalazioni.
 		\end{description}
 		
-		L'aggiunta di nuovi utenti nel database \verb|_users| deve essere fatta
+		\noindent L'aggiunta di nuovi utenti nel database \verb|_users| deve essere fatta
 		attraverso opportuni messaggi HTTP nei quali occorre essere autenticati
 		come amministratori del server\footnote{Questo particolare utente viene
 		definito in fase di configurazione del server Apache CouchDB\texttrademark{}}.
