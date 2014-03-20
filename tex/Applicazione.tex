@@ -234,9 +234,36 @@
 		come SSL\citep{Web:RFC2617}. CouchDB permette l'uso del protocollo HTTPS, 
 		che però non abbiamo adottato dato che lo scopo del tirocinio non era quello di focalizzarsi 
 		sulla sicurezza.
+	
+	
 	\section{Lato Client}
-		descrizione funzionalità e struttura applicazione. per ogni funzionalità
-		si mostra il confronto tra i due framework. In questa sezione, se 
-		necessario, si inseriranno qualche screenshot delle 2 app.
+		In questa sezione prenderemo in esame le varie funzionalità fornite
+		dall'applicazione come pretesto per mostrare come si sono
+		comportati i due framework quando abbiamo cercato di realizzarle. Non ci addentreremo
+		nei dettagli di carattere algoritmico nelle soluzioni dei vari problemi ma,
+		piuttosto, mostreremo quali strumenti \tisdk{} e \pg{} ci hanno fornito
+		per poterli risolvere.
+		
+		\subsection{Cominicare con il lato server}
+			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
+			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
+			di realizzare una libreria fatta su misura che ci permettesse di generare
+			i giusti messaggi HTTP da inviare al server. Ora, \tisdk{} ha la propria
+			libreria \texttt{Titanium.Network} che permette di istanziare un
+			particolare oggetto	\texttt{Titanium.Network.HTTPClient} con il
+			quale è possibile comporre ogni genere di richiesta HTTP. \pg{}
+			invece non fornisce nulla di tutto ciò e quindi abbiamo dovuto far
+			ricorso alle funzionalità AJAX di \jq{} fornito dal framework
+			\kendomob{}\footnote{Ricordiamo che \kendomob{}	è basato proprio su
+			\jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
+			questi fatti è stata definita un unica interfaccia di funzioni \js{}
+			e ne sono state realizzate due diverse implementazioni: una
+			fruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
+			sulla funzione \verb|$.ajax(...)| di \jq{}. È importante far notare
+			che, sia HTTPClient che \verb|$.ajax(...)| implementano un sistema
+			di comunicazione asincrono, ciò significa che una volta inviate le
+			richieste HTTP, il programma continuerà ad essere eseguito in attesa
+			che dal server tornino le relative risposte; a questo punto verrà
+			eseguito l'opportuno codice che gestirà tale evento.
 		
 		
