@@ -62,7 +62,7 @@
 	\section{Lato Server}
 		Lo scopo principale del lato server di questa applicazione è quello di
 		gestire un database che andrà a contenere tutte le segnalazioni inviate
-		dagli utenti che vi interagiranno attraverso il lato client. Il
+		dagli utenti attraverso il dispositivo mobile. Il
 		database dovrà essere in grado di rispondere a query riguardanti
 		certamente le coordinate geografiche, ma anche i nickname e la data e
 		ora delle varie segnalazioni. Un secondo compito importante che dovrà
@@ -122,7 +122,7 @@
 				registrazione provenienti da nuovi utenti.
 		\end{description}
 		
-		Apache CouchDB\texttrademark{} è stato configurato per gestire e
+		Apache CouchDB\texttrademark{} è stato quindi configurato per gestire e
 		memorizzare l'insieme degli utenti e delle segnalazioni.
 		Ogni documento rappresentante una segnalazione è composto dai campi:
 		\begin{description}
@@ -131,7 +131,7 @@
 				sul lato client.
 			\item[Descrizione] Una descrizione testuale più dettagliata sul
 				fenomeno di degrado segnalato. Questo valore verrà mostrato sul
-				lato clienti sono tra i dettagli di una segnalazione.
+				lato client solo tra i dettagli di una segnalazione.
 			\item[Data] Stringa testuale che indica la data e l'ora dell'istante
 				in cui la segnalazione è stata creata dall'utente. Anche questo
 				valore sarà mostrato solo tra i dettagli.
@@ -152,8 +152,8 @@
 				informazioni su una segnalazione, sarà possibile eseguire una
 				seconda query sul database degli utenti per ottenere i valori
 				di nickname e mail dell'utente che ha creato quella segnalazione.
-			\item[Id] Questo valore è univoco e, scelto automaticamente da
-				Apache CouchDB\texttrademark{}, viene inserito al momento del
+			\item[Id] Questo valore è univoco ed è scelto automaticamente da
+				Apache CouchDB\texttrademark{}, nel momento del
 				salvataggio della segnalazione sul server.
 		\end{description}
 		
@@ -202,7 +202,7 @@
 		le credenziali di autenticazione. Apache CouchDB\texttrademark{} fornisce
 		vari meccanismi di autenticazione tra cui Basic Access Authentication\footnote{
 		Schema di autenticazione definito per HTTP nella RFC2617 consultabile al'indirizzo
-		\url{https://tools.ietf.org/html/rfc2617#section-2}.}
+		\url{https://tools.ietf.org/html/rfc2617\#section-2}.}
 		che per semplicità abbiamo scelto di utilizzare. In questo modo il
 		passaggio delle credenziali di accesso da client a server avviene attraverso 
 		il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP 
@@ -213,109 +213,15 @@
 	Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
 	 ...
 		\end{lstlisting}
-		dove dXNlcm5hbWU6cGFzc3dvcmQK è la codifica base64 della stringa 
-		``username:password''.
+		dove \texttt{dXNlcm5hbWU6cGFzc3dvcmQK} è la stringa ``name:password'' 
+		codificata in base64.
 		Questo tipo di autenticazione non prevede protezione per le credenziali 
 		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
-		criptate. CouchDB permette l'uso del protocollo HTTPS, che non abbiamo adottato 
-		per semplicità.
-		
-		
-		Continuando a parlare di utenti, un problema che ci siamo trovati a
-		dover gestire è stato quello di	registrarli e autenticarli. L'aspetto
-		più delicato era riuscire ad aggiungerne uno nuovo partendo da una
-		richiesta proveniente da un utente che per il momento era ancora ``anonimo''.
-		Apache CouchDB\texttrademark{} fornisce la possibilità di creare tre
-		tipi diversi di utenti:
-		\begin{itemize}
-			\item membri del database
-			\item amministratori del database
-			\item amministratori del server
-		\end{itemize}
-		Per ogni DB (database) è possibile definire l'insieme dei suoi utenti
-		membri che, in quanto tali, hanno la possibilità di leggere tutti i
-		documenti del DB, aggiungerne di nuovi, modificare quelli già esistenti
-		ed eseguire query sul database. 
-		% in questo punto vediamo se poi è necessario parlare anche dei design document
-		Gli amministratori del database sono definiti ancora per DB e hanno,
-		oltre a tutti i privilegi dei membri, la possibilità di
-		aggiungere/rimuovere altri amministratori e membri dal database che
-		amministrano; non possono però creare e/o cancellare un DB.
-		% qui bisogna dire che possono anche modificare i design document se
-		% si decide di parlarne. 
-		Gli amministratori del server, invece, hanno tutti i privilegi dei
-		precedenti, possono creare e/o cancellare database e posso configurare
-		il comportamento dell'intero DBMS.
-		
-		\noindent Avevamo quindi individuato tre differenti soluzioni:
-		\begin{enumerate} 
-			% di questa soluzione non c'ho capito nulla, e siccome non me la
-			% ricordo nemmeno la rivediamo insieme (nota di Mirco).
-			\item creare un utente amministratore del server, un utente amministratore 
-				del database, e al primo avvio dell'app usare codice IMEI (o numero di telefono) 
-				sia come nome utente che come password per far diventare l'utente un 
-				membro del database (con la conseguenza che ad ogni avvio dell'app 
-				sia necessaria un'autenticazione, che comunque potrebbe essere 
-				trasparente all'utente).
-			\item creare un utente amministratore del server e un utente amministratore 
-				del database, lasciando però la possibilità di accesso al database 
-				come utenti anonimi, e usare il codice IMEI (o numero di telefono) 
-				semplicemente come valore di un campo ``utente'' nel documento che 
-				rappresenta la segnalazione. In questo modo solo l'utente amministratore 
-				del server sarebbe stato in grado di eliminare il database, e solo 
-				l'utente amministratore del database avrebbe potuto modificare il 
-				design document, mentre non sarebbe stata necessaria nessuna 
-				autenticazione per leggere e scrivere segnalazioni.
-			\item non creare nessun account e quindi lasciare il server accessibile 
-				da chiunque. Come al punto 2 il codice IMEI (o il numero di telefono) 
-				sarebbe stato usato semplicemente come valore di un campo ``utente''
-				nel documento che rappresenta la segnalazione
-		\end{enumerate}
-		In accordo col tutore aziendale abbiamo deciso di adottare la prima soluzione
-		\footnote{Non abbiamo però creato l'utente amministratore del database, con 
-		la conseguenza che le sue funzioni vengono svolte dall'ammnisratore del server}, 
-		anche per rendere l'applicazione più vicina a quelle che si trovano sul 
-		mercato; sarebbe stato infatti poco sicuro lasciare l'accesso al server 
-		e/o al database aperto a qualsiasi utente esterno.
-		
-		I membri di un database devono essere inseriti in un particolare database 
-		fornito da CouchDB, il cui nome è \_users\footnote{Volendo è possibile 
-		configurare CouchDB per modificare tale nome.}. In questo DB ogni documento 
-		rappresenta un utente e deve contenere un nome utente e una password da 
-		usare come credenziali di autenticazione; inoltre è possibile aggiungervi 
-		dei campi pubblici, ovvero dei campi che al contrario di nome utente e 
-		password saranno visibili agli altri utenti contenuti nel database \_users.
-		E' stata questa caratteristica a permetterci di rendere pubblici il nickname 
-		l'indirizzo mail.
-		
-		CouchDB offre vari sistemi di autenticazione, per semplicità abbiamo scelto 
-		di usare il Basic Access Authentication\footnote{}; in questo modo il passaggio delle 
-		credenziali di accesso da client a server avviene attraverso 
-		il campo Authorization inserito nell'header della richiesta HTTP 
-		come nell'esempio 
-		\begin{lstlisting}
-		Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
-		\end{lstlisting}
-		dove dXNlcm5hbWU6cGFzc3dvcmQK è la codifica base64 della stringa 
-		``username:password''.
-		Questo tipo di autenticazione non prevede protezione per le credenziali 
-		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
-		criptate. CouchDB permette l'uso del protocollo HTTPS, che non abbiamo adottato 
-		per semplicità.
-		
-		Avendo adottato la soluzione descritta al punto 1, al primo avvio dell'applicazione 
-		è necessario registrare l'utente utilizzando le credenziali dell'amministratore 
-		del server. Per fare questo abbiamo creato un Web Server utilizzando Node.js; 
-		esso cattura la richiesta di registrazione proveniente dall'applicazione 
-		e la inoltra a CouchDB autenticandosi come amministratore del server, 
-		l'esito della registrazione viene comunicato da CouchDB a Node.js, che 
-		si occupa di inoltrarla all'applicazione. In particolare neel caso in cui il ``nickname"
-		scelto dall'utente in fase di registrazione non sia disponibile 
-		(ovvero esiste già un utente con lo stesso ``nickname''), il server CouchDB 
-		lo comunicherà a Node.js, il quale si occuperà di inviare un opportuno 
-		messaggio di errore all'applicazione. L'utente verrà così avvisato della 
-		necessità di scegliere un diverso ``nickname''.
-		
+		criptate. Per cui l'uso di questo tipo di 
+		autenticazione andrebbe fatto assieme ad un sistema di sicurezza esterno 
+		come SSL\citep{Web:RFC2617}. CouchDB permette l'uso del protocollo HTTPS, 
+		che però non abbiamo adottato dato che lo scopo del tirocinio non era quello di focalizzarsi 
+		sulla sicurezza.
 	\section{Lato Client}
 		descrizione funzionalità e struttura applicazione. per ogni funzionalità
 		si mostra il confronto tra i due framework. In questa sezione, se 
