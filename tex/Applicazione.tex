@@ -2,7 +2,7 @@
 	Per avere un confronto più significativo, il tutore aziendale ci ha proposto
 	la realizzazione di un'applicazione che interagisse, in maniera sostanziale,
 	con le funzionalità offerte dal dispositivo in modo da poter valutare meglio
-	la potenzialità delle API offerte dai due framework in analisi.
+	la potenzialità delle API offerte dai due frame\-work in analisi.
 	
 	L'applicazione che ci è stata commissionata permette all'utente di segnalare 
 	problemi di degrado ambientale con immagini e testo georeferenziati.
@@ -37,11 +37,11 @@
 	utilizzando come credenziali di accesso il codice IMEI o il numero di
 	telefono, che dovevano essere letti automaticamente dall'applicazione,
 	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
-	dare all'utente, che si sta registrando, la possibilità di scegliersi un
+	dare all'utente che si sta registrando la possibilità di scegliersi un
 	``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
 	al lato server e verrà descritto più in dettaglio nella sezione apposita.}
-	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere
-	successivamente queste informazioni in tutte le sue segnalazioni; in questo
+	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere,
+	successivamente, queste informazioni in tutte le sue segnalazioni; in questo
 	modo un altro utente che visualizza una certa segnalazione può vedere chi
 	l'ha realizzata e, se vuole, sarà in grado di contattarlo tramite posta
 	elettronica. Per semplicità abbiamo deciso che una volta scelto il nickname
@@ -50,12 +50,14 @@
 	e-mail.
 	
 	L'applicazione, come ovvio, sarà composta di una parte client e di una parte
-	server. Il lato client è la parte dove si concentrano i nostri studi e dove
+	server. Il lato client, che risiederà sul dispositivo mobile, è la parte dove
+	si concentrano i nostri studi e dove
 	mostreremo come sono state implementate le funzionalità richieste
-	utilizzando i due framework presi in esame. L'analisi del lato server non
-	è scopo di questa attività di tirocinio e quindi ne daremo solo una
-	semplice descrizione indicando il modo di funzionamento e le tecnologie
-	impiegate, nonché il modo in cui è stato realizzato.
+	utilizzando i due frame\-work presi in esame. Il lato server risiederà
+	su una macchina dedicata e per quanto riguarda la sua analisi, non
+	essendo scopo di questa attività di tirocinio, ne daremo solo una
+	semplice descrizione sul funzionamento e sulle tecnologie
+	impiegate per realizzarlo.
 	
 	\section{Lato Server}
 		Lo scopo principale del lato server di questa applicazione è quello di
@@ -64,13 +66,13 @@
 		database dovrà essere in grado di rispondere a query riguardanti
 		certamente le coordinate geografiche, ma anche i nickname e la data e
 		ora delle varie segnalazioni. Un secondo compito importante che dovrà
-		svolgere sarà quello di gestire le identità dei diversi utenti e di
+		svolgere, sarà quello di gestire le identità dei diversi utenti e di
 		controllare l'univocità del nickname utilizzato in fase di
 		registrazione.
 		
 		Una caratteristica in più che non era richiesta ma che ci sembrava
 		opportuno avere era l'indipendenza della realizzazione del server
-		rispetto ai due framework utilizzati nell'implementare il lato client.
+		rispetto ai due frame\-work utilizzati nell'implementare il lato client.
 		In questo modo entrambe le implementazioni del lato client avrebbero
 		dialogato con la stessa implementazione del lato server.
 		
@@ -79,7 +81,7 @@
 		Apache CouchDB\texttrademark{} e Node.js.
 		\begin{description}
 			\item[Apache CouchDB\texttrademark{}] è un DBMS (database-management
-				system) document-o\-rien\-ted accessibile mediante API RESTful\footnote{Il termine è usato
+				system) doc\-u\-ment-ori\-ented accessibile mediante API RESTful\footnote{Il termine è usato
 				per descrivere un'interfaccia che trasmette dati su HTTP. Per una
 				descrizione più esaustiva vedere
 				\url{http://it.wikipedia.org/wiki/Representational_State_Transfer}}
@@ -88,37 +90,41 @@
 				indipendentemente dal linguaggio usato per realizzare l'applicazione.
 				
 				Un database document-oriented è composto da una serie di documenti
-				``auto-contenenti'', nei quali vengono inseriti dati strutturati
-				in formato JSON. Questo significa che il documento in
+				``auto-contenenti'', questo significa che il documento in
 				questione è memorizzato nel documento stesso anziché in una tabella
 				come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
 				non esistono tabelle, righe, colonne e relazioni tra i
-				documenti; è quindi possibile, ad esempio, aggiungere un nuovo
-				campo ad un documento senza influire negativamente sugli altri.
+				documenti e quindi aggiungere o rimuovere un nuovo
+				campo ad un documento non influisce negativamente sugli altri.
 				
-				Ogni documento può contenere tipi di dato, come stringhe 
-				di testo, numeri e valori booleani, ma anche allegati multimediali, 
-				questo ci ha permesso di inserire le immagini e i dati di una 
-				segnalazione all'interno di un singolo documento.
+				Ogni documento è rappresentato in una struttura JSON che può
+				contenere tipi di dato, come stringhe di testo, numeri e valori
+				booleani; inoltre Apache CouchDB\texttrademark{} permette
+				di allegare file multimediali ad ogni documento quindi nella sua
+				definizione JSON sarà presente anche un riferimento a tale allegato. 
+				Questa caratteristica ci ha permesso di inserire sia l'immagine che
+				i dati di una segnalazione all'interno di un singolo documento.
+				
 				Nella sua versione pura, CouchDB non permette di eseguire interrogazioni 
-				su coordinate geografiche; per sopperire a questa mancanza si è fatto
-				ricorso all'utilizzo dell'estensione GeoCouch\footnote{La documentazione 
+				spaziali basate su coordinate geografiche, per sopperire a questa
+				mancanza si è dovuto ricorrere all'utilizzo dell'apposita estensione
+				GeoCouch\footnote{La documentazione 
 				è disponibile sul sito \url{https://github.com/couchbase/geocouch/}}.
 			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
 				Google Chrome per la realizzazione facile e veloce di
 				applicazioni di rete. La potenza di questa piattaforma è anche
 				nel fatto che è supportata da una enorme quantità di moduli
 				che permettono di realizzare con poco codice applicazioni piuttosto
-				complesse. In più, come Apache CouchDB\texttrademark{}, tutto 
+				complesse; in più, come Apache CouchDB\texttrademark{}, tutto 
 				questo è open source. Node.js è stato usato per creare un
 				semplice web server che, comunicando col database Apache CouchDB\texttrademark{}
 				attraverso le proprie API HTTP, gestisse le richieste di
 				registrazione provenienti da nuovi utenti.
 		\end{description}
 		
-		Apache CouchDB\texttrademark{} è stato configurato per gestire l'insieme
-		degli utenti e delle segnalazioni. Ogni documento rappresentante una
-		segnalazione è composto dai campi:
+		Apache CouchDB\texttrademark{} è stato configurato per gestire e
+		memorizzare l'insieme degli utenti e delle segnalazioni.
+		Ogni documento rappresentante una segnalazione è composto dai campi:
 		\begin{description}
 			\item[Titolo] Stringa di poche parole per descrivere la segnalazione.
 				Questo valore verrà poi visualizzato nelle liste di segnalazioni
@@ -131,47 +137,105 @@
 				valore sarà mostrato solo tra i dettagli.
 			\item[Coordinate] Valore composto da due campi che contengono la
 				latitudine nord e la longitudine est della posizione geografica
-				in cui l'utente di trovava quando ha creato il documento. Valore
-				che verrà mostrato solo tra i dettagli della segnalazione.
+				in cui l'utente di trovava quando ha creato la segnalazione. Anche
+				la posizione geografica verrà mostrata solo tra i dettagli della
+				segnalazione.
 			\item[Immagine] Una foto scattata dal dispositivo usata	per
 				documentare il degrado individuato che verrà mostrata all'utente
 				solo nella schermata dei dettagli della relativa segnalazione.
 			\item[UserId] Identificatore unico relativo all'utente che ha creato
-				questa segnalazione. Questo valore è necessario in quanto,
-				Apache CouchDB\texttrademark{} non essendo un database relazionale
-				non è possibile in altro modo mettere in relazione un utente con
+				questa segnalazione. Questo valore è necessario visto che in
+				Apache CouchDB\texttrademark{}, non essendo un database relazionale,
+				non è possibile in alcun altro modo mettere in relazione un utente con
 				tutte le sue segnalazioni. Con questo accorgimento si sta di fatto
 				creando tale relazione in modo che, una volta scaricate le
-				informazioni su una segnalazione, sarà possibili eseguire una
+				informazioni su una segnalazione, sarà possibile eseguire una
 				seconda query sul database degli utenti per ottenere i valori
-				di nickname e e-mail del suo creatore.
+				di nickname e mail dell'utente che ha creato quella segnalazione.
 			\item[Id] Questo valore è univoco e, scelto automaticamente da
 				Apache CouchDB\texttrademark{}, viene inserito al momento del
 				salvataggio della segnalazione sul server.
 		\end{description}
 		
-		Per quanto riguarda la rappresentazione di un utente, oltre ai campi
-		obbligatori imposti dal DBMS, abbiamo inserito due cambi pubblici:
+		Per quanto riguarda la rappresentazione di un utente bisogna approfondire
+		un po' più l'argomento. Apache CouchDB\texttrademark{} fornisce un
+		particolare database di nome \verb|_users| in cui, ogni documento 
+		rappresenta un utente e deve contenere i campi \texttt{name} e \texttt{password}, i cui
+		rispettivi valori saranno poi utilizzati come credenziali di
+		autenticazione da inserire nelle richieste HTTP per consentire
+		all'utente operazioni sui DB contenuti nel server\footnote{
+		Apache CouchDB\texttrademark{} permette una gestione delle utenze molto
+		più accurata; per esempio è possibile riservare l'accesso ad un DB ad un
+		particolare gruppo di utenti.}. Oltre ai suddetti campi obbligatori è
+		possibile definirne altri pubblici, ovvero campi che al contrario di
+		\texttt{name} e \texttt{password} saranno visibili a qualsiasi altro utente.
+		Nel nostro caso abbiamo inserito solo due nuovi campi pubblici:
 		\begin{description}
-			\item[nickname] Il nickname dell'utente mostrato poi nei dettagli
-				di tutte le sue segnalazioni.
-			\item[mail] Indirizzo di posta elettronica mostrato anche questo
-				nei dettagli di tutte le segnalazioni create dallo stesso utente.
+			\item[nickname] Un nome identificativo scelto dall'utente in fase di
+				registrazione e mostrato poi nei dettagli di tutte le sue segnalazioni.
+			\item[mail] Indirizzo di posta elettronica dell'utente mostrato anche questo
+				nei dettagli di tutte le sue segnalazioni.
 		\end{description}
+		
+		L'aggiunta di nuovi utenti nel database \verb|_users| deve essere fatta
+		attraverso opportuni messaggi HTTP nei quali occorre essere autenticati
+		come amministratori del server\footnote{Questo particolare utente viene
+		definito in fase di configurazione del server Apache CouchDB\texttrademark{}}.
+		Nasce qui il problema di come far registrare sul server nuovi utenti
+		direttamente dal lato client dell'applicazione. Potevamo, a questo punto,
+		scegliere d'inserire nel codice del lato client le credenziali
+		d'amministratore usandole soltanto nelle richieste HTTP per la registrazione
+		di un nuovo utente.	Successivamente il dispositivo mobile avrebbe continuato a
+		comunicare con il server usando le credenziali del nuovo utente. Ovviamente
+		questa soluzione avrebbe permesso a chiunque avesse accesso al codice
+		sorgente dell'applicazione di ottenere nome utente e password dell'amministratore.
+		Abbiamo quindi deciso di realizzare un semplice web server implementato
+		con Node.js che lavori a fianco di Apache CouchDB\texttrademark{} con il
+		compito: di ascoltare richieste di registrazione provenienti dal lato
+		client, di inoltrarle al DBMS aggiungendovi le credenziali di amministratore
+		e di controllare che il \texttt{nickname} scelto dall'utente non sia già
+		stato usato da un altro. Così facendo le credenziali di amministratore
+		del DBMS sono contenute all'interno del web server Node.js e non sono più
+		reperibili direttamente dal codice del lato client. 
+		
+		Fin ora abbiamo detto che nelle varie richieste HTTP devo essere presenti
+		le credenziali di autenticazione. Apache CouchDB\texttrademark{} fornisce
+		vari meccanismi di autenticazione tra cui Basic Access Authentication\footnote{
+		Schema di autenticazione definito per HTTP nella RFC2617 consultabile al'indirizzo
+		\url{https://tools.ietf.org/html/rfc2617#section-2}.}
+		che per semplicità abbiamo scelto di utilizzare. In questo modo il
+		passaggio delle credenziali di accesso da client a server avviene attraverso 
+		il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP 
+		come nell'esempio 
+		\begin{lstlisting}
+	GET index.html HTTP/1.1
+	Host: www.someserver.com
+	Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
+	 ...
+		\end{lstlisting}
+		dove dXNlcm5hbWU6cGFzc3dvcmQK è la codifica base64 della stringa 
+		``username:password''.
+		Questo tipo di autenticazione non prevede protezione per le credenziali 
+		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
+		criptate. CouchDB permette l'uso del protocollo HTTPS, che non abbiamo adottato 
+		per semplicità.
+		
 		
 		Continuando a parlare di utenti, un problema che ci siamo trovati a
 		dover gestire è stato quello di	registrarli e autenticarli. L'aspetto
 		più delicato era riuscire ad aggiungerne uno nuovo partendo da una
 		richiesta proveniente da un utente che per il momento era ancora ``anonimo''.
 		Apache CouchDB\texttrademark{} fornisce la possibilità di creare tre
-		tipi di utenti diversi:
+		tipi diversi di utenti:
 		\begin{itemize}
 			\item membri del database
 			\item amministratori del database
 			\item amministratori del server
 		\end{itemize}
-		I membri del database sono definiti per ogni DB (database) e possono:
-		leggere tutti i tipi di documenti dal DB, aggiungerne di nuovi ed editarli.
+		Per ogni DB (database) è possibile definire l'insieme dei suoi utenti
+		membri che, in quanto tali, hanno la possibilità di leggere tutti i
+		documenti del DB, aggiungerne di nuovi, modificare quelli già esistenti
+		ed eseguire query sul database. 
 		% in questo punto vediamo se poi è necessario parlare anche dei design document
 		Gli amministratori del database sono definiti ancora per DB e hanno,
 		oltre a tutti i privilegi dei membri, la possibilità di
