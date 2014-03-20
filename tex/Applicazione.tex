@@ -217,19 +217,18 @@
 		passaggio delle credenziali di accesso da client a server avviene attraverso 
 		il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP 
 		come nell'esempio 
-		\begin{lstlisting}
+		\begin{lstlisting}[language=http]
 	GET index.html HTTP/1.1
 	Host: www.someserver.com
 	Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
 	 ...
 		\end{lstlisting}
 		dove \texttt{dXNlcm5hbWU6cGFzc3dvcmQK} è la stringa ``name:password'' 
-		codificata in base64.
+		codificata in base64\footnote{Per una completa specifica del sistema di
+		codifica/decodifica base64 consultare la RFC4648 disponibili all'indirizzo
+		\url{http://www.rfc-editor.org/pdfrfc/rfc4648.txt.pdf}}.
 		Questo tipo di autenticazione non prevede protezione per le credenziali 
-		trasmesse; come visto esse vengono banalmente codificate in base64\footnote{
-		Per una completa specifica del sistema di codifica/decodifica base64 
-		consultare la RFC4648 disponibili all'indirizzo
-		\url{http://www.rfc-editor.org/pdfrfc/rfc4648.txt.pdf}} ma non 
+		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
 		criptate. Per cui l'uso di questo tipo di 
 		autenticazione andrebbe fatto assieme ad un sistema di sicurezza esterno 
 		come SSL\citep{Web:RFC2617}. CouchDB permette l'uso del protocollo HTTPS, 
