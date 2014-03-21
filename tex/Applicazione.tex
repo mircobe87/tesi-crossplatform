@@ -352,23 +352,47 @@
 	/** istanzia la mappa */
 	app.map = new google.maps.Map(mapElement, mapOptions);
 			\end{lstlisting}
-			La mappa così implementata possiede tutte le funzionalità offerte da
-			Google ma, essendo trascinabile in tutte le direzioni, il gesto di
-			spostarla verso destra entra in conflitto con il gesto di swipe per
-			l'apertura del menù. \kendomob{} non fornendo la possibilità di 
-			configurare	la sensibilità del gesto di swipe ci ha costretto a
-			dover rinunciare all'uso di tale gesto per l'apertura e chiusura del
-			drawer. Un altro appunto che dobbiamo fare riguarda le prestazioni
-			della mappa: rispetto a quelle che si possono trovare in applicazioni
-			native, la nostra risulta molto meno fluida durante i movimenti.
+			La mappa così implementata possiede tutte le caratteristiche offerte
+			dalle mappe Google, in particolare, la possibilità di ottenere le
+			coordinate dei punti in basso a sinistra e in alto a destra che
+			delimitano l'area rettangolare mostrata e, la possibilità di
+			disegnare dei segnaposto cliccabili con icone personalizzabili.
+			Sfruttando queste funzionalità, una volta ottenute dal database
+			tutte le segnalazioni riguardanti l'area attualmente visualizzata, è
+			stato sufficiente creare un vettore di \texttt{google.maps.Marker} e
+			passarlo alla mappa per	veder apparire tutte le segnalazioni sopra
+			di essa. Un problema che però ci siamo trovati ad affrontare è stato
+			il fatto che lo spostare la mappa verso destra entrava in conflitto
+			con il gesto di swipe per l'apertura del menù. \kendomob{} non
+			fornendo la possibilità di configurare la sensibilità dello swipe ci
+			ha costretti a dover rinunciare all'uso di tale gesto per l'apertura
+			e chiusura del drawer. Un altro appunto che dobbiamo fare riguarda
+			le prestazioni: rispetto alle mappe che si possono trovare in
+			applicazioni native, questa risulta essere molto meno fluida durante
+			il suo trascinamento e durante il cambio del livello di zoom.
 			\begin{figure}[h]
 				\centering
-				\includegraphics[keepaspectratio=true, width=0.5\textwidth]{mapPG}
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=\textwidth]{mapPG}
+					\caption{}
+					\label{fig:mapPG}
+				\end{subfigure}
+				~
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=\textwidth]{mapPGMark}
+					\caption{}
+					\label{fig:mapPGMark}
+				\end{subfigure}
 				\caption{
-					Aspetto finale della mappa ottenuta mediante le API Google
-					all'interno di una view \kendomob{}.
+					Mappe ottenute mediante le API Google all'interno di
+					view \kendomob{}. In (a) una normale mappa, in
+					(b) una mappa con l'aggiunta di alcuni
+					segnaposto personalizzati.
 				}
-				\label{fig:mapPG}
+				\label{fig:PGMaps}
 			\end{figure}
 			
+			Anche per quanto riguarda l'uso delle mappe in progetti Titanium
+			non comporta grandi difficoltà, in più il paradigma MVC
+			offerto da Alloy rende tutto più modulare e strutturato.
 			
