@@ -239,12 +239,94 @@
 	\section{Lato Client}
 		In questa sezione prenderemo in esame le varie funzionalità fornite
 		dall'applicazione come pretesto per mostrare come si sono
-		comportati i due framework quando abbiamo cercato di realizzarle. Non ci addentreremo
+		comportati i due framework. Non ci addentreremo
 		nei dettagli di carattere algoritmico nelle soluzioni dei vari problemi ma,
-		piuttosto, mostreremo quali strumenti \tisdk{} e \pg{} ci hanno fornito
+		piuttosto, mostreremo quali strumenti ci hanno fornito \tisdk{} e \pg{}
 		per poterli risolvere.
 		
-		\subsection{Cominicare con il lato server}
+		\subsection{Struttura}
+			Descriviamo ora la struttura generale dell'applicazione dal punto 
+			di vista grafico.
+			Abbiamo cercato di fornire lo stesso aspetto alle due versioni 
+			dell'applicazione. E' interessante vedere come i due framework hanno risposto 
+			alle nostre esigenze. Prendendo spunto da applicazioni native come 
+			gmail e facebook l'idea è stata quella di avere una barra di intestazione 
+			nella parte alta dello schermo, che contenesse un pulsante in grado di 
+			far apparire un menù dal quale accedere alle varie schermate dell'applicazione.
+			Viste le funzionalità richieste dall'applicazione abbiamo creato schermate 
+			differenti per:
+			\begin{enumerate} 
+				\item visualizzare la mappa delle segnalazioni 
+				\item visualizzare la lista delle segnalazioni fatte dall'utente
+				\item visualizzare la lista delle ultime segnalazioni fatte da tutti gli utenti
+				\item comporre ed inviare la segnalazione
+				\item effettuare la registrazione e/o modificare l'indirizzo mail registrato.
+				\item visualizzare i dettagli di una segnalazione
+			\end{enumerate}
+			
+			I due framework approcciano in maniera differente il concetto di schermata: 
+			in \kendomob{} le schermate vanno inserite nel body dello stesso 
+			file HTML, tramite div decorati con l'attributo data-role=view, la 
+			navigazione tra di esse avviene attraverso le ancore come nelle normali 
+			pagine web si naviga all'interno dello stesso documento; Titanium invece 
+			permette due modi diversi di definire una schermata: la view e la window.
+			Una view deve essere necessariamente contenuta in una window, nel linguaggio 
+			del web una window Titanium è paragonabile ad una pagina web. Mentre le view 
+			sono analoghe ai div. Un'applicazione potrebbe essere costituita da un'unica 
+			window con tante view (che sarebbe la stessa tecnica usata con \kendomob{}) 
+			dando l'effetto appunto di essere composta da schermate differenti, oppure 
+			può essere composta da tante window. La differenza si ha nel fatto che 
+			le window hanno contesti di esecuzione diversi l'una dall'altra al contrario 
+			delle view che condividono quello della window che le contiene.
+			Personalmente abbiamo scelto di implementare le schermate 1,2,3 come 
+			view appartenenti alla stessa window e le 4, 5, 6 come window differenti, 
+			questo ha facilitato la navigazione tra le varie schermate, in quanto 
+			il passaggio da una view all'altra non è così semplice in \tisdk{} come 
+			lo è invece in \kendomob{}.
+			
+			Per la barra di intestazione ed il menù di navigazione abbiamo trovato 
+			differenze sostanziali tra i due framework.
+			Partiamo con \kendomob{}
+			Innanzitutto esso offre un particolare elemento grafico chiamato drawer, 
+			ovvero un bottone che se premuto porta all'apertura di 
+			una lista che si espande partendo dalla sinistra dello schermo e che 
+			si va a sovrapporre al contenuto della schermata stessa.
+			Ogni schermata può essere suddivisa in un intestazione e un corpo, 
+			con l'effetto che l'intestazione apparirà come una barra nella parte alta 
+			dello schermo. Per essere più precisi la sua posizione dipende dalla
+			piattaforma: di default su iOS la posizione è in alto, mentre per Android 
+			è in basso, ma, attraverso opportune modifiche ai file css che accompagnano 
+			questo framework, abbiamo fatto in modo che la barra risultasse in alto 
+			anche su Android in modo da rendere l'applicazione il più simile possibile 
+			a quelle native.
+			All'interno di questa barra abbiamo inserito il widget drawer, emulando 
+			così la action bar e il navigation drawer di Android e la navbar di iOS,
+			ottenendo appunto il sistema di navigazione desiderato (riferimento figura).
+			Avendo utilizzato interamente i widget offerti da \kendomob{}, l'aspetto 
+			della barra di navigazione viene adattato alla piattaforma senza 
+			dover aggiungere nessuna riga di codice.
+			
+			\tisdk{} fornisce le API per creare direttamente la action bar nativa 
+			di Android e la navbar nativa di iOS, però ancora non permette la 
+			creazione del navigation drawer nativo di android, e dell'analogo 
+			elemento su iOS. Però siamo comunque riusciti a fornire l'aspetto 
+			desiderato all'applicazione.
+			Con \tisdk{} infatti è comunque possibile disegnare elementi grafici 
+			personalizzati ed assegnarli particolari comportamenti 
+			semplicemente attraverso l'uso di xml, tss e \js{}. In particolare 
+			avendo usato il framework alloy (descritto 
+			nella sezione \ref{subsub:alloy}) abbiamo potuto usare un widget.
+			Per Alloy un widget non è un semplice elemento grafico, ma un componente 
+			con proprio view, controller e stile che può essere riutilizzato in progetti 
+			diversi. Abbiamo così trovato in rete il widget \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}
+			che faceva esattamente al caso nostro. L'unica limitazione di questo 
+			widget è che la barra d'intestazione con il menù è utilizzabile all'interno 
+			di una sola window (dove comunque possono essere presenti più schermate 
+			come detto attraverso le view) e inoltre funziona solo su iOS e Android.
+			
+
+		
+		\subsection{Comunicare con il lato server}
 			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
 			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
 			di realizzare una libreria fatta su misura che ci permettesse di generare
@@ -256,7 +338,7 @@
 			ricorso alle funzionalità AJAX di \jq{} fornito dal framework
 			\kendomob{}\footnote{Ricordiamo che \kendomob{}	è basato proprio su
 			\jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
-			questi fatti è stata definita un unica interfaccia di funzioni \js{}
+			questi fatti è stata definita un'unica interfaccia di funzioni \js{}
 			e ne sono state realizzate due diverse implementazioni: una
 			fruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
 			sulla funzione \verb|$.ajax(...)| di \jq{}\footnote{Maggiori
@@ -272,9 +354,10 @@
 			eseguito l'opportuno codice che gestirà tale evento.
 			
 		\subsection{Registrazione al primo avvio}
-			Come avevamo già anticipato, la prima cosa di cui doveva occuparsi
-			il client era di registrare un nuovo utente al suo primo avvio. Per
-			poter distinguere ogni volta se siamo al primo avvio o meno c'è la
+			Come avevamo già anticipato, la prima cosa di cui deve occuparsi
+			il client al suo primo avvio è quella di registrare un nuovo utente. Per
+			poter distinguere ogni volta se l'applicazione è stata avviata 
+			per la prima volta o meno c'è la
 			necessità di avere qualche informazione in grado di permanere una volta
 			che l'applicazione è stata chiusa.
 			
@@ -282,8 +365,7 @@
 			\texttt{FileSystem}, offre la possibilità di accedere al file system
 			del dispositivo così da poter creare ed	eliminare file; in questa
 			situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
-			di \html{}5 (sempre che la web view del dispositivo implementi questa
-			funzionalità). In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
+			di \html{}5. In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
 			è possibile memorizzare, in maniera permanente tra varie sessioni, coppie
 			chiave - valore di tipo \texttt{String - String}. Per esempio con il
 			codice
@@ -306,7 +388,53 @@
 	var n = Titanium.App.Properties.getString("name");
 	Titanium.App.Properties.removeProperty("name");
 			\end{lstlisting}
-		
+
+			La differenza sostanziale tra i due sistemi di memorizzazione risiede 
+			nella quantità di dati che possono essere salvati. 
+			Le specifiche di \html{}5 suggeriscono un limite di 5MB, ma la dimensione 
+			può variare tra le varie piattaforme; mentre come afferma la documentazione 
+			di \tisdk{} non c'è un limite specifico alla quantità di dati memorizzabili
+			in Properties, bisogna però notare che questi dati sono caricati in 
+			memoria principale quando 
+			viene lanciata l'applicazione, e vi rimangono fino alla sua chiusura.
+			Questo permette un rapido accesso ai dati, ma al costo di un aumento 
+			della memoria usata dall'applicazione. 
+			
+			Dal punto di vista dello sviluppo cross platform \tisdk{} assicura il funzionamento 
+			del sistema di memorizzazione descritto, direttamente senza dover riadattare il codice,
+			su tutte le piattaforme supportate. Anche il local storage 
+			di \html{}5 può essere usato per memorizzare dati su piattaforme diverse 
+			usando lo stesso codice, ma il fatto di incorrere in diversi limiti di quota, 
+			a seconda del sistema operativo, rende necessario un controllo più 
+			accurato. Inoltre con \pg{} bisogna tenere conto che la web view di 
+			alcune piattaforme potrebbe non supportare il local storage di \html{}5 
+			(attualmente i principali OS Android, Windows Phone 8 e iOS lo fanno).
+			
+			Come descritto più volte, la registrazione doveva avvenire utilizzando 
+			come credenziali il codice IMEI del disositivo oppure il numero di telefono.
+			Nè con \pg{} nè con \tisdk{} questo è stato possibile. Nativamente 
+			Android permette di accedere al codice IMEI, mentre iOS no; è stato 
+			comunque possibile ottenere un identificatore con entrambi i 
+			framework. \pg{} tramite il plugin \texttt{device} permette di accedere 
+			ad alcune informazioni sul dispositivo come lo UUID, allo stesso 
+			modo \tisdk{} fornisce una funzione per ottenere lo stesso UUID.
+			Dobbiamo però fare una distinzione particolare sul valore di questo 
+			UUID tra Android e iOS. 
+			Le documentazioni di entrambi i framework affermano che date le limitazioni 
+			imposte da iOS non è possibile ottenere un valore in grado di identificare 
+			univocamente il dispositivo\footnote{Approfondimenti sulle limitazioni 
+			imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}}. 
+			Pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma 
+			un valore che identifica l'applicazione che però potrebbe essere diverso 
+			dopo una reinstallazione o dopo 
+			un aggiornamento della stessa o addirittura del sistema operativo. 
+			Su Android invece UUID 
+			identifica proprio il dispositivo. La conseguenza di tutto ciò è che 
+			UUID non è affidabile per iOS e quindi sarebbe stato necessario utilizzare 
+			un meccanismo di registrazione basato su credenziali differenti; 
+			dato che però come detto l'applicazione è stata sviluppata solo per Android 
+			abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo 
+			continuato ad usare UUID.
 		\subsection{La mappa delle segnalazioni}
 			Arricchire la propria applicazione Titanium o \pg{} con una mappa
 			non è un problema. Google fornisce un ricco insieme di API \js{} per
@@ -396,3 +524,4 @@
 			non comporta grandi difficoltà, in più il paradigma MVC
 			offerto da Alloy rende tutto più modulare e strutturato.
 			
+
