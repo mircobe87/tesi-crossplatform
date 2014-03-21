@@ -388,7 +388,7 @@
 	var n = Titanium.App.Properties.getString("name");
 	Titanium.App.Properties.removeProperty("name");
 			\end{lstlisting}
-			%aggiungere discorso che queste sono funzioni completamente cross platform
+
 			La differenza sostanziale tra i due sistemi di memorizzazione risiede 
 			nella quantità di dati che possono essere salvati. 
 			Le specifiche di \html{}5 suggeriscono un limite di 5MB, ma la dimensione 
@@ -435,5 +435,69 @@
 			dato che però come detto l'applicazione è stata sviluppata solo per Android 
 			abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo 
 			continuato ad usare UUID.
-			 
-		
+		\subsection{La mappa delle segnalazioni}
+			Arricchire la propria applicazione Titanium o \pg{} con una mappa
+			non è un problema. Google fornisce un ricco insieme di API \js{} per
+			l'utilizzo delle proprie mappe che quindi possiamo utilizzare nella
+			web view di \pg{}. \tisdk, invece, inizialmente forniva l'oggetto
+			\texttt{Titanium.Map} che permetteva di utilizzare le mappe su tutte
+			le sue piattaforme supportate ma, dalla versione 3.2.0 dell'SDK, l'uso
+			di queste API per Andorid e iOS è stato deprecato; ora, al suo posto,
+			Titanium fornisce un implementazione più aggiornata con	il modulo
+			gratuito \texttt{Module.Map}.
+			
+			Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
+			come mostrato nel segmento di codice seguente
+			\begin{lstlisting}
+	<div data-role="view"  data-title="Degrado Ambientale" id="map-view" data-layout="default" data-stretch="true" data-init="app.initMap" data-show="app.viewMapShow">
+		<div id="map" style="width:100%;"></div>
+	</div>
+			\end{lstlisting}
+			sfruttando il framework \kendomob{}, abbiamo definito una specifica
+			view con all'interno un particolare elemento \texttt{div}; in fase di
+			avvio dell'applicazione, tramite \js{}, abbiamo configurato e
+			successivamente inizializzato la mappa su quel \texttt{div} (come
+			mostrato nel frammento di codice \ref{cod:initmapPG}) così
+			da renderla visibile all'utente all'interno di quella view come
+			mostrato nella figura \ref{fig:mapPG}.
+			\begin{lstlisting}[
+				caption={
+				    L'elemento \texttt{div} è stato selezionato mediante una
+				    query \jq{} e su quello si è istanziata la mappa tramite
+				    le API offerte da Google.
+				},
+				label={cod:initmapPG}
+			]
+	/** elemento <div> nel DOM che conterra' la mappa */
+	var mapElement = $("#map")[0];
+
+	/** configurazione della mappa */
+	var mapOptions = {
+		center: new google.maps.LatLng(43.720741,10.408413),
+		zoom: 10
+	};
+
+	/** istanzia la mappa */
+	app.map = new google.maps.Map(mapElement, mapOptions);
+			\end{lstlisting}
+			La mappa così implementata possiede tutte le funzionalità offerte da
+			Google ma, essendo trascinabile in tutte le direzioni, il gesto di
+			spostarla verso destra entra in conflitto con il gesto di swipe per
+			l'apertura del menù. \kendomob{} non fornendo la possibilità di 
+			configurare	la sensibilità del gesto di swipe ci ha costretto a
+			dover rinunciare all'uso di tale gesto per l'apertura e chiusura del
+			drawer. Un altro appunto che dobbiamo fare riguarda le prestazioni
+			della mappa: rispetto a quelle che si possono trovare in applicazioni
+			native, la nostra risulta molto meno fluida durante i movimenti.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=0.5\textwidth]{mapPG}
+				\caption{
+					Aspetto finale della mappa ottenuta mediante le API Google
+					all'interno di una view \kendomob{}.
+				}
+				\label{fig:mapPG}
+			\end{figure}
+			
+			
+
