@@ -685,3 +685,62 @@
 			quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
 			supportano tutte le piattaforme senza alcuna differenza.
 			
+			
+		\subsection{Creare una nuova segnalazione}
+			Creare una segnalazione sembra una cosa semplice ma per
+			comporne una c'è bisogno di una sostanziale interazione con il
+			dispositivo. Quello che andremo a descrivere ed a valutare sarà
+			come \pg{} e \tisdk{} si sono comportati quando abbiamo avuto
+			bisogno di:
+			\begin{itemize}
+				\item ottenere l'input testuale immesso dall'utente;
+				\item interagire con la fotocamera del dispositivo per ottenere
+					una foto del degrado da allegare;
+				\item interagire con il servizio di geolocalizzazione per
+					recuperare la posizione attuale del dispositivo;
+				\item inviare la nuova segnalazione sul server.
+			\end{itemize}
+			
+			\noindent Sul rilevare l'input immesso dall'utente non ci sono molte
+			considerazioni da fare: sia \tisdk{} che
+			\kendomob{}\footnote{Rilevare input testuale non compete \pg{}, non
+			è un interazione con funzionalità del dispositivo; riguarda invece
+			funzionalità dei widget di cui è comporta l'interfaccia grafica.}
+			mettono a disposizione i propri widget di ``input'' per i quali sono
+			definiti gli opportuni metodi per ottenere il valore immesso
+			dall'utente.
+			
+			Accedere alla fotocamera per scattare ed acquisire una foto è un 
+			compito non banale; \pg{} lo rende possibile attraverso le API del
+			proprio plugin \texttt{Camera}. Tramite la funzione
+			\texttt{getPicture} viene avviata l'applicazione della fotocamera
+			dove l'utente, una volta scatta la foto, ha la possibilità di
+			accettarla o di rifiutarla. Le azioni da intraprendere nei due casi
+			sono specificate in due rispettive funzioni \js{} che vengono
+			passate come parametri al momento della chiamata di
+			\texttt{getPicture}. Questa funzione accetta anche anche terzo
+			parametro che specifica un certo numero di opzioni permettendo di
+			modificare la foto acquisita; in particolare è possibile
+			ridimensionare l'immagine, specificare la qualità della compressione
+			JPEG utilizzata e indicare il formato dei dati restituiti dalla
+			chiamata. \tisdk{} offre la stessa funzionalità di acquisire foto
+			tramite la funzione \texttt{showCamera} dello spazio dei nomi
+			\texttt{Titanium.Media}. La differenza con \pg{} è che i dati
+			dell'immagine vengono restituiti solo in formato un oggetto \js{}
+			\texttt{Blob} così come vendono acquisiti; per modificare l'immagine
+			si deve ricorrere ad altre funzionalità magari offerte da qualche
+			modulo aggiuntivo.
+			
+			Recuperate le informazioni inserite dall'utente e acquisita la
+			fotografia c'è bisogno di recuperare le coordinate geografiche della
+			posizione attuale. \pg{} consente di accedere al servizio di
+			geolocalizzazione del dispositivo attraverso il plugin
+			\texttt{Geolocation} che permette di monitorare in maniera
+			continuativa la posizione oppure di inviare una richiesta per la
+			posizione corrente. In entrambi i casi si possono passare dei
+			parametri di opzione alle rispettive funzioni per esempio per
+			ottenere la posizione esatta mediante il ricevitore GPS oppure,
+			quella meno accurata, mediante il sistema si approssimazione che
+			impiega le informazioni sulle reti WiFi presenti nella zone e la
+			cella telefonica alla quale si è agganciati.
+			
