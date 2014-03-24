@@ -444,7 +444,7 @@
 			le sue piattaforme supportate ma, dalla versione 3.2.0 dell'SDK, l'uso
 			di queste API per Andorid e iOS è stato deprecato; ora, al suo posto,
 			Titanium fornisce un implementazione più aggiornata con	il modulo
-			gratuito \texttt{Module.Map}.
+			gratuito \texttt{ti.map}.
 			
 			Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
 			come mostrato nel segmento di codice seguente
@@ -522,6 +522,74 @@
 			
 			Anche per quanto riguarda l'uso delle mappe in progetti Titanium
 			non comporta grandi difficoltà, in più il paradigma MVC
-			offerto da Alloy rende tutto più modulare e strutturato.
+			offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
+			una view con al suo interno la mappa bisogna prima caricare il modulo
+			relativo, questo lo si fa tipicamente all'interno del file
+			\texttt{app/alloy.js} così che il caricamento del modulo venga
+			eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
+			comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
+			in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
+			\begin{lstlisting}[
+				caption={Caricamento del modulo \texttt{ti.map} creando un riferimento
+				        globale nel file \texttt{alloy.js}.},
+				label=cod:alloyglob
+			]
+	// caricamento modulo mappa
+	Alloy.Globals.Map = require('ti.map');
+			\end{lstlisting}
+			
+			Fatto questo abbiamo definito la view in un file XML dedicato, vi abbiamo richiamato
+			il modulo per la mappa (vedi codice \ref{cod:alloymapview}) e, in un secondo file \js{} specifico per
+			l'implementazione del controllore, sono stati definiti tutti i
+			gestori per gli eventi, per noi interessanti da gestire, che la
+			mappa potrà scatenare durante l'interazione con l'utente (vedi codice \ref{cod:alloymapcontroller}).
+			\begin{lstlisting}[
+				caption={Contenuto del file \texttt{map.xml} che definisce la
+				view contenente la mappa.},
+				label=cod:alloymapview
+			]
+	<Alloy>
+		<View
+			id="map" ns="Alloy.Globals.Map" regionFit="true"
+			onClick="markerClick"
+			onRegionchanged="moved"
+			onComplete="mapCompleted"/>
+	</Alloy>
+			\end{lstlisting}
+			\begin{lstlisting}[
+				caption={Parte del file \texttt{map.js}, controllore per la mappa, con le definizioni dei gestori per
+				gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
+				label=cod:alloymapcontroller
+			]
+
+	[...]
+
+	/**
+	 * Handler del click su un segnaposto della mappa.
+	 * @param {ModulesMapViewEvent} evt evento passato allo
+	 *   handler al momento della chiamata.
+	 */
+	function markerClick(evt) {	...	}
+
+	/**
+	 * handler dell'evento associato allo spostamento e
+	 * ridimensionamento della mappa.
+	 * @param {ModulesMapViewEvent} evt evento passato allo
+	 *   handler al momento della chiamata.
+	 */
+	function moved(evt) { ... }
+
+	/**
+	 * Handler dell'evento onComplete scatenato appena la mappa
+	 * e' pronta.
+	 *
+	 * Recupera la posizione corrente e una volta ottenuta
+	 * inizializza la mappa con quella posizione.
+	 *
+	 * @param {ModulesMapViewEvent} evt
+	 */
+	function mapCompleted(evt){ ... }
+
+			\end{lstlisting}
 			
 
