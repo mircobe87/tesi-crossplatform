@@ -449,7 +449,11 @@
 			Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
 			come mostrato nel segmento di codice seguente
 			\begin{lstlisting}
-	<div data-role="view"  data-title="Degrado Ambientale" id="map-view" data-layout="default" data-stretch="true" data-init="app.initMap" data-show="app.viewMapShow">
+	<div data-role="view" data-title="Degrado Ambientale"
+	  id="map-view" data-layout="default"
+	  data-stretch="true" data-init="app.initMap"
+	  data-show="app.viewMapShow"
+	>
 		<div id="map" style="width:100%;"></div>
 	</div>
 			\end{lstlisting}
@@ -468,7 +472,7 @@
 				},
 				label={cod:initmapPG}
 			]
-	/** elemento <div> nel DOM che conterra' la mappa */
+	/** elemento 'div' nel DOM che conterra' la mappa */
 	var mapElement = $("#map")[0];
 
 	/** configurazione della mappa */
@@ -537,11 +541,10 @@
 	// caricamento modulo mappa
 	Alloy.Globals.Map = require('ti.map');
 			\end{lstlisting}
-			
 			Fatto questo abbiamo definito la view in un file XML dedicato, vi abbiamo richiamato
 			il modulo per la mappa (vedi codice \ref{cod:alloymapview}) e, in un secondo file \js{} specifico per
 			l'implementazione del controllore, sono stati definiti tutti i
-			gestori per gli eventi, per noi interessanti da gestire, che la
+			gestori per gli eventi (per noi interessanti da gestire) che la
 			mappa potrà scatenare durante l'interazione con l'utente (vedi codice \ref{cod:alloymapcontroller}).
 			\begin{lstlisting}[
 				caption={Contenuto del file \texttt{map.xml} che definisce la
@@ -591,5 +594,52 @@
 	function mapCompleted(evt){ ... }
 
 			\end{lstlisting}
+			Come visto nel caso dell'applicazione \pg{} è possibile, anche qui,
+			disegnare segnaposto sulla mappa e reperire le informazioni
+			necessarie alla composizione delle query spaziali per scaricare le
+			segnalazioni da mostrare (vedi fig. \ref{fig:TiMaps}). Il modulo
+			\texttt{ti.map} fornisce sostanzialmente un'interfaccia che permette
+			tramite \js{} l'uso	delle rispettive mappe native per le piattaforme
+			iOS e Android. Le mappe risultati sono notevolmente più performanti
+			rispetto a quelle descritte precedentemente fornendo un esperienza
+			utente molto più gradevole.
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=\textwidth]{tiMap}
+					\caption{}
+					\label{fig:tiMap}
+				\end{subfigure}
+				~
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=\textwidth]{tiMapMark}
+					\caption{}
+					\label{fig:tiMapMark}
+				\end{subfigure}
+				\caption{
+					Mappe ottenuto con il modulo \texttt{ti.map} su Android: (a)
+					una normale mappa; (b) esempio di segnaposto personalizzati
+					disegnati sulla mappa.
+				}
+				\label{fig:TiMaps}
+			\end{figure}
 			
-
+			Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
+			applicazioni \pg{} non dà nessun problema non essendo necessario
+			interagire con funzionalità del dispositivo; una volta scritto,
+			tutto il codice sarà utilizzabile su tutte le piattaforme per le
+			quali si sta sviluppando l'applicazione. Inoltre non si è
+			costretti ad utilizzare soltanto il servizio mappe di Google, online
+			sono disponibili altre API \js{} open source come Leaflet oppure
+			di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
+			(di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
+			delicato: per supportare sia la piattaforma Android che iOS sono
+			sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
+			Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
+			\texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
+			di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
+			\js{}/\html{} che utilizza le API online del nostro fornitore di
+			mappe preferito, può essere caricato in un'opportuna web view,
+			quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
+			supportano tutte le piattaforme senza alcuna differenza.
+			
