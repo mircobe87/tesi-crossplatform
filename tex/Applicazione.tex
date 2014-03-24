@@ -250,7 +250,7 @@
 			Abbiamo cercato di fornire lo stesso aspetto alle due versioni 
 			dell'applicazione. E' interessante vedere come i due framework hanno risposto 
 			alle nostre esigenze. Prendendo spunto da applicazioni native come 
-			gmail e facebook l'idea è stata quella di avere una barra di intestazione 
+			gmail e facebook l'idea è stata quella di avere una barra di intestazione, 
 			nella parte alta dello schermo, che contenesse un pulsante in grado di 
 			far apparire un menù dal quale accedere alle varie schermate dell'applicazione.
 			Viste le funzionalità richieste dall'applicazione abbiamo creato schermate 
@@ -278,7 +278,7 @@
 			può essere composta da tante window. La differenza si ha nel fatto che 
 			le window hanno contesti di esecuzione diversi l'una dall'altra al contrario 
 			delle view che condividono quello della window che le contiene.
-			Personalmente abbiamo scelto di implementare le schermate 1,2,3 come 
+			Personalmente abbiamo scelto di implementare le schermate 1, 2, 3 come 
 			view appartenenti alla stessa window e le 4, 5, 6 come window differenti, 
 			questo ha facilitato la navigazione tra le varie schermate, in quanto 
 			il passaggio da una view all'altra non è così semplice in \tisdk{} come 
@@ -301,31 +301,73 @@
 			a quelle native.
 			All'interno di questa barra abbiamo inserito il widget drawer, emulando 
 			così la action bar e il navigation drawer di Android e la navbar di iOS,
-			ottenendo appunto il sistema di navigazione desiderato (riferimento figura).
+			ottenendo appunto il sistema di navigazione desiderato (vedi fig.\ref{fig:kendodrawer}).
 			Avendo utilizzato interamente i widget offerti da \kendomob{}, l'aspetto 
 			della barra di navigazione viene adattato alla piattaforma senza 
 			dover aggiungere nessuna riga di codice.
-			
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerClose}
+					\caption{}
+					\label{fig:kendoDrawerClose}
+				\end{subfigure}
+				~
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerOpen}
+					\caption{}
+					\label{fig:kendoDrawerOpen}
+				\end{subfigure}
+				\caption{Schermata iniziale dell'applicazione con \kendomob{}. 
+				In (a) si vede la barra di intestazione con il pulsante drawer 
+				per aprire il menù di navigazione, in (b) si mostra il menù aperto 
+				e l'effetto che ha sulla schermata}
+				\label{fig:kendodrawer}
+			\end{figure}
+		
 			\tisdk{} fornisce le API per creare direttamente la action bar nativa 
 			di Android e la navbar nativa di iOS, però ancora non permette la 
-			creazione del navigation drawer nativo di android, e dell'analogo 
-			elemento su iOS. Però siamo comunque riusciti a fornire l'aspetto 
+			creazione del navigation drawer di Android, e dell'analogo 
+			elemento su iOS. Siamo comunque riusciti a fornire l'aspetto 
 			desiderato all'applicazione.
-			Con \tisdk{} infatti è comunque possibile disegnare elementi grafici 
+			Con \tisdk{} infatti è possibile disegnare elementi grafici 
 			personalizzati ed assegnarli particolari comportamenti 
-			semplicemente attraverso l'uso di xml, tss e \js{}. In particolare 
-			avendo usato il framework alloy (descritto 
-			nella sezione \ref{subsub:alloy}) abbiamo potuto usare un widget.
-			Per Alloy un widget non è un semplice elemento grafico, ma un componente 
-			con proprio view, controller e stile che può essere riutilizzato in progetti 
-			diversi. Abbiamo così trovato in rete il widget \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}
-			che faceva esattamente al caso nostro. L'unica limitazione di questo 
-			widget è che la barra d'intestazione con il menù è utilizzabile all'interno 
-			di una sola window (dove comunque possono essere presenti più schermate 
-			come detto attraverso le view) e inoltre funziona solo su iOS e Android.
+			semplicemente attraverso l'uso di xml, tss e \js{}. Nel framwork Alloy 
+			(descritto nella sezione \ref{subsub:alloy}) questi elementi sono 
+			chiamati widget e possono essere creati in un progetto per poi essere 
+			utilizzati anche in altri, questa caratteristica ha permesso la nascita 
+			di numerosi widget creati 
+			da sviluppatori indipendenti. 
+			Abbiamo così trovato in rete il widget \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}
+			contenente tutti gli elementi necessari per fornire all'applicazione 
+			l'aspetto dato con \kendomob{} (vedi fig. \ref{fig:tidrawer}). 
+			Il widget aveva dei propri colori e icone, ma modificando i file 
+			opportuni lo abbiamo adattato alle nostre esigenze.
+			Questo widget funziona sia per iOS che per Android, ma il suo aspetto 
+			non si adatta automaticamente alla piattaforma, teoricamente è possibile
+			modificarlo per aggiungervi anche questa funzionalità, avendo però 
+			la possibilità di testare l'applicazione solo su dispositivi Android non 
+			ci siamo addentrati in tale modifica.
 			
-
-		
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerClose}
+					\caption{}
+					\label{fig:tiDrawerClose}
+				\end{subfigure}
+				~
+				\begin{subfigure}[b]{0.485\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerOpen}
+					\caption{}
+					\label{fig:tiDrawerOpen}
+				\end{subfigure}
+				\caption{Schermata iniziale dell'applicazione con \tisdk{}. 
+				In (a) si vede la barra di intestazione con il pulsante drawer per aprire 
+				il menù di navigazione, in (b) si mostra il menù aperto 
+				e l'effetto che ha sulla schermata.}
+				\label{fig:tidrawer}
+			\end{figure} 
 		\subsection{Comunicare con il lato server}
 			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
 			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
