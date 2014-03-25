@@ -703,6 +703,7 @@
 					una foto del degrado da allegare;
 				\item interagire con il servizio di geolocalizzazione per
 					recuperare la posizione attuale del dispositivo.
+				\item inviare la nuova segnalazione sul server.
 			\end{itemize}
 			
 			\noindent Sul rilevare l'input immesso dall'utente non ci sono molte
@@ -760,6 +761,16 @@
 			supportare ma troviamo delle differenze sostanziali per quanto
 			riguarda la configurazione del servizio, questo perché le diverse
 			piattaforme ne danno una differente implementazione.
+			
+			Una volta raccolte tutte le informazione siamo pronti per inviare
+			al server la nuova segnalazione tramite le nostre API. Se stiamo
+			sviluppando per Android, \tiadk{} ci permette di farlo in un modo
+			più elegante fornendo la possibilità di avviare sevizi in
+			background: in questo modo, mentre la segnalazione viene inviata al
+			server, l'applicazione può continuare ad essere utilizzata e la
+			conclusione dell'operazione	può essere mostrata all'utente mediante
+			notifica nell'apposita barra. Tutto questo non è realizzabile sulle
+			altre piattaforme e nemmeno con \pg{} si è in grado di farlo.
 			
 			Concludiamo facendo notare che al momento della realizzazione della
 			nostra applicazione \pg{} ha mostrato qualche problema con
