@@ -17,7 +17,7 @@
 		      degrado scattata con il dispositivo;
 		\item visualizzare una lista riassuntiva delle proprie segnalazioni
 		      inviate;
-		\item scegliere un segnalazione e visualizzarne i dettagli.
+		\item scegliere una segnalazione e visualizzarne i dettagli.
 	\end{itemize}
 	Durante la fase di sviluppo però, in occasione della revisione periodica del
 	nostro lavoro svolto, sono state richieste nuove funzionalità aggiuntive; in
@@ -749,7 +749,7 @@
 			quella meno accurata, mediante il sistema si approssimazione che
 			impiega le informazioni sulle reti WiFi presenti nella zone e la
 			cella telefonica alla quale si è agganciati per stimare la
-			posizione. In \tisdk{} invece si accede al sistema di
+			posizione. In \tisdk{} si accede al sistema di
 			geolocalizzazione attraverso le API del gruppo
 			\texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
 			metodi per la richiesta (continua o meno) della posizione corrente,
@@ -760,5 +760,19 @@
 			supportare ma troviamo delle differenze sostanziali per quanto
 			riguarda la configurazione del servizio, questo perché le diverse
 			piattaforme ne danno una differente implementazione.
+			
+			Concludiamo facendo notare che al momento della realizzazione della
+			nostra applicazione \pg{} ha mostrato qualche problema con
+			l'attivazione del GPS: se si tentava di ottenere la posizione
+			accurata, il GPS veniva attivato correttamente e disattivato una
+			volta ottenuta la posizione ma, da quel momento in poi, il servizio
+			veniva riavviato in modo casuale anche se l'applicazione era già
+			stata terminata. Un altro dettaglio degno di nota è il comportamento
+			del metodo \texttt{getCurrentPosition} di \tisdk{}: questo
+			restituisce la posizione corrente ma, su Android, non attiva mai il
+			ricevitore GPS e preleva le informazioni dalla cache del
+			dispositivo; su iOS invece il GPS può essere attivato se il sistema
+			valuta le informazioni in cache ``troppo vecchie'' e non più
+			attendibili.
 			
 			
