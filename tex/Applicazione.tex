@@ -367,7 +367,9 @@
 				il menù di navigazione, in (b) si mostra il menù aperto 
 				e l'effetto che ha sulla schermata.}
 				\label{fig:tidrawer}
-			\end{figure} 
+			\end{figure}
+			
+			
 		\subsection{Comunicare con il lato server}
 			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
 			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
@@ -394,6 +396,7 @@
 			richieste HTTP, il programma continuerà ad essere eseguito in attesa
 			che dal server tornino le relative risposte; a questo punto verrà
 			eseguito l'opportuno codice che gestirà tale evento.
+			
 			
 		\subsection{Registrazione al primo avvio}
 			Come avevamo già anticipato, la prima cosa di cui deve occuparsi
@@ -477,6 +480,8 @@
 			dato che però come detto l'applicazione è stata sviluppata solo per Android 
 			abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo 
 			continuato ad usare UUID.
+			
+			
 		\subsection{La mappa delle segnalazioni}
 			Arricchire la propria applicazione Titanium o \pg{} con una mappa
 			non è un problema. Google fornisce un ricco insieme di API \js{} per
@@ -697,8 +702,7 @@
 				\item interagire con la fotocamera del dispositivo per ottenere
 					una foto del degrado da allegare;
 				\item interagire con il servizio di geolocalizzazione per
-					recuperare la posizione attuale del dispositivo;
-				\item inviare la nuova segnalazione sul server.
+					recuperare la posizione attuale del dispositivo.
 			\end{itemize}
 			
 			\noindent Sul rilevare l'input immesso dall'utente non ci sono molte
@@ -710,37 +714,51 @@
 			definiti gli opportuni metodi per ottenere il valore immesso
 			dall'utente.
 			
-			Accedere alla fotocamera per scattare ed acquisire una foto è un 
-			compito non banale; \pg{} lo rende possibile attraverso le API del
+			Accedere alla fotocamera per scattare ed acquisire una foto non è un 
+			compito banale; \pg{} lo rende possibile attraverso le API del
 			proprio plugin \texttt{Camera}. Tramite la funzione
-			\texttt{getPicture} viene avviata l'applicazione della fotocamera
-			dove l'utente, una volta scatta la foto, ha la possibilità di
-			accettarla o di rifiutarla. Le azioni da intraprendere nei due casi
-			sono specificate in due rispettive funzioni \js{} che vengono
-			passate come parametri al momento della chiamata di
-			\texttt{getPicture}. Questa funzione accetta anche anche terzo
-			parametro che specifica un certo numero di opzioni permettendo di
-			modificare la foto acquisita; in particolare è possibile
-			ridimensionare l'immagine, specificare la qualità della compressione
-			JPEG utilizzata e indicare il formato dei dati restituiti dalla
-			chiamata. \tisdk{} offre la stessa funzionalità di acquisire foto
-			tramite la funzione \texttt{showCamera} dello spazio dei nomi
-			\texttt{Titanium.Media}. La differenza con \pg{} è che i dati
-			dell'immagine vengono restituiti solo in formato un oggetto \js{}
-			\texttt{Blob} così come vendono acquisiti; per modificare l'immagine
-			si deve ricorrere ad altre funzionalità magari offerte da qualche
-			modulo aggiuntivo.
+			\texttt{getPicture} viene avviata l'applicazione nativa della
+			fotocamera dove l'utente, una volta scattata la foto ha la
+			possibilità di accettarla o di rifiutarla. Le azioni da
+			intraprendere nei due casi sono specificate in due rispettive
+			funzioni \js{} che vengono passate come parametri al momento della
+			chiamata di	\texttt{getPicture}. Questa funzione accetta anche
+			anche terzo parametro che specifica un certo numero di opzioni
+			permettendo di modificare la foto acquisita; in particolare è
+			possibile ridimensionare l'immagine, specificare la qualità della
+			compressione JPEG utilizzata e indicare il formato dei dati
+			restituiti dalla chiamata. \tisdk{} offre la stessa funzionalità di
+			acquisire foto tramite la funzione \texttt{showCamera} dello spazio
+			dei nomi \texttt{Titanium.Media}. La differenza con \pg{} è che i
+			dati dell'immagine vengono restituiti solo in formato binario
+			tramite un oggetto \js{} \texttt{Blob} così come vendono acquisiti;
+			per modificare l'immagine si deve ricorrere ad altre funzionalità
+			magari offerte anche da qualche modulo aggiuntivo\footnote{Appcelerator
+			fornisce il modulo gratuito \texttt{ti.imagefactory} però
+			disponibile solo per Android e iOS}.
 			
-			Recuperate le informazioni inserite dall'utente e acquisita la
+			Recuperate le informazioni inserite dall'utente ed acquisita la
 			fotografia c'è bisogno di recuperare le coordinate geografiche della
 			posizione attuale. \pg{} consente di accedere al servizio di
 			geolocalizzazione del dispositivo attraverso il plugin
-			\texttt{Geolocation} che permette di monitorare in maniera
-			continuativa la posizione oppure di inviare una richiesta per la
+			\texttt{Geolocation} che permette sia di monitorare in maniera
+			continuativa la posizione, sia di inviare una sola richiesta per la
 			posizione corrente. In entrambi i casi si possono passare dei
-			parametri di opzione alle rispettive funzioni per esempio per
+			parametri di opzione alle rispettive funzioni, per esempio, per
 			ottenere la posizione esatta mediante il ricevitore GPS oppure,
 			quella meno accurata, mediante il sistema si approssimazione che
 			impiega le informazioni sulle reti WiFi presenti nella zone e la
-			cella telefonica alla quale si è agganciati.
+			cella telefonica alla quale si è agganciati per stimare la
+			posizione. In \tisdk{} invece si accede al sistema di
+			geolocalizzazione attraverso le API del gruppo
+			\texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
+			metodi per la richiesta (continua o meno) della posizione corrente,
+			offrono anche il servizio di geocoding che da la possibilità di
+			trasformare la posizione data in coordinate geografiche in un
+			normale indirizzo postale. L'uso dei metodi per ottenere i dati
+			sulla posizione è lo stesso per tutte le piattaforme che si possono
+			supportare ma troviamo delle differenze sostanziali per quanto
+			riguarda la configurazione del servizio, questo perché le diverse
+			piattaforme ne danno una differente implementazione.
+			
 			
