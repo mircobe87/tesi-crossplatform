@@ -244,7 +244,8 @@
 		piuttosto, mostreremo quali strumenti ci hanno fornito \tisdk{} e \pg{}
 		per poterli risolvere.
 		
-		\subsection{Struttura}
+		\subsection{Struttura Grafica}
+		\label{subsec:structgraphic}
 			Descriviamo ora la struttura generale dell'applicazione dal punto 
 			di vista grafico.
 			Abbiamo cercato di fornire lo stesso aspetto alle due versioni 
@@ -285,8 +286,8 @@
 			lo è invece in \kendomob{}.
 			
 			Per la barra di intestazione ed il menù di navigazione abbiamo trovato 
-			differenze sostanziali tra i due framework.
-			Partiamo con \kendomob{}
+			differenze sostanziali tra i due framework.\\
+			Partiamo con \kendomob{}.
 			Innanzitutto esso offre un particolare elemento grafico chiamato drawer, 
 			ovvero un bottone che se premuto porta all'apertura di 
 			una lista che si espande partendo dalla sinistra dello schermo e che 
@@ -332,23 +333,14 @@
 			desiderato all'applicazione.
 			Con \tisdk{} infatti è possibile disegnare elementi grafici 
 			personalizzati ed assegnarli particolari comportamenti 
-			semplicemente attraverso l'uso di xml, tss e \js{}. Nel framwork Alloy 
+			semplicemente attraverso l'uso di xml, tss e \js{}. Nel framework Alloy 
 			(descritto nella sezione \ref{subsub:alloy}) questi elementi sono 
 			chiamati widget e possono essere creati in un progetto per poi essere 
 			utilizzati anche in altri, questa caratteristica ha permesso la nascita 
-			di numerosi widget creati 
-			da sviluppatori indipendenti. 
+			di numerosi widget creati da sviluppatori indipendenti. 
 			Abbiamo così trovato in rete il widget \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}
 			contenente tutti gli elementi necessari per fornire all'applicazione 
-			l'aspetto dato con \kendomob{} (vedi fig. \ref{fig:tidrawer}). 
-			Il widget aveva dei propri colori e icone, ma modificando i file 
-			opportuni lo abbiamo adattato alle nostre esigenze.
-			Questo widget funziona sia per iOS che per Android, ma il suo aspetto 
-			non si adatta automaticamente alla piattaforma, teoricamente è possibile
-			modificarlo per aggiungervi anche questa funzionalità, avendo però 
-			la possibilità di testare l'applicazione solo su dispositivi Android non 
-			ci siamo addentrati in tale modifica.
-			
+			l'aspetto dato con \kendomob{} (vedi fig. \ref{fig:tidrawer}).
 			\begin{figure}[h]
 				\centering
 				\begin{subfigure}[b]{0.485\textwidth}
@@ -367,10 +359,123 @@
 				il menù di navigazione, in (b) si mostra il menù aperto 
 				e l'effetto che ha sulla schermata.}
 				\label{fig:tidrawer}
+<<<<<<< HEAD
+			\end{figure}  
+			Il widget aveva dei propri colori e icone, ma modificando i file 
+			opportuni lo abbiamo adattato alle nostre esigenze.
+			Questo widget funziona sia per iOS che per Android, ma il suo aspetto 
+			non si adatta automaticamente alla piattaforma, teoricamente è possibile
+			modificarlo per aggiungervi anche questa funzionalità, avendo però 
+			la possibilità di testare l'applicazione solo su dispositivi Android 
+			non ci siamo addentrati in tale modifica.
+		\subsection{Struttura del Progetto}
+			Parliamo ora della struttura del progetto, partendo da \pg{} e mostrando 
+			come avviene l'integrazione con \kendomob{}, proseguendo poi con 
+			la struttura usata in \tisdk{}.
+		
+			Inizialmente avevamo deciso di sfruttare il servizio \pg{}Build, 
+			ma questo si è rivelato veramente lento: per testare l'applicazione 
+			dovevamo creare un pacchetto .zip da inviare al servizio, limitati 
+			anche dalla lentezza della rete della nostra abitazione questa operazione 
+			portava via un tempo eccessivo, inoltre era molto lento anche 
+			lo stesso processo di compilazione, senza contare che continuamente 
+			c'erano malfunzionamenti nel servizio e dovevamo attenderne il ripristino. 
+			Abbiamo così deciso di affidarci al CLI per creare, compilare ed 
+			installare l'applicazione, nonchè per l'aggiunta dei plugin. La 
+			conseguenza è stata la necessità di configurare l'sdk nativo di Android
+			sulla macchina usata per lo sviluppo dell'applicazione.
+			La creazione del progetto tramite CLI ha portato alla creazione 
+			delle cartelle: platforms, merges, plugins, www.
+			Senza addentrarci troppo nel contenuto delle cartelle è importante 
+			comunque evidenziare lo scopo della cartella www e di quella merges, 
+			che di fatto sono quelle che contengono i file da modificare per 
+			realizzare l'applicazione.
+			La cartella www contiene tutti i file HTML, CSS, \js{} e le immagini
+			che compongono l'applicazione oltre al file config.xml che contiene 
+			i metadati dell'app come la versione o il nome. 
+			Per dare più ordine in presenza di molti 
+			file questi possono essere suddivisi in ulteriori sottocartelle a 
+			discrezione del programmatore, personalmente abbiamo creato una sottocartella 
+			per i file CSS, 
+			una per quelli \js{} creati da noi, una per quelli \js{} di \kendomob{} e 
+			una per le immagini.
+			Sulle immagini usate come icone e come schermate di apertura\footnote{
+			Per schermata di apertura si intende un'immagine che compare per qualche 
+			secondo durante l'avvio dell'applicazione in attesa che vengano eseguite 
+			le operazioni di inizializzazione della stessa} va fatto 
+			un discorso a parte. Come noto esistendo 
+			dispositivi con dimensioni dello schermo e risoluzioni differenti 
+			è necessario utilizzare immagini di dimensioni diverse a seconda 
+			del dispositivo, \pg{} permette di facilitare tutto ciò fornendo 
+			opportune cartelle per ogni categoria di dispositivi disponibili sul 
+			mercato, è quindi sufficiente creare tali immagini con lo stesso nome 
+			ed inserirle nelle cartelle opportune sarà poi il framework a caricare 
+			quella adatta alla risoluzione dello schermo del dispositivo.
+			La cartella merges serve per personalizzare il codice su piattaforme 
+			diverse, essa contiene una sottocartella per ogni piattaforma di destinazione
+			(es. una per Android, una per iOS e una per Windows Phone) 
+			al cui interno è replicata la cartella www descritta precedentemente,
+			se si vuole utilizzare del codice diverso a seconda della piattaforma 
+			basta modificare i file nelle rispettive cartelle www.
+			
+			L'integrazione con \kendomob{} è semplicissima, dopo aver inserito 
+			i file \js{} e CSS dentro le opportune cartelle è stato sufficiente 
+			caricarli dentro al file \texttt{index.html} per mezzo dei tag 
+			\texttt{<script>} e \texttt{<link>}.
+			Nel paragrafo \ref{subsec:kendo} abbiamo accennato al fatto di poter 
+			utilizzare il paradigma MVVM su alcuni elementi grafici forniti dal 
+			framework, ma al momento dell'inizio della scrittura dell'applicazione 
+			non tutti i widget erano supportati da MVVM e quindi abbiamo preferito 
+			non usarlo, di conseguenza la logica dell'applicazione è stata gestita 
+			interamente in un unico file \js{}. Inoltre come detto più volte 
+			tutte le schermate e gli elementi all'interno di esse sono state 
+			definite in un unico file HTML (vedi fig. \ref{fig:degradoAmbientaleTree}).
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=0.95\textwidth]{degradoAmbientaleTree}
+				\caption{
+				La figura mostra la gerarchia delle cartelle e dei file che 
+				compongono l'applicazione
+				}
+				\label{fig:degradoAmbientaleTree}
 			\end{figure}
 			
-			
+			Lo sviluppo dell'applicazione con \tisdk{} è stato fatto sfruttando 
+			l'IDE Titanium Studio, con esso è stato possibile creare direttamente 
+			un'applicazione Alloy (vedi sezione \ref{subsub:alloy}) strutturandola 
+			così secondo il paradigma MVC.
+			Questo processo genera numerose cartelle e file, ma come per \pg{} ci 
+			concentreremo soltanto sulla descrizione di quelli veramente importanti.
+			La cartella principale del progetto contiene: il file tiapp.xml che 
+			analogamente al file config.xml di \pg{} specifica i metadati dell'applicazione e 
+			la cartella app che contiene il resto dell'applicazione.
+			Quest'ultima in particolare contiene le cartelle: 
+			\begin{description}
+				\item[assets] contiene le immagini usate nell'applicazione, le 
+							  icone e la schermata di apertura e come per \pg{} 
+							  sono presenti sottocartelle per inserirvi le stesse 
+							  immagini in dimensioni diverse a seconda del dispositivo;
+				\item[widgets] contiene tutti i file necessari per utilizzare widget esterni 
+							   come quello usato per la barra di navigazione ed il menù descritti 
+							   nel paragrafo \ref{subsec:structgraphic};
+				\item[lib] qui dentro vanno inseriti i file javaScript che definiscono 
+						   moduli CommonJS\footnote{http://www.commonjs.org/}. Nel 
+						   nostro caso è servito per creare una libreria per fornire 
+						   le API di comunicazione verso il lato server (vedi \ref{subsec:comlatoserver});
+				\item[controllers, views, styles] contengono rispettivamente file 
+							javaScript, XML, e TSS per ogni schermata dell'applicazione. Queste cartelle
+							permettono lo sviluppo dell'applicazione secondo il paradigma MVC. Per ogni 
+							schermata l'aspetto viene realizzato combinando il file XML e quello TSS, 
+							mentre la logica è gestita dal file javaScript.
+			\end{description} 
+			La cartella app contiene anche il file Alloy.js, un particolare file
+			javaScript il cui codice viene eseguito prima di quello del controllore 
+			di qualsiasi schermata, rendendolo così un ottimo posto dove fare 
+			varie inizializzazioni dell'applicazione. Nel nostro progetto è 
+			stato usato ad esempio per caricare il modulo per la mappa.
+				
 		\subsection{Comunicare con il lato server}
+		\label{subsec:comlatoserver}
 			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
 			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
 			di realizzare una libreria fatta su misura che ci permettesse di generare
@@ -456,7 +561,7 @@
 			(attualmente i principali OS Android, Windows Phone 8 e iOS lo fanno).
 			
 			Come descritto più volte, la registrazione doveva avvenire utilizzando 
-			come credenziali il codice IMEI del disositivo oppure il numero di telefono.
+			come credenziali il codice IMEI del dispositivo oppure il numero di telefono.
 			Nè con \pg{} nè con \tisdk{} questo è stato possibile. Nativamente 
 			Android permette di accedere al codice IMEI, mentre iOS no; è stato 
 			comunque possibile ottenere un identificatore con entrambi i 
