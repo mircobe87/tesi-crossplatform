@@ -916,4 +916,24 @@
 			valuta le informazioni in cache ``troppo vecchie'' e non più
 			attendibili.
 			
+		\subsection{Lista proprie segnalazioni}
+			Questa schermata mostra una lista di titoli delle segnalazioni fatte
+			dal proprio dispositivo (non contiene quindi quelle effettuate da altri 
+			utenti), in modo da poter accedere velocemente alle proprie segnalazioni 
+			senza dover necessariamente andarle a cercare sulla mappa.
+			Gli elementi della lista sono cliccabili e premere su uno di questi 
+			elementi porta all'apertura del dettaglio della corrispondente 
+			segnalazione (vedi \ref{subsec: dettagli}).
 			
+			Qui non c'è interazione con gli strumenti offerti dal dispositivo
+			tranne che per il caching descritto nella sezione (riferimento alla 
+			sezione quando ci sarà) per usare l'applicazione 
+			anche in assenza di connessione alla rete Internet, 
+			quindi per la realizzazione dell'applicazione ibrida le API di \pg{} 
+			non sono state utilizzate, mentre invece sono 
+			stati sfruttati gli strumenti offerti da \kendomob{}.
+			
+			Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
+			che permette di presentare informazioni , in una schermata scorrevole verticalmente, 
+			organizzandole in sezioni ed elementi.
+		
