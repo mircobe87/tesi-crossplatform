@@ -780,6 +780,25 @@
 			iOS e Android. Le mappe risultati sono notevolmente più performanti
 			rispetto a quelle descritte precedentemente fornendo un esperienza
 			utente molto più gradevole.
+			
+			Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
+			applicazioni \pg{} non dà nessun problema non essendo necessario
+			interagire con funzionalità del dispositivo; una volta scritto,
+			tutto il codice sarà utilizzabile su tutte le piattaforme per le
+			quali si sta sviluppando l'applicazione. Inoltre non si è
+			costretti ad utilizzare soltanto il servizio mappe di Google, online
+			sono disponibili altre API \js{} open source come Leaflet oppure
+			di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
+			(di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
+			delicato: per supportare sia la piattaforma Android che iOS sono
+			sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
+			Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
+			\texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
+			di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
+			\js{}/\html{} che utilizza le API online del nostro fornitore di
+			mappe preferito, può essere caricato in un'opportuna web view,
+			quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
+			supportano tutte le piattaforme senza alcuna differenza.
 			\begin{figure}[h]
 				\centering
 				\begin{subfigure}[b]{0.485\textwidth}
@@ -800,26 +819,6 @@
 				}
 				\label{fig:TiMaps}
 			\end{figure}
-			
-			Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
-			applicazioni \pg{} non dà nessun problema non essendo necessario
-			interagire con funzionalità del dispositivo; una volta scritto,
-			tutto il codice sarà utilizzabile su tutte le piattaforme per le
-			quali si sta sviluppando l'applicazione. Inoltre non si è
-			costretti ad utilizzare soltanto il servizio mappe di Google, online
-			sono disponibili altre API \js{} open source come Leaflet oppure
-			di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
-			(di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
-			delicato: per supportare sia la piattaforma Android che iOS sono
-			sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
-			Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
-			\texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
-			di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
-			\js{}/\html{} che utilizza le API online del nostro fornitore di
-			mappe preferito, può essere caricato in un'opportuna web view,
-			quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
-			supportano tutte le piattaforme senza alcuna differenza.
-			
 			
 		\subsection{Creare una nuova segnalazione}
 			Creare una segnalazione sembra una cosa semplice ma per
@@ -966,5 +965,164 @@
 			in \js{} abbiamo poi usato la funzione \texttt{kendoMobileListView}, 
 			fornita dal framework stesso, per definire le operazioni da eseguire 
 			quando viene premuto un elemento della lista e per 
+		\subsection{Dettagli di una segnalazione}
+		\label{subsec:dattagli}
+			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
+			dettagli è relativamente semplice. Per fare questo abbiamo 
+			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
+			window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi i 
+			framework, a prescindere dalla piattaforma che vogliamo supportare, 
+			metto a disposizione diversi widget per mostrare sia dati testuali 
+			che immagini, quindi è stato molto semplice realizzare l'interfaccia 
+			per adempiere a questo scopo. La figura \ref{fig:repodetails}
+			mostra le interfacce dei due framework con i dettagli di una
+			segnalazione.
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}[b]{0.9\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG1}
+					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG2}
+					\caption{}
+				\end{subfigure}
+				\begin{subfigure}[b]{0.9\textwidth}
+					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI1}
+					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI2}
+					\caption{}
+				\end{subfigure}
+				\caption{
+					Interfaccia per i dettagli di una segnalazione: (a) la view
+					\kendomob{}; (b) la window di \tisdk{}.
+				}
+				\label{fig:repodetails}
+			\end{figure}
 			
+			
+			Realizzare questa funzionalità ci ha permesso di confrontarci con il 
+			problema di dover scaricare da un server un file, in questo caso, 
+			l'immagine allegata alla segnalazione da mostrare. CouchDB 
+			consente di reperire gli allegati multimediali per un documento in 
+			tre modi:
+			\begin{enumerate}
+				\item chiedendogli di inviare il documento completo di allegati 
+				tutto in formato JSON; in questo caso i file vengono codificati 
+				in BASE64 e tutto il documento JSON viene trasportato nel corpo 
+				di un messaggio di risposta HTTP;
+				\item chiedendogli di inviare il documento completo di allegati 
+				ma non specificando il formato; in questo caso il server prepara 
+				un messaggio di risposta HTTP dove nel corpo è presente un 
+				contenuto di dati misto con intestazione 
+				MIME\footnote{Protocollo che permette di estendere semplici 
+				messaggi testuali a contenere dati multimediali. Per maggiori 
+				dettagli consultare RFC2045 
+				(\url{http://tools.ietf.org/html/rfc2045}).} (Multipurpose 
+				Internet Mail Extensions) dove, nella prima parte è presente, 
+				senza allegati, il documento richiesto in formato JSON, mentre 
+				nella seconda sono presenti tutti gli allegati, uno dopo 
+				l'altro, in formato binario;
+				\item chiedendogli direttamente il file dell'allegato mediante 
+				uno specifico URL.
+			\end{enumerate}
+			Il primo caso richiedeva da parte del server del lavoro in più per 
+			codificare l'allegato a scapito del tempo di risposta; nel secondo 
+			caso era necessario un metodo per separare il vari contenuti dal 
+			messaggio MIME che nessun framework forniva. Per questi motivi 
+			abbiamo deciso di scaricare gli allegati direttamente dopo aver 
+			ottenuto tutto il resto della segnalazione con una richiesta 
+			separata.
+			
+			\pg{} fornisce, per tutte le piattaforme che supporta, il plugin 
+			\texttt{File} per manipolare file e il plugin \texttt{FileTransfer} 
+			per inviarli e riceverli dalla rete. A questo punto, una volta 
+			creato un nuovo file è stato possibile scaricarvi l'immagine remota 
+			(vedi esempio \ref{cod:dlFilePG}).
+			\begin{lstlisting}[
+				caption={Una volta ottenuto il filesystem vine creato un nuovo 
+					file che andrà a contenere i dati del file scaricato.},
+				label={cod:dlFilePG}
+			]
+	// richiesta filesystem persistente
+	requestFileSystem(
+		LocalFileSystem.PERSISTENT,
+		0,
+		FileSystemSuccess,
+		null
+	);
+	// eseguita una volta ottenuto il filesystem
+	function FileSystemSuccess(filesystem){
+		var dir = filesystem.root;
+		// crea un nuovo file
+		var newfile = dir.getFile("filename.jpeg",
+			{
+				create: true,
+				exclusive: false,
+			},
+			newFileSuccess,
+			newFileFail
+		);
+		// eseguita una volta creato il file
+		function newFileSuccess(newf){
+			var filepath = newf.fullPath;
+			var ft = new FileTransfert();		
+			// scarica il file
+			ft.download(
+				"http://uri.of.remote.file/img.jpeg",
+				filepath,
+				// gestisce il successo del download
+				function(file){ ... },
+				// gestisce errore di download
+				function(err){ ... },
+				false
+			);
+		}
+	}
+			\end{lstlisting}
+			
+			Anche \tisdk{} consente di accedere al filesystem della piattaforma 
+			e di maneggiare file. Le API necessarie sono contenute nello 
+			spazio dei nomi \texttt{Titanium.Filesystem} e sono compatibili 
+			con tutte le piattaforme supportate da \tisdk{}. Come avevamo 
+			anticipato nella sezione relativa alla comunicazione con il lato 
+			server (sez.~\ref{subsec:comlatoserver}), per creare richieste HTTP 
+			si utilizza in \tisdk{} l'oggetto \texttt{HTTPClient} definito nelle 
+			API \texttt{Titanium.Network}. Anche in questo caso, in maniera 
+			simile a quanto di fa con le API di \pg{}, dopo aver creato un nuovo 
+			file si può procedere con richiedere al server l'allegato da 
+			scaricare e memorizzare. Il segmento di codice \ref{cod:dlFileTi} 
+			mostra un esempio d'uso delle API di \tisdk{} per scaricare un file 
+			e salvarlo nel filesystem.
+			\begin{lstlisting}[
+				caption={
+					L'oggetto \texttt{HTTPClient esegue una \texttt{GET} di un 
+					file remoto che se scaricato correttamente viene 
+					memorizzato in un file locale nel filesystem.}
+				},label={cod:dlFileTi}
+			]
+	// crea un nuovo HTTPClient
+	var httpClt = Titanium.Network.createHTTPClient({
+		onload: function(){ // se il download ha successo
+			var newf = Titanium.Filesystem.getFile(
+				Titanium.Filesystem.applicationDataDirectory,
+				"filename.jpeg"
+			);
+			// scrivo i dati ricevuti nel nuovo file
+			newf.write(this.responseData);
+		},
+		// se il download fallisce
+		onerror: function(e){ ... }
+	});
+	
+	// compongo una 'GET'
+	httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
+	// invio la richiesta
+	httpClt.send();
+			\end{lstlisting}
+			Una differenza sostanziale che c'è nella gestione del filesystem 
+			tra \tisdk{} e \pg{} è che le API del primo consentono di creare 
+			file persistenti solo in precise directory relative 
+			all'applicazione stessa per le quali sono definite delle specifiche 
+			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere 
+			l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}). 
+			Con il plugin di \pg{}, a patto di avere i permessi necessari, è 
+			possibile navigare in tutto il filesystem del sistema e creare nuove 
+			cartelle e file dove si vuole.
 		
