@@ -438,7 +438,7 @@
 				\includegraphics[keepaspectratio=true, width=0.95\textwidth]{degradoAmbientaleTree}
 				\caption{
 				La figura mostra la gerarchia delle cartelle e dei file che 
-				compongono l'applicazione
+				compongono l'applicazione realizzata con \pg{} e \kendomob{}.
 				}
 				\label{fig:degradoAmbientaleTree}
 			\end{figure}
@@ -447,10 +447,10 @@
 			l'IDE Titanium Studio, con esso è stato possibile creare direttamente 
 			un'applicazione Alloy (vedi sezione \ref{subsub:alloy}) strutturandola 
 			così secondo il paradigma MVC.
-			Questo processo genera numerose cartelle e file, ma come per \pg{} ci 
-			concentreremo soltanto sulla descrizione di quelli veramente importanti.
-			La cartella principale del progetto contiene: il file tiapp.xml che 
-			analogamente al file \texttt{config.xml} di \pg{} specifica i metadati dell'applicazione e 
+			Questo processo genera numerose cartelle e file (vedi fig. \ref{fig:degradoTiTree}), 
+			ma come per \pg{} ci concentreremo soltanto sulla descrizione di quelle/i veramente importanti.
+			La cartella principale del progetto contiene: il file \texttt{tiapp.xml}, che 
+			analogamente al file \texttt{config.xml} di \pg{} specifica i metadati, e 
 			la cartella \texttt{app} che contiene il resto dell'applicazione.
 			Quest'ultima in particolare contiene le cartelle: 
 			\begin{description}
@@ -466,11 +466,33 @@
 						   nostro caso è servito per creare una libreria per fornire 
 						   le API di comunicazione verso il lato server (vedi \ref{subsec:comlatoserver});
 				\item[controllers, views, styles] contengono rispettivamente file 
-							\js{}, XML, e TSS per ogni schermata dell'applicazione. Queste cartelle
-							permettono lo sviluppo dell'applicazione secondo il paradigma MVC. Per ogni 
-							schermata l'aspetto viene realizzato combinando il file XML e quello TSS, 
-							mentre la logica è gestita dal file \js{}.
-			\end{description} 
+							\js{}, XML e TSS per ogni schermata dell'applicazione. 
+							In Alloy il componente \texttt{view} rappresenta l'interfaccia 
+							dell'applicazione e comprende un file XML e uno TSS. 
+							Il primo definisce la struttura della schermata, mentre il 
+							secondo contiene gli stili da applicare ai vari elementi 
+							che essa contiene, la relazione tra XML e tss è la stessa
+							che si ha tra HTML e CSS.
+							Il file dentro \texttt{controllers} esegue chiamate dirette 
+							alle API di \tisdk{} per manipolare gli oggetti grafici 
+							ed eseguire la logica dell'applicazione.
+			\end{description}
+			
+			\begin{figure}[h]
+				\centering
+				\includegraphics[keepaspectratio=true, width=0.80\textwidth]{degradoTiTree}
+				\caption{
+				La figura mostra la gerarchia delle cartelle e dei file che 
+				compongono l'applicazione realizzata con \tisdk{}
+				}
+				\label{fig:degradoTiTree}
+			\end{figure}
+			
+			\noindent Per strutturare realmente l'applicazione secondo il paradigma MVC 
+			ci sarebbe stato bisogno di usare un'altra cartella di nome \texttt{models}
+			nella quale inserire i file \js{} per i modelli, però la documentazione 
+			di \tisdk{} non è molto chiara su come utilizzarli, per cui
+			abbiamo gestito i dati completamente nel controllore. 
 			\noindent La cartella \texttt{app} contiene anche il file \texttt{alloy.js}, un particolare file
 			\js{} il cui codice viene eseguito prima di quello del controllore 
 			di qualsiasi schermata, rendendolo così un ottimo posto dove fare 
