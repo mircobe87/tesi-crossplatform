@@ -741,9 +741,7 @@
 				gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
 				label=cod:alloymapcontroller
 			]
-
 	[...]
-
 	/**
 	 * Handler del click su un segnaposto della mappa.
 	 * @param {ModulesMapViewEvent} evt evento passato allo
@@ -842,7 +840,25 @@
 			funzionalità dei widget di cui è comporta l'interfaccia grafica.}
 			mettono a disposizione i propri widget di ``input'' per i quali sono
 			definiti gli opportuni metodi per ottenere il valore immesso
-			dall'utente.
+			dall'utente. Su \kendomob{} la schermata che raccoglie l'input è
+            stata realizzata in una nuova view mentre con \tisdk{} la si è
+            implementata con una window. La figura \ref{fig:inputs} mostra la
+            schermata di input per i due framework.
+            \begin{figure}[h]
+              \centering
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{inputPG}
+                \caption{}
+              \end{subfigure}
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{inputTI}
+                \caption{}
+              \end{subfigure}
+              \caption{Inserimento nuova segnalazione: (a) l'interfaccia
+                realizzata con \kendomob{}; (b) l'interfaccia grafica
+                dell'applicazione realizzata con \tisdk{}.}
+              \label{fig:inputs}
+            \end{figure}
 			
 			Accedere alla fotocamera per scattare ed acquisire una foto non è un 
 			compito banale; \pg{} lo rende possibile attraverso le API del
@@ -922,15 +938,15 @@
 			senza dover necessariamente andarle a cercare sulla mappa.
 			Gli elementi della lista sono cliccabili e premere su uno di questi 
 			elementi porta all'apertura del dettaglio della corrispondente 
-			segnalazione (vedi \ref{subsec: dettagli}).
+			segnalazione (vedi \ref{subsec:dettagli}).
 			
 			Qui non c'è interazione con gli strumenti offerti dal dispositivo
-			tranne che per il caching descritto nella sezione (riferimento alla 
-			sezione quando ci sarà) per usare l'applicazione 
-			anche in assenza di connessione alla rete Internet, 
-			quindi per la realizzazione dell'applicazione ibrida le API di \pg{} 
-			non sono state utilizzate, mentre invece sono 
-			stati sfruttati gli strumenti offerti da \kendomob{}.
+			tranne che per il caching descritto nella sezione \ref{subsec:caching}
+			implementato per permettere un uso dell'applicazione 
+			anche in assenza di connessione alla rete Internet 
+			quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
+            state utilizzate le API di \pg{} bensì sono stati sfruttati gli
+            strumenti offerti da \kendomob{}.
 			
 			Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
 			che permette di presentare informazioni, in una schermata scorrevole 
@@ -986,36 +1002,36 @@
 				},
 				label = {cod:list}
 			]
-    <div 
-      data-role="view" 
-      data-init="initList" 
-      data-show="insertData"
-    >
-	    	<ul data-role="listView" id="listViewContent"></ul>
-	    
-    </div>
-    
+  <div data-role="view" data-init="initList"
+       data-show="insertData">
+    <ul data-role="listView" id="listViewContent"></ul>    
+  </div>
+
+  [ ... ]
+
+  <script>
     /* contenitore dei dati da inserire nella lista */
     var customerDataSource = new kendo.data.DataSource({ });
     
     var initList = function (){
-		$("#listViewContent").kendoMobileListView({
-			/* setta la sorgente dei dati per questa lista */
-			dataSource: customerDataSource, 
-			click: function(e) {
-				 /* codice da eseguire quando viene premuto un elemento della lista */
-			},
-			/* in questo modo all'interno della lista viene visualizzato solo il campo titolo */
-			template: "<h5>#:titolo#</h5>" 
-		}); 
-	};
+      $("#listViewContent").kendoMobileListView({
+        /* setta la sorgente dei dati per questa lista */
+        dataSource: customerDataSource, 
+        click: function(e) {
+          /* gestore del tocco su un elemento della lista */
+        },
+        /* nella lista viengono mostrati solo i campi 'titolo' */
+        template: "<h5>#:titolo#</h5>" 
+      }); 
+    };
 	
-	var insertData = function(){
-		/* scarica le segnalazioni dal server */
-		var dati = getDataFromServer();
-		/* inserisce effettivamente i dati nella lista */ 
-		customerDataSource.data(dati); 
-	};	
+    var insertData = function(){
+      /* scarica le segnalazioni dal server */
+      var dati = getDataFromServer();
+      /* inserisce effettivamente i dati nella lista */ 
+      customerDataSource.data(dati); 
+    };
+  </script>	
 			\end{lstlisting}
 			
 			\noindent Come detto con \tisdk{} l'approccio è simile. Dentro 
@@ -1102,7 +1118,7 @@
 			è mostato in figura \ref{}
 			 
 		\subsection{Dettagli di una segnalazione}
-		\label{subsec:dattagli}
+		\label{subsec:dettagli}
 			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
 			dettagli è relativamente semplice. Per fare questo abbiamo 
 			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
@@ -1228,9 +1244,9 @@
 			e salvarlo nel filesystem.
 			\begin{lstlisting}[
 				caption={
-					L'oggetto \texttt{HTTPClient esegue una \texttt{GET} di un 
+					L'oggetto \texttt{HTTPClient} esegue una \texttt{GET} di un 
 					file remoto che se scaricato correttamente viene 
-					memorizzato in un file locale nel filesystem.}
+					memorizzato in un file locale nel filesystem.
 				},label={cod:dlFileTi}
 			]
 	// crea un nuovo HTTPClient
@@ -1246,7 +1262,6 @@
 		// se il download fallisce
 		onerror: function(e){ ... }
 	});
-	
 	// compongo una 'GET'
 	httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
 	// invio la richiesta
@@ -1256,9 +1271,75 @@
 			tra \tisdk{} e \pg{} è che le API del primo consentono di creare 
 			file persistenti solo in precise directory relative 
 			all'applicazione stessa per le quali sono definite delle specifiche 
-			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere 
+			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
 			l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}). 
 			Con il plugin di \pg{}, a patto di avere i permessi necessari, è 
 			possibile navigare in tutto il filesystem del sistema e creare nuove 
 			cartelle e file dove si vuole.
 		
+
+        \subsection{Lista delle ultime segnalazione}
+        
+        
+        \subsection{Salvataggio locale}
+        \label{subsec:caching}
+            
+
+        
+        \subsection{Dai dettagli alla mappa}
+            Come ultimo dettaglio ci è stato chiesto di aggiungere un
+            particolare bottone nella schermata di dettaglio della segnalazione
+            con la funzionalità di aprire la mappa mostrandone la
+            posizione. Nel navigare alla schermata e centrare la mappa in
+            corrispondenza di una data posizione non ci sono osservazioni
+            importanti da fare; quello che è più interessante da notare è come
+            si è aggiunto il bottone nelle barre di intestazione delle schermate
+            nei due framework.
+
+            Nell'applicazione \tisdk{} la barra in alto della window dei
+            dettagli è una action bar nativa di Android e per tale oggetto sono
+            definite le API per aggiungervi bottoni come per l'accesso ad un
+            menù. Questo è tipico nell'interfaccia Android ma non è prevista
+            nelle altre piattaforme e sicuramente non per iOS; così se si
+            vogliono supportare più piattaforme, in questo punto è necessario
+            differenziare il codice utilizzando le giuste API per ogni
+            piattaforma.
+            
+            Per quanto riguarda la schermata dei dettagli dell'applicazione
+            \pg{}, la barra in altro è una navbar \kendomob{}, la stessa per
+            ogni piattaforma, e in essa è possibile inserire bottoni per la
+            navigazione, nel nostro caso per saltare alla view della mappa. Nel
+            frammento di codice \ref{cod:tomapPG} si può vedere la definizione
+            del bottone con identificatore \texttt{jumpMap-button} all'interno
+            della navbar della view.
+            \begin{lstlisting}[
+                caption={Segmento iniziale della definizione della view per i
+                  dettagli dei una segnalazione. Notare la definizione dei
+                  bottoni di navigazione all'interno della navbar},
+                label={cod:tomapPG}
+              ]
+  [ ... ]
+  <div
+    data-role="view" id="view-repoDetail"
+    style="width: 100%; height: 100%"
+    data-show="app.loadRepo" data-hide="app.hideRepo"
+  >
+      <div data-role="header">
+        <div data-role="navbar">
+          <span id="repoDetail-title"><h3>Titolo</h3></span>
+          <a
+            id="back-button" data-align="left" href="#:back"
+            data-role="backbutton"
+          >Back</a>
+          <a
+            id="jumpMap-button" data-align="right"
+            data-role="button" data-click="app.jumpToMap"
+          >Map</a>
+        </div>
+      </div>
+      [ ... ]
+  </div>
+            \end{lstlisting}
+
+            L'aspetto delle due schermate con i relativi bottoni per la
+            navigazione verso la mappa sono mostrate in figura \ref{fig:repodetails}.
