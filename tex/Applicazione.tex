@@ -940,15 +940,15 @@
 			senza dover necessariamente andarle a cercare sulla mappa.
 			Gli elementi della lista sono cliccabili e premere su uno di questi 
 			elementi porta all'apertura del dettaglio della corrispondente 
-			segnalazione (vedi \ref{subsec: dettagli}).
+			segnalazione (vedi \ref{subsec:dettagli}).
 			
 			Qui non c'è interazione con gli strumenti offerti dal dispositivo
-			tranne che per il caching descritto nella sezione (riferimento alla 
-			sezione quando ci sarà) per usare l'applicazione 
-			anche in assenza di connessione alla rete Internet, 
-			quindi per la realizzazione dell'applicazione ibrida le API di \pg{} 
-			non sono state utilizzate, mentre invece sono 
-			stati sfruttati gli strumenti offerti da \kendomob{}.
+			tranne che per il caching descritto nella sezione \ref{subsec:caching}
+			implementato per permettere un uso dell'applicazione 
+			anche in assenza di connessione alla rete Internet 
+			quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
+            state utilizzate le API di \pg{} bensì sono stati sfruttati gli
+            strumenti offerti da \kendomob{}.
 			
 			Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
 			che permette di presentare informazioni, in una schermata scorrevole 
@@ -1139,8 +1139,19 @@
 			file persistenti solo in precise directory relative 
 			all'applicazione stessa per le quali sono definite delle specifiche 
 			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere 
+
 			l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}). 
 			Con il plugin di \pg{}, a patto di avere i permessi necessari, è 
 			possibile navigare in tutto il filesystem del sistema e creare nuove 
 			cartelle e file dove si vuole.
 		
+
+        \subsection{Lista delle ultime segnalazione}
+        
+        
+        \subsection{Salvataggio locale}
+        \label{subsec:caching}
+        
+
+        
+        \subsection{Dai dettagli alla mappa}
