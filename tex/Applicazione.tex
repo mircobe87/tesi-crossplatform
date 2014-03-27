@@ -984,7 +984,7 @@
 			fornita dal framework stesso, per definire le operazioni da eseguire 
 			quando viene premuto un elemento della lista e per 
 		\subsection{Dettagli di una segnalazione}
-		\label{subsec:dattagli}
+		\label{subsec:dettagli}
 			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
 			dettagli è relativamente semplice. Per fare questo abbiamo 
 			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
@@ -1110,9 +1110,9 @@
 			e salvarlo nel filesystem.
 			\begin{lstlisting}[
 				caption={
-					L'oggetto \texttt{HTTPClient esegue una \texttt{GET} di un 
+					L'oggetto \texttt{HTTPClient} esegue una \texttt{GET} di un 
 					file remoto che se scaricato correttamente viene 
-					memorizzato in un file locale nel filesystem.}
+					memorizzato in un file locale nel filesystem.
 				},label={cod:dlFileTi}
 			]
 	// crea un nuovo HTTPClient
@@ -1128,7 +1128,6 @@
 		// se il download fallisce
 		onerror: function(e){ ... }
 	});
-	
 	// compongo una 'GET'
 	httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
 	// invio la richiesta
@@ -1138,8 +1137,7 @@
 			tra \tisdk{} e \pg{} è che le API del primo consentono di creare 
 			file persistenti solo in precise directory relative 
 			all'applicazione stessa per le quali sono definite delle specifiche 
-			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere 
-
+			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
 			l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}). 
 			Con il plugin di \pg{}, a patto di avere i permessi necessari, è 
 			possibile navigare in tutto il filesystem del sistema e creare nuove 
@@ -1151,7 +1149,63 @@
         
         \subsection{Salvataggio locale}
         \label{subsec:caching}
-        
+            
 
         
         \subsection{Dai dettagli alla mappa}
+            Come ultimo dettaglio ci è stato chiesto di aggiungere un
+            particolare bottone nella schermata di dettaglio della segnalazione
+            con la funzionalità di aprire la mappa mostrandone la
+            posizione. Nel navigare alla schermata e centrare la mappa in
+            corrispondenza di una data posizione non ci sono osservazioni
+            importanti da fare; quello che è più interessante da notare è come
+            si è aggiunto il bottone nelle barre di intestazione delle schermate
+            nei due framework.
+
+            Nell'applicazione \tisdk{} la barra in alto della window dei
+            dettagli è una action bar nativa di Android e per tale oggetto sono
+            definite le API per aggiungervi bottoni come per l'accesso ad un
+            menù. Questo è tipico nell'interfaccia Android ma non è prevista
+            nelle altre piattaforme e sicuramente non per iOS; così se si
+            vogliono supportare più piattaforme, in questo punto è necessario
+            differenziare il codice utilizzando le giuste API per ogni
+            piattaforma.
+            
+            Per quanto riguarda la schermata dei dettagli dell'applicazione
+            \pg{}, la barra in altro è una navbar \kendomob{}, la stessa per
+            ogni piattaforma, e in essa è possibile inserire bottoni per la
+            navigazione, nel nostro caso per saltare alla view della mappa. Nel
+            frammento di codice \ref{cod:tomapPG} si può vedere la definizione
+            del bottone con identificatore \texttt{jumpMap-button} all'interno
+            della navbar della view.
+            \begin{lstlisting}[
+                caption={Segmento iniziale della definizione della view per i
+                  dettagli dei una segnalazione. Notare la definizione dei
+                  bottoni di navigazione all'interno della navbar},
+                label={cod:tomapPG}
+              ]
+  [ ... ]
+  <div
+    data-role="view" id="view-repoDetail"
+    style="width: 100%; height: 100%"
+    data-show="app.loadRepo" data-hide="app.hideRepo"
+  >
+      <div data-role="header">
+        <div data-role="navbar">
+          <span id="repoDetail-title"><h3>Titolo</h3></span>
+          <a
+            id="back-button" data-align="left" href="#:back"
+            data-role="backbutton"
+          >Back</a>
+          <a
+            id="jumpMap-button" data-align="right"
+            data-role="button" data-click="app.jumpToMap"
+          >Map</a>
+		</div>
+      </div>
+      [ ... ]
+  </div>
+            \end{lstlisting}
+
+            L'aspetto delle due schermate con i relativi bottoni per la
+            navigazione verso la mappa sono mostrate in figura \ref{fig:repodetails}.
