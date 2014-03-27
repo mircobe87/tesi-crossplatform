@@ -842,7 +842,25 @@
 			funzionalità dei widget di cui è comporta l'interfaccia grafica.}
 			mettono a disposizione i propri widget di ``input'' per i quali sono
 			definiti gli opportuni metodi per ottenere il valore immesso
-			dall'utente.
+			dall'utente. Su \kendomob{} la schermata che raccoglie l'input è
+            stata realizzata in una nuova view mentre con \tisdk{} la si è
+            implementata con una window. La figura \ref{fig:inputs} mostra la
+            schermata di input per i due framework.
+            \begin{figure}[h]
+              \centering
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{inputPG}
+                \caption{}
+              \end{subfigure}
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{inputTI}
+                \caption{}
+              \end{subfigure}
+              \caption{Inserimento nuova segnalazione: (a) l'interfaccia
+                realizzata con \kendomob{}; (b) l'interfaccia grafica
+                dell'applicazione realizzata con \tisdk{}.}
+              \label{fig:inputs}
+            \end{figure}
 			
 			Accedere alla fotocamera per scattare ed acquisire una foto non è un 
 			compito banale; \pg{} lo rende possibile attraverso le API del
