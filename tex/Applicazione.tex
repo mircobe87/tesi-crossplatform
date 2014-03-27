@@ -958,31 +958,92 @@
 			
 			Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
 			siamo in grado di ottenere un vettore contenente oggetti JSON che 
-			rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo, 
-			ovviamente dato che non ci interessa mostrare l'immagine della segnalazione
-			nella lista questa non viene scaricata velocizzando così il 
+			rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo. 
+			Ovviamente dato che nella lista non ci interessa mostrare l'immagine della segnalazione
+			questa non viene scaricata velocizzando così il 
 			trasferimento dei dati, bisogna però notare che, anche se la lista 
 			ne mostrerà soltanto il titolo, le segnalazioni scaricate contengono 
 			anche altri campi come il loro identificatore e quello dell'utente 
 			che le ha inviate, queste ultime informazioni sono necessarie per 
 			poter poi visualizzare la segnalazione nel dettaglio.
+			
 			Una volta scaricati i dati c'è appunto il problema di come inserirli 
 			nella lista, e il problema di far visualizzare solo il titolo 
 			"scartando" le altre informazioni.
 			\kendomob{} offre una pratica funzione \js{} tramite la quale è 
 			possibile definire il comportamento dell'applicazione in seguito 
 			alla pressione di un elemento della lista e di specificare quali 
-			campi mostrare degli oggetti inseriti nella lista. Il suddetto vettore 
+			campi mostrare degli oggetti inseriti in essa. Il vettore contentente le segnalazioni
 			poi può essere passato direttamente ad un'altra funzione,
 			sempre offerta dal framework, che si occuperà di inserire effettivamente 
 			gli oggetti JSON nella lista.
+			La creazione dell'elemento grafico lista è ancora una volta fatta 
+			attraverso un tag HTML decorato con l'attributo \texttt{data-role}, 
+			in particolare viene usato il tag \texttt{<ul data-role=listView>}.
+			Il codice \ref{cod:list} mostra un semplice esempio per 
+			chiarire l'uso di queste liste.
 			
+			Mentre le segnalazione vengono scaricate dal server l'utente si 
+			troverebbe di fronte ad una lista vuota senza capire effettivamente 
+			cosa stia succedendo, per evitare questo spiacevole inconveniente 
+			la cosa migliore da fare è stata quella di mostrare all'utente un'animazione 
+			di caricamento. \kendomob{} offre a tal proposito le funzioni
+			\texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per 
+			avviare e interrompere l'animazione.
+			\begin{lstlisting}[
+				caption = {
+					Esempio di definizione di una lista e del caricamento dei 
+					dati in essa. E' importante notare che
+					la funzione initList viene chiamata solo la prima volta che 
+					si accede alla schermata della lista, mentre la insertData 
+					viene eseguita anche agli accessi successivi.
+				},
+				label = {cod:list}
+			]
+    <div 
+      data-role="view" 
+      data-init="initList" 
+      data-show="insertData"
+    >
+	    	<ul data-role="listView" id="listViewContent"></ul>
+	    
+    </div>
+    
+    /* contenitore dei dati da inserire nella lista */
+    var customerDataSource = new kendo.data.DataSource({ });
+    
+    var initList = function (){
+		$("#listViewContent").kendoMobileListView({
+			/* setta la sorgente dei dati per questa lista */
+			dataSource: customerDataSource, 
+			click: function(e) {
+				 /* codice da eseguire quando viene premuto un elemento della lista */
+			},
+			/* in questo modo all'interno della lista viene visualizzato solo il campo titolo */
+			template: "<h5>#:titolo#</h5>" 
+		}); 
+	};
+	
+	var insertData = function(){
+		/* scarica le segnalazioni dal server */
+		var dati = getDataFromServer();
+		/* inserisce effettivamente i dati nella lista */ 
+		customerDataSource.data(dati); 
+	};	
+			\end{lstlisting}
 			
-			Per \kendomob{} abbiamo creato una \texttt{view} con al suo interno 
-			una lista \texttt{<ul>} decorata con l'attributo \texttt{data-role=listView}, 
-			in \js{} abbiamo poi usato la funzione \texttt{kendoMobileListView}, 
-			fornita dal framework stesso, per definire le operazioni da eseguire 
-			quando viene premuto un elemento della lista e per 
+			\noindent Come detto con \tisdk{} l'approccio è simile. Dentro 
+			il file XML della schermata che contiene la lista deve essere definito 
+			l'elemento \texttt{ListView} però a differenza di \kendomob{} la struttura 
+			degli elementi va ancora definita in XML anzichè in \js{}. Nel controllore 
+			si ha quindi il solo obbligo di occuparsi di scaricare i dati dal 
+			server, di inserirli nella lista e di implementare la funzione 
+			da eseguire alla pressione degli elementi. Il tutto però non è così immediato, 
+			infatti non è possibile inserire i dati nella lista usando direttamente 
+			il vettore delle segnalazioni, ogni elemento deve prima essere convertito 
+			da JSON ad un oggetto \js{} e inoltre questo oggetto deve avere dei 
+			campi particolari imposti dal framework.
+			 
 		\subsection{Dettagli di una segnalazione}
 		\label{subsec:dettagli}
 			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
