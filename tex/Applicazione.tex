@@ -741,9 +741,7 @@
 				gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
 				label=cod:alloymapcontroller
 			]
-
 	[...]
-
 	/**
 	 * Handler del click su un segnaposto della mappa.
 	 * @param {ModulesMapViewEvent} evt evento passato allo
@@ -1000,36 +998,36 @@
 				},
 				label = {cod:list}
 			]
-    <div 
-      data-role="view" 
-      data-init="initList" 
-      data-show="insertData"
-    >
-	    	<ul data-role="listView" id="listViewContent"></ul>
-	    
-    </div>
-    
+  <div data-role="view" data-init="initList"
+       data-show="insertData">
+    <ul data-role="listView" id="listViewContent"></ul>    
+  </div>
+
+  [ ... ]
+
+  <script>
     /* contenitore dei dati da inserire nella lista */
     var customerDataSource = new kendo.data.DataSource({ });
     
     var initList = function (){
-		$("#listViewContent").kendoMobileListView({
-			/* setta la sorgente dei dati per questa lista */
-			dataSource: customerDataSource, 
-			click: function(e) {
-				 /* codice da eseguire quando viene premuto un elemento della lista */
-			},
-			/* in questo modo all'interno della lista viene visualizzato solo il campo titolo */
-			template: "<h5>#:titolo#</h5>" 
-		}); 
-	};
+      $("#listViewContent").kendoMobileListView({
+        /* setta la sorgente dei dati per questa lista */
+        dataSource: customerDataSource, 
+        click: function(e) {
+          /* gestore del tocco su un elemento della lista */
+        },
+        /* nella lista viengono mostrati solo i campi 'titolo' */
+        template: "<h5>#:titolo#</h5>" 
+      }); 
+    };
 	
-	var insertData = function(){
-		/* scarica le segnalazioni dal server */
-		var dati = getDataFromServer();
-		/* inserisce effettivamente i dati nella lista */ 
-		customerDataSource.data(dati); 
-	};	
+    var insertData = function(){
+      /* scarica le segnalazioni dal server */
+      var dati = getDataFromServer();
+      /* inserisce effettivamente i dati nella lista */ 
+      customerDataSource.data(dati); 
+    };
+  </script>	
 			\end{lstlisting}
 			
 			\noindent Come detto con \tisdk{} l'approccio è simile. Dentro 
@@ -1262,7 +1260,7 @@
             id="jumpMap-button" data-align="right"
             data-role="button" data-click="app.jumpToMap"
           >Map</a>
-		</div>
+        </div>
       </div>
       [ ... ]
   </div>
