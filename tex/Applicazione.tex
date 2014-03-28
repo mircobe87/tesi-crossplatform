@@ -934,7 +934,7 @@
 		\subsection{Lista proprie segnalazioni}
 			Questa schermata mostra una lista di titoli delle segnalazioni fatte
 			dal proprio dispositivo (non contiene quindi quelle effettuate da altri 
-			utenti), in modo da poter accedere velocemente alle proprie segnalazioni 
+			utenti), in modo da poter accedere velocemente ad esse 
 			senza dover necessariamente andarle a cercare sulla mappa.
 			Gli elementi della lista sono cliccabili e premere su uno di questi 
 			elementi porta all'apertura del dettaglio della corrispondente 
@@ -943,19 +943,35 @@
 			Qui non c'è interazione con gli strumenti offerti dal dispositivo
 			tranne che per il caching descritto nella sezione \ref{subsec:caching}
 			implementato per permettere un uso dell'applicazione 
-			anche in assenza di connessione alla rete Internet 
+			anche in assenza di connessione alla rete Internet, 
 			quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
             state utilizzate le API di \pg{} bensì sono stati sfruttati gli
             strumenti offerti da \kendomob{}.
 			
 			Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
 			che permette di presentare informazioni, in una schermata scorrevole 
-			verticalmente, organizzandole in sezioni ed elementi.
-			Entrambi i framework gestiscono in maniera simile l'inserimento dei 
-			dati nella lista.
+			verticalmente, organizzandole in sezioni ed elementi (vedi fig. \ref{fig:mieTiPg}).
 			
-			Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
-			siamo in grado di ottenere un vettore contenente oggetti JSON che 
+			\begin{figure}[H]
+              \centering
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{listaMiePg}
+                \caption{}
+              \end{subfigure}
+              ~
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieTi}
+                \caption{}
+              \end{subfigure}
+              \caption{Lista delle  proprie segnalazioni: 
+                (a) interfaccia grafica realizzata con \kendomob{}; 
+                (b) interfaccia grafica realizzata con \tisdk{}.
+  				}
+              \label{fig:mieTiPg}
+            \end{figure}
+
+			\noindent Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
+			siamo in grado di ottenere un vettore contenente le segnalazioni in formato JSON che 
 			rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo. 
 			Ovviamente dato che nella lista non ci interessa mostrare l'immagine della segnalazione
 			questa non viene scaricata velocizzando così il 
@@ -981,17 +997,6 @@
 			Il codice \ref{cod:list} mostra un semplice esempio per 
 			chiarire l'uso di queste liste.
 			
-			Mentre le segnalazione vengono scaricate dal server l'utente si 
-			troverebbe di fronte ad una lista vuota senza capire effettivamente 
-			cosa stia succedendo, per evitare questo spiacevole inconveniente 
-			la cosa migliore da fare è stata quella di mostrare all'utente un'animazione 
-			di caricamento. \kendomob{} offre a tal proposito le funzioni
-			\texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per 
-			avviare e interrompere l'animazione. Questa animazione però non blocca 
-			l'interfaccia grafica e in questo modo l'utente può ad esempio decidere 
-			di cambiare schermata creando così dei problemi nella logica dell'applicazione, 
-			inoltre su Android lo stile di questa animazione non assomiglia per niente 
-			a quello nativo.
 			\begin{lstlisting}[
 				caption = {
 					Esempio di definizione di una lista e del caricamento dei 
@@ -1033,6 +1038,27 @@
     };
   </script>	
 			\end{lstlisting}
+			
+			\noindent Mentre le segnalazioni vengono scaricate dal server l'utente si 
+			troverebbe di fronte ad una lista vuota senza capire effettivamente 
+			cosa stia succedendo, per evitare questo spiacevole inconveniente 
+			la cosa migliore da fare è stata quella di mostrare all'utente un'animazione 
+			di caricamento (vedi fig. \ref{fig:listaMieLoadPg}). \kendomob{} offre a tal proposito le funzioni
+			\texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per 
+			avviare e interrompere l'animazione. Questa animazione però non blocca 
+			l'interfaccia grafica e l'utente può ad esempio decidere 
+			di cambiare schermata creando dei problemi nella logica dell'applicazione, 
+			inoltre su Android lo stile di questa animazione non assomiglia molto
+			a quello nativo.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[keepaspectratio=true,width=0.5\textwidth]{listaMieLoadPg}
+				\caption{La figura mostra l'animazione di caricamento nella lista 
+				delle proprie segnalazioni realizzata con \kendomob{}.
+				}
+				\label{fig:listaMieLoadPg}
+			\end{figure}
 			
 			\noindent Come detto con \tisdk{} l'approccio è simile. Dentro 
 			il file XML della schermata che contiene la lista deve essere definito 
@@ -1115,7 +1141,27 @@
 			quella indeterminata è stata fatta visualizzare mentre le segnalazioni 
 			venivano scaricate dal server, mentre l'altra quando i dati venivano 
 			convertiti negli oggetti da poter inserire nella lista. Il risultato 
-			è mostato in figura \ref{}
+			è mostato in figura \ref{fig:mieLoadTi}.
+			
+			\begin{figure}[H]
+              \centering
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieUndTi}
+                \caption{}
+              \end{subfigure}
+              ~
+              \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieDefTi}
+                \caption{}
+              \end{subfigure}
+              \caption{Animazione di caricamento nella lista delle proprie segnalazioni: 
+                (a) animazione di attesa indefinita mostrata durante il download delle 
+                segnalazioni; (b) animazione di attesa definita mostrata durante 
+                l'inserimento delle segnalazioni nella lista.
+  				}
+              \label{fig:mieLoadTi}
+            \end{figure}
+
 			 
 		\subsection{Dettagli di una segnalazione}
 		\label{subsec:dettagli}
