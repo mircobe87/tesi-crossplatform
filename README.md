@@ -25,6 +25,7 @@ installato nel proprio sistema i seguenti pacchetti:
 
  - [babel](http://ctan.org/pkg/babel "Multilingual support for Plain TEX or LATEX")
  - [fancyhdr](http://ctan.org/pkg/fancyhdr "Extensive control of page headers and footers in LATEX2ε")
+ - [fncychap](http://ctan.org/pkg/fncychap "Seven predefined chapter heading styles")
  - [frontespizio](http://ctan.org/pkg/frontespizio "Create a frontispiece for Italian theses")
  - [hyperref](http://ctan.org/pkg/hyperref "Extensive support for hypertext in LATEX")
  - [inputenc](http://ctan.org/pkg/inputenc "Accept different input encodings")
