@@ -529,6 +529,7 @@
 			
 			
 		\subsection{Registrazione al primo avvio}
+		\label{subsec:registrazione}
 			Come avevamo già anticipato, la prima cosa di cui deve occuparsi
 			il client al suo primo avvio è quella di registrare un nuovo utente. Per
 			poter distinguere ogni volta se l'applicazione è stata avviata 
@@ -932,6 +933,7 @@
 			attendibili.
 			
 		\subsection{Lista proprie segnalazioni}
+		\label{subsec:proprie}
 			Questa schermata mostra una lista di titoli delle segnalazioni fatte
 			dal proprio dispositivo (non contiene quindi quelle effettuate da altri 
 			utenti), in modo da poter accedere velocemente ad esse 
@@ -1162,12 +1164,21 @@
               \label{fig:mieLoadTi}
             \end{figure}
 
+			\noindent In generale entrambi i framework hanno soddisfatto tutti 
+			i nostri requisiti e lo scorrimento delle liste è
+			performante anche in presenza di molti elementi. \kendomob{} ha
+			anche introdotto, per tutte le piattaforme supportate, la
+			possibilità di aggiornare il contenuto della
+			lista attraverso il cosiddetto ``pull-to-refresh'', cioè
+			trascinando col dito la lista verso il basso per qualche secondo.
+			Anche \tisdk{} permette questa modalità di aggiornamento del
+			contenuto delle lista ma solo per iOS.
 			 
 		\subsection{Dettagli di una segnalazione}
 		\label{subsec:dettagli}
 			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
 			dettagli è relativamente semplice. Per fare questo abbiamo 
-			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
+			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una
 			window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi
 			i framework, a prescindere dalla piattaforma che vogliamo
 			supportare, metto a disposizione diversi widget per mostrare sia
@@ -1175,6 +1186,7 @@
 			l'interfaccia per adempiere a questo scopo. La figura
 			\ref{fig:repodetails} mostra le interfacce dei due framework con i
 			dettagli di una segnalazione.
+
 			\begin{figure}[h]
 				\centering
 				\begin{subfigure}[b]{0.9\textwidth}
@@ -1196,7 +1208,7 @@
 			
 			
 			Realizzare questa funzionalità ci ha permesso di confrontarci con il 
-			problema di dover scaricare da un server un file, in questo caso, 
+			problema di dover scaricare un file da un server, in questo caso, 
 			l'immagine allegata alla segnalazione da mostrare. CouchDB 
 			consente di reperire gli allegati multimediali per un documento in 
 			tre modi:
@@ -1325,7 +1337,39 @@
 		
 
         \subsection{Lista delle ultime segnalazioni}
+        Questa schermata è quella mostrata all'avvio dell'applicazione se
+        l'utente è già registrato, altrimenti viene mostrata la schermata di
+        registrazione descritta nella sezione \ref{subsec:registrazione}.
+        La lista contenuta in questa schermata mostra il titolo e la data delle
+        ultime dieci segnalazioni
+        fatte da un qualsiasi utente. Rispetto a quella delle proprie
+        segnalazioni descritta nella sezione \ref{subsec:proprie} non c'è
+        molto da aggiungere, se non che nella lista dell'applicazione
+        realizzata con \tisdk{} abbiamo inserito anche un'immagine per
+        differenziare le proprie segnalazioni da quelle di un altro utente.
+        Questo non siamo però riusciti a farlo con \kendomob{}. Nella figura
+        \ref{fig:last} sono visibili le due realizzazioni a confronto.
         
+        \begin{figure}[h]
+			\centering
+			\begin{subfigure}[b]{0.485\textwidth}
+				\includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerClose}
+				\caption{}
+				\label{fig:tiLast}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.485\textwidth}
+				\includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerClose}
+				\caption{}
+				\label{fig:kendoLast}
+			\end{subfigure}
+			\caption{Lista delle ultime segnalazioni: 
+			In (a) si mostra la realizzazione con \tisdk{}; in (b) si mostra
+			quella con \kendomob{}
+			}
+			\label{fig:last}
+		\end{figure}
+
         
         \subsection{Salvataggio locale}
         \label{subsec:caching}
