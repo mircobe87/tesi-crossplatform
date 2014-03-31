@@ -1514,9 +1514,9 @@
 		La qualità dell'interfaccia grafica è sicuramente migliore in \tisdk{},
 		soprattutto per il fatto che è possibile accedere agli elementi 
 		grafici nativi delle varie piattaforme. \kendomob{} prova tramite i 
-		suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si nota 
-		la differenza con esso, dalle dimostrazioni disponibili sulla 
-		documentazione di questo framework sembra che per iOS l'aspetto 
+		suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si
+        notano ancora alcune differenze; dalle dimostrazioni disponibili sulla 
+		documentazione di questo framework, invece, sembra che per iOS l'aspetto 
 		rispecchi in maniera più fedele quello nativo. Integrare \pg{} con 
 		altri framework per la realizzazione dell'interfaccia grafica potrebbe 
 		comunque risolvere in parte il problema dell'aspetto.
@@ -1531,21 +1531,21 @@
 		\subsubsection{Funzionalità}
 		Entrambi i framwork sono risultati validi nel realizzare le 
 		funzionalità che ci erano state richieste. Di base \tisdk{} fornisce 
-		sicuramente più strumenti, ma l'estendibilità di \pg{} tramite plugin 
+		sicuramente più strumenti, ma l'estensibilità di \pg{} tramite plugin 
 		permette di ridurre questo gap, molti di questi plugin sono 
 		disponibili in rete e avendo conoscenze del linguaggio nativo è 
 		possibile crearsene di propri. L'unica vera differenza 
-		trovata è stata l'impossibilità di implementare il servizio di 
+		trovata è stata nell'impossibilità di implementare il servizio di 
 		background (vedi \ref{subsec:nuova}) con \pg{}, questo problema 
 		riguarda proprio il concetto con 
 		il quale sono costruite queste applicazioni: è si possibile lanciare 
 		in \js{}
 		un servizio in background che possa essere eseguito anche quando 
 		l'applicazione è stata chiusa (in rete è disponibile un plugin proprio 
-		per questo scopo), ma il codice del servizio deve essere comunque 
-		scritto in linguaggio nativo in quanto un servizio scritto in codice 
-		\js{}, essendo interpretato, all'interno della Web View  
-		dell'applicazione non potrebbe essere eseguito quando questa viene 
+		per questo scopo) ma, il codice del servizio deve essere comunque 
+		scritto in linguaggio nativo in quanto, un servizio scritto in codice 
+		\js{}, essendo interpretato all'interno della Web View  
+		dell'applicazione, non potrebbe essere eseguito quando questa viene 
 		chiusa.
 		\tisdk{} invece convertendo il codice \js{} in codice nativo non 
 		soffre di questo problema.
