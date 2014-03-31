@@ -1180,13 +1180,13 @@
 			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
 			dettagli è relativamente semplice. Per fare questo abbiamo 
 			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
-			window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi i 
-			framework, a prescindere dalla piattaforma che vogliamo supportare, 
-			mettono a disposizione diversi widget per mostrare sia dati testuali 
-			che immagini, quindi è stato molto semplice realizzare l'interfaccia 
-			per adempiere a questo scopo. La figura \ref{fig:repodetails}
-			mostra le interfacce dei due framework con i dettagli di una
-			segnalazione.
+			window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi
+            i framework, a prescindere dalla piattaforma che vogliamo
+            supportare, mettono a disposizione diversi widget per mostrare sia
+            dati testuali che immagini, quindi è stato molto semplice realizzare
+            l'interfaccia per adempiere a questo scopo. La figura
+            \ref{fig:repodetails} mostra le interfacce dei due framework con i
+            dettagli di una segnalazione.
 			\begin{figure}[h]
 				\centering
 				\begin{subfigure}[b]{0.9\textwidth}
@@ -1373,10 +1373,44 @@
 			}
 			\label{fig:last}
 		\end{figure}
-		
+
+        
         \subsection{Salvataggio locale}
         \label{subsec:caching}
-            
+            Dopo la consegna della prima versine funzionante delle due
+            applizioni, la prima cosa che il nostro tutore aziendale ci ha
+            richiesto di aggiungere è stato un meccanismo di caching per
+            permettere almeno la visualizzazione delle proprie segnalazioni in
+            modalità offline.
+
+            A prescindere dalla possibilità di memorizzare localmente i dati,
+            la prima cosa che ci serviva era un sistema per stabilire se un
+            connessione a Internet era presente o meno, in modo da poter
+            decidere se accedere ai dati locali o a quelli remoti;
+            fortunatamente entrambi i framework forniscono le API per ottenere
+            questo genere d'informazioni.
+
+            Il plugin \texttt{Connection} di \pg{}, che supporta tutte le
+            piattaforme, attraverso il valore di \texttt{connection.type} è
+            possibile sapere che tipo di connessione è attualmente in corso
+            sul dispositivo.
+
+            Per quanto riguarda \tisdk{} le API \texttt{Titanium.Network}
+            forniscono, oltre ad altri metodi utili per identificare il tipo di
+            connessione in corso, anche il semplice metodo \texttt{getOnline}
+            che con un valore booleano permette di conoscere se il dispoditivo
+            ha attualmente accesso ad Internet.
+
+            Sapendo ora accedere alle informazioni di rete, dovevamo decidere
+            come memorizzare le segnalazioni locali: avendo già fatto
+            esperienza con il salvataggio di immagini sul file system e con il
+            meccanismo di web storage, abbiamo deciso di utilizzare
+            quest'ultimo per salvare tutte le informazioni sulla segnalazione
+            tranne per l'immagine allegata che abbiamo memorizzato
+            direttamente in un file sul dispositivo. Oltre che a memorizzare
+            solo le segnalazioni composte dall'utente, abbiamo deciso di
+            memorizzare anche le due liste, in modo da rendere le applicazioni
+            il più possibile utilizzabili offline.
 
         
         \subsection{Dai dettagli alla mappa}
@@ -1435,7 +1469,8 @@
             \end{lstlisting}
 
             L'aspetto delle due schermate con i relativi bottoni per la
-            navigazione verso la mappa sono mostrate in figura \ref{fig:repodetails}.
+            navigazione verso la mappa sono mostrate in figura
+            \ref{fig:repodetails}.
 
 	\subsection{Risultato del confronto}
 	Descriviamo ora il risultato del confronto tra i due framework valutando 
