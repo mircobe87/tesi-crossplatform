@@ -820,6 +820,7 @@
 			\end{figure}
 			
 		\subsection{Creare una nuova segnalazione}
+        \label{subsec:nuovasegnalazione}
 			Creare una segnalazione sembra una cosa semplice ma per
 			comporne una c'è bisogno di una sostanziale interazione con il
 			dispositivo. Quello che andremo a descrivere ed a valutare sarà
@@ -1383,13 +1384,13 @@
             modalità offline.
 
             A prescindere dalla possibilità di memorizzare localmente i dati,
-            la prima cosa che ci serviva era un sistema per stabilire se un
-            connessione a Internet era presente o meno, in modo da poter
+            la prima cosa che ci serviva era un sistema per stabilire se era
+            presente o meno una connessione a Internet, in modo da poter
             decidere se accedere ai dati locali o a quelli remoti;
             fortunatamente entrambi i framework forniscono le API per ottenere
             questo genere d'informazioni.
 
-            Il plugin \texttt{Connection} di \pg{}, che supporta tutte le
+            Con il plugin \texttt{Connection} di \pg{}, che supporta tutte le
             piattaforme, attraverso il valore di \texttt{connection.type} è
             possibile sapere che tipo di connessione è attualmente in corso
             sul dispositivo.
@@ -1402,14 +1403,46 @@
 
             Sapendo ora accedere alle informazioni di rete, dovevamo decidere
             come memorizzare le segnalazioni locali: avendo già fatto
-            esperienza con il salvataggio di immagini sul file system e con il
-            meccanismo di web storage, abbiamo deciso di utilizzare
-            quest'ultimo per salvare tutte le informazioni sulla segnalazione
-            tranne per l'immagine allegata che abbiamo memorizzato
-            direttamente in un file sul dispositivo. Oltre che a memorizzare
+            esperienza con il salvataggio di immagini sul file system (vedi
+            sez. \ref{subsec:nuovasegnalazione}) e con il meccanismo di web
+            storage (vedi sez. \ref{subsec:registrazione}), abbiamo deciso di
+            utilizzare quest'ultimo per salvare tutte le informazioni sulla
+            segnalazione tranne per l'immagine allegata che è stata memorizzata
+            sul dispositivo direttamente in un file. Oltre a mantenere in cache
             solo le segnalazioni composte dall'utente, abbiamo deciso di
             memorizzare anche le due liste, in modo da rendere le applicazioni
             il più possibile utilizzabili offline.
+
+            Una volta che le immagini vengono salvate sul file system è
+            possibile che altre applicazioni, come la galleria di Android,
+            possano mostrarle all'utente il quale potrebbe decidere di
+            rimuoverle. Un altra possibile causa di mancanza dell'allegato di
+            una segnalazione nella cache è duvuta ad un fortuito errore durante
+            il download dal server. In entrambi questi casi il caching verrebbe
+            compromesso ma, quando si visualizzeranno i dettagli di una
+            segnalazione che avrà la foto mancante, verrà mostrata un immagine
+            predefinita sulla quale, un tocco dell'utente scatenerà un nuovo
+            download di tale allegato ovviando così alla ``falla'' nella cache
+            (vedi fig. \ref{fig:noImages}).
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{noImagePG}
+                    \caption{}
+                \end{subfigure}
+                ~
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{noImageTI}
+                    \caption{}
+                \end{subfigure}
+                \caption{
+                    File allegato alla segnalazione mancante nella cache durante
+                    la visualizzazione dei suoi dettagli. (a) e (b) mostrano
+                    l'immagine predefinita utilizzata rispettivamente
+                    nell'applicazioni realizzate con \pg{} e \tisdk{}
+                }
+                \label{fig:noImages}
+            \end{figure}
 
         
         \subsection{Dai dettagli alla mappa}
