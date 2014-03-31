@@ -820,6 +820,7 @@
 			\end{figure}
 			
 		\subsection{Creare una nuova segnalazione}
+		\label{subsec:nuova}
 			Creare una segnalazione sembra una cosa semplice ma per
 			comporne una c'è bisogno di una sostanziale interazione con il
 			dispositivo. Quello che andremo a descrivere ed a valutare sarà
@@ -1460,6 +1461,26 @@
 		anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo 
 		di consigliare \tisdk{}.
 		\subsubsection{Funzionalità}
+		Entrambi i framwork sono risultati validi nel realizzare le 
+		funzionalità che ci erano state richieste. Di base \tisdk{} fornisce 
+		sicuramente più strumenti, ma l'estendibilità di \pg{} tramite plugin 
+		permette di ridurre questo gap, molti di questi plugin sono 
+		disponibili in rete e avendo conoscenze del linguaggio nativo è 
+		possibile crearsene di propri. L'unica vera differenza 
+		trovata è stata l'impossibilità di implementare il servizio di 
+		background (vedi \ref{subsec:nuova}))con \pg{}, questo problema 
+		riguarda proprio il concetto con 
+		il quale sono costruite queste applicazioni: è si possibile lanciare 
+		in \js{}
+		un servizio in background che possa essere eseguito anche quando 
+		l'applicazione è stata chiusa (in rete è disponibile un plugin proprio 
+		per questo scopo), ma il codice del servizio deve essere comunque 
+		scritto in linguaggio nativo in quanto un servizio scrivere codice 
+		\js{}, essendo interpretato, all'interno della Web View  
+		dell'applicazione non potrebbe essere eseguito quando questa viene 
+		chiusa.
+		\tisdk{} invece convertendo il codice \js{} in codice nativo non 
+		soffre di questo problema. 
 		\subsubsection{Strumenti per lo sviluppo}
 		\subsubsection{Cross-platform}
 
