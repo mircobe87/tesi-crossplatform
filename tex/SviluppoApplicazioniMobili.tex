@@ -1,266 +1,276 @@
 \chapter{Sviluppo Applicazioni Mobili}
-	Vista la grande diffusione di dispositivi mobili, come smartphone e tablet, 
-	in grado di eseguire applicazioni scritte da terze parti, un'azienda 
-	potrebbe essere intenzionata a fornire i propri servizi anche attraverso 
-	queste applicazioni.
-	
-	Diversamente dalle applicazioni per desktop, dove per molto tempo la 
-	piattaforma di riferimento è stata Windows, il panorama delle piattaforme 
-	mobili è molto frammentato. I principali sistemi operativi mobili sono: iOS, 
-	Android e Windows Phone, seguiti dai meno diffusi Blackberry e Symbian, 
-	inoltre ne stanno nascendo continuamente di nuovi.
-	
-	Quando si decide di sviluppare un'applicazione mobile, è quindi necessario 
-	scegliere se sviluppare per una o più di queste piattaforme. Lo sviluppo su 
-	una sola piattaforma (sviluppo \singleplat), è appropriato se si ha 
-	intenzione di sviluppare applicazioni che avranno un uso interno dove i 
-	dispositivi sono controllati o se per un strategia di mercato si è deciso di 
-	concentrarci sullo sviluppo per un unico produttore che adotta un'unica 
-	piattaforma. Anche se sviluppare per una singola piattaforma semplifica di 
-	molto il lavoro, questo pone dei rischi in quanto il successo 
-	dell'applicazione è legato al mantenimento del grado di preferenza degli 
-	utenti della piattaforma supportata. L'alternativa è quella di sviluppare 
-	l'applicazione supportando diverse piattaforme (sviluppo \crossplat), 
-	col vantaggio di raggiungere un bacino di utenza più ampio.
-	
-	Ci sono molti approcci differenti per lo sviluppo \crossplat, ognuno con 
-	differenti vantaggi, ma la caratteristica che tutti hanno in comune è la 
-	possibilità di sviluppare la stessa (o molto simile) applicazione per 
-	diverse piattaforme mobili.
-	 
-	Principalmente è possibile sviluppare tre tipi di applicazioni, ognuno dei 
-	quali può essere usato sia per lo sviluppo \singleplat, sia per quello 
-	\crossplat: Native, Web e Ibride. Nei successivi paragrafi 
-	verranno spiegati nel dettaglio, e per ognuno saranno affrontati i pro e i 
-	contro, con particolare attenzione per lo sviluppo \crossplat.
-	
-	\section{Applicazioni Native}
-	\label{sec:nativapp}
-		Lo sviluppo nativo di applicazioni si basa sull'utilizzo di SDK e di 
-		linguaggi di programmazione specifici per ogni piattaforma. Per esempio, 
-		le applicazioni native per iOS usano le API di Apple, Objective C e 
-		UIKit; su Android si utilizzano le API di Google, Java e la specifica 
-		sintassi XML per la UI; su Windows Phone si utilizzano le API di 
-		Microsoft, .NET e XAML. Ogni SDK fornisce gli strumenti necessari per 
-		compilare il codice sorgente in codice eseguibile sulla propria 
-		piattaforma, per creare pacchetti installabili\footnote{Su Android le 
-		applicazioni vendono distribuite in pacchetti .apk, su iOS in .ipa e su 
-		Windows Phone 8 in .xap} e diversi strumenti utili per il debugging.
+    Vista la grande diffusione di dispositivi mobili, come smartphone e tablet,
+    in grado di eseguire applicazioni scritte da terze parti, un'azienda
+    potrebbe essere intenzionata a fornire i propri servizi anche attraverso
+    queste applicazioni.
 
-		Sviluppare applicazioni native permette di creare applicazioni molto 
-		performanti, tale caratteristica rende questa tecnica la più opportuna 
-		per lo sviluppo di giochi con una ricca grafica. Inoltre grazie alle 
-		API, fornite direttamente dal produttore, si ha un completo accesso al 
-		dispositivo, con la possibilità quindi di sfruttare i vari sensori 
-		(come fotocamera, GPS, accelerometro). Infine è possibile distribuire 
-		l'applicazione sfruttando i vari store\footnote{Ogni piattaforma 
-		fornisce il proprio canale di distribuzione per le applicazioni: 
-		App Store per iOS, Google Play Store per Android, Windows Store per 
-		Windows Phone} delle piattaforme, questo permette di avere maggiore 
-		pubblicità per l'applicazione grazie all'enorme ecosistema che si è 
-		venuto a creare intorno ad essi.
+    Diversamente dalle applicazioni per desktop, dove per molto tempo la
+    piattaforma di riferimento è stata Windows, il panorama delle piattaforme
+    mobili è molto frammentato. I principali sistemi operativi mobili sono: iOS,
+    Android e Windows Phone, seguiti dai meno diffusi Blackberry e Symbian.
 
-		Di contro questa tecnica non è molto adatta allo sviluppo di 
-		applicazioni \crossplat. Sviluppare la stessa applicazione per 
-		diverse piattaforme richiede che diversi team di sviluppatori scrivano 
-		la stessa applicazione più volte in linguaggi diversi e in ambienti di 
-		sviluppo differenti. Il problema inoltre cresce con il numero di 
-		piattaforme che si intende supportare. Un'azienda, per ogni piattaforma, 
-		deve spendere lo stesso tempo, sforzo e denaro per produrre e testare 
-		l'applicazione. E lo stesso vale anche per il mantenimento della app. 
-		Un' altro importante fattore in ogni progetto di sviluppo di 
-		applicazioni native \crossplat è la disponibilità di programmatori 
-		con le giuste conoscenze. Lo sviluppo di applicazioni native richiede 
-		l'avere a disposizione un gruppo di sviluppatori che conosca tutti i 
-		vari linguaggi necessarri per lavorare su ogni piattaforma (requisito 
-		non	molto facile da soddisfare) oppure si dovrà contare un diversi team 
-		di programmatori ognuno specializzato su una specifica piattaforma.
-		
-		Esistono strumenti di cross-compiling che possono essere una soluzione 
-		parziale del problema consentendo di scrivere l'applicazione in un solo 
-		linguaggio (per esempio javaScript) e poi compilarla in applicazione 
-		nativa. Questa soluzione aiuta a ridurre il numero di differenti 
-		linguaggi di programmazione che gli sviluppatori devono saper maneggiare 
-		ma comunque non elimina la necessità di dover compilare differenti 
-		applicazioni per ogni piattaforma. Cross-compiling inoltre introduce un 
-		nuovo livello di astrazione tra il codice della app e il runtime; di 
-		questo bisogna tenere conto quando si vanno a fare operazioni di 
-		ottimizzazione, testing e di debugging.
+    Quando si decide di sviluppare un'applicazione mobile è quindi necessario
+    scegliere se supportare una o più di queste piattaforme. Lo sviluppo per
+    una sola piattaforma (sviluppo \singleplat{}) può essere appropriato se si ha
+    intenzione di creare applicazioni destinate a particolari dispositivi
+    aziendali (es. lettore di codici a barre), per i quali sappiamo che il
+    sistema opertivo utilizzato non cambierà, o se semplicemente per una
+    strategia di mercato si è deciso di concentrarsi su un unica piattaforma.
+    Anche se sviluppare per una singola piattaforma semplifica di
+    molto il lavoro, questo pone dei rischi in quanto la durata del successo
+    dell'applicazione è legato al futuro della piattaforma stessa: gli utenti
+    infatti nel tempo potrebbero preferire l'uso di altri dispositivi con
+    differenti sistemi operativi.
+    L'alternativa è quella di supportare allo stesso tempo numerose piattaforme
+    (sviluppo \crossplat{}), col vantaggio di raggiungere un bacino di utenza
+    più ampio.
 
-	\section{Applicazioni Web}
-	\label{sec:webapp}
-		Le Applicazioni Web (chiamate anche Browser App o Web App) non sono 
-		altro che siti web ottimizzati per i dispositivi mobili. Il loro uso è 
-		reso possibile dai moderni browser mobili come: Mobile Safari (sui 
-		dispositivi iOS), Google Chrome per Android (sui dispositivi Android 4+) 
-		e Internet Explorer 10 (sui dispositivi Windows Phone 8).
-		
-		Per realizzare questo tipo di applicazione viene sfruttata la potenza di 
-		HTML5, CSS3 e JavaScript. HTML5 è la quinta versione del linguaggio 
-		HTML, il quale fornisce gli elementi di base che costituiscono le pagine 
-		web. HTML5 supporta i contenuti multimediali, ed è stato creato con 
-		l'obiettivo di poter essere eseguito da qualsiasi browser 
-		mobile\citep{White:Native-vs-Html}. Una delle tante novità di HTML5 è la 
-		cosiddetta ``application cache'': attraverso questo strumento è 
-		possibile dire al browser quali file salvare (non nella cache 
-		``normale'' ma in un cache apposita, definita per l'appunto 
-		``application cache''). Il funzionamento dell'application cache è 
-		piuttosto semplice: sostanzialmente, si crea un file all'interno del 
-		quale si specifica la lista di file che il browser deve salvare nella 
-		sua ``memoria'' e che deve mostrare anche quando si è offline. Il 
-		vantaggio principale della ``application cache'', rispetto a quella 
-		tradizionale, è il controllo: mentre nella cache ``normale'' è il 
-		browser a decidere (più o meno) quali sono i file da salvare e tenere in 
-		cache, con lo strumento offerto da HTML5 possiamo dire noi con 
-		precisione quali risorse tenere in memoria, possiamo infatti decidere di 
-		memorizzare pagine sulle quali non si è ancora navigato, fino 
-		addirittura a memorizzare interi script. In questo modo le applicazioni 
-		web sono in grado di essere eseguite anche quando il dispositivo mobile 
-		è offline.
+    Ci sono molti approcci differenti per lo sviluppo \crossplat{}, ognuno con
+    differenti vantaggi, ma la caratteristica che tutti hanno in comune è la
+    possibilità di sviluppare la stessa (o molto simile) applicazione per
+    diverse piattaforme mobili.
 
-		Scrivere un'applicazione web di successo, non è solo una questione di
-		rispettare le specifiche, ma dipende anche dall'implementazione del 
-		browser del dispositivo. È da vedere quanto sia nell'interesse di 
-		aziende come Apple e Google tenere i loro browser aggiornati 
-		continuamente con gli standard, infatti ci sarebbe poi il rischio che 
-		HTML5 diventi uno standard per le applicazioni e che quindi ci rimettano 
-		gli store\citep{White:Native-vs-Html}. 
+    Esistono vari modi di realizzare applicazioni mobili, ognuno dei quali può
+    essere impegato sia per lo sviluppo \singleplat{}, sia per quello
+    \crossplat{}.
+    Possiamo quindi definire tre tipologie di applicazioni in base al modo in
+    cui vengono realizzate: Native, Web, Ibride.
+    Nei successivi paragrafi verranno descritte nel dettaglio queste diverse
+    tipologie cercando di evidenziare come gli strumenti utilizzati per
+    realizzarle influiscano sullo sviluppo \crossplat{}.
 
-		Sfruttando opportunamente CSS3, HTML5 e JavaScript, gli sviluppatori 
-		possono ottimizzare la loro applicazione presentandola con un aspetto 
-		diverso a seconda del sistema operativo mobile che intendono supportare, 
-		in modo da rendere l'esperienza utente il più possibile simile a quella 
-		attesa, oppure possono progettare un'unica interfaccia grafica che viene 
-		utilizzata su ogni piattaforma. A tale scopo sono nati numerosi 
-		framework (\hyperref[sec:frameworkwebapp]{vedi~\ref{sec:frameworkwebapp}}).
+    \section{Applicazioni Native}
+    \label{sec:nativapp}
+        Per applicazioni native si intendono quelle costruite per una specifica
+        piattaforma utilizzando le risorse software fornite appositamente dal
+        produttore della piattaforma stessa.
+        Lo sviluppo di esse si basa quindi sull'utilizzo di SDK
+        (Software development Kit) e di
+        linguaggi di programmazione specifici che variano tra i diversi
+        sistemi operativi. Per esempio,
+        le applicazioni native per iOS sono scritte in linguaggio Objective-C
+        e sfruttano le API create appositamente da Apple; quelle Android fanno
+        uso del linguaggio Java esteso con le API realizzate da Google; mentre
+        per le applicazioni Windows Phone si utilizzano le API di
+        Microsoft .NET e XAML. Ogni SDK fornisce quindi tutto il software necessario
+        per la realizzazione dell'applicazione, dalla sua scrittura fino alla
+        sua pubblicazione sui vari canali di diffusione.
 
-		HTML5 promette che scrivendo un unico codice per l'applicazione, 
-		questa sia direttamente funzionante su ogni piattaforma, questa e le 
-		altre caratteristiche rendono la creazione di web app il modo più veloce 
-		per realizzare applicazioni mobili  \crossplat. Essendo eseguite 
-		direttamente nel browser non c'è la necessità di creare il pacchetto 
-		nativo da installare su ogni piattaforma, liberando così gli 
-		sviluppatori dal vincolo di lavorare in differenti ambienti di sviluppo. 
-		Le applicazioni web hanno il vantaggio di poter fruire di aggiornamenti 
-		direttamente attraverso il browser, è infatti sufficiente che lo 
-		sviluppatore aggiorni il codice della pagina web online. Non sono quindi
-		necessari passaggi extra per la distribuzione dell'aggiornamento. 
-		Rispetto alle applicazioni native c'è il vantaggio della maggior 
-		disponibilità di programmatori con conoscenze dei linguaggi CSS3, HTML5 
-		e JavaScript, rispetto a quelli con conoscenze specifiche per i 
-		linguaggi Objective-C, Java e .NET.
+        Le applicazioni native permettono di sfruttare al massimo l'hardware
+        dei dispositivi, risultando così adatte allo sviluppo di giochi con
+        una ricca grafica. Inoltre grazie alle
+        API, fornite direttamente dal produttore, si ha un completo accesso al
+        dispositivo, con la possibilità quindi di sfruttare vari sensori
+        come fotocamera, GPS e accelerometro. Infine la distribuzione
+        dell'applicazione avviene attraverso i vari store \footnote{Ogni
+        piattaforma
+        fornisce il proprio canale di distribuzione per le applicazioni:
+        App Store per iOS, Google Play Store per Android, Windows Store per
+        Windows Phone} delle piattaforme, questo permette di avere maggiore
+        pubblicità per l'applicazione grazie all'enorme ecosistema che si è
+        venuto a creare intorno ad essi.
 
-		Il più grande svantaggio di questo genere di applicazioni è che non 
-		possono accedere ad una vasta gamma di sensori e API dei vari 
-		dispositivi. La promessa di HTML5 di scrivere una volta ed eseguire 
-		ovunque non è totalmente rispettata, infatti, essendoci molti browser 
-		diversi e molte versioni degli stessi browser (chrome è stato aggiornato 
-		21 volte in due anni, con conseguente modifica dell'interpretazione di 
-		web app\citep{White:Native-vs-Html}) i vari dispositivi accedono in modo 
-		diverso alle applicazioni web. La conseguenza è che gli sviluppatori 
-		devono creare versioni diverse per browser diversi, con la conseguente 
-		perdita di parte dei benefici argomentati per lo sviluppo di web app. Un 
-		altro grande svantaggio si ha nelle performance che sono sicuramente 
-		inferiori a quelle delle applicazioni native, dato che le prestazioni 
-		delle applicazioni web sono limitate dalla capacità dei browser nel 
-		caricare i dati e nel visualizzarli (loading e rendering). Infine non 
-		essendo possibile distribuire queste applicazioni attraverso i più 
-		popolari store, viene persa la visibilità e la possibilità di 
-		monetizzazione, offerta dagli stessi. Per trarre profitto 
-		dall'applicazione è quindi necessario trovare soluzioni alternative.
-		
-	\section{Applicazioni Ibride}
-		Le applicazioni ibride combinano la convenienza dello sviluppo con HTML, 
-		CSS e JavaScript con aspetti delle app native (da qui l'appellativo 
-		``ibride''). Queste applicazioni vengono impacchettate in file 
-		installabili proprio come le applicazioni native ma i linguaggi 
-		utilizzati nella loro realizzazione sono ancora quelli impiegati nelle 
-		applicazioni web. Le applicazioni ibride sono controllate da una web 
-		view (UIWebView su iOS, WebView su Android e altri) in questo modo il 
-		contenuto JavaScript e HTML è  presentato in un formato a schermo 
-		intero usando il motore di rendering del browser nativo\footnote{Da 
-		notare che non viene utilizzato il browser ma solo il motore.}. WebKit è 
-		il motore di rendering del browser che è utilizzato su iOS, Android, 
-		BlackBerry e altri. Quello che rende un'applicazione ibrida differente 
-		da una web app è la possibilità di implementare un livello di astrazione 
-		che espone le funzionalità del dispositivo (GPS, fotocamera, 
-		accelerometro, filesystem, ecc...) attraverso API JavaScript.
-		
-		Esistono diversi framework che mettono a disposizione un buon insieme di 
-		API per accedere alle funzionalità del dispositivo ma comunque c'è 
-		ancora la necessità di far uso di software di terze parti per realizzare 
-		l'interfaccia utente dell'applicazione. Proprio come le web app, le 
-		applicazioni ibride fanno uso degli stessi framework per adempiere a 
-		questo scopo (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}).
-		
-		Il poter utilizzare i linguaggi del web fa delle applicazioni ibride una 
-		buona strategia nell'ottica dello sviluppo \crossplat tenendo in 
-		considerazione anche il fatto che si ha la possibilità di accedere a 
-		funzionalità specifiche del dispositivo. Con questo approccio la 
-		distribuzione delle app può avvenire tramite i comuni store con 
-		annessa possibilità di monetizzazione.
-		
-		Anche se lo stesso codice può essere utilizzato su diverse piattaforme, 
-		è necessario programmare in ambienti di sviluppo opportunamente 
-		configurati con i diversi SDK per realizzare i vari pacchetti. Ad oggi 
-		esistono anche dei servizi online di compilazione cloud-based che 
-		permetto di ovviare a questo inconveniente. Una difficoltà importante si 
-		trova nella fase di debugging dove è necessario installare 
-		l'applicazione sul dispositivo (al contrario delle web app che possono 
-		essere testate direttamente nel browser) e ricorrere a software di terze 
-		parti per poter poi avere solo a disposizione semplici strumenti per il 
-		solito web debugging\footnote{Un software che permette di utilizzare 
-		strumenti di web debugging per applicazioni ibride è WEINRE 
-		(\url{http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html}). 
-		}. Da tener conto, quando si decide di sviluppare un'applicazione con 
-		questo stile, è la possibilità che questa venga rifiutata nel momento 
-		della pubblicazione sullo store; questo può accadere, per esempio, su 
-		App Store dove esistono regole molto rigide che l'applicazione deve 
-		rispettare riguardo a prestazioni, qualità e stile di programmazione.
-		
-	\section{Conclusioni}
-		Ogni paradigma di sviluppo ha i suoi vantaggi e svantaggi; non esiste il 
-		modo migliore per sviluppare un'applicazione ma piuttosto esiste una 
-		scelta migliore tenendo conto di cosa si vuole ottenere e delle risorse 
-		che si hanno a disposizione che possono riguardare sia la conoscenza dei
-		linguaggi di programmazione sia il tempo e il denaro che si hanno a
-		disposizione.
-		
-		Sviluppare un applicazione web può risultare più rapido e magari meno 
-		costoso, ma questa soluzione è accettabile se non si desidera che il 
-		prodotto finale venga distribuito via store e che si disponga di 
-		altre soluzioni se si è interessati a trarre profitto dalla vendita.
-		Questo \textit{modus operandi} è attuabile se si sviluppano applicazioni
-		che non necessitino di utilizzare sensori del dispositivo mobile, ad
-		esempio applicazioni di gestione di dati o di applicazioni connesse 
-		come e-commerce. Se si è disposti ad accettare questi compromessi,
-		un'applicazione web è sicuramente una buona soluzione dal punto di vista 
-		dello sviluppo \crossplat stando attenti ai possibili problemi di 
-		compatibilità tra i diversi browser che verranno impiegati dagli utenti.
-		
-		Se abbiamo la necessità, invece, di realizzare un'applicazione più
-		complessa che sfrutti il dispositivo sottostante e non si vuol
-		rinunciare alle, magari già familiari, tecnologie web allora una buona
-		idea potrebbe essere sviluppare	un'applicazione ibrida. Questa
-		soluzione, implicando la realizzazione di pacchetti installabili, offre
-		la possibilità di vendere il prodotto finito sugli store traendone
-		profitto. Per chi è esperto nelle tecnologie web e si vuole cimentare
-		nella programmazione mobile, questa soluzione si rivela ottima prestando
-		le dovute attenzioni, infatti possono sorgere problemi quando si accede
-		alle funzionalità del dispositivo oppure alcune funzionalità desiderate
-		potrebbero non essere implementabili\footnote{Un esempio sono i servizi
-		che vengono eseguiti in background sui dispositivi Android che non sono
-		implementabili in applicazioni ibride}.
-		
-		Se si deve realizzare un'applicazione molto responsiva come per esempio 
-		un gioco con una pesante grafica oppure, se per scelte di mercato, si
-		decide di supportare una sola piattaforma mobile, allora vale la pena
-		intraprendere la strada di sviluppo in codice nativo. In questo modo non
-		si incorre nel rischio che l'applicazione non venga accettata sullo
-		store relativo e di sicuro si ottengono prestazioni più elevate rispetto
-		alle altre due soluzioni. Inoltre se comunque si vogliono supportare più
-		piattaforme, si può pensare di voltare lo sguardo su framework
-		cross-compiling (\hyperref[sec:titanium]{vedi~\ref{sec:titanium}}) così
-		da utilizzare il medesimo codice (non nativo, per esempio JavaScript)
-		per creare applicazioni, a tutti gli effetti, native.
+        Di contro questa tecnica non è molto adatta allo sviluppo di
+        applicazioni \crossplat{}. Realizzare la stessa applicazione per
+        diverse piattaforme richiede che gli sviluppatori debbano riscriverla
+        più volte in linguaggi diversi e in ambienti di
+        sviluppo differenti. Il problema inoltre è che con il crescere del
+        numero di sistemi operativi che si intende supportare, crescono
+        propozionalmente anche il tempo, lo
+        sforzo e il denaro spesi per produrre e testare l'applicazione.
+        Un' altro importante fattore in ogni progetto di sviluppo di
+        applicazioni native \crossplat{} è la disponibilità di programmatori
+        con le giuste conoscenze. Creare applicazioni native richiede
+        l'avere a disposizione un gruppo di sviluppatori che conosca tutti i
+        linguaggi necessari per lavorare su ogni piattaforma (requisito
+        non molto facile da soddisfare) oppure si dovrà contare su diversi team
+        di programmatori ognuno specializzato in una particolare piattaforma.
+
+        Esistono strumenti di cross-compiling che possono essere una soluzione
+        parziale del problema consentendo di scrivere l'applicazione in un solo
+        linguaggio (per esempio javaScript) e poi compilarla in applicazione
+        nativa. Questa soluzione aiuta a ridurre il numero di differenti
+        linguaggi di programmazione che gli sviluppatori devono saper maneggiare
+        ma comunque non elimina la necessità di dover compilare differenti
+        applicazioni per ogni piattaforma. Cross-compiling inoltre introduce un
+        nuovo livello di astrazione tra il codice della app e il runtime; di
+        questo bisogna tenere conto quando si vanno a fare operazioni di
+        ottimizzazione, testing e di debugging.
+
+    \section{Applicazioni Web}
+    \label{sec:webapp}
+        Le Applicazioni Web (chiamate anche Browser App o Web App) non sono
+        altro che siti web ottimizzati per i dispositivi mobili. Il loro uso è
+        reso possibile dai moderni browser mobili come: Mobile Safari (sui
+        dispositivi iOS), Google Chrome per Android (sui dispositivi Android 4+)
+        e Internet Explorer 10 (sui dispositivi Windows Phone 8).
+
+        Per realizzare questo tipo di applicazione viene sfruttata la potenza di
+        HTML5, CSS3 e JavaScript. HTML5 è la quinta versione del linguaggio
+        HTML, il quale fornisce gli elementi di base che costituiscono le pagine
+        web. HTML5 supporta i contenuti multimediali, ed è stato creato con
+        l'obiettivo di poter essere eseguito da qualsiasi browser
+        mobile\citep{White:Native-vs-Html}. Una delle tante novità di HTML5 è la
+        cosiddetta ``application cache'': attraverso questo strumento è
+        possibile dire al browser quali file salvare (non nella cache
+        ``normale'' ma in un cache apposita, definita per l'appunto
+        ``application cache''). Il funzionamento dell'application cache è
+        piuttosto semplice: sostanzialmente, si crea un file all'interno del
+        quale si specifica la lista di file che il browser deve salvare nella
+        sua ``memoria'' e che deve mostrare anche quando si è offline. Il
+        vantaggio principale della ``application cache'', rispetto a quella
+        tradizionale, è il controllo: mentre nella cache ``normale'' è il
+        browser a decidere (più o meno) quali sono i file da salvare e tenere in
+        cache, con lo strumento offerto da HTML5 possiamo dire noi con
+        precisione quali risorse tenere in memoria, possiamo infatti decidere di
+        memorizzare pagine sulle quali non si è ancora navigato, fino
+        addirittura a memorizzare interi script. In questo modo le applicazioni
+        web sono in grado di essere eseguite anche quando il dispositivo mobile
+        è offline.
+
+        Scrivere un'applicazione web di successo, non è solo una questione di
+        rispettare le specifiche, ma dipende anche dall'implementazione del
+        browser del dispositivo. È da vedere quanto sia nell'interesse di
+        aziende come Apple e Google tenere i loro browser aggiornati
+        continuamente con gli standard, infatti ci sarebbe poi il rischio che
+        HTML5 diventi uno standard per le applicazioni e che quindi ci rimettano
+        gli store\citep{White:Native-vs-Html}.
+
+        Sfruttando opportunamente CSS3, HTML5 e JavaScript, gli sviluppatori
+        possono ottimizzare la loro applicazione presentandola con un aspetto
+        diverso a seconda del sistema operativo mobile che intendono supportare,
+        in modo da rendere l'esperienza utente il più possibile simile a quella
+        attesa, oppure possono progettare un'unica interfaccia grafica che viene
+        utilizzata su ogni piattaforma. A tale scopo sono nati numerosi
+        framework (\hyperref[sec:frameworkwebapp]{vedi~\ref{sec:frameworkwebapp}}).
+
+        HTML5 promette che scrivendo un unico codice per l'applicazione,
+        questa sia direttamente funzionante su ogni piattaforma, questa e le
+        altre caratteristiche rendono la creazione di web app il modo più veloce
+        per realizzare applicazioni mobili  \crossplat{}. Essendo eseguite
+        direttamente nel browser non c'è la necessità di creare il pacchetto
+        nativo da installare su ogni piattaforma, liberando così gli
+        sviluppatori dal vincolo di lavorare in differenti ambienti di sviluppo.
+        Le applicazioni web hanno il vantaggio di poter fruire di aggiornamenti
+        direttamente attraverso il browser, è infatti sufficiente che lo
+        sviluppatore aggiorni il codice della pagina web online. Non sono quindi
+        necessari passaggi extra per la distribuzione dell'aggiornamento.
+        Rispetto alle applicazioni native c'è il vantaggio della maggior
+        disponibilità di programmatori con conoscenze dei linguaggi CSS3, HTML5
+        e JavaScript, rispetto a quelli con conoscenze specifiche per i
+        linguaggi Objective-C, Java e .NET.
+
+        Il più grande svantaggio di questo genere di applicazioni è che non
+        possono accedere ad una vasta gamma di sensori e API dei vari
+        dispositivi. La promessa di HTML5 di scrivere una volta ed eseguire
+        ovunque non è totalmente rispettata, infatti, essendoci molti browser
+        diversi e molte versioni degli stessi browser (chrome è stato aggiornato
+        21 volte in due anni, con conseguente modifica dell'interpretazione di
+        web app\citep{White:Native-vs-Html}) i vari dispositivi accedono in modo
+        diverso alle applicazioni web. La conseguenza è che gli sviluppatori
+        devono creare versioni diverse per browser diversi, con la conseguente
+        perdita di parte dei benefici argomentati per lo sviluppo di web app. Un
+        altro grande svantaggio si ha nelle performance che sono sicuramente
+        inferiori a quelle delle applicazioni native, dato che le prestazioni
+        delle applicazioni web sono limitate dalla capacità dei browser nel
+        caricare i dati e nel visualizzarli (loading e rendering). Infine non
+        essendo possibile distribuire queste applicazioni attraverso i più
+        popolari store, viene persa la visibilità e la possibilità di
+        monetizzazione, offerta dagli stessi. Per trarre profitto
+        dall'applicazione è quindi necessario trovare soluzioni alternative.
+
+    \section{Applicazioni Ibride}
+        Le applicazioni ibride combinano la convenienza dello sviluppo con HTML,
+        CSS e JavaScript con aspetti delle app native (da qui l'appellativo
+        ``ibride''). Queste applicazioni vengono impacchettate in file
+        installabili proprio come le applicazioni native ma i linguaggi
+        utilizzati nella loro realizzazione sono ancora quelli impiegati nelle
+        applicazioni web. Le applicazioni ibride sono controllate da una web
+        view (UIWebView su iOS, WebView su Android e altri) in questo modo il
+        contenuto JavaScript e HTML è  presentato in un formato a schermo
+        intero usando il motore di rendering del browser nativo\footnote{Da
+        notare che non viene utilizzato il browser ma solo il motore.}. WebKit è
+        il motore di rendering del browser che è utilizzato su iOS, Android,
+        BlackBerry e altri. Quello che rende un'applicazione ibrida differente
+        da una web app è la possibilità di implementare un livello di astrazione
+        che espone le funzionalità del dispositivo (GPS, fotocamera,
+        accelerometro, filesystem, ecc...) attraverso API JavaScript.
+
+        Esistono diversi framework che mettono a disposizione un buon insieme di
+        API per accedere alle funzionalità del dispositivo ma comunque c'è
+        ancora la necessità di far uso di software di terze parti per realizzare
+        l'interfaccia utente dell'applicazione. Proprio come le web app, le
+        applicazioni ibride fanno uso degli stessi framework per adempiere a
+        questo scopo (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}).
+
+        Il poter utilizzare i linguaggi del web fa delle applicazioni ibride una
+        buona strategia nell'ottica dello sviluppo \crossplat{} tenendo in
+        considerazione anche il fatto che si ha la possibilità di accedere a
+        funzionalità specifiche del dispositivo. Con questo approccio la
+        distribuzione delle app può avvenire tramite i comuni store con
+        annessa possibilità di monetizzazione.
+
+        Anche se lo stesso codice può essere utilizzato su diverse piattaforme,
+        è necessario programmare in ambienti di sviluppo opportunamente
+        configurati con i diversi SDK per realizzare i vari pacchetti. Ad oggi
+        esistono anche dei servizi online di compilazione cloud-based che
+        permetto di ovviare a questo inconveniente. Una difficoltà importante si
+        trova nella fase di debugging dove è necessario installare
+        l'applicazione sul dispositivo (al contrario delle web app che possono
+        essere testate direttamente nel browser) e ricorrere a software di terze
+        parti per poter poi avere solo a disposizione semplici strumenti per il
+        solito web debugging\footnote{Un software che permette di utilizzare
+        strumenti di web debugging per applicazioni ibride è WEINRE
+        (\url{http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html}).
+        }. Da tener conto, quando si decide di sviluppare un'applicazione con
+        questo stile, è la possibilità che questa venga rifiutata nel momento
+        della pubblicazione sullo store; questo può accadere, per esempio, su
+        App Store dove esistono regole molto rigide che l'applicazione deve
+        rispettare riguardo a prestazioni, qualità e stile di programmazione.
+
+    \section{Conclusioni}
+        Ogni paradigma di sviluppo ha i suoi vantaggi e svantaggi; non esiste il
+        modo migliore per sviluppare un'applicazione ma piuttosto esiste una
+        scelta migliore tenendo conto di cosa si vuole ottenere e delle risorse
+        che si hanno a disposizione, queste possono riguardare sia la
+        conoscenza dei linguaggi di programmazione sia il tempo e il denaro che
+        si hanno a disposizione.
+
+        Sviluppare un applicazione web può risultare più rapido e magari meno
+        costoso, ma questa soluzione è accettabile se non si desidera che il
+        prodotto finale venga distribuito via store e che si disponga di
+        altre soluzioni se si è interessati a trarre profitto dalla vendita.
+        Questo \textit{modus operandi} è attuabile se si sviluppano applicazioni
+        che non necessitino di utilizzare sensori del dispositivo mobile, ad
+        esempio applicazioni di gestione di dati o di applicazioni connesse
+        come e-commerce. Se si è disposti ad accettare questi compromessi,
+        un'applicazione web è sicuramente una buona soluzione dal punto di vista
+        dello sviluppo \crossplat{} stando attenti ai possibili problemi di
+        compatibilità tra i diversi browser che verranno impiegati dagli utenti.
+
+        Se abbiamo la necessità, invece, di realizzare un'applicazione più
+        complessa che sfrutti il dispositivo sottostante e non si vuol
+        rinunciare alle, magari già familiari, tecnologie web allora una buona
+        idea potrebbe essere sviluppare un'applicazione ibrida. Questa
+        soluzione, implicando la realizzazione di pacchetti installabili, offre
+        la possibilità di vendere il prodotto finito sugli store traendone
+        profitto. Per chi è esperto nelle tecnologie web e si vuole cimentare
+        nella programmazione mobile, questa soluzione si rivela ottima prestando
+        le dovute attenzioni, infatti possono sorgere problemi quando si accede
+        alle funzionalità del dispositivo oppure alcune funzionalità desiderate
+        potrebbero non essere implementabili\footnote{Un esempio sono i servizi
+        che vengono eseguiti in background sui dispositivi Android che non sono
+        implementabili in applicazioni ibride}.
+
+        Se si deve realizzare un'applicazione molto responsiva come per esempio
+        un gioco con una pesante grafica oppure, se per scelte di mercato, si
+        decide di supportare una sola piattaforma mobile, allora vale la pena
+        intraprendere la strada di sviluppo in codice nativo. In questo modo non
+        si incorre nel rischio che l'applicazione non venga accettata sullo
+        store relativo e di sicuro si ottengono prestazioni più elevate rispetto
+        alle altre due soluzioni. Inoltre se comunque si vogliono supportare più
+        piattaforme, si può pensare di voltare lo sguardo su framework
+        cross-compiling (\hyperref[sec:titanium]{vedi~\ref{sec:titanium}}) così
+        da utilizzare il medesimo codice (non nativo, per esempio JavaScript)
+        per creare applicazioni, a tutti gli effetti, native.
 
