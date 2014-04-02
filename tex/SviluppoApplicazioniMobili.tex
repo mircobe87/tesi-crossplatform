@@ -1,9 +1,4 @@
 \chapter{Sviluppo Applicazioni Mobili}
-    Vista la grande diffusione di dispositivi mobili, come smartphone e tablet,
-    in grado di eseguire applicazioni scritte da terze parti, un'azienda
-    potrebbe essere intenzionata a fornire i propri servizi anche attraverso
-    queste applicazioni.
-
     Diversamente dalle applicazioni per desktop, dove per molto tempo la
     piattaforma di riferimento è stata Windows, il panorama delle piattaforme
     mobili è molto frammentato. I principali sistemi operativi mobili sono: iOS,
@@ -24,7 +19,6 @@
     L'alternativa è quella di supportare allo stesso tempo numerose piattaforme
     (sviluppo \crossplat{}), col vantaggio di raggiungere un bacino di utenza
     più ampio.
-
     Ci sono molti approcci differenti per lo sviluppo \crossplat{}, ognuno con
     differenti vantaggi, ma la caratteristica che tutti hanno in comune è la
     possibilità di sviluppare la stessa (o molto simile) applicazione per
@@ -45,7 +39,7 @@
         piattaforma utilizzando le risorse software fornite appositamente dal
         produttore della piattaforma stessa.
         Lo sviluppo di esse si basa quindi sull'utilizzo di SDK
-        (Software development Kit) e di
+        (Software Development Kit) e di
         linguaggi di programmazione specifici che variano tra i diversi
         sistemi operativi. Per esempio,
         le applicazioni native per iOS sono scritte in linguaggio Objective-C
@@ -53,8 +47,9 @@
         uso del linguaggio Java esteso con le API realizzate da Google; mentre
         per le applicazioni Windows Phone si utilizzano le API di
         Microsoft .NET e XAML. Ogni SDK fornisce quindi tutto il software necessario
-        per la realizzazione dell'applicazione, dalla sua scrittura fino alla
-        sua pubblicazione sui vari canali di diffusione.
+        per supportare l'intero ciclo di sviluppo dell'applicazione: dalla sua
+        scrittura, passando per la creazione del pacchetto installabile, fino
+        alla sua pubblicazione sui vari canali di diffusione.
 
         Le applicazioni native permettono di sfruttare al massimo l'hardware
         dei dispositivi, risultando così adatte allo sviluppo di giochi con
@@ -62,7 +57,7 @@
         API, fornite direttamente dal produttore, si ha un completo accesso al
         dispositivo, con la possibilità quindi di sfruttare vari sensori
         come fotocamera, GPS e accelerometro. Infine la distribuzione
-        dell'applicazione avviene attraverso i vari store \footnote{Ogni
+        dell'applicazione avviene attraverso i vari store\footnote{Ogni
         piattaforma
         fornisce il proprio canale di distribuzione per le applicazioni:
         App Store per iOS, Google Play Store per Android, Windows Store per
@@ -87,9 +82,10 @@
         di programmatori ognuno specializzato in una particolare piattaforma.
 
         Esistono strumenti di cross-compiling che possono essere una soluzione
-        parziale del problema consentendo di scrivere l'applicazione in un solo
-        linguaggio (per esempio javaScript) e poi compilarla in applicazione
-        nativa. Questa soluzione aiuta a ridurre il numero di differenti
+        parziale del problema, essi consentono di scrivere l'applicazione in un solo
+        linguaggio (per esempio javaScript) e di poi compilarla in applicazione
+        nativa (sempre sfruttando l'SDK fornito dal produttore della
+        piattaforma). Questa soluzione aiuta a ridurre il numero di differenti
         linguaggi di programmazione che gli sviluppatori devono saper maneggiare
         ma comunque non elimina la necessità di dover compilare differenti
         applicazioni per ogni piattaforma. Cross-compiling inoltre introduce un
@@ -108,7 +104,7 @@
         Per realizzare questo tipo di applicazione viene sfruttata la potenza di
         HTML5, CSS3 e JavaScript. HTML5 è la quinta versione del linguaggio
         HTML, il quale fornisce gli elementi di base che costituiscono le pagine
-        web. HTML5 supporta i contenuti multimediali, ed è stato creato con
+        web. Esso supporta i contenuti multimediali, ed è stato creato con
         l'obiettivo di poter essere eseguito da qualsiasi browser
         mobile\citep{White:Native-vs-Html}. Una delle tante novità di HTML5 è la
         cosiddetta ``application cache'': attraverso questo strumento è
@@ -140,43 +136,49 @@
         possono ottimizzare la loro applicazione presentandola con un aspetto
         diverso a seconda del sistema operativo mobile che intendono supportare,
         in modo da rendere l'esperienza utente il più possibile simile a quella
-        attesa, oppure possono progettare un'unica interfaccia grafica che viene
-        utilizzata su ogni piattaforma. A tale scopo sono nati numerosi
-        framework (\hyperref[sec:frameworkwebapp]{vedi~\ref{sec:frameworkwebapp}}).
+        nativa, oppure possono progettare un'unica interfaccia grafica che viene
+        utilizzata su ogni piattaforma. Per agevolare lo sviluppo di
+        applicazioni web sono nati numerosi framework
+        (vedi \ref{sec:frameworkwebapp}), ognuno dei quali
+        fornisce elementi grafici tipici delle applicazioni native
+        (liste, barre di intestazione, finestre di notifica e molto altro) e le
+        funzioni \js{} per poterli manipolare.
 
         HTML5 promette che scrivendo un unico codice per l'applicazione,
-        questa sia direttamente funzionante su ogni piattaforma, questa e le
+        essa sia direttamente funzionante su ogni piattaforma, questa e le
         altre caratteristiche rendono la creazione di web app il modo più veloce
         per realizzare applicazioni mobili  \crossplat{}. Essendo eseguite
         direttamente nel browser non c'è la necessità di creare il pacchetto
         nativo da installare su ogni piattaforma, liberando così gli
-        sviluppatori dal vincolo di lavorare in differenti ambienti di sviluppo.
+        sviluppatori dal vincolo di dover utilizzare gli SDK forniti dai
+        produttori delle piattaforme.
         Le applicazioni web hanno il vantaggio di poter fruire di aggiornamenti
         direttamente attraverso il browser, è infatti sufficiente che lo
         sviluppatore aggiorni il codice della pagina web online. Non sono quindi
         necessari passaggi extra per la distribuzione dell'aggiornamento.
-        Rispetto alle applicazioni native c'è il vantaggio della maggior
+        Rispetto alle applicazioni native c'è anche il vantaggio della maggior
         disponibilità di programmatori con conoscenze dei linguaggi CSS3, HTML5
         e JavaScript, rispetto a quelli con conoscenze specifiche per i
         linguaggi Objective-C, Java e .NET.
 
         Il più grande svantaggio di questo genere di applicazioni è che non
         possono accedere ad una vasta gamma di sensori e API dei vari
-        dispositivi. La promessa di HTML5 di scrivere una volta ed eseguire
+        dispositivi. Inotre la promessa di HTML5 di scrivere una volta ed eseguire
         ovunque non è totalmente rispettata, infatti, essendoci molti browser
         diversi e molte versioni degli stessi browser (chrome è stato aggiornato
         21 volte in due anni, con conseguente modifica dell'interpretazione di
         web app\citep{White:Native-vs-Html}) i vari dispositivi accedono in modo
         diverso alle applicazioni web. La conseguenza è che gli sviluppatori
-        devono creare versioni diverse per browser diversi, con la conseguente
-        perdita di parte dei benefici argomentati per lo sviluppo di web app. Un
+        devono creare versioni diverse per browser diversi, perdendo così di
+        parte dei benefici argomentati per lo sviluppo di web app. Un
         altro grande svantaggio si ha nelle performance che sono sicuramente
-        inferiori a quelle delle applicazioni native, dato che le prestazioni
-        delle applicazioni web sono limitate dalla capacità dei browser nel
+        inferiori a quelle delle applicazioni native, in particolare, oltre
+        alla potenza hardware dei dispositivi, le prestazioni delle web app
+        sono limitate dalla capacità dei browser nel
         caricare i dati e nel visualizzarli (loading e rendering). Infine non
         essendo possibile distribuire queste applicazioni attraverso i più
         popolari store, viene persa la visibilità e la possibilità di
-        monetizzazione, offerta dagli stessi. Per trarre profitto
+        monetizzazione offerta dagli stessi. Per trarre profitto
         dall'applicazione è quindi necessario trovare soluzioni alternative.
 
     \section{Applicazioni Ibride}
