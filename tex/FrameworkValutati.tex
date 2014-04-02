@@ -1,39 +1,36 @@
 \chapter{Framework Valutati}
     Il primo passo necessario nella valutazione di questi framework è stato
-    chiarire bene il fine del loro impiego. Durante la fase di ricerca abbiamo
+    chiarire bene quali applicazioni, tra le tre tipologie descritte nel
+    capitolo \ref{chap:sam}, fosse possibile realizzare con essi.
+    Durante la fase di ricerca abbiamo
     notato una gran confusione nell'attribuire a ciascun framework il tipo di
     applicazione che permetteva di realizzare. Spesso il fatto che
     l'applicazione venisse eseguita all'interno di una componente nativa veniva
     pubblicizzato come se il framework fosse in grado di creare una completa
     applicazione nativa anziché ibrida; in altri casi
-    veniva confuso il concetto di \crosscomp
-    (\hyperref[sec:nativapp]{vedi~\ref{sec:nativapp}}) con quello di
+    veniva confuso il concetto di \crosscomp{} (vedi \ref{sec:nativapp}) con
+    quello di
     applicazione ibrida; in altri ancora non veniva mostrata la separazione
     concettuale che vi è tra framework utili per la sola costruzione della
     logica e dell'interfaccia grafica dell'applicazione e framework che
     permettono d'incapsulare il contenuto web in una componente nativa creando
     così un'applicazione ibrida.
 
-    Allo scopo di dare ordine per descrivere al meglio le differenze tra i vari
-    framework abbiamo ritenuto opportuno suddividerli a seconda del tipo di
-    applicazioni che sono in grado di produrre.
-
-    Abbiamo così classificato Titanium Appcelerator come framework per la
+    Abbiamo così classificato \tisdk{} come framework per la
     realizzazione di applicazioni native; Phonegap/Cordova, Rho Mobile e Sencha
     Touch come quelli dediti alla creazione di applicazioni ibride; \jqm{},
     \kendomob{} e \phonejs{} utili per implementare complete
-    applicazioni web e per la logica e l'interfaccia grafica di applicazioni
+    applicazioni web, e per la logica e l'interfaccia grafica di applicazioni
     ibride.
 
     \section{Framework per Applicazioni Native}
-
         \subsection{Titanium Appcelerator}
         \label{sec:titanium}
-            Titanium è una piattaforma gratis e open source di sviluppo di
+            \tisdk{} è una piattaforma gratis e open source di sviluppo di
             applicazioni mobili che permette la creazione di applicazioni native
             \crossplat{} per iOS, Android, BlackBerry e Tizen usando il
-            linguaggio \js{}. Usando \js{} e \html{} è anche possibile
-            creare semplici applicazioni Web.
+            linguaggio \js{}. Oltre alle applicazioni mobili questo framework
+            può essere utilizzato per creare applicazioni web.
 
             Titanium agisce come un ponte tra i sistemi operativi nativi e il
             codice dell'applicazione. La figura \ref{fig:ti_stack} illustra
@@ -165,10 +162,10 @@
                 IDE open-source più utilizzati. Con Titanium Studio è possibile
                 scrivere, fare testing e debugging delle proprie applicazioni;
                 inoltre sono presenti anche vari templates e applicazioni di
-                esempio per rendere più semplice incominciare a creare
+                esempio per rendere più semplice cominciare a creare
                 applicazioni con Titanium SDK. Titanium Studio è stato
                 pensato per essere l'unico software di cui si ha bisogno (oltre
-                agli SDK nativi delle diverse piattaforme) per incominciare a
+                agli SDK nativi delle diverse piattaforme) per
                 sviluppare con Titanium SDK; per questo motivo dal suo interno
                 si ha la possibilità di installare e configurare l'SDK (al primo
                 avvio) e successivamente eseguire aggiornamenti. In più è
@@ -178,11 +175,12 @@
                 L'uso di questo strumento non è obbligatorio, Titanium SDK
                 ha una propria interfaccia a linea di comando che permette di
                 gestire ogni aspetto dello sviluppo: inizializzare un
-                nuovo progetto, compilarlo, eseguirlo e permette anche di
-                installare nuovi aggiornamenti dello SDK nonché di configurarlo.
+                nuovo progetto, compilarlo, eseguirlo. Inoltre questa
+                interfaccia permette anche di
+                installare e configurare l'SDK stesso.
                 Ovviamente se si rinuncia a Titanium Studio non è garantito che
-                si riescano a trovare i medesimi tool per il debugging in altri
-                IDE che si possono trovare in quello fornito da Appcelerator.
+                in altri IDE si riescano a trovare i medesimi tool per il
+                debugging.
 
             \paragraph{Moduli}
                 Titanium è composto da una serie di moduli che estendono alcune
@@ -313,7 +311,7 @@
             una pagina con una certa base semantica, sarà poi \jqm{} a
             dare all'applicazione una più complessa interfaccia utente. Se
             l'applicazione è composta da più schermate \jqm{} fornisce
-            il concetto di pagina per poter modellare questi elementi e
+            il concetto di pagina per poter modellare questi elementi, e
             implementa anche un sistema di navigazione \ajax{} (Asynchronous
             \js{} and XML) per supportare un ricco insieme di animazioni
             nella transizione tra le pagine. Per definire una pagina è
@@ -577,7 +575,7 @@
             L'obiettivo è sempre quello di realizzare un'applicazione web cross-platform
             riusando completamente il codice.
 
-            Come Kendo UI, questo framework è in grado di fornire all'applicazione
+            Come \kendomob{}, questo framework è in grado di fornire all'applicazione
             un aspetto differente a seconda del dispositivo senza scrivere codice aggiuntivo.
             PhoneJS, infatti, identifica la piattaforma a tempo di esecuzione
             e applica automaticamente
@@ -649,7 +647,7 @@
             nella Cordova Street di Vancouver.}. All'inizio la differenza tra
             i due era solo nel nome, ma nel tempo PhoneGap ha reso disponibili
             strumenti addizionali per collegarsi ai servizi di Adobe, un esempio
-            di questo sono è PhoneGap Build che verrà
+            di questi è PhoneGap Build che verrà
             descritto successivamente. Le istruzioni per iniziare ad usare
             Apache Cordova e PhoneGap sono presenti rispettivamente su
             \url{https://cordova.apache.org/} e su
@@ -833,7 +831,7 @@
             di destinazione dell'applicazione.
 
             Per superare questa necessità Adobe ha creato un servizio chiamato
-            PhoneGap Build~\footnote{Il servizio è accessibile dal sito
+            PhoneGap Build\footnote{Il servizio è accessibile dal sito
             \url{https://build.phonegap.com}}.
             Inviando i file sorgenti al servizio, attraverso un
             pacchetto .zip o attraverso il repository GitHub, il processo di
@@ -904,7 +902,7 @@
             \subsubsection{RhoStudio}
                 RhoStudio è un potente plug-in per Eclipse che lo estende aggiungendo
                 funzionalità per lo sviluppo, il debugging e il testing di
-                applicazioni \rhom{}. È utilizzabile su PC Windows e Mac e
+                applicazioni \rhom{}. È utilizzabile su PC, Windows e Mac e
                 include RhoSimulator, uno strumento che consente di emulare
                 vari dispositivi e piattaforme diverse per provare ad eseguire
                 l'applicazione durante la fase del suo sviluppo.
@@ -1113,7 +1111,7 @@
         per un'analisi più approfondita.
         La scelta naturale è stata quella di creare un'applicazione con due
         framework che adottassero approcci diversi: sono stati quindi scelti
-        Titanium Appcelerator per la creazione di un'applicazione nativa, e
+        \tisdk{} per la creazione di un'applicazione nativa, e
         PhoneGap per la realizzazione di quella ibrida.
         Il tutore ci ha lasciato libera scelta sul framework per l'interfaccia
         grafica da usare assieme a PhoneGap. Colpiti dalla semplicità d'uso,
