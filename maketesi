@@ -23,6 +23,39 @@ function clearAll(){
 	echo "Ok, godiamoci il tepore primaverile"
 }
 
+function mkFrontespizio() {
+	local name="front"
+	local tmpDir="tmp"
+	local filename="$name.tex"
+	local srcDir="tex"
+	local gfxDir="graphics"
+	
+	mkdir $tmpDir
+	cp "$srcDir/frontespizio.tex" "$tmpDir"
+	echo "
+		\documentclass[12pt, a4paper, twoside, openright, titlepage]{book}
+		\usepackage[utf8]{inputenc}
+		\usepackage[italian]{babel}
+		\usepackage{mathptmx}
+		\usepackage{graphicx}
+		\graphicspath{ {../$gfxDir/} }
+		\usepackage[write,signatures]{frontespizio}
+		
+		\begin{document}
+		\include{frontespizio}
+		\end{document}
+		" >> $tmpDir/$filename
+		
+	cd $tmpDir
+	
+	pdflatex -shell-escape "$filename"
+	pdflatex -shell-escape "$name-frn.tex"
+	
+	mv "$name-frn.pdf" "../frontespizio.pdf"
+	cd ..
+	rm -rf $tmpDir
+}
+
 src_dir=tex/
 name='tesi'
 
@@ -34,6 +67,9 @@ elif [ "$1" = "-c-tex" ]; then
 	exit 0
 elif [ "$1" = "-c-gfx" ]; then
 	clearGfx
+	exit 0
+elif [ "$1" = "-f" ]; then
+	mkFrontespizio
 	exit 0
 fi
 

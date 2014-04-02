@@ -44,6 +44,13 @@ Eseguire il comando
 per avviare il processo di compilazione. Se tutto ha successo,
 si troverà nella root del repo git il file `tesi.pdf`.
 
+### Generare il frontespizio
+E' possibile generare solo il frontespizio da far firmare ai relatori.
+
+`./maketesi -f`
+
+genera il frontespizio nel file **frontespizio.pdf**
+
 ### Ripulire l'ambiente
 Usando questi comandi non viene eseguito nessun processo di compilazione ma
 vengono solo eliminati i file indesiderati.
