@@ -1,848 +1,848 @@
 \chapter{L'Applicazione}
-	Per avere un confronto più significativo, il tutore aziendale ci ha proposto
-	la realizzazione di un'applicazione che interagisse, in maniera sostanziale,
-	con le funzionalità offerte dal dispositivo in modo da poter valutare meglio
-	la potenzialità delle API offerte dai due frame\-work in analisi.
-	
-	L'applicazione che ci è stata commissionata permette all'utente di segnalare 
-	problemi di degrado ambientale con immagini e testo georeferenziati.
-	In particolare l'applicazione inizialmente doveva permette all'utente di:
-	\begin{itemize}
-		\item registrarsi nel sistema al primo avvio e di autenticarsi in quelli
-		      successivi;
-		\item visualizzare su una mappa le proprie segnalazioni e quelle inviate
-		      degli altri utenti;
-		\item comporre e inviare su un server una nuova segnalazione
-		      georeferenziata inserendo una descrizione testuale e una foto del
-		      degrado scattata con il dispositivo;
-		\item visualizzare una lista riassuntiva delle proprie segnalazioni
-		      inviate;
-		\item scegliere una segnalazione e visualizzarne i dettagli.
-	\end{itemize}
-	Durante la fase di sviluppo però, in occasione della revisione periodica del
-	nostro lavoro svolto, sono state richieste nuove funzionalità aggiuntive; in
-	particolare ci è stato chiesto di aggiungere:
-	\begin{itemize}
-		\item una lista generale che mostrasse le ultime segnalazioni inviate da
-		      qualsiasi utente;
-		\item un meccanismo di salvataggio locale delle proprie segnalazioni e
-		      di tutte quelle visualizzate in dettaglio permettendo così
-		      all'applicazione un parziale funzionamento anche in assenza di
-		      connessione Internet;
-		\item la possibilità di ritrovare sulla mappa una segnalazione partendo
-		      dalla visualizzazione dei suoi dettagli.
-	\end{itemize}
-	
-	\noindent La registrazione e l'autenticazione dell'utente sul server doveva avvenire 
-	utilizzando come credenziali di accesso il codice IMEI o il numero di
-	telefono, che dovevano essere letti automaticamente dall'applicazione,
-	senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
-	dare all'utente che si sta registrando la possibilità di scegliersi un
-	``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
-	al lato server e verrà descritto più in dettaglio nella sezione apposita.}
-	e di inserire il proprio indirizzo e-mail con l'idea di aggiungere,
-	successivamente, queste informazioni in tutte le sue segnalazioni; in questo
-	modo un altro utente che visualizza una certa segnalazione può vedere chi
-	l'ha realizzata e, se vuole, sarà in grado di contattarlo tramite posta
-	elettronica. Per semplicità abbiamo deciso che una volta scelto il nickname
-	questo sarà permanente, diversamente abbiamo aggiunto nell'applicazione una
-	schermata tramite la quale sarà possibile aggiornare il proprio indirizzo
-	e-mail.
-	
-	L'applicazione, come ovvio, sarà composta di una parte client e di una parte
-	server. Il lato client, che risiederà sul dispositivo mobile, è la parte dove
-	si concentrano i nostri studi e dove
-	mostreremo come sono state implementate le funzionalità richieste
-	utilizzando i due frame\-work presi in esame. Il lato server risiederà
-	su una macchina dedicata e per quanto riguarda la sua analisi, non
-	essendo scopo di questa attività di tirocinio, ne daremo solo una
-	semplice descrizione sul funzionamento e sulle tecnologie
-	impiegate per realizzarlo.
-	
-	\section{Lato Server}
-		Lo scopo principale del lato server di questa applicazione è quello di
-		gestire un database che andrà a contenere tutte le segnalazioni inviate
-		dagli utenti attraverso il dispositivo mobile. Il
-		database dovrà essere in grado di rispondere a query riguardanti
-		certamente le coordinate geografiche, ma anche i nickname e la data e
-		ora delle varie segnalazioni. Un secondo compito importante che dovrà
-		svolgere, sarà quello di gestire le identità dei diversi utenti e di
-		controllare l'univocità del nickname utilizzato in fase di
-		registrazione.
-		
-		Una caratteristica in più che non era richiesta ma che ci sembrava
-		opportuno avere era l'indipendenza della realizzazione del server
-		rispetto ai due frame\-work utilizzati nell'implementare il lato client.
-		In questo modo entrambe le implementazioni del lato client avrebbero
-		dialogato con la stessa implementazione del lato server.
-		
-		Per la realizzazione di tutto questo, dopo una fase di ricerca, abbiamo
-		mirato a due prodotti open source vista la loro semplicità d'uso:
-		Apache CouchDB\texttrademark{} e Node.js.
-		\begin{description}
-			\item[Apache CouchDB\texttrademark{}] è un DBMS (database-management
-				system) doc\-u\-ment-ori\-ented accessibile mediante API RESTful\footnote{Il termine è usato
-				per descrivere un'interfaccia che trasmette dati su HTTP. Per una
-				descrizione più esaustiva vedere
-				\url{http://it.wikipedia.org/wiki/Representational_State_Transfer}}
-				con scambio di dati in formato \js{} Object Notation (JSON). Questa
-				caratteristica permette di eseguire facilmente operazioni sul database
-				indipendentemente dal linguaggio usato per realizzare l'applicazione.
-				
-				Un database document-oriented è composto da una serie di documenti
-				``auto-contenenti'', questo significa che il documento in
-				questione è memorizzato nel documento stesso anziché in una tabella
-				come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
-				non esistono tabelle, righe, colonne e relazioni tra i
-				documenti e quindi aggiungere o rimuovere un nuovo
-				campo ad un documento non influisce negativamente sugli altri.
-				
-				Ogni documento è rappresentato in una struttura JSON che può
-				contenere tipi di dato, come stringhe di testo, numeri e valori
-				booleani; inoltre Apache CouchDB\texttrademark{} permette
-				di allegare file multimediali ad ogni documento quindi nella sua
-				definizione JSON sarà presente anche un riferimento a tale allegato. 
-				Questa caratteristica ci ha permesso di inserire sia l'immagine che
-				i dati di una segnalazione all'interno di un singolo documento.
-				
-				Nella sua versione pura, CouchDB non permette di eseguire interrogazioni 
-				spaziali basate su coordinate geografiche, per sopperire a questa
-				mancanza si è dovuto ricorrere all'utilizzo dell'apposita estensione
-				GeoCouch\footnote{La documentazione 
-				è disponibile sul sito \url{https://github.com/couchbase/geocouch/}}.
-			\item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
-				Google Chrome per la realizzazione facile e veloce di
-				applicazioni di rete. La potenza di questa piattaforma è anche
-				nel fatto che è supportata da una enorme quantità di moduli
-				che permettono di realizzare con poco codice applicazioni piuttosto
-				complesse; in più, come Apache CouchDB\texttrademark{}, tutto 
-				questo è open source. Node.js è stato usato per creare un
-				semplice web server che, comunicando col database Apache CouchDB\texttrademark{}
-				attraverso le proprie API HTTP, gestisse le richieste di
-				registrazione provenienti da nuovi utenti.
-		\end{description}
-		
-		\noindent Apache CouchDB\texttrademark{} è stato quindi configurato per gestire e
-		memorizzare l'insieme degli utenti e delle segnalazioni.
-		Ogni documento rappresentante una segnalazione è composto dai campi:
-		\begin{description}
-			\item[Titolo] Stringa di poche parole per descrivere la segnalazione.
-				Questo valore verrà poi visualizzato nelle liste di segnalazioni
-				sul lato client.
-			\item[Descrizione] Una descrizione testuale più dettagliata sul
-				fenomeno di degrado segnalato. Questo valore verrà mostrato sul
-				lato client solo tra i dettagli di una segnalazione.
-			\item[Data] Stringa testuale che indica la data e l'ora dell'istante
-				in cui la segnalazione è stata creata dall'utente. Anche questo
-				valore sarà mostrato solo tra i dettagli.
-			\item[Coordinate] Valore composto da due campi che contengono la
-				latitudine nord e la longitudine est della posizione geografica
-				in cui l'utente di trovava quando ha creato la segnalazione. Anche
-				la posizione geografica verrà mostrata solo tra i dettagli della
-				segnalazione.
-			\item[Immagine] Una foto scattata dal dispositivo usata	per
-				documentare il degrado individuato che verrà mostrata all'utente
-				solo nella schermata dei dettagli della relativa segnalazione.
-			\item[UserId] Identificatore unico relativo all'utente che ha creato
-				questa segnalazione. Questo valore è necessario visto che in
-				Apache CouchDB\texttrademark{}, non essendo un database relazionale,
-				non è possibile in alcun altro modo mettere in relazione un utente con
-				tutte le sue segnalazioni. Con questo accorgimento si sta di fatto
-				creando tale relazione in modo che, una volta scaricate le
-				informazioni su una segnalazione, sarà possibile eseguire una
-				seconda query sul database degli utenti per ottenere i valori
-				di nickname e mail dell'utente che ha creato quella segnalazione.
-			\item[Id] Questo valore è univoco ed è scelto automaticamente da
-				Apache CouchDB\texttrademark{}, nel momento del
-				salvataggio della segnalazione sul server.
-		\end{description}
-		
-		\noindent Per quanto riguarda la rappresentazione di un utente bisogna approfondire
-		un po' più l'argomento. Apache CouchDB\texttrademark{} fornisce un
-		particolare database di nome \verb|_users| in cui, ogni documento 
-		rappresenta un utente e deve contenere i campi \texttt{name} e \texttt{password}, i cui
-		rispettivi valori saranno poi utilizzati come credenziali di
-		autenticazione da inserire nelle richieste HTTP per consentire
-		all'utente operazioni sui DB contenuti nel server\footnote{
-		Apache CouchDB\texttrademark{} permette una gestione delle utenze molto
-		più accurata; per esempio è possibile riservare l'accesso ad un DB ad un
-		particolare gruppo di utenti.}. Oltre ai suddetti campi obbligatori è
-		possibile definirne altri pubblici, ovvero campi che al contrario di
-		\texttt{name} e \texttt{password} saranno visibili a qualsiasi altro utente.
-		Nel nostro caso abbiamo inserito solo due nuovi campi pubblici:
-		\begin{description}
-			\item[nickname] Un nome identificativo scelto dall'utente in fase di
-				registrazione e mostrato poi nei dettagli di tutte le sue segnalazioni.
-			\item[mail] Indirizzo di posta elettronica dell'utente mostrato anche questo
-				nei dettagli di tutte le sue segnalazioni.
-		\end{description}
-		
-		\noindent L'aggiunta di nuovi utenti nel database \verb|_users| deve essere fatta
-		attraverso opportuni messaggi HTTP nei quali occorre essere autenticati
-		come amministratori del server\footnote{Questo particolare utente viene
-		definito in fase di configurazione del server Apache CouchDB\texttrademark{}}.
-		Nasce qui il problema di come far registrare sul server nuovi utenti
-		direttamente dal lato client dell'applicazione. Potevamo, a questo punto,
-		scegliere d'inserire nel codice del lato client le credenziali
-		d'amministratore usandole soltanto nelle richieste HTTP per la registrazione
-		di un nuovo utente.	Successivamente il dispositivo mobile avrebbe continuato a
-		comunicare con il server usando le credenziali del nuovo utente. Ovviamente
-		questa soluzione avrebbe permesso a chiunque avesse accesso al codice
-		sorgente dell'applicazione di ottenere nome utente e password dell'amministratore.
-		Abbiamo quindi deciso di realizzare un semplice web server implementato
-		con Node.js che lavori a fianco di Apache CouchDB\texttrademark{}
-		(vedi fig.~\ref{fig:latoserver}) con il
-		compito: di ascoltare richieste di registrazione provenienti dal lato
-		client, di inoltrarle al DBMS aggiungendovi le credenziali di amministratore
-		e di controllare che il \texttt{nickname} scelto dall'utente non sia già
-		stato usato da un altro. Così facendo le credenziali di amministratore
-		del DBMS sono contenute all'interno del web server Node.js e non sono più
-		reperibili direttamente dal codice del lato client. 
-		
-		\begin{figure}[h]
-			\centering
-			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{lato-server}
-			\caption{
-				Architettura del lato server dell'applicazione.
-			}
-			\label{fig:latoserver}
-		\end{figure}
-		
-		Fin ora abbiamo detto che nelle varie richieste HTTP devo essere presenti
-		le credenziali di autenticazione. Apache CouchDB\texttrademark{} fornisce
-		vari meccanismi di autenticazione tra cui Basic Access Authentication\footnote{
-		Schema di autenticazione definito per HTTP nella RFC2617 consultabile al'indirizzo
-		\url{https://tools.ietf.org/html/rfc2617\#section-2}.}
-		che abbiamo scelto di utilizzare per la sua semplicità. In questo modo il
-		passaggio delle credenziali di accesso da client a server avviene attraverso 
-		il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP 
-		come nell'esempio 
-		\begin{lstlisting}[language=http]
-	GET index.html HTTP/1.1
-	Host: www.someserver.com
-	Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
-	 ...
-		\end{lstlisting}
-		dove \texttt{dXNlcm5hbWU6cGFzc3dvcmQK} è la stringa ``name:password'' 
-		codificata in base64\footnote{Per una completa specifica del sistema di
-		codifica/decodifica base64 consultare la RFC4648 disponibili all'indirizzo
-		\url{http://www.rfc-editor.org/pdfrfc/rfc4648.txt.pdf}}.
-		Questo tipo di autenticazione non prevede protezione per le credenziali 
-		trasmesse; come visto esse vengono banalmente codificate in base64 ma non 
-		criptate. Per cui l'uso di questo tipo di 
-		autenticazione andrebbe fatto assieme ad un sistema di sicurezza esterno 
-		come SSL\citep{Web:RFC2617}. CouchDB permette l'uso del protocollo HTTPS, 
-		che però non abbiamo adottato dato che lo scopo del tirocinio non era quello di focalizzarsi 
-		sulla sicurezza.
-	
-	
-	\section{Lato Client}
-		In questa sezione prenderemo in esame le varie funzionalità fornite
-		dall'applicazione come pretesto per mostrare come si sono
-		comportati i due framework. Non ci addentreremo
-		nei dettagli di carattere algoritmico nelle soluzioni dei vari problemi ma,
-		piuttosto, mostreremo quali strumenti ci hanno fornito \tisdk{} e \pg{}
-		per poterli risolvere.
-		
-		\subsection{Struttura Grafica}
-		\label{subsec:structgraphic}
-			Descriviamo ora la struttura generale dell'applicazione dal punto 
-			di vista grafico.
-			Abbiamo cercato di fornire lo stesso aspetto alle due versioni 
-			dell'applicazione. E' interessante vedere come i due framework hanno risposto 
-			alle nostre esigenze. Prendendo spunto da applicazioni native come 
-			gmail e facebook l'idea è stata quella di avere una barra di intestazione, 
-			nella parte alta dello schermo, che contenesse un pulsante in grado di 
-			far apparire un menù dal quale accedere alle varie schermate dell'applicazione.
-			Viste le funzionalità richieste dall'applicazione abbiamo creato schermate 
-			differenti per:
-			\begin{enumerate} 
-				\item visualizzare la mappa delle segnalazioni 
-				\item visualizzare la lista delle segnalazioni fatte dall'utente
-				\item visualizzare la lista delle ultime segnalazioni fatte da tutti gli utenti
-				\item comporre ed inviare la segnalazione
-				\item effettuare la registrazione e/o modificare l'indirizzo mail registrato.
-				\item visualizzare i dettagli di una segnalazione
-			\end{enumerate}
-			
-			\noindent I due framework approcciano in maniera differente il concetto di schermata: 
-			in \kendomob{} le schermate vanno inserite nel tag \verb|<body>| dello stesso 
-			file \html{}, tramite \verb|<div>| decorati con l'attributo \verb|data-role=view|, la 
-			navigazione tra di esse avviene attraverso le ancore come nelle normali 
-			pagine web si naviga all'interno dello stesso documento; Titanium invece 
-			permette due modi diversi di definire una schermata: la view e la window.
-			Una view deve essere necessariamente contenuta in una window; nel linguaggio 
-			del web una window Titanium è paragonabile ad una pagina web, mentre le view 
-			sono analoghe ai \verb|<div>|. Un'applicazione potrebbe essere costituita da un'unica 
-			window con tante view (che sarebbe la stessa tecnica usata con \kendomob{}) 
-			dando l'effetto appunto di essere composta da schermate differenti, oppure 
-			può essere composta da tante window. La differenza sta nel fatto che 
-			le window hanno contesti di esecuzione diversi l'una dall'altra al contrario 
-			delle view che condividono quello della window che le contiene.
-			Personalmente abbiamo scelto di implementare le schermate 1, 2, 3 come 
-			view appartenenti alla stessa window e le 4, 5, 6 come window differenti, 
-			questo ha facilitato la navigazione tra le varie schermate, in quanto 
-			il passaggio da una view all'altra non è così semplice in \tisdk{} come 
-			lo è invece in \kendomob{}.
-			
-			Per la barra di intestazione ed il menù di navigazione abbiamo trovato 
-			differenze sostanziali tra i due framework.\\
-			Partiamo con \kendomob{}.
-			Innanzitutto esso offre un particolare elemento grafico chiamato drawer, 
-			ovvero un bottone che se premuto porta all'apertura di 
-			una lista che si espande partendo dalla sinistra dello schermo e che 
-			si va a sovrapporre al contenuto della schermata stessa.
-			Ogni schermata può essere suddivisa in un intestazione e un corpo, 
-			con l'effetto che l'intestazione apparirà come una barra nella parte alta 
-			dello schermo. Per essere più precisi la sua posizione dipende dalla
-			piattaforma: di default su iOS la posizione è in alto, mentre per Android 
-			è in basso ma, attraverso opportune modifiche ai file \css{} che accompagnano 
-			questo framework, abbiamo fatto in modo che la barra risultasse in alto 
-			anche su Android in modo da rendere l'applicazione il più simile possibile 
-			a quelle native.
-			All'interno di questa barra abbiamo inserito il widget drawer, emulando 
-			così la action bar e il navigation drawer di Android e la navbar di iOS,
-			ottenendo appunto il sistema di navigazione desiderato (vedi fig.\ref{fig:kendodrawer}).
-			Avendo utilizzato interamente i widget offerti da \kendomob{}, l'aspetto 
-			della barra di navigazione viene adattato alla piattaforma senza 
-			dover aggiungere nessuna riga di codice.
-			\begin{figure}[h]
-				\centering
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerClose}
-					\caption{}
-					\label{fig:kendoDrawerClose}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerOpen}
-					\caption{}
-					\label{fig:kendoDrawerOpen}
-				\end{subfigure}
-				\caption{Schermata iniziale dell'applicazione con \kendomob{}. 
-				In (a) si vede la barra di intestazione con il pulsante drawer 
-				per aprire il menù di navigazione, in (b) si mostra il menù aperto 
-				e l'effetto che ha sulla schermata}
-				\label{fig:kendodrawer}
-			\end{figure}
-		
-			\tisdk{} fornisce le API per creare direttamente la action bar nativa 
-			di Android e la navbar nativa di iOS, però ancora non permette la 
-			creazione del navigation drawer di Android, e dell'analogo 
-			elemento su iOS. Siamo comunque riusciti a fornire l'aspetto 
-			desiderato all'applicazione.
-			Con \tisdk{} infatti è possibile disegnare elementi grafici 
-			personalizzati ed assegnarli particolari comportamenti 
-			semplicemente attraverso l'uso di XML, TSS e \js{}. Nel framework Alloy 
-			(descritto nella sezione \ref{subsub:alloy}) questi elementi sono 
-			chiamati widget e possono essere creati in un progetto per poi essere 
-			utilizzati anche in altri, questa caratteristica ha permesso la nascita 
-			di numerosi widget creati da sviluppatori indipendenti. 
-			Abbiamo così trovato in rete il widget
-			\texttt{com.drawermenu.widget}\footnote{Questo il link al codice
-			sorgente: \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}}
-			contenente tutti gli elementi necessari per fornire all'applicazione 
-			l'aspetto dato con \kendomob{} (vedi fig. \ref{fig:tidrawer}).
-			\begin{figure}[h]
-				\centering
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerClose}
-					\caption{}
-					\label{fig:tiDrawerClose}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerOpen}
-					\caption{}
-					\label{fig:tiDrawerOpen}
-				\end{subfigure}
-				\caption{Schermata iniziale dell'applicazione con \tisdk{}. 
-				In (a) si vede la barra di intestazione con il pulsante drawer per aprire 
-				il menù di navigazione, in (b) si mostra il menù aperto 
-				e l'effetto che ha sulla schermata.}
-				\label{fig:tidrawer}
-			\end{figure}
-			Il widget aveva dei propri colori e icone, ma modificando i file 
-			opportuni lo abbiamo adattato alle nostre esigenze.
-			Questo widget funziona sia per iOS che per Android, ma il suo aspetto 
-			non si adatta automaticamente alla piattaforma, teoricamente è possibile
-			modificarlo per aggiungervi anche questa funzionalità, avendo però 
-			la possibilità di testare l'applicazione solo su dispositivi Android 
-			non ci siamo addentrati in tale modifica.
-			
-			
-		\subsection{Struttura del Progetto}
-			Parliamo ora della struttura del progetto, partendo da \pg{} e mostrando 
-			come avviene l'integrazione con \kendomob{}, proseguendo poi con 
-			la struttura usata in \tisdk{}.
-		
-			Inizialmente avevamo deciso di sfruttare il servizio \pgb{}, 
-			ma questo si è rivelato veramente lento: per testare l'applicazione 
-			dovevamo creare un pacchetto .zip da inviare al servizio, limitati 
-			anche dalla lentezza della rete della nostra abitazione questa operazione 
-			portava via un tempo eccessivo, inoltre era molto lento anche 
-			lo stesso processo di compilazione, senza contare che continuamente 
-			c'erano malfunzionamenti nel servizio e dovevamo attenderne il ripristino. 
-			Abbiamo così deciso di affidarci al CLI per creare, compilare ed 
-			installare l'applicazione, nonché per l'aggiunta dei plugin. La 
-			conseguenza è stata la necessità di configurare l'SDK nativo di Android
-			sulla macchina usata per lo sviluppo dell'applicazione.
-			La creazione del progetto tramite CLI ha portato alla creazione 
-			delle cartelle: \texttt{platforms}, \texttt{merges}, \texttt{plugins}, \texttt{www}.
-			Senza addentrarci troppo nel contenuto delle cartelle è importante 
-			comunque evidenziare lo scopo della cartella \texttt{www} e di quella merges, 
-			che di fatto sono quelle che contengono i file da modificare per 
-			realizzare l'applicazione.
-			La cartella \texttt{www} contiene tutti i file \html{}, \css{}, \js{} e le immagini
-			che compongono l'applicazione oltre al file \texttt{config.xml} che contiene 
-			i metadati dell'app come la versione o il nome. 
-			Per dare più ordine in presenza di molti 
-			file questi possono essere suddivisi in ulteriori sottocartelle a 
-			discrezione del programmatore, personalmente abbiamo creato una sottocartella 
-			per i file \css{}, 
-			una per quelli \js{} creati da noi, una per quelli \js{} di \kendomob{} e 
-			una per le immagini.
-			Sulle immagini usate come icone e come schermate di apertura\footnote{
-			Per schermata di apertura si intende un'immagine che compare per qualche 
-			secondo durante l'avvio dell'applicazione in attesa che vengano eseguite 
-			le operazioni di inizializzazione della stessa} va fatto 
-			un discorso a parte. Come noto esistendo 
-			dispositivi con dimensioni dello schermo e risoluzioni differenti 
-			è necessario utilizzare immagini di dimensioni diverse a seconda 
-			del dispositivo, \pg{} permette di facilitare tutto ciò fornendo 
-			opportune cartelle per ogni categoria di dispositivi disponibili sul 
-			mercato, è quindi sufficiente creare tali immagini con lo stesso nome 
-			ed inserirle nelle cartelle opportune sarà poi il framework a caricare 
-			quella adatta alla risoluzione dello schermo del dispositivo.
-			La cartella \texttt{merges} serve per personalizzare il codice su piattaforme 
-			diverse, essa contiene una sottocartella per ogni piattaforma di destinazione
-			(es. una per Android, una per iOS e una per Windows Phone) 
-			al cui interno è replicata la cartella \texttt{www} descritta precedentemente,
-			se si vuole utilizzare del codice diverso a seconda della piattaforma 
-			basta modificare i file nelle rispettive cartelle \texttt{www}.
-			
-			L'integrazione con \kendomob{} è semplicissima, dopo aver inserito 
-			i file \js{} e \css{} dentro le opportune cartelle è stato sufficiente 
-			caricarli dentro al file \texttt{index.html} per mezzo dei tag 
-			\texttt{<script>} e \texttt{<link>}.
-			Nel paragrafo \ref{subsec:kendo} abbiamo accennato al fatto di poter 
-			utilizzare il paradigma MVVM su alcuni elementi grafici forniti dal 
-			framework, ma al momento dell'inizio della scrittura dell'applicazione 
-			non tutti i widget erano supportati da MVVM e quindi abbiamo preferito 
-			non usarlo, di conseguenza la logica dell'applicazione è stata gestita 
-			interamente in un unico file \js{}. Inoltre come detto più volte 
-			tutte le schermate e gli elementi all'interno di esse sono state 
-			definite in un unico file \html{} (vedi fig. \ref{fig:degradoAmbientaleTree}).
-			\begin{figure}[h]
-				\centering
-				\includegraphics[keepaspectratio=true, width=0.95\textwidth]{degradoAmbientaleTree}
-				\caption{
-				La figura mostra la gerarchia delle cartelle e dei file che 
-				compongono l'applicazione realizzata con \pg{} e \kendomob{}.
-				}
-				\label{fig:degradoAmbientaleTree}
-			\end{figure}
-			
-			Lo sviluppo dell'applicazione con \tisdk{} è stato fatto sfruttando 
-			l'IDE Titanium Studio, con esso è stato possibile creare direttamente 
-			un'applicazione Alloy (vedi sezione \ref{subsub:alloy}) strutturandola 
-			così secondo il paradigma MVC.
-			Questo processo genera numerose cartelle e file (vedi fig. \ref{fig:degradoTiTree}), 
-			ma come per \pg{} ci concentreremo soltanto sulla descrizione di quelle/i veramente importanti.
-			La cartella principale del progetto contiene: il file \texttt{tiapp.xml}, che 
-			analogamente al file \texttt{config.xml} di \pg{} specifica i metadati, e 
-			la cartella \texttt{app} che contiene il resto dell'applicazione.
-			Quest'ultima in particolare contiene le cartelle: 
-			\begin{description}
-				\item[assets] contiene le immagini usate nell'applicazione, le 
-							  icone e la schermata di apertura e come per \pg{} 
-							  sono presenti sottocartelle per inserirvi le stesse 
-							  immagini in dimensioni diverse a seconda del dispositivo;
-				\item[widgets] contiene tutti i file necessari per utilizzare widget esterni 
-							   come quello usato per la barra di navigazione ed il menù descritti 
-							   nel paragrafo \ref{subsec:structgraphic};
-				\item[lib] qui dentro vanno inseriti i file javaScript che definiscono 
-						   moduli CommonJS\footnote{http://www.commonjs.org/}. Nel 
-						   nostro caso è servito per creare una libreria per fornire 
-						   le API di comunicazione verso il lato server (vedi \ref{subsec:comlatoserver});
-				\item[controllers, views, styles] contengono rispettivamente file 
-							\js{}, XML e TSS per ogni schermata dell'applicazione. 
-							In Alloy il componente \texttt{view} rappresenta l'interfaccia 
-							dell'applicazione e comprende un file XML e uno TSS. 
-							Il primo definisce la struttura della schermata, mentre il 
-							secondo contiene gli stili da applicare ai vari elementi 
-							che essa contiene, la relazione tra XML e tss è la stessa
-							che si ha tra HTML e CSS.
-							Il file dentro \texttt{controllers} esegue chiamate dirette 
-							alle API di \tisdk{} per manipolare gli oggetti grafici 
-							ed eseguire la logica dell'applicazione.
-			\end{description}
-			
-			\begin{figure}[h]
-				\centering
-				\includegraphics[keepaspectratio=true, width=0.80\textwidth]{degradoTiTree}
-				\caption{
-				La figura mostra la gerarchia delle cartelle e dei file che 
-				compongono l'applicazione realizzata con \tisdk{}
-				}
-				\label{fig:degradoTiTree}
-			\end{figure}
-			
-			\noindent Per strutturare realmente l'applicazione secondo il paradigma MVC 
-			ci sarebbe stato bisogno di usare un'altra cartella di nome \texttt{models}
-			nella quale inserire i file \js{} per i modelli, però la documentazione 
-			di \tisdk{} non è molto chiara su come utilizzarli, per cui
-			abbiamo gestito i dati completamente nel controllore. 
-			\noindent La cartella \texttt{app} contiene anche il file \texttt{alloy.js}, un particolare file
-			\js{} il cui codice viene eseguito prima di quello del controllore 
-			di qualsiasi schermata, rendendolo così un ottimo posto dove fare 
-			varie inizializzazioni dell'applicazione. Nel nostro progetto è 
-			stato usato ad esempio per caricare il modulo per la mappa.
-				
-		\subsection{Comunicare con il lato server}
-		\label{subsec:comlatoserver}
-			Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
-			come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
-			di realizzare una libreria fatta su misura che ci permettesse di generare
-			i giusti messaggi HTTP da inviare al server. Ora, \tisdk{} ha la propria
-			libreria \texttt{Titanium.Network} che permette di istanziare un
-			particolare oggetto	\texttt{Titanium.Network.HTTPClient} con il
-			quale è possibile comporre ogni genere di richiesta HTTP. \pg{}
-			invece non fornisce nulla di tutto ciò e quindi abbiamo dovuto far
-			ricorso alle funzionalità AJAX di \jq{} fornito dal framework
-			\kendomob{}\footnote{Ricordiamo che \kendomob{}	è basato proprio su
-			\jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
-			questi fatti è stata definita un'unica interfaccia di funzioni \js{}
-			e ne sono state realizzate due diverse implementazioni: una
-			fruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
-			sulla funzione \verb|$.ajax(...)| di \jq{}\footnote{Maggiori
-			dettagli sull'uso di HTTPClinet e \texttt{\$.ajax(...)} sono
-			disponibili nelle rispettive documentazioni online:\\
-			\url{http://docs.appcelerator.com/titanium/latest/\#!/api/Titanium.Network.HTTPClient}
-			e\\ \url{http://api.jquery.com/jQuery.ajax/}.}.
-			È importante far notare
-			che, sia HTTPClient che \verb|$.ajax(...)| implementano un sistema
-			di comunicazione asincrono, ciò significa che una volta inviate le
-			richieste HTTP, il programma continuerà ad essere eseguito in attesa
-			che dal server tornino le relative risposte; a questo punto verrà
-			eseguito l'opportuno codice che gestirà tale evento.
-			
-			
-		\subsection{Registrazione al primo avvio}
-		\label{subsec:registrazione}
-			Come avevamo già anticipato, la prima cosa di cui deve occuparsi
-			il client al suo primo avvio è quella di registrare un nuovo utente. Per
-			poter distinguere ogni volta se l'applicazione è stata avviata 
-			per la prima volta o meno c'è la
-			necessità di avere qualche informazione in grado di permanere una volta
-			che l'applicazione è stata chiusa.
-			
-			\pg{}, tramite il plugin
-			\texttt{FileSystem}, offre la possibilità di accedere al file system
-			del dispositivo così da poter creare ed	eliminare file; in questa
-			situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
-			di \html{}5. In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
-			è possibile memorizzare, in maniera permanente tra varie sessioni, coppie
-			chiave - valore di tipo \texttt{String - String}. Per esempio con il
-			codice
-			\begin{lstlisting}
-	localStorage.setItem("name", "goofy");
-	var n = localStorage.getItem("name");
-	localStorage.removeItem("name");
-			\end{lstlisting}
-			si memorizza la coppia ``name'' - ``goofy'', si recupera la stringa associata
-			alla chiave ``name'' e si elimina tale coppia definitivamente.
-			
-			La stessa funzionalità è presente anche in \tisdk{} offerta dal suo
-			modulo \texttt{Titanium.App.Properties} che però, a differenza di
-			quella standard di \html{}5, permette di memorizzare tutti i tipi di
-			dato di \js{} tranne che funzioni. Facendo riferimento all'esempio 
-			precedente, la stessa cosa è realizzabile con \tisdk mediante il
-			codice
-			\begin{lstlisting}
-	Titanium.App.Properties.setString("name", "goofy");
-	var n = Titanium.App.Properties.getString("name");
-	Titanium.App.Properties.removeProperty("name");
-			\end{lstlisting}
+    Per avere un confronto più significativo, il tutore aziendale ci ha proposto
+    la realizzazione di un'applicazione che interagisse, in maniera sostanziale,
+    con le funzionalità offerte dal dispositivo in modo da poter valutare meglio
+    la potenzialità delle API offerte dai due frame\-work in analisi.
 
-			La differenza sostanziale tra i due sistemi di memorizzazione risiede 
-			nella quantità di dati che possono essere salvati. 
-			Le specifiche di \html{}5 suggeriscono un limite di 5MB, ma la dimensione 
-			può variare tra le varie piattaforme; mentre come afferma la documentazione 
-			di \tisdk{} non c'è un limite specifico alla quantità di dati memorizzabili
-			in Properties, bisogna però notare che questi dati sono caricati in 
-			memoria principale quando 
-			viene lanciata l'applicazione, e vi rimangono fino alla sua chiusura.
-			Questo permette un rapido accesso ai dati, ma al costo di un aumento 
-			della memoria usata dall'applicazione. 
-			
-			Dal punto di vista dello sviluppo cross platform \tisdk{} assicura il funzionamento 
-			del sistema di memorizzazione descritto, direttamente senza dover riadattare il codice,
-			su tutte le piattaforme supportate. Anche il local storage 
-			di \html{}5 può essere usato per memorizzare dati su piattaforme diverse 
-			usando lo stesso codice, ma il fatto di incorrere in diversi limiti di quota, 
-			a seconda del sistema operativo, rende necessario un controllo più 
-			accurato. Inoltre con \pg{} bisogna tenere conto che la web view di 
-			alcune piattaforme potrebbe non supportare il local storage di \html{}5 
-			(attualmente i principali OS Android, Windows Phone 8 e iOS lo fanno).
-			
-			Come descritto più volte, la registrazione doveva avvenire utilizzando 
-			come credenziali il codice IMEI del dispositivo oppure il numero di telefono.
-			Nè con \pg{} nè con \tisdk{} questo è stato possibile. Nativamente 
-			Android permette di accedere al codice IMEI, mentre iOS no; è stato 
-			comunque possibile ottenere un identificatore con entrambi i 
-			framework. \pg{} tramite il plugin \texttt{device} permette di accedere 
-			ad alcune informazioni sul dispositivo come lo UUID, allo stesso 
-			modo \tisdk{} fornisce una funzione per ottenere lo stesso UUID.
-			Dobbiamo però fare una distinzione particolare sul valore di questo 
-			UUID tra Android e iOS. 
-			Le documentazioni di entrambi i framework affermano che date le limitazioni 
-			imposte da iOS non è possibile ottenere un valore in grado di identificare 
-			univocamente il dispositivo\footnote{Approfondimenti sulle limitazioni 
-			imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}}. 
-			Pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma 
-			un valore che identifica l'applicazione che però potrebbe essere diverso 
-			dopo una reinstallazione o dopo 
-			un aggiornamento della stessa o addirittura del sistema operativo. 
-			Su Android invece UUID 
-			identifica proprio il dispositivo. La conseguenza di tutto ciò è che 
-			UUID non è affidabile per iOS e quindi sarebbe stato necessario utilizzare 
-			un meccanismo di registrazione basato su credenziali differenti; 
-			dato che però come detto l'applicazione è stata sviluppata solo per Android 
-			abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo 
-			continuato ad usare UUID.
-			
-			
-		\subsection{La mappa delle segnalazioni}
-			Arricchire la propria applicazione Titanium o \pg{} con una mappa
-			non è un problema. Google fornisce un ricco insieme di API \js{} per
-			l'utilizzo delle proprie mappe che quindi possiamo utilizzare nella
-			web view di \pg{}. \tisdk, invece, inizialmente forniva l'oggetto
-			\texttt{Titanium.Map} che permetteva di utilizzare le mappe su tutte
-			le sue piattaforme supportate ma, dalla versione 3.2.0 dell'SDK, l'uso
-			di queste API per Andorid e iOS è stato deprecato; ora, al suo posto,
-			Titanium fornisce un implementazione più aggiornata con	il modulo
-			gratuito \texttt{ti.map}.
-			
-			Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
-			come mostrato nel segmento di codice seguente
-			\begin{lstlisting}
-	<div data-role="view" data-title="Degrado Ambientale"
-	  id="map-view" data-layout="default"
-	  data-stretch="true" data-init="app.initMap"
-	  data-show="app.viewMapShow"
-	>
-		<div id="map" style="width:100%;"></div>
-	</div>
-			\end{lstlisting}
-			sfruttando il framework \kendomob{}, abbiamo definito una specifica
-			view con all'interno un particolare elemento \texttt{div}; in fase di
-			avvio dell'applicazione, tramite \js{}, abbiamo configurato e
-			successivamente inizializzato la mappa su quel \texttt{div} (come
-			mostrato nel frammento di codice \ref{cod:initmapPG}) così
-			da renderla visibile all'utente all'interno di quella view come
-			mostrato nella figura \ref{fig:mapPG}.
-			\begin{lstlisting}[
-				caption={
-				    L'elemento \texttt{div} è stato selezionato mediante una
-				    query \jq{} e su quello si è istanziata la mappa tramite
-				    le API offerte da Google.
-				},
-				label={cod:initmapPG}
-			]
-	/** elemento 'div' nel DOM che conterra' la mappa */
-	var mapElement = $("#map")[0];
+    L'applicazione che ci è stata commissionata permette all'utente di segnalare
+    problemi di degrado ambientale con immagini e testo georeferenziati.
+    In particolare l'applicazione inizialmente doveva permettere all'utente di:
+    \begin{itemize}
+        \item registrarsi nel sistema al primo avvio e di autenticarsi in quelli
+              successivi;
+        \item visualizzare su una mappa le proprie segnalazioni e quelle inviate
+              degli altri utenti;
+        \item comporre e inviare su un server una nuova segnalazione
+              georeferenziata inserendo una descrizione testuale e una foto del
+              degrado scattata con il dispositivo;
+        \item visualizzare una lista riassuntiva delle proprie segnalazioni
+              inviate;
+        \item scegliere una segnalazione e visualizzarne i dettagli.
+    \end{itemize}
+    Durante la fase di sviluppo però, in occasione della revisione periodica del
+    nostro lavoro svolto, sono state richieste nuove funzionalità aggiuntive; in
+    particolare ci è stato chiesto di aggiungere:
+    \begin{itemize}
+        \item una lista generale che mostrasse le ultime segnalazioni inviate da
+              qualsiasi utente;
+        \item un meccanismo di salvataggio locale delle proprie segnalazioni e
+              di tutte quelle visualizzate in dettaglio permettendo così
+              all'applicazione un parziale funzionamento anche in assenza di
+              connessione Internet;
+        \item la possibilità di ritrovare sulla mappa una segnalazione partendo
+              dalla visualizzazione dei suoi dettagli.
+    \end{itemize}
 
-	/** configurazione della mappa */
-	var mapOptions = {
-		center: new google.maps.LatLng(43.720741,10.408413),
-		zoom: 10
-	};
+    \noindent La registrazione e l'autenticazione dell'utente sul server doveva avvenire
+    utilizzando come credenziali di accesso il codice IMEI o il numero di
+    telefono, che dovevano essere letti automaticamente dall'applicazione,
+    senza necessità d'interazione con l'utente. Abbiamo però deciso, inoltre, di
+    dare all'utente che si sta registrando la possibilità di scegliersi un
+    ``nickname'' univoco\footnote{Il controllo dell'univocità è stato demandato
+    al lato server e verrà descritto più in dettaglio nella sezione apposita.}
+    e di inserire il proprio indirizzo e-mail con l'idea di aggiungere,
+    successivamente, queste informazioni in tutte le sue segnalazioni; in questo
+    modo un altro utente che visualizza una certa segnalazione può vedere chi
+    l'ha realizzata e, se vuole, sarà in grado di contattarlo tramite posta
+    elettronica. Per semplicità abbiamo deciso che una volta scelto il nickname
+    questo sarà permanente, diversamente abbiamo aggiunto nell'applicazione una
+    schermata tramite la quale sarà possibile aggiornare il proprio indirizzo
+    e-mail.
 
-	/** istanzia la mappa */
-	app.map = new google.maps.Map(mapElement, mapOptions);
-			\end{lstlisting}
-			La mappa così implementata possiede tutte le caratteristiche offerte
-			dalle mappe Google, in particolare, la possibilità di ottenere le
-			coordinate dei punti in basso a sinistra e in alto a destra che
-			delimitano l'area rettangolare mostrata e, la possibilità di
-			disegnare dei segnaposto cliccabili con icone personalizzabili.
-			Sfruttando queste funzionalità, una volta ottenute dal database
-			tutte le segnalazioni riguardanti l'area attualmente visualizzata, è
-			stato sufficiente creare un vettore di \texttt{google.maps.Marker} e
-			passarlo alla mappa per	veder apparire tutte le segnalazioni sopra
-			di essa. Un problema che però ci siamo trovati ad affrontare è stato
-			il fatto che lo spostare la mappa verso destra entrava in conflitto
-			con il gesto di swipe per l'apertura del menù. \kendomob{} non
-			fornendo la possibilità di configurare la sensibilità dello swipe ci
-			ha costretti a dover rinunciare all'uso di tale gesto per l'apertura
-			e chiusura del drawer. Un altro appunto che dobbiamo fare riguarda
-			le prestazioni: rispetto alle mappe che si possono trovare in
-			applicazioni native, questa risulta essere molto meno fluida durante
-			il suo trascinamento e durante il cambio del livello di zoom.
-			\begin{figure}[h]
-				\centering
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=\textwidth]{mapPG}
-					\caption{}
-					\label{fig:mapPG}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=\textwidth]{mapPGMark}
-					\caption{}
-					\label{fig:mapPGMark}
-				\end{subfigure}
-				\caption{
-					Mappe ottenute mediante le API Google all'interno di
-					view \kendomob{}. In (a) una normale mappa, in
-					(b) una mappa con l'aggiunta di alcuni
-					segnaposto personalizzati.
-				}
-				\label{fig:PGMaps}
-			\end{figure}
-			
-			Anche per quanto riguarda l'uso delle mappe in progetti Titanium
-			non comporta grandi difficoltà, in più il paradigma MVC
-			offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
-			una view con al suo interno la mappa bisogna prima caricare il modulo
-			relativo, questo lo si fa tipicamente all'interno del file
-			\texttt{app/alloy.js} così che il caricamento del modulo venga
-			eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
-			comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
-			in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
-			\begin{lstlisting}[
-				caption={Caricamento del modulo \texttt{ti.map} creando un riferimento
-				        globale nel file \texttt{alloy.js}.},
-				label=cod:alloyglob
-			]
-	// caricamento modulo mappa
-	Alloy.Globals.Map = require('ti.map');
-			\end{lstlisting}
-			Fatto questo abbiamo definito la view in un file XML dedicato, vi abbiamo richiamato
-			il modulo per la mappa (vedi codice \ref{cod:alloymapview}) e, in un secondo file \js{} specifico per
-			l'implementazione del controllore, sono stati definiti tutti i
-			gestori per gli eventi (per noi interessanti da gestire) che la
-			mappa potrà scatenare durante l'interazione con l'utente (vedi codice \ref{cod:alloymapcontroller}).
-			\begin{lstlisting}[
-				caption={Contenuto del file \texttt{map.xml} che definisce la
-				view contenente la mappa.},
-				label=cod:alloymapview
-			]
-	<Alloy>
-		<View
-			id="map" ns="Alloy.Globals.Map" regionFit="true"
-			onClick="markerClick"
-			onRegionchanged="moved"
-			onComplete="mapCompleted"/>
-	</Alloy>
-			\end{lstlisting}
-			\begin{lstlisting}[
-				caption={Parte del file \texttt{map.js}, controllore per la mappa, con le definizioni dei gestori per
-				gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
-				label=cod:alloymapcontroller
-			]
-	[...]
-	/**
-	 * Handler del click su un segnaposto della mappa.
-	 * @param {ModulesMapViewEvent} evt evento passato allo
-	 *   handler al momento della chiamata.
-	 */
-	function markerClick(evt) {	...	}
+    L'applicazione, come ovvio, sarà composta di una parte client e di una parte
+    server. Il lato client, che risiederà sul dispositivo mobile, è la parte dove
+    si concentrano i nostri studi e dove
+    mostreremo come sono state implementate le funzionalità richieste
+    utilizzando i due frame\-work presi in esame. Il lato server risiederà
+    su una macchina dedicata e per quanto riguarda la sua analisi, non
+    essendo scopo di questa attività di tirocinio, ne daremo solo una
+    semplice descrizione sul funzionamento e sulle tecnologie
+    impiegate per realizzarlo.
 
-	/**
-	 * handler dell'evento associato allo spostamento e
-	 * ridimensionamento della mappa.
-	 * @param {ModulesMapViewEvent} evt evento passato allo
-	 *   handler al momento della chiamata.
-	 */
-	function moved(evt) { ... }
+    \section{Lato Server}
+        Lo scopo principale del lato server di questa applicazione è quello di
+        gestire un database che andrà a contenere tutte le segnalazioni inviate
+        dagli utenti attraverso il dispositivo mobile. Il
+        database dovrà essere in grado di rispondere a query riguardanti
+        certamente le coordinate geografiche, ma anche i nickname e la data e
+        ora delle varie segnalazioni. Un secondo compito importante che dovrà
+        svolgere, sarà quello di gestire le identità dei diversi utenti e di
+        controllare l'univocità del nickname utilizzato in fase di
+        registrazione.
 
-	/**
-	 * Handler dell'evento onComplete scatenato appena la mappa
-	 * e' pronta.
-	 *
-	 * Recupera la posizione corrente e una volta ottenuta
-	 * inizializza la mappa con quella posizione.
-	 *
-	 * @param {ModulesMapViewEvent} evt
-	 */
-	function mapCompleted(evt){ ... }
+        Una caratteristica in più che non era richiesta ma che ci sembrava
+        opportuno avere era l'indipendenza della realizzazione del server
+        rispetto ai due frame\-work utilizzati nell'implementare il lato client.
+        In questo modo entrambe le implementazioni del lato client avrebbero
+        dialogato con la stessa implementazione del lato server.
 
-			\end{lstlisting}
-			Come visto nel caso dell'applicazione \pg{} è possibile, anche qui,
-			disegnare segnaposto sulla mappa e reperire le informazioni
-			necessarie alla composizione delle query spaziali per scaricare le
-			segnalazioni da mostrare (vedi fig. \ref{fig:TiMaps}). Il modulo
-			\texttt{ti.map} fornisce sostanzialmente un'interfaccia che permette
-			tramite \js{} l'uso	delle rispettive mappe native per le piattaforme
-			iOS e Android. Le mappe risultati sono notevolmente più performanti
-			rispetto a quelle descritte precedentemente fornendo un esperienza
-			utente molto più gradevole.
-			
-			Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
-			applicazioni \pg{} non dà nessun problema non essendo necessario
-			interagire con funzionalità del dispositivo; una volta scritto,
-			tutto il codice sarà utilizzabile su tutte le piattaforme per le
-			quali si sta sviluppando l'applicazione. Inoltre non si è
-			costretti ad utilizzare soltanto il servizio mappe di Google, online
-			sono disponibili altre API \js{} open source come Leaflet oppure
-			di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
-			(di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
-			delicato: per supportare sia la piattaforma Android che iOS sono
-			sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
-			Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
-			\texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
-			di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
-			\js{}/\html{} che utilizza le API online del nostro fornitore di
-			mappe preferito, può essere caricato in un'opportuna web view,
-			quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
-			supportano tutte le piattaforme senza alcuna differenza.
-			\begin{figure}[h]
-				\centering
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=\textwidth]{tiMap}
-					\caption{}
-					\label{fig:tiMap}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.485\textwidth}
-					\includegraphics[keepaspectratio=true, width=\textwidth]{tiMapMark}
-					\caption{}
-					\label{fig:tiMapMark}
-				\end{subfigure}
-				\caption{
-					Mappe ottenuto con il modulo \texttt{ti.map} su Android: (a)
-					una normale mappa; (b) esempio di segnaposto personalizzati
-					disegnati sulla mappa.
-				}
-				\label{fig:TiMaps}
-			\end{figure}
-			
-		\subsection{Creare una nuova segnalazione}
-		\label{subsec:nuova}
-			Creare una segnalazione sembra una cosa semplice ma per
-			comporne una c'è bisogno di una sostanziale interazione con il
-			dispositivo. Quello che andremo a descrivere ed a valutare sarà
-			come \pg{} e \tisdk{} si sono comportati quando abbiamo avuto
-			bisogno di:
-			\begin{itemize}
-				\item ottenere l'input testuale immesso dall'utente;
-				\item interagire con la fotocamera del dispositivo per ottenere
-					una foto del degrado da allegare;
-				\item interagire con il servizio di geolocalizzazione per
-					recuperare la posizione attuale del dispositivo.
-				\item inviare la nuova segnalazione sul server.
-			\end{itemize}
-			
-			\noindent Sul rilevare l'input immesso dall'utente non ci sono molte
-			considerazioni da fare: sia \tisdk{} che
-			\kendomob{}\footnote{Rilevare input testuale non compete \pg{}, non
-			è un interazione con funzionalità del dispositivo; riguarda invece
-			funzionalità dei widget di cui è comporta l'interfaccia grafica.}
-			mettono a disposizione i propri widget di ``input'' per i quali sono
-			definiti gli opportuni metodi per ottenere il valore immesso
-			dall'utente. Su \kendomob{} la schermata che raccoglie l'input è
+        Per la realizzazione di tutto questo, dopo una fase di ricerca, abbiamo
+        mirato a due prodotti open source vista la loro semplicità d'uso:
+        Apache CouchDB\texttrademark{} e Node.js.
+        \begin{description}
+            \item[Apache CouchDB\texttrademark{}] è un DBMS (database-management
+                system) doc\-u\-ment-ori\-ented accessibile mediante API RESTful\footnote{Il termine è usato
+                per descrivere un'interfaccia che trasmette dati su HTTP. Per una
+                descrizione più esaustiva vedere
+                \url{http://it.wikipedia.org/wiki/Representational_State_Transfer}}
+                con scambio di dati in formato \js{} Object Notation (JSON). Questa
+                caratteristica permette di eseguire facilmente operazioni sul database
+                indipendentemente dal linguaggio usato per realizzare l'applicazione.
+
+                Un database document-oriented è composto da una serie di documenti
+                ``auto-contenenti'', questo significa che il documento in
+                questione è memorizzato nel documento stesso anziché in una tabella
+                come avviene nei database relazionali. Infatti in Apache CouchDB\texttrademark{}
+                non esistono tabelle, righe, colonne e relazioni tra i
+                documenti e quindi aggiungere o rimuovere un nuovo
+                campo ad un documento non influisce negativamente sugli altri.
+
+                Ogni documento è rappresentato in una struttura JSON che può
+                contenere tipi di dato, come stringhe di testo, numeri e valori
+                booleani; inoltre Apache CouchDB\texttrademark{} permette
+                di allegare file multimediali ad ogni documento quindi nella sua
+                definizione JSON sarà presente anche un riferimento a tale allegato.
+                Questa caratteristica ci ha permesso di inserire sia l'immagine che
+                i dati di una segnalazione all'interno di un singolo documento.
+
+                Nella sua versione pura, CouchDB non permette di eseguire interrogazioni
+                spaziali basate su coordinate geografiche, per sopperire a questa
+                mancanza si è dovuto ricorrere all'utilizzo dell'apposita estensione
+                GeoCouch\footnote{La documentazione
+                è disponibile sul sito \url{https://github.com/couchbase/geocouch/}}.
+            \item[Node.js] è una piattaforma realizzata sul motore \js{} V8 di
+                Google Chrome per la realizzazione facile e veloce di
+                applicazioni di rete. La potenza di questa piattaforma è anche
+                nel fatto che è supportata da una enorme quantità di moduli
+                che permettono di realizzare con poco codice applicazioni piuttosto
+                complesse; in più, come Apache CouchDB\texttrademark{}, tutto
+                questo è open source. Node.js è stato usato per creare un
+                semplice web server che, comunicando col database Apache CouchDB\texttrademark{}
+                attraverso le proprie API HTTP, gestisse le richieste di
+                registrazione provenienti da nuovi utenti.
+        \end{description}
+
+        \noindent Apache CouchDB\texttrademark{} è stato quindi configurato per gestire e
+        memorizzare l'insieme degli utenti e delle segnalazioni.
+        Ogni documento rappresentante una segnalazione è composto dai campi:
+        \begin{description}
+            \item[Titolo] Stringa di poche parole per descrivere la segnalazione.
+                Questo valore verrà poi visualizzato nelle liste di segnalazioni
+                sul lato client.
+            \item[Descrizione] Una descrizione testuale più dettagliata sul
+                fenomeno di degrado segnalato. Questo valore verrà mostrato sul
+                lato client solo tra i dettagli di una segnalazione.
+            \item[Data] Stringa testuale che indica la data e l'ora dell'istante
+                in cui la segnalazione è stata creata dall'utente. Anche questo
+                valore sarà mostrato solo tra i dettagli.
+            \item[Coordinate] Valore composto da due campi che contengono la
+                latitudine nord e la longitudine est della posizione geografica
+                in cui l'utente di trovava quando ha creato la segnalazione. Anche
+                la posizione geografica verrà mostrata solo tra i dettagli della
+                segnalazione.
+            \item[Immagine] Una foto scattata dal dispositivo usata per
+                documentare il degrado individuato che verrà mostrata all'utente
+                solo nella schermata dei dettagli della relativa segnalazione.
+            \item[UserId] Identificatore unico relativo all'utente che ha creato
+                questa segnalazione. Questo valore è necessario visto che in
+                Apache CouchDB\texttrademark{}, non essendo un database relazionale,
+                non è possibile in alcun altro modo mettere in relazione un utente con
+                tutte le sue segnalazioni. Con questo accorgimento si sta di fatto
+                creando tale relazione in modo che, una volta scaricate le
+                informazioni su una segnalazione, sarà possibile eseguire una
+                seconda query sul database degli utenti per ottenere i valori
+                di nickname e mail dell'utente che ha creato quella segnalazione.
+            \item[Id] Questo valore è univoco ed è scelto automaticamente da
+                Apache CouchDB\texttrademark{}, nel momento del
+                salvataggio della segnalazione sul server.
+        \end{description}
+
+        \noindent Per quanto riguarda la rappresentazione di un utente bisogna approfondire
+        un po' più l'argomento. Apache CouchDB\texttrademark{} fornisce un
+        particolare database di nome \verb|_users| in cui, ogni documento
+        rappresenta un utente e deve contenere i campi \texttt{name} e \texttt{password}, i cui
+        rispettivi valori saranno poi utilizzati come credenziali di
+        autenticazione da inserire nelle richieste HTTP per consentire
+        all'utente operazioni sui DB contenuti nel server\footnote{
+        Apache CouchDB\texttrademark{} permette una gestione delle utenze molto
+        più accurata; per esempio è possibile riservare l'accesso ad un DB ad un
+        particolare gruppo di utenti.}. Oltre ai suddetti campi obbligatori è
+        possibile definirne altri pubblici, ovvero campi che al contrario di
+        \texttt{name} e \texttt{password} saranno visibili a qualsiasi altro utente.
+        Nel nostro caso abbiamo inserito solo due nuovi campi pubblici:
+        \begin{description}
+            \item[nickname] Un nome identificativo scelto dall'utente in fase di
+                registrazione e mostrato poi nei dettagli di tutte le sue segnalazioni.
+            \item[mail] Indirizzo di posta elettronica dell'utente mostrato anche questo
+                nei dettagli di tutte le sue segnalazioni.
+        \end{description}
+
+        \noindent L'aggiunta di nuovi utenti nel database \verb|_users| deve essere fatta
+        attraverso opportuni messaggi HTTP nei quali occorre essere autenticati
+        come amministratori del server\footnote{Questo particolare utente viene
+        definito in fase di configurazione del server Apache CouchDB\texttrademark{}}.
+        Nasce qui il problema di come far registrare sul server nuovi utenti
+        direttamente dal lato client dell'applicazione. Potevamo, a questo punto,
+        scegliere d'inserire nel codice del lato client le credenziali
+        d'amministratore usandole soltanto nelle richieste HTTP per la registrazione
+        di un nuovo utente. Successivamente il dispositivo mobile avrebbe continuato a
+        comunicare con il server usando le credenziali del nuovo utente. Ovviamente
+        questa soluzione avrebbe permesso a chiunque avesse accesso al codice
+        sorgente dell'applicazione di ottenere nome utente e password dell'amministratore.
+        Abbiamo quindi deciso di realizzare un semplice web server implementato
+        con Node.js che lavori a fianco di Apache CouchDB\texttrademark{}
+        (vedi fig.~\ref{fig:latoserver}) con il
+        compito: di ascoltare richieste di registrazione provenienti dal lato
+        client, di inoltrarle al DBMS aggiungendovi le credenziali di amministratore
+        e di controllare che il \texttt{nickname} scelto dall'utente non sia già
+        stato usato da un altro. Così facendo le credenziali di amministratore
+        del DBMS sono contenute all'interno del web server Node.js e non sono più
+        reperibili direttamente dal codice del lato client.
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[keepaspectratio=true, width=0.95\textwidth]{lato-server}
+            \caption{
+                Architettura del lato server dell'applicazione.
+            }
+            \label{fig:latoserver}
+        \end{figure}
+
+        Fin ora abbiamo detto che nelle varie richieste HTTP devo essere presenti
+        le credenziali di autenticazione. Apache CouchDB\texttrademark{} fornisce
+        vari meccanismi di autenticazione tra cui Basic Access Authentication\footnote{
+        Schema di autenticazione definito per HTTP nella RFC2617 consultabile al'indirizzo
+        \url{https://tools.ietf.org/html/rfc2617\#section-2}.}
+        che abbiamo scelto di utilizzare per la sua semplicità. In questo modo il
+        passaggio delle credenziali di accesso da client a server avviene attraverso
+        il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP
+        come nell'esempio
+        \begin{lstlisting}[language=http]
+    GET index.html HTTP/1.1
+    Host: www.someserver.com
+    Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
+     ...
+        \end{lstlisting}
+        dove \texttt{dXNlcm5hbWU6cGFzc3dvcmQK} è la stringa ``name:password''
+        codificata in base64\footnote{Per una completa specifica del sistema di
+        codifica/decodifica base64 consultare la RFC4648 disponibili all'indirizzo
+        \url{http://www.rfc-editor.org/pdfrfc/rfc4648.txt.pdf}}.
+        Questo tipo di autenticazione non prevede protezione per le credenziali
+        trasmesse; come visto esse vengono banalmente codificate in base64 ma non
+        criptate. Per cui l'uso di questo tipo di
+        autenticazione andrebbe fatto assieme ad un sistema di sicurezza esterno
+        come SSL\citep{Web:RFC2617}. CouchDB permette l'uso del protocollo HTTPS,
+        che però non abbiamo adottato dato che lo scopo del tirocinio non era quello di focalizzarsi
+        sulla sicurezza.
+
+
+    \section{Lato Client}
+        In questa sezione prenderemo in esame le varie funzionalità fornite
+        dall'applicazione come pretesto per mostrare come si sono
+        comportati i due framework. Non ci addentreremo
+        nei dettagli di carattere algoritmico nelle soluzioni dei vari problemi ma,
+        piuttosto, mostreremo quali strumenti ci hanno fornito \tisdk{} e \pg{}
+        per poterli risolvere.
+
+        \subsection{Struttura Grafica}
+        \label{subsec:structgraphic}
+            Descriviamo ora la struttura generale dell'applicazione dal punto
+            di vista grafico.
+            Abbiamo cercato di fornire lo stesso aspetto alle due versioni
+            dell'applicazione. E' interessante vedere come i due framework hanno risposto
+            alle nostre esigenze. Prendendo spunto da applicazioni native come
+            gmail e facebook l'idea è stata quella di avere una barra di intestazione,
+            nella parte alta dello schermo, che contenesse un pulsante in grado di
+            far apparire un menù dal quale accedere alle varie schermate dell'applicazione.
+            Viste le funzionalità richieste dall'applicazione abbiamo creato schermate
+            differenti per:
+            \begin{enumerate}
+                \item visualizzare la mappa delle segnalazioni
+                \item visualizzare la lista delle segnalazioni fatte dall'utente
+                \item visualizzare la lista delle ultime segnalazioni fatte da tutti gli utenti
+                \item comporre ed inviare la segnalazione
+                \item effettuare la registrazione e/o modificare l'indirizzo mail registrato.
+                \item visualizzare i dettagli di una segnalazione
+            \end{enumerate}
+
+            \noindent I due framework approcciano in maniera differente il concetto di schermata:
+            in \kendomob{} le schermate vanno inserite nel tag \verb|<body>| dello stesso
+            file \html{}, tramite \verb|<div>| decorati con l'attributo \verb|data-role=view|, la
+            navigazione tra di esse avviene attraverso le ancore come nelle normali
+            pagine web si naviga all'interno dello stesso documento; Titanium invece
+            permette due modi diversi di definire una schermata: la view e la window.
+            Una view deve essere necessariamente contenuta in una window; nel linguaggio
+            del web una window Titanium è paragonabile ad una pagina web, mentre le view
+            sono analoghe ai \verb|<div>|. Un'applicazione potrebbe essere costituita da un'unica
+            window con tante view (che sarebbe la stessa tecnica usata con \kendomob{})
+            dando l'effetto appunto di essere composta da schermate differenti, oppure
+            può essere composta da tante window. La differenza sta nel fatto che
+            le window hanno contesti di esecuzione diversi l'una dall'altra al contrario
+            delle view che condividono quello della window che le contiene.
+            Personalmente abbiamo scelto di implementare le schermate 1, 2, 3 come
+            view appartenenti alla stessa window e le 4, 5, 6 come window differenti,
+            questo ha facilitato la navigazione tra le varie schermate, in quanto
+            il passaggio da una view all'altra non è così semplice in \tisdk{} come
+            lo è invece in \kendomob{}.
+
+            Per la barra di intestazione ed il menù di navigazione abbiamo trovato
+            differenze sostanziali tra i due framework.\\
+            Partiamo con \kendomob{}.
+            Innanzitutto esso offre un particolare elemento grafico chiamato drawer,
+            ovvero un bottone che se premuto porta all'apertura di
+            una lista che si espande partendo dalla sinistra dello schermo e che
+            si va a sovrapporre al contenuto della schermata stessa.
+            Ogni schermata può essere suddivisa in un intestazione e un corpo,
+            con l'effetto che l'intestazione apparirà come una barra nella parte alta
+            dello schermo. Per essere più precisi la sua posizione dipende dalla
+            piattaforma: di default su iOS la posizione è in alto, mentre per Android
+            è in basso ma, attraverso opportune modifiche ai file \css{} che accompagnano
+            questo framework, abbiamo fatto in modo che la barra risultasse in alto
+            anche su Android in modo da rendere l'applicazione il più simile possibile
+            a quelle native.
+            All'interno di questa barra abbiamo inserito il widget drawer, emulando
+            così la action bar e il navigation drawer di Android e la navbar di iOS,
+            ottenendo appunto il sistema di navigazione desiderato (vedi fig.\ref{fig:kendodrawer}).
+            Avendo utilizzato interamente i widget offerti da \kendomob{}, l'aspetto
+            della barra di navigazione viene adattato alla piattaforma senza
+            dover aggiungere nessuna riga di codice.
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerClose}
+                    \caption{}
+                    \label{fig:kendoDrawerClose}
+                \end{subfigure}
+                ~
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.95\textwidth]{KendoDrawerOpen}
+                    \caption{}
+                    \label{fig:kendoDrawerOpen}
+                \end{subfigure}
+                \caption{Schermata iniziale dell'applicazione con \kendomob{}.
+                In (a) si vede la barra di intestazione con il pulsante drawer
+                per aprire il menù di navigazione, in (b) si mostra il menù aperto
+                e l'effetto che ha sulla schermata}
+                \label{fig:kendodrawer}
+            \end{figure}
+
+            \tisdk{} fornisce le API per creare direttamente la action bar nativa
+            di Android e la navbar nativa di iOS, però ancora non permette la
+            creazione del navigation drawer di Android, e dell'analogo
+            elemento su iOS. Siamo comunque riusciti a fornire l'aspetto
+            desiderato all'applicazione.
+            Con \tisdk{} infatti è possibile disegnare elementi grafici
+            personalizzati ed assegnarli particolari comportamenti
+            semplicemente attraverso l'uso di XML, TSS e \js{}. Nel framework Alloy
+            (descritto nella sezione \ref{subsub:alloy}) questi elementi sono
+            chiamati widget e possono essere creati in un progetto per poi essere
+            utilizzati anche in altri, questa caratteristica ha permesso la nascita
+            di numerosi widget creati da sviluppatori indipendenti.
+            Abbiamo così trovato in rete il widget
+            \texttt{com.drawermenu.widget}\footnote{Questo il link al codice
+            sorgente: \url{https://github.com/ricardoalcocer/alloy-widget-drawermenu/tree/master/app/widgets}}
+            contenente tutti gli elementi necessari per fornire all'applicazione
+            l'aspetto dato con \kendomob{} (vedi fig. \ref{fig:tidrawer}).
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerClose}
+                    \caption{}
+                    \label{fig:tiDrawerClose}
+                \end{subfigure}
+                ~
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.95\textwidth]{TiDrawerOpen}
+                    \caption{}
+                    \label{fig:tiDrawerOpen}
+                \end{subfigure}
+                \caption{Schermata iniziale dell'applicazione con \tisdk{}.
+                In (a) si vede la barra di intestazione con il pulsante drawer per aprire
+                il menù di navigazione, in (b) si mostra il menù aperto
+                e l'effetto che ha sulla schermata.}
+                \label{fig:tidrawer}
+            \end{figure}
+            Il widget aveva dei propri colori e icone, ma modificando i file
+            opportuni lo abbiamo adattato alle nostre esigenze.
+            Questo widget funziona sia per iOS che per Android, ma il suo aspetto
+            non si adatta automaticamente alla piattaforma, teoricamente è possibile
+            modificarlo per aggiungervi anche questa funzionalità, avendo però
+            la possibilità di testare l'applicazione solo su dispositivi Android
+            non ci siamo addentrati in tale modifica.
+
+
+        \subsection{Struttura del Progetto}
+            Parliamo ora della struttura del progetto, partendo da \pg{} e mostrando
+            come avviene l'integrazione con \kendomob{}, proseguendo poi con
+            la struttura usata in \tisdk{}.
+
+            Inizialmente avevamo deciso di sfruttare il servizio \pgb{},
+            ma questo si è rivelato veramente lento: per testare l'applicazione
+            dovevamo creare un pacchetto .zip da inviare al servizio, limitati
+            anche dalla lentezza della rete della nostra abitazione questa operazione
+            portava via un tempo eccessivo, inoltre era molto lento anche
+            lo stesso processo di compilazione, senza contare che continuamente
+            c'erano malfunzionamenti nel servizio e dovevamo attenderne il ripristino.
+            Abbiamo così deciso di affidarci al CLI per creare, compilare ed
+            installare l'applicazione, nonché per l'aggiunta dei plugin. La
+            conseguenza è stata la necessità di configurare l'SDK nativo di Android
+            sulla macchina usata per lo sviluppo dell'applicazione.
+            La creazione del progetto tramite CLI ha portato alla creazione
+            delle cartelle: \texttt{platforms}, \texttt{merges}, \texttt{plugins}, \texttt{www}.
+            Senza addentrarci troppo nel contenuto delle cartelle è importante
+            comunque evidenziare lo scopo della cartella \texttt{www} e di quella merges,
+            che di fatto sono quelle che contengono i file da modificare per
+            realizzare l'applicazione.
+            La cartella \texttt{www} contiene tutti i file \html{}, \css{}, \js{} e le immagini
+            che compongono l'applicazione oltre al file \texttt{config.xml} che contiene
+            i metadati dell'app come la versione o il nome.
+            Per dare più ordine in presenza di molti
+            file questi possono essere suddivisi in ulteriori sottocartelle a
+            discrezione del programmatore, personalmente abbiamo creato una sottocartella
+            per i file \css{},
+            una per quelli \js{} creati da noi, una per quelli \js{} di \kendomob{} e
+            una per le immagini.
+            Sulle immagini usate come icone e come schermate di apertura\footnote{
+            Per schermata di apertura si intende un'immagine che compare per qualche
+            secondo durante l'avvio dell'applicazione in attesa che vengano eseguite
+            le operazioni di inizializzazione della stessa} va fatto
+            un discorso a parte. Come noto esistendo
+            dispositivi con dimensioni dello schermo e risoluzioni differenti
+            è necessario utilizzare immagini di dimensioni diverse a seconda
+            del dispositivo, \pg{} permette di facilitare tutto ciò fornendo
+            opportune cartelle per ogni categoria di dispositivi disponibili sul
+            mercato, è quindi sufficiente creare tali immagini con lo stesso nome
+            ed inserirle nelle cartelle opportune sarà poi il framework a caricare
+            quella adatta alla risoluzione dello schermo del dispositivo.
+            La cartella \texttt{merges} serve per personalizzare il codice su piattaforme
+            diverse, essa contiene una sottocartella per ogni piattaforma di destinazione
+            (es. una per Android, una per iOS e una per Windows Phone)
+            al cui interno è replicata la cartella \texttt{www} descritta precedentemente,
+            se si vuole utilizzare del codice diverso a seconda della piattaforma
+            basta modificare i file nelle rispettive cartelle \texttt{www}.
+
+            L'integrazione con \kendomob{} è semplicissima, dopo aver inserito
+            i file \js{} e \css{} dentro le opportune cartelle è stato sufficiente
+            caricarli dentro al file \texttt{index.html} per mezzo dei tag
+            \texttt{<script>} e \texttt{<link>}.
+            Nel paragrafo \ref{subsec:kendo} abbiamo accennato al fatto di poter
+            utilizzare il paradigma MVVM su alcuni elementi grafici forniti dal
+            framework, ma al momento dell'inizio della scrittura dell'applicazione
+            non tutti i widget erano supportati da MVVM e quindi abbiamo preferito
+            non usarlo, di conseguenza la logica dell'applicazione è stata gestita
+            interamente in un unico file \js{}. Inoltre come detto più volte
+            tutte le schermate e gli elementi all'interno di esse sono state
+            definite in un unico file \html{} (vedi fig. \ref{fig:degradoAmbientaleTree}).
+            \begin{figure}[h]
+                \centering
+                \includegraphics[keepaspectratio=true, width=0.95\textwidth]{degradoAmbientaleTree}
+                \caption{
+                La figura mostra la gerarchia delle cartelle e dei file che
+                compongono l'applicazione realizzata con \pg{} e \kendomob{}.
+                }
+                \label{fig:degradoAmbientaleTree}
+            \end{figure}
+
+            Lo sviluppo dell'applicazione con \tisdk{} è stato fatto sfruttando
+            l'IDE Titanium Studio, con esso è stato possibile creare direttamente
+            un'applicazione Alloy (vedi sezione \ref{subsub:alloy}) strutturandola
+            così secondo il paradigma MVC.
+            Questo processo genera numerose cartelle e file (vedi fig. \ref{fig:degradoTiTree}),
+            ma come per \pg{} ci concentreremo soltanto sulla descrizione di quelle/i veramente importanti.
+            La cartella principale del progetto contiene: il file \texttt{tiapp.xml}, che
+            analogamente al file \texttt{config.xml} di \pg{} specifica i metadati, e
+            la cartella \texttt{app} che contiene il resto dell'applicazione.
+            Quest'ultima in particolare contiene le cartelle:
+            \begin{description}
+                \item[assets] contiene le immagini usate nell'applicazione, le
+                              icone e la schermata di apertura e come per \pg{}
+                              sono presenti sottocartelle per inserirvi le stesse
+                              immagini in dimensioni diverse a seconda del dispositivo;
+                \item[widgets] contiene tutti i file necessari per utilizzare widget esterni
+                               come quello usato per la barra di navigazione ed il menù descritti
+                               nel paragrafo \ref{subsec:structgraphic};
+                \item[lib] qui dentro vanno inseriti i file javaScript che definiscono
+                           moduli CommonJS\footnote{http://www.commonjs.org/}. Nel
+                           nostro caso è servito per creare una libreria per fornire
+                           le API di comunicazione verso il lato server (vedi \ref{subsec:comlatoserver});
+                \item[controllers, views, styles] contengono rispettivamente file
+                            \js{}, XML e TSS per ogni schermata dell'applicazione.
+                            In Alloy il componente \texttt{view} rappresenta l'interfaccia
+                            dell'applicazione e comprende un file XML e uno TSS.
+                            Il primo definisce la struttura della schermata, mentre il
+                            secondo contiene gli stili da applicare ai vari elementi
+                            che essa contiene, la relazione tra XML e tss è la stessa
+                            che si ha tra HTML e CSS.
+                            Il file dentro \texttt{controllers} esegue chiamate dirette
+                            alle API di \tisdk{} per manipolare gli oggetti grafici
+                            ed eseguire la logica dell'applicazione.
+            \end{description}
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[keepaspectratio=true, width=0.80\textwidth]{degradoTiTree}
+                \caption{
+                La figura mostra la gerarchia delle cartelle e dei file che
+                compongono l'applicazione realizzata con \tisdk{}
+                }
+                \label{fig:degradoTiTree}
+            \end{figure}
+
+            \noindent Per strutturare realmente l'applicazione secondo il paradigma MVC
+            ci sarebbe stato bisogno di usare un'altra cartella di nome \texttt{models}
+            nella quale inserire i file \js{} per i modelli, però la documentazione
+            di \tisdk{} non è molto chiara su come utilizzarli, per cui
+            abbiamo gestito i dati completamente nel controllore.
+            \noindent La cartella \texttt{app} contiene anche il file \texttt{alloy.js}, un particolare file
+            \js{} il cui codice viene eseguito prima di quello del controllore
+            di qualsiasi schermata, rendendolo così un ottimo posto dove fare
+            varie inizializzazioni dell'applicazione. Nel nostro progetto è
+            stato usato ad esempio per caricare il modulo per la mappa.
+
+        \subsection{Comunicare con il lato server}
+        \label{subsec:comlatoserver}
+            Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
+            come abbiamo già detto, è \js{} e per questo motivo c'è stato il bisogno
+            di realizzare una libreria fatta su misura che ci permettesse di generare
+            i giusti messaggi HTTP da inviare al server. Ora, \tisdk{} ha la propria
+            libreria \texttt{Titanium.Network} che permette di istanziare un
+            particolare oggetto \texttt{Titanium.Network.HTTPClient} con il
+            quale è possibile comporre ogni genere di richiesta HTTP. \pg{}
+            invece non fornisce nulla di tutto ciò e quindi abbiamo dovuto far
+            ricorso alle funzionalità AJAX di \jq{} fornito dal framework
+            \kendomob{}\footnote{Ricordiamo che \kendomob{} è basato proprio su
+            \jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
+            questi fatti è stata definita un'unica interfaccia di funzioni \js{}
+            e ne sono state realizzate due diverse implementazioni: una
+            fruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
+            sulla funzione \verb|$.ajax(...)| di \jq{}\footnote{Maggiori
+            dettagli sull'uso di HTTPClinet e \texttt{\$.ajax(...)} sono
+            disponibili nelle rispettive documentazioni online:\\
+            \url{http://docs.appcelerator.com/titanium/latest/\#!/api/Titanium.Network.HTTPClient}
+            e\\ \url{http://api.jquery.com/jQuery.ajax/}.}.
+            È importante far notare
+            che, sia HTTPClient che \verb|$.ajax(...)| implementano un sistema
+            di comunicazione asincrono, ciò significa che una volta inviate le
+            richieste HTTP, il programma continuerà ad essere eseguito in attesa
+            che dal server tornino le relative risposte; a questo punto verrà
+            eseguito l'opportuno codice che gestirà tale evento.
+
+
+        \subsection{Registrazione al primo avvio}
+        \label{subsec:registrazione}
+            Come avevamo già anticipato, la prima cosa di cui deve occuparsi
+            il client al suo primo avvio è quella di registrare un nuovo utente. Per
+            poter distinguere ogni volta se l'applicazione è stata avviata
+            per la prima volta o meno c'è la
+            necessità di avere qualche informazione in grado di permanere una volta
+            che l'applicazione è stata chiusa.
+
+            \pg{}, tramite il plugin
+            \texttt{FileSystem}, offre la possibilità di accedere al file system
+            del dispositivo così da poter creare ed eliminare file; in questa
+            situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
+            di \html{}5. In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
+            è possibile memorizzare, in maniera permanente tra varie sessioni, coppie
+            chiave - valore di tipo \texttt{String - String}. Per esempio con il
+            codice
+            \begin{lstlisting}
+    localStorage.setItem("name", "goofy");
+    var n = localStorage.getItem("name");
+    localStorage.removeItem("name");
+            \end{lstlisting}
+            si memorizza la coppia ``name'' - ``goofy'', si recupera la stringa associata
+            alla chiave ``name'' e si elimina tale coppia definitivamente.
+
+            La stessa funzionalità è presente anche in \tisdk{} offerta dal suo
+            modulo \texttt{Titanium.App.Properties} che però, a differenza di
+            quella standard di \html{}5, permette di memorizzare tutti i tipi di
+            dato di \js{} tranne che funzioni. Facendo riferimento all'esempio
+            precedente, la stessa cosa è realizzabile con \tisdk mediante il
+            codice
+            \begin{lstlisting}
+    Titanium.App.Properties.setString("name", "goofy");
+    var n = Titanium.App.Properties.getString("name");
+    Titanium.App.Properties.removeProperty("name");
+            \end{lstlisting}
+
+            La differenza sostanziale tra i due sistemi di memorizzazione risiede
+            nella quantità di dati che possono essere salvati.
+            Le specifiche di \html{}5 suggeriscono un limite di 5MB, ma la dimensione
+            può variare tra le varie piattaforme; mentre come afferma la documentazione
+            di \tisdk{} non c'è un limite specifico alla quantità di dati memorizzabili
+            in Properties, bisogna però notare che questi dati sono caricati in
+            memoria principale quando
+            viene lanciata l'applicazione, e vi rimangono fino alla sua chiusura.
+            Questo permette un rapido accesso ai dati, ma al costo di un aumento
+            della memoria usata dall'applicazione.
+
+            Dal punto di vista dello sviluppo cross platform \tisdk{} assicura il funzionamento
+            del sistema di memorizzazione descritto, direttamente senza dover riadattare il codice,
+            su tutte le piattaforme supportate. Anche il local storage
+            di \html{}5 può essere usato per memorizzare dati su piattaforme diverse
+            usando lo stesso codice, ma il fatto di incorrere in diversi limiti di quota,
+            a seconda del sistema operativo, rende necessario un controllo più
+            accurato. Inoltre con \pg{} bisogna tenere conto che la web view di
+            alcune piattaforme potrebbe non supportare il local storage di \html{}5
+            (attualmente i principali OS Android, Windows Phone 8 e iOS lo fanno).
+
+            Come descritto più volte, la registrazione doveva avvenire utilizzando
+            come credenziali il codice IMEI del dispositivo oppure il numero di telefono.
+            Nè con \pg{} nè con \tisdk{} questo è stato possibile. Nativamente
+            Android permette di accedere al codice IMEI, mentre iOS no; è stato
+            comunque possibile ottenere un identificatore con entrambi i
+            framework. \pg{} tramite il plugin \texttt{device} permette di accedere
+            ad alcune informazioni sul dispositivo come lo UUID, allo stesso
+            modo \tisdk{} fornisce una funzione per ottenere lo stesso UUID.
+            Dobbiamo però fare una distinzione particolare sul valore di questo
+            UUID tra Android e iOS.
+            Le documentazioni di entrambi i framework affermano che date le limitazioni
+            imposte da iOS non è possibile ottenere un valore in grado di identificare
+            univocamente il dispositivo\footnote{Approfondimenti sulle limitazioni
+            imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}}.
+            Pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma
+            un valore che identifica l'applicazione che però potrebbe essere diverso
+            dopo una reinstallazione o dopo
+            un aggiornamento della stessa o addirittura del sistema operativo.
+            Su Android invece UUID
+            identifica proprio il dispositivo. La conseguenza di tutto ciò è che
+            UUID non è affidabile per iOS e quindi sarebbe stato necessario utilizzare
+            un meccanismo di registrazione basato su credenziali differenti;
+            dato che però come detto l'applicazione è stata sviluppata solo per Android
+            abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo
+            continuato ad usare UUID.
+
+
+        \subsection{La mappa delle segnalazioni}
+            Arricchire la propria applicazione Titanium o \pg{} con una mappa
+            non è un problema. Google fornisce un ricco insieme di API \js{} per
+            l'utilizzo delle proprie mappe che quindi possiamo utilizzare nella
+            web view di \pg{}. \tisdk, invece, inizialmente forniva l'oggetto
+            \texttt{Titanium.Map} che permetteva di utilizzare le mappe su tutte
+            le sue piattaforme supportate ma, dalla versione 3.2.0 dell'SDK, l'uso
+            di queste API per Andorid e iOS è stato deprecato; ora, al suo posto,
+            Titanium fornisce un implementazione più aggiornata con il modulo
+            gratuito \texttt{ti.map}.
+
+            Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
+            come mostrato nel segmento di codice seguente
+            \begin{lstlisting}
+    <div data-role="view" data-title="Degrado Ambientale"
+      id="map-view" data-layout="default"
+      data-stretch="true" data-init="app.initMap"
+      data-show="app.viewMapShow"
+    >
+        <div id="map" style="width:100%;"></div>
+    </div>
+            \end{lstlisting}
+            sfruttando il framework \kendomob{}, abbiamo definito una specifica
+            view con all'interno un particolare elemento \texttt{div}; in fase di
+            avvio dell'applicazione, tramite \js{}, abbiamo configurato e
+            successivamente inizializzato la mappa su quel \texttt{div} (come
+            mostrato nel frammento di codice \ref{cod:initmapPG}) così
+            da renderla visibile all'utente all'interno di quella view come
+            mostrato nella figura \ref{fig:mapPG}.
+            \begin{lstlisting}[
+                caption={
+                    L'elemento \texttt{div} è stato selezionato mediante una
+                    query \jq{} e su quello si è istanziata la mappa tramite
+                    le API offerte da Google.
+                },
+                label={cod:initmapPG}
+            ]
+    /** elemento 'div' nel DOM che conterra' la mappa */
+    var mapElement = $("#map")[0];
+
+    /** configurazione della mappa */
+    var mapOptions = {
+        center: new google.maps.LatLng(43.720741,10.408413),
+        zoom: 10
+    };
+
+    /** istanzia la mappa */
+    app.map = new google.maps.Map(mapElement, mapOptions);
+            \end{lstlisting}
+            La mappa così implementata possiede tutte le caratteristiche offerte
+            dalle mappe Google, in particolare, la possibilità di ottenere le
+            coordinate dei punti in basso a sinistra e in alto a destra che
+            delimitano l'area rettangolare mostrata e, la possibilità di
+            disegnare dei segnaposto cliccabili con icone personalizzabili.
+            Sfruttando queste funzionalità, una volta ottenute dal database
+            tutte le segnalazioni riguardanti l'area attualmente visualizzata, è
+            stato sufficiente creare un vettore di \texttt{google.maps.Marker} e
+            passarlo alla mappa per veder apparire tutte le segnalazioni sopra
+            di essa. Un problema che però ci siamo trovati ad affrontare è stato
+            il fatto che lo spostare la mappa verso destra entrava in conflitto
+            con il gesto di swipe per l'apertura del menù. \kendomob{} non
+            fornendo la possibilità di configurare la sensibilità dello swipe ci
+            ha costretti a dover rinunciare all'uso di tale gesto per l'apertura
+            e chiusura del drawer. Un altro appunto che dobbiamo fare riguarda
+            le prestazioni: rispetto alle mappe che si possono trovare in
+            applicazioni native, questa risulta essere molto meno fluida durante
+            il suo trascinamento e durante il cambio del livello di zoom.
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{mapPG}
+                    \caption{}
+                    \label{fig:mapPG}
+                \end{subfigure}
+                ~
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{mapPGMark}
+                    \caption{}
+                    \label{fig:mapPGMark}
+                \end{subfigure}
+                \caption{
+                    Mappe ottenute mediante le API Google all'interno di
+                    view \kendomob{}. In (a) una normale mappa, in
+                    (b) una mappa con l'aggiunta di alcuni
+                    segnaposto personalizzati.
+                }
+                \label{fig:PGMaps}
+            \end{figure}
+
+            Anche per quanto riguarda l'uso delle mappe in progetti Titanium
+            non comporta grandi difficoltà, in più il paradigma MVC
+            offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
+            una view con al suo interno la mappa bisogna prima caricare il modulo
+            relativo, questo lo si fa tipicamente all'interno del file
+            \texttt{app/alloy.js} così che il caricamento del modulo venga
+            eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
+            comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
+            in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
+            \begin{lstlisting}[
+                caption={Caricamento del modulo \texttt{ti.map} creando un riferimento
+                        globale nel file \texttt{alloy.js}.},
+                label=cod:alloyglob
+            ]
+    // caricamento modulo mappa
+    Alloy.Globals.Map = require('ti.map');
+            \end{lstlisting}
+            Fatto questo abbiamo definito la view in un file XML dedicato, vi abbiamo richiamato
+            il modulo per la mappa (vedi codice \ref{cod:alloymapview}) e, in un secondo file \js{} specifico per
+            l'implementazione del controllore, sono stati definiti tutti i
+            gestori per gli eventi (per noi interessanti da gestire) che la
+            mappa potrà scatenare durante l'interazione con l'utente (vedi codice \ref{cod:alloymapcontroller}).
+            \begin{lstlisting}[
+                caption={Contenuto del file \texttt{map.xml} che definisce la
+                view contenente la mappa.},
+                label=cod:alloymapview
+            ]
+    <Alloy>
+        <View
+            id="map" ns="Alloy.Globals.Map" regionFit="true"
+            onClick="markerClick"
+            onRegionchanged="moved"
+            onComplete="mapCompleted"/>
+    </Alloy>
+            \end{lstlisting}
+            \begin{lstlisting}[
+                caption={Parte del file \texttt{map.js}, controllore per la mappa, con le definizioni dei gestori per
+                gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
+                label=cod:alloymapcontroller
+            ]
+    [...]
+    /**
+     * Handler del click su un segnaposto della mappa.
+     * @param {ModulesMapViewEvent} evt evento passato allo
+     *   handler al momento della chiamata.
+     */
+    function markerClick(evt) { ... }
+
+    /**
+     * handler dell'evento associato allo spostamento e
+     * ridimensionamento della mappa.
+     * @param {ModulesMapViewEvent} evt evento passato allo
+     *   handler al momento della chiamata.
+     */
+    function moved(evt) { ... }
+
+    /**
+     * Handler dell'evento onComplete scatenato appena la mappa
+     * e' pronta.
+     *
+     * Recupera la posizione corrente e una volta ottenuta
+     * inizializza la mappa con quella posizione.
+     *
+     * @param {ModulesMapViewEvent} evt
+     */
+    function mapCompleted(evt){ ... }
+
+            \end{lstlisting}
+            Come visto nel caso dell'applicazione \pg{} è possibile, anche qui,
+            disegnare segnaposto sulla mappa e reperire le informazioni
+            necessarie alla composizione delle query spaziali per scaricare le
+            segnalazioni da mostrare (vedi fig. \ref{fig:TiMaps}). Il modulo
+            \texttt{ti.map} fornisce sostanzialmente un'interfaccia che permette
+            tramite \js{} l'uso delle rispettive mappe native per le piattaforme
+            iOS e Android. Le mappe risultati sono notevolmente più performanti
+            rispetto a quelle descritte precedentemente fornendo un esperienza
+            utente molto più gradevole.
+
+            Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
+            applicazioni \pg{} non dà nessun problema non essendo necessario
+            interagire con funzionalità del dispositivo; una volta scritto,
+            tutto il codice sarà utilizzabile su tutte le piattaforme per le
+            quali si sta sviluppando l'applicazione. Inoltre non si è
+            costretti ad utilizzare soltanto il servizio mappe di Google, online
+            sono disponibili altre API \js{} open source come Leaflet oppure
+            di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
+            (di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
+            delicato: per supportare sia la piattaforma Android che iOS sono
+            sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
+            Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
+            \texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
+            di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
+            \js{}/\html{} che utilizza le API online del nostro fornitore di
+            mappe preferito, può essere caricato in un'opportuna web view,
+            quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
+            supportano tutte le piattaforme senza alcuna differenza.
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{tiMap}
+                    \caption{}
+                    \label{fig:tiMap}
+                \end{subfigure}
+                ~
+                \begin{subfigure}[b]{0.485\textwidth}
+                    \includegraphics[keepaspectratio=true, width=\textwidth]{tiMapMark}
+                    \caption{}
+                    \label{fig:tiMapMark}
+                \end{subfigure}
+                \caption{
+                    Mappe ottenuto con il modulo \texttt{ti.map} su Android: (a)
+                    una normale mappa; (b) esempio di segnaposto personalizzati
+                    disegnati sulla mappa.
+                }
+                \label{fig:TiMaps}
+            \end{figure}
+
+        \subsection{Creare una nuova segnalazione}
+        \label{subsec:nuova}
+            Creare una segnalazione sembra una cosa semplice ma per
+            comporne una c'è bisogno di una sostanziale interazione con il
+            dispositivo. Quello che andremo a descrivere ed a valutare sarà
+            come \pg{} e \tisdk{} si sono comportati quando abbiamo avuto
+            bisogno di:
+            \begin{itemize}
+                \item ottenere l'input testuale immesso dall'utente;
+                \item interagire con la fotocamera del dispositivo per ottenere
+                    una foto del degrado da allegare;
+                \item interagire con il servizio di geolocalizzazione per
+                    recuperare la posizione attuale del dispositivo.
+                \item inviare la nuova segnalazione sul server.
+            \end{itemize}
+
+            \noindent Sul rilevare l'input immesso dall'utente non ci sono molte
+            considerazioni da fare: sia \tisdk{} che
+            \kendomob{}\footnote{Rilevare input testuale non compete \pg{}, non
+            è un interazione con funzionalità del dispositivo; riguarda invece
+            funzionalità dei widget di cui è comporta l'interfaccia grafica.}
+            mettono a disposizione i propri widget di ``input'' per i quali sono
+            definiti gli opportuni metodi per ottenere il valore immesso
+            dall'utente. Su \kendomob{} la schermata che raccoglie l'input è
             stata realizzata in una nuova view mentre con \tisdk{} la si è
             implementata con una window. La figura \ref{fig:inputs} mostra la
             schermata di input per i due framework.
@@ -861,101 +861,101 @@
                 dell'applicazione realizzata con \tisdk{}.}
               \label{fig:inputs}
             \end{figure}
-			
-			Accedere alla fotocamera per scattare ed acquisire una foto non è un 
-			compito banale; \pg{} lo rende possibile attraverso le API del
-			proprio plugin \texttt{Camera}. Tramite la funzione
-			\texttt{getPicture} viene avviata l'applicazione nativa della
-			fotocamera dove l'utente, una volta scattata la foto ha la
-			possibilità di accettarla o di rifiutarla. Le azioni da
-			intraprendere nei due casi sono specificate in due rispettive
-			funzioni \js{} che vengono passate come parametri al momento della
-			chiamata di	\texttt{getPicture}. Questa funzione accetta anche
-			anche terzo parametro che specifica un certo numero di opzioni
-			permettendo di modificare la foto acquisita; in particolare è
-			possibile ridimensionare l'immagine, specificare la qualità della
-			compressione JPEG utilizzata e indicare il formato dei dati
-			restituiti dalla chiamata. \tisdk{} offre la stessa funzionalità di
-			acquisire foto tramite la funzione \texttt{showCamera} dello spazio
-			dei nomi \texttt{Titanium.Media}. La differenza con \pg{} è che i
-			dati dell'immagine vengono restituiti solo in formato binario
-			tramite un oggetto \js{} \texttt{Blob} così come vendono acquisiti;
-			per modificare l'immagine si deve ricorrere ad altre funzionalità
-			magari offerte anche da qualche modulo aggiuntivo\footnote{Appcelerator
-			fornisce il modulo gratuito \texttt{ti.imagefactory} però
-			disponibile solo per Android e iOS}.
-			
-			Recuperate le informazioni inserite dall'utente ed acquisita la
-			fotografia c'è bisogno di recuperare le coordinate geografiche della
-			posizione attuale. \pg{} consente di accedere al servizio di
-			geolocalizzazione del dispositivo attraverso il plugin
-			\texttt{Geolocation} che permette sia di monitorare in maniera
-			continuativa la posizione, sia di inviare una sola richiesta per la
-			posizione corrente. In entrambi i casi si possono passare dei
-			parametri di opzione alle rispettive funzioni, per esempio, per
-			ottenere la posizione esatta mediante il ricevitore GPS oppure,
-			quella meno accurata, mediante il sistema si approssimazione che
-			impiega le informazioni sulle reti WiFi presenti nella zone e la
-			cella telefonica alla quale si è agganciati per stimare la
-			posizione. In \tisdk{} si accede al sistema di
-			geolocalizzazione attraverso le API del gruppo
-			\texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
-			metodi per la richiesta (continua o meno) della posizione corrente,
-			offrono anche il servizio di geocoding che da la possibilità di
-			trasformare la posizione data in coordinate geografiche in un
-			normale indirizzo postale. L'uso dei metodi per ottenere i dati
-			sulla posizione è lo stesso per tutte le piattaforme che si possono
-			supportare ma troviamo delle differenze sostanziali per quanto
-			riguarda la configurazione del servizio, questo perché le diverse
-			piattaforme ne danno una differente implementazione.
-			
-			Una volta raccolte tutte le informazione siamo pronti per inviare
-			al server la nuova segnalazione tramite le nostre API. Se stiamo
-			sviluppando per Android, \tisdk{} ci permette di farlo in un modo
-			più elegante fornendo la possibilità di avviare sevizi in
-			background: in questo modo, mentre la segnalazione viene inviata al
-			server, l'applicazione può continuare ad essere utilizzata e la
-			conclusione dell'operazione	può essere mostrata all'utente mediante
-			notifica nell'apposita barra. Tutto questo non è realizzabile sulle
-			altre piattaforme e nemmeno con \pg{} si è in grado di farlo.
-			
-			Concludiamo facendo notare che al momento della realizzazione della
-			nostra applicazione \pg{} ha mostrato qualche problema con
-			l'attivazione del GPS: se si tentava di ottenere la posizione
-			accurata, il GPS veniva attivato correttamente e disattivato una
-			volta ottenuta la posizione ma, da quel momento in poi, il servizio
-			veniva riavviato in modo casuale anche se l'applicazione era già
-			stata terminata. Un altro dettaglio degno di nota è il comportamento
-			del metodo \texttt{getCurrentPosition} di \tisdk{}: questo
-			restituisce la posizione corrente ma, su Android, non attiva mai il
-			ricevitore GPS e preleva le informazioni dalla cache del
-			dispositivo; su iOS invece il GPS può essere attivato se il sistema
-			valuta le informazioni in cache ``troppo vecchie'' e non più
-			attendibili.
-			
-		\subsection{Lista proprie segnalazioni}
-		\label{subsec:proprie}
-			Questa schermata mostra una lista di titoli delle segnalazioni fatte
-			dal proprio dispositivo (non contiene quindi quelle effettuate da altri 
-			utenti), in modo da poter accedere velocemente ad esse 
-			senza dover necessariamente andarle a cercare sulla mappa.
-			Gli elementi della lista sono cliccabili e premere su uno di questi 
-			elementi porta all'apertura del dettaglio della corrispondente 
-			segnalazione (vedi \ref{subsec:dettagli}).
-			
-			Qui non c'è interazione con gli strumenti offerti dal dispositivo
-			tranne che per il caching descritto nella sezione \ref{subsec:caching}
-			implementato per permettere un uso dell'applicazione 
-			anche in assenza di connessione alla rete Internet, 
-			quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
+
+            Accedere alla fotocamera per scattare ed acquisire una foto non è un
+            compito banale; \pg{} lo rende possibile attraverso le API del
+            proprio plugin \texttt{Camera}. Tramite la funzione
+            \texttt{getPicture} viene avviata l'applicazione nativa della
+            fotocamera dove l'utente, una volta scattata la foto ha la
+            possibilità di accettarla o di rifiutarla. Le azioni da
+            intraprendere nei due casi sono specificate in due rispettive
+            funzioni \js{} che vengono passate come parametri al momento della
+            chiamata di \texttt{getPicture}. Questa funzione accetta anche
+            anche terzo parametro che specifica un certo numero di opzioni
+            permettendo di modificare la foto acquisita; in particolare è
+            possibile ridimensionare l'immagine, specificare la qualità della
+            compressione JPEG utilizzata e indicare il formato dei dati
+            restituiti dalla chiamata. \tisdk{} offre la stessa funzionalità di
+            acquisire foto tramite la funzione \texttt{showCamera} dello spazio
+            dei nomi \texttt{Titanium.Media}. La differenza con \pg{} è che i
+            dati dell'immagine vengono restituiti solo in formato binario
+            tramite un oggetto \js{} \texttt{Blob} così come vendono acquisiti;
+            per modificare l'immagine si deve ricorrere ad altre funzionalità
+            magari offerte anche da qualche modulo aggiuntivo\footnote{Appcelerator
+            fornisce il modulo gratuito \texttt{ti.imagefactory} però
+            disponibile solo per Android e iOS}.
+
+            Recuperate le informazioni inserite dall'utente ed acquisita la
+            fotografia c'è bisogno di recuperare le coordinate geografiche della
+            posizione attuale. \pg{} consente di accedere al servizio di
+            geolocalizzazione del dispositivo attraverso il plugin
+            \texttt{Geolocation} che permette sia di monitorare in maniera
+            continuativa la posizione, sia di inviare una sola richiesta per la
+            posizione corrente. In entrambi i casi si possono passare dei
+            parametri di opzione alle rispettive funzioni, per esempio, per
+            ottenere la posizione esatta mediante il ricevitore GPS oppure,
+            quella meno accurata, mediante il sistema si approssimazione che
+            impiega le informazioni sulle reti WiFi presenti nella zone e la
+            cella telefonica alla quale si è agganciati per stimare la
+            posizione. In \tisdk{} si accede al sistema di
+            geolocalizzazione attraverso le API del gruppo
+            \texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
+            metodi per la richiesta (continua o meno) della posizione corrente,
+            offrono anche il servizio di geocoding che da la possibilità di
+            trasformare la posizione data in coordinate geografiche in un
+            normale indirizzo postale. L'uso dei metodi per ottenere i dati
+            sulla posizione è lo stesso per tutte le piattaforme che si possono
+            supportare ma troviamo delle differenze sostanziali per quanto
+            riguarda la configurazione del servizio, questo perché le diverse
+            piattaforme ne danno una differente implementazione.
+
+            Una volta raccolte tutte le informazione siamo pronti per inviare
+            al server la nuova segnalazione tramite le nostre API. Se stiamo
+            sviluppando per Android, \tisdk{} ci permette di farlo in un modo
+            più elegante fornendo la possibilità di avviare sevizi in
+            background: in questo modo, mentre la segnalazione viene inviata al
+            server, l'applicazione può continuare ad essere utilizzata e la
+            conclusione dell'operazione può essere mostrata all'utente mediante
+            notifica nell'apposita barra. Tutto questo non è realizzabile sulle
+            altre piattaforme e nemmeno con \pg{} si è in grado di farlo.
+
+            Concludiamo facendo notare che al momento della realizzazione della
+            nostra applicazione \pg{} ha mostrato qualche problema con
+            l'attivazione del GPS: se si tentava di ottenere la posizione
+            accurata, il GPS veniva attivato correttamente e disattivato una
+            volta ottenuta la posizione ma, da quel momento in poi, il servizio
+            veniva riavviato in modo casuale anche se l'applicazione era già
+            stata terminata. Un altro dettaglio degno di nota è il comportamento
+            del metodo \texttt{getCurrentPosition} di \tisdk{}: questo
+            restituisce la posizione corrente ma, su Android, non attiva mai il
+            ricevitore GPS e preleva le informazioni dalla cache del
+            dispositivo; su iOS invece il GPS può essere attivato se il sistema
+            valuta le informazioni in cache ``troppo vecchie'' e non più
+            attendibili.
+
+        \subsection{Lista proprie segnalazioni}
+        \label{subsec:proprie}
+            Questa schermata mostra una lista di titoli delle segnalazioni fatte
+            dal proprio dispositivo (non contiene quindi quelle effettuate da altri
+            utenti), in modo da poter accedere velocemente ad esse
+            senza dover necessariamente andarle a cercare sulla mappa.
+            Gli elementi della lista sono cliccabili e premere su uno di questi
+            elementi porta all'apertura del dettaglio della corrispondente
+            segnalazione (vedi \ref{subsec:dettagli}).
+
+            Qui non c'è interazione con gli strumenti offerti dal dispositivo
+            tranne che per il caching descritto nella sezione \ref{subsec:caching}
+            implementato per permettere un uso dell'applicazione
+            anche in assenza di connessione alla rete Internet,
+            quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
             state utilizzate le API di \pg{} bensì sono stati sfruttati gli
             strumenti offerti da \kendomob{}.
-			
-			Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
-			che permette di presentare informazioni, in una schermata scorrevole 
-			verticalmente, organizzandole in sezioni ed elementi (vedi fig. \ref{fig:mieTiPg}).
-			
-			\begin{figure}[H]
+
+            Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
+            che permette di presentare informazioni, in una schermata scorrevole
+            verticalmente, organizzandole in sezioni ed elementi (vedi fig. \ref{fig:mieTiPg}).
+
+            \begin{figure}[H]
               \centering
               \begin{subfigure}[b]{0.485\textwidth}
                 \includegraphics[keepaspectratio=true,width=\textwidth]{listaMiePg}
@@ -966,53 +966,53 @@
                 \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieTi}
                 \caption{}
               \end{subfigure}
-              \caption{Lista delle  proprie segnalazioni: 
-                (a) interfaccia grafica realizzata con \kendomob{}; 
+              \caption{Lista delle  proprie segnalazioni:
+                (a) interfaccia grafica realizzata con \kendomob{};
                 (b) interfaccia grafica realizzata con \tisdk{}.
-  				}
+                }
               \label{fig:mieTiPg}
             \end{figure}
 
-			\noindent Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
-			siamo in grado di ottenere un vettore contenente le segnalazioni in formato JSON che 
-			rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo. 
-			Ovviamente dato che nella lista non ci interessa mostrare l'immagine della segnalazione
-			questa non viene scaricata velocizzando così il 
-			trasferimento dei dati, bisogna però notare che, anche se la lista 
-			ne mostrerà soltanto il titolo, le segnalazioni scaricate contengono 
-			anche altri campi come il loro identificatore e quello dell'utente 
-			che le ha inviate, queste ultime informazioni sono necessarie per 
-			poter poi visualizzare la segnalazione nel dettaglio.
-			
-			Una volta scaricati i dati c'è appunto il problema di come inserirli 
-			nella lista, e il problema di far visualizzare solo il titolo 
-			"scartando" le altre informazioni.
-			\kendomob{} offre una pratica funzione \js{} tramite la quale è 
-			possibile definire il comportamento dell'applicazione in seguito 
-			alla pressione di un elemento della lista e di specificare quali 
-			campi mostrare degli oggetti inseriti in essa. Il vettore contentente le segnalazioni
-			poi può essere passato direttamente ad un'altra funzione,
-			sempre offerta dal framework, che si occuperà di inserire effettivamente 
-			gli oggetti JSON nella lista.
-			La creazione dell'elemento grafico lista è ancora una volta fatta 
-			attraverso un tag HTML decorato con l'attributo \texttt{data-role}, 
-			in particolare viene usato il tag \texttt{<ul data-role=listView>}.
-			Il codice \ref{cod:list} mostra un semplice esempio per 
-			chiarire l'uso di queste liste.
-			
-			\begin{lstlisting}[
-				caption = {
-					Esempio di definizione di una lista e del caricamento dei 
-					dati in essa. E' importante notare che
-					la funzione initList viene chiamata solo la prima volta che 
-					si accede alla schermata della lista, mentre la insertData 
-					viene eseguita anche agli accessi successivi.
-				},
-				label = {cod:list}
-			]
+            \noindent Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
+            siamo in grado di ottenere un vettore contenente le segnalazioni in formato JSON che
+            rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo.
+            Ovviamente dato che nella lista non ci interessa mostrare l'immagine della segnalazione
+            questa non viene scaricata velocizzando così il
+            trasferimento dei dati, bisogna però notare che, anche se la lista
+            ne mostrerà soltanto il titolo, le segnalazioni scaricate contengono
+            anche altri campi come il loro identificatore e quello dell'utente
+            che le ha inviate, queste ultime informazioni sono necessarie per
+            poter poi visualizzare la segnalazione nel dettaglio.
+
+            Una volta scaricati i dati c'è appunto il problema di come inserirli
+            nella lista, e il problema di far visualizzare solo il titolo
+            "scartando" le altre informazioni.
+            \kendomob{} offre una pratica funzione \js{} tramite la quale è
+            possibile definire il comportamento dell'applicazione in seguito
+            alla pressione di un elemento della lista e di specificare quali
+            campi mostrare degli oggetti inseriti in essa. Il vettore contentente le segnalazioni
+            poi può essere passato direttamente ad un'altra funzione,
+            sempre offerta dal framework, che si occuperà di inserire effettivamente
+            gli oggetti JSON nella lista.
+            La creazione dell'elemento grafico lista è ancora una volta fatta
+            attraverso un tag HTML decorato con l'attributo \texttt{data-role},
+            in particolare viene usato il tag \texttt{<ul data-role=listView>}.
+            Il codice \ref{cod:list} mostra un semplice esempio per
+            chiarire l'uso di queste liste.
+
+            \begin{lstlisting}[
+                caption = {
+                    Esempio di definizione di una lista e del caricamento dei
+                    dati in essa. E' importante notare che
+                    la funzione initList viene chiamata solo la prima volta che
+                    si accede alla schermata della lista, mentre la insertData
+                    viene eseguita anche agli accessi successivi.
+                },
+                label = {cod:list}
+            ]
   <div data-role="view" data-init="initList"
        data-show="insertData">
-    <ul data-role="listView" id="listViewContent"></ul>    
+    <ul data-role="listView" id="listViewContent"></ul>
   </div>
 
   [ ... ]
@@ -1020,133 +1020,133 @@
   <script>
     /* contenitore dei dati da inserire nella lista */
     var customerDataSource = new kendo.data.DataSource({ });
-    
+
     var initList = function (){
       $("#listViewContent").kendoMobileListView({
         /* setta la sorgente dei dati per questa lista */
-        dataSource: customerDataSource, 
+        dataSource: customerDataSource,
         click: function(e) {
           /* gestore del tocco su un elemento della lista */
         },
         /* nella lista viengono mostrati solo i campi 'titolo' */
-        template: "<h5>#:titolo#</h5>" 
-      }); 
+        template: "<h5>#:titolo#</h5>"
+      });
     };
-	
+
     var insertData = function(){
       /* scarica le segnalazioni dal server */
       var dati = getDataFromServer();
-      /* inserisce effettivamente i dati nella lista */ 
-      customerDataSource.data(dati); 
+      /* inserisce effettivamente i dati nella lista */
+      customerDataSource.data(dati);
     };
-  </script>	
-			\end{lstlisting}
-			
-			\noindent Mentre le segnalazioni vengono scaricate dal server l'utente si 
-			troverebbe di fronte ad una lista vuota senza capire effettivamente 
-			cosa stia succedendo, per evitare questo spiacevole inconveniente 
-			la cosa migliore da fare è stata quella di mostrare all'utente un'animazione 
-			di caricamento (vedi fig. \ref{fig:listaMieLoadPg}). \kendomob{} offre a tal proposito le funzioni
-			\texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per 
-			avviare e interrompere l'animazione. Questa animazione però non blocca 
-			l'interfaccia grafica e l'utente può ad esempio decidere 
-			di cambiare schermata creando dei problemi nella logica dell'applicazione, 
-			inoltre su Android lo stile di questa animazione non assomiglia molto
-			a quello nativo.
-			
-			\begin{figure}[H]
-				\centering
-				\includegraphics[keepaspectratio=true,width=0.5\textwidth]{listaMieLoadPg}
-				\caption{La figura mostra l'animazione di caricamento nella lista 
-				delle proprie segnalazioni realizzata con \kendomob{}.
-				}
-				\label{fig:listaMieLoadPg}
-			\end{figure}
-			
-			\noindent Come detto con \tisdk{} l'approccio è simile. Dentro 
-			il file XML della schermata che contiene la lista deve essere definito 
-			l'elemento \texttt{ListView} però a differenza di \kendomob{} la struttura 
-			degli elementi va ancora definita in XML anzichè in \js{}. Nel controllore 
-			bisogna quindi occuparsi di scaricare i dati dal 
-			server, di inserirli nella lista e di implementare la funzione 
-			da eseguire alla pressione degli elementi. Il tutto però non è così immediato, 
-			infatti non è possibile inserire i dati nella lista usando direttamente 
-			il vettore delle segnalazioni, ogni elemento deve prima essere convertito 
-			da JSON ad un oggetto \js{} e inoltre questo oggetto deve avere dei 
-			campi particolari imposti dal framework. Nel codice \ref{cod:listTiXML} si mostra il 
-			codice XML per creare una lista, mentre nel \ref{cod:listJsTi} è presente il codice 
-			\js{} del controllore eseguito automaticamente ogni volta che si 
-			accede alla schermata.
-			\begin{lstlisting}[
-				caption = {
-					Tag XML da usare in \tisdk{} per creare una lista. Da notare 
-					che il formato delle righe è descritto ancora tramite tag 
-					XML, in particolare in questo esempio le righe della lista 
-					mostreranno una sola riga di testo contenente il titolo 
-					della segnalazione.
-				},
-				label = {cod:listTiXML}
-			]
-	<ListView id="my" defaultItemTemplate="template" allowsSelection="true" onItemclick="dataClick">
+  </script>
+            \end{lstlisting}
+
+            \noindent Mentre le segnalazioni vengono scaricate dal server l'utente si
+            troverebbe di fronte ad una lista vuota senza capire effettivamente
+            cosa stia succedendo, per evitare questo spiacevole inconveniente
+            la cosa migliore da fare è stata quella di mostrare all'utente un'animazione
+            di caricamento (vedi fig. \ref{fig:listaMieLoadPg}). \kendomob{} offre a tal proposito le funzioni
+            \texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per
+            avviare e interrompere l'animazione. Questa animazione però non blocca
+            l'interfaccia grafica e l'utente può ad esempio decidere
+            di cambiare schermata creando dei problemi nella logica dell'applicazione,
+            inoltre su Android lo stile di questa animazione non assomiglia molto
+            a quello nativo.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[keepaspectratio=true,width=0.5\textwidth]{listaMieLoadPg}
+                \caption{La figura mostra l'animazione di caricamento nella lista
+                delle proprie segnalazioni realizzata con \kendomob{}.
+                }
+                \label{fig:listaMieLoadPg}
+            \end{figure}
+
+            \noindent Come detto con \tisdk{} l'approccio è simile. Dentro
+            il file XML della schermata che contiene la lista deve essere definito
+            l'elemento \texttt{ListView} però a differenza di \kendomob{} la struttura
+            degli elementi va ancora definita in XML anzichè in \js{}. Nel controllore
+            bisogna quindi occuparsi di scaricare i dati dal
+            server, di inserirli nella lista e di implementare la funzione
+            da eseguire alla pressione degli elementi. Il tutto però non è così immediato,
+            infatti non è possibile inserire i dati nella lista usando direttamente
+            il vettore delle segnalazioni, ogni elemento deve prima essere convertito
+            da JSON ad un oggetto \js{} e inoltre questo oggetto deve avere dei
+            campi particolari imposti dal framework. Nel codice \ref{cod:listTiXML} si mostra il
+            codice XML per creare una lista, mentre nel \ref{cod:listJsTi} è presente il codice
+            \js{} del controllore eseguito automaticamente ogni volta che si
+            accede alla schermata.
+            \begin{lstlisting}[
+                caption = {
+                    Tag XML da usare in \tisdk{} per creare una lista. Da notare
+                    che il formato delle righe è descritto ancora tramite tag
+                    XML, in particolare in questo esempio le righe della lista
+                    mostreranno una sola riga di testo contenente il titolo
+                    della segnalazione.
+                },
+                label = {cod:listTiXML}
+            ]
+    <ListView id="my" defaultItemTemplate="template" allowsSelection="true" onItemclick="dataClick">
         <Templates>
-			<!-- definisce l'aspetto delle righe della lista. L'attributo bindId="titolo" indica che verra' mostrato solo il campo titolo -->
-			
+            <!-- definisce l'aspetto delle righe della lista. L'attributo bindId="titolo" indica che verra' mostrato solo il campo titolo -->
+
             <ItemTemplate name="template">
                 <Label bindId="titolo" id="title" />
             </ItemTemplate>
 
         </Templates>
 
-		<!-- In Titanium SDK le liste possono essere divise in piu' sezioni ma per il nostro scopo ne e' stata sufficiente soltanto una -->
+        <!-- In Titanium SDK le liste possono essere divise in piu' sezioni ma per il nostro scopo ne e' stata sufficiente soltanto una -->
         <ListSection id="listSection">
         </ListSection>
-	</ListView>
-			\end{lstlisting}
-			
-			\begin{lstlisting}[
-				caption = {
-					Codice del controllore della lista. E' importante notare 
-					che il codice viene eseguito automaticamente ad ogni 
-					accesso alla schermata, mentre la funzione dataClick 
-					verrà chiamata solo alla pressione di un elemento della riga
-				},
-				label = {cod:listJsTi}
-			]
-	/* Scarica le segnalazioni dal server */
-	var data = getDataFromServer();
-	/* Trasforma le segnalazioni in oggetti inseribili nella lista */
-	var dataToInsert = transformData(data);
-	/* Inserisce le segnalazioni trasformate nella lista */
-	listSection.appendItems(dataToInsert);
-	
-	var dataClick = function(){
-		/* codice da eseguire quando viene premuto un elemento della lista */
-	}
-			\end{lstlisting}
-			
-			\noindent Per quanto riguarda l'animazione di caricamento \tisdk{} fornisce 
-			l'API per accedere a quella nativa di Android. 
-			Tale animazione può essere di due tipi: una semplice da usare quando 
-			il tempo da attendere è indeterminato e 
-			una che mostra anche la percentuale di caricamento nel caso si conosca 
-			lo stato di attesa.
-			Anche per le altre piattaforme sono disponibili API con lo stesso scopo, 
-			è quindi necessario dover scrivere codice diverso per ogni piattaforma 
-			se si intende creare un'applicazione cross-platform.
-			Un'aspetto positivo di questa animazione di caricamento è la possibilità 
-			di bloccare l'interfaccia grafica durante la sua visualizzazione, 
-			in questo modo non ci si deve preoccupare delle azioni dell'utente, 
-			ovviamente il contro è che l'utente si troverà bloccato di fronte 
-			all'animazione e quindi questa non dovrebbe provocare un'attesa troppo 
-			lunga, per questo abbiamo deciso che se i dati impiegano troppo tempo 
-			ad essere recuperati dal server terminiamo l'animazione e mostriamo 
-			un avviso all'utente. Inoltre abbiamo fatto uso di entrambe le animazioni: 
-			quella indeterminata è stata fatta visualizzare mentre le segnalazioni 
-			venivano scaricate dal server, mentre l'altra quando i dati venivano 
-			convertiti negli oggetti da poter inserire nella lista. Il risultato 
-			è mostato in figura \ref{fig:mieLoadTi}.
-			
-			\begin{figure}[H]
+    </ListView>
+            \end{lstlisting}
+
+            \begin{lstlisting}[
+                caption = {
+                    Codice del controllore della lista. E' importante notare
+                    che il codice viene eseguito automaticamente ad ogni
+                    accesso alla schermata, mentre la funzione dataClick
+                    verrà chiamata solo alla pressione di un elemento della riga
+                },
+                label = {cod:listJsTi}
+            ]
+    /* Scarica le segnalazioni dal server */
+    var data = getDataFromServer();
+    /* Trasforma le segnalazioni in oggetti inseribili nella lista */
+    var dataToInsert = transformData(data);
+    /* Inserisce le segnalazioni trasformate nella lista */
+    listSection.appendItems(dataToInsert);
+
+    var dataClick = function(){
+        /* codice da eseguire quando viene premuto un elemento della lista */
+    }
+            \end{lstlisting}
+
+            \noindent Per quanto riguarda l'animazione di caricamento \tisdk{} fornisce
+            l'API per accedere a quella nativa di Android.
+            Tale animazione può essere di due tipi: una semplice da usare quando
+            il tempo da attendere è indeterminato e
+            una che mostra anche la percentuale di caricamento nel caso si conosca
+            lo stato di attesa.
+            Anche per le altre piattaforme sono disponibili API con lo stesso scopo,
+            è quindi necessario dover scrivere codice diverso per ogni piattaforma
+            se si intende creare un'applicazione cross-platform.
+            Un'aspetto positivo di questa animazione di caricamento è la possibilità
+            di bloccare l'interfaccia grafica durante la sua visualizzazione,
+            in questo modo non ci si deve preoccupare delle azioni dell'utente,
+            ovviamente il contro è che l'utente si troverà bloccato di fronte
+            all'animazione e quindi questa non dovrebbe provocare un'attesa troppo
+            lunga, per questo abbiamo deciso che se i dati impiegano troppo tempo
+            ad essere recuperati dal server terminiamo l'animazione e mostriamo
+            un avviso all'utente. Inoltre abbiamo fatto uso di entrambe le animazioni:
+            quella indeterminata è stata fatta visualizzare mentre le segnalazioni
+            venivano scaricate dal server, mentre l'altra quando i dati venivano
+            convertiti negli oggetti da poter inserire nella lista. Il risultato
+            è mostato in figura \ref{fig:mieLoadTi}.
+
+            \begin{figure}[H]
               \centering
               \begin{subfigure}[b]{0.485\textwidth}
                 \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieUndTi}
@@ -1157,184 +1157,184 @@
                 \includegraphics[keepaspectratio=true,width=\textwidth]{listaMieDefTi}
                 \caption{}
               \end{subfigure}
-              \caption{Animazione di caricamento nella lista delle proprie segnalazioni: 
-                (a) animazione di attesa indefinita mostrata durante il download delle 
-                segnalazioni; (b) animazione di attesa definita mostrata durante 
+              \caption{Animazione di caricamento nella lista delle proprie segnalazioni:
+                (a) animazione di attesa indefinita mostrata durante il download delle
+                segnalazioni; (b) animazione di attesa definita mostrata durante
                 l'inserimento delle segnalazioni nella lista.
-  				}
+                }
               \label{fig:mieLoadTi}
             \end{figure}
 
-			\noindent In generale entrambi i framework hanno soddisfatto tutti 
-			i nostri requisiti e lo scorrimento delle liste è
-			performante anche in presenza di molti elementi. \kendomob{} ha
-			anche introdotto, per tutte le piattaforme supportate, la
-			possibilità di aggiornare il contenuto della
-			lista attraverso il cosiddetto ``pull-to-refresh'', cioè
-			trascinando col dito la lista verso il basso per qualche secondo.
-			Anche \tisdk{} permette questa modalità di aggiornamento del
-			contenuto delle lista ma solo per iOS.
-			 
-		\subsection{Dettagli di una segnalazione}
-		\label{subsec:dettagli}
-			Una volta che l'utente ha selezionato una segnalazione, mostrarne i 
-			dettagli è relativamente semplice. Per fare questo abbiamo 
-			realizzato un'apposita view \kendomob{} nel progetto \pg{} e una 
-			window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi
+            \noindent In generale entrambi i framework hanno soddisfatto tutti
+            i nostri requisiti e lo scorrimento delle liste è
+            performante anche in presenza di molti elementi. \kendomob{} ha
+            anche introdotto, per tutte le piattaforme supportate, la
+            possibilità di aggiornare il contenuto della
+            lista attraverso il cosiddetto ``pull-to-refresh'', cioè
+            trascinando col dito la lista verso il basso per qualche secondo.
+            Anche \tisdk{} permette questa modalità di aggiornamento del
+            contenuto delle lista ma solo per iOS.
+
+        \subsection{Dettagli di una segnalazione}
+        \label{subsec:dettagli}
+            Una volta che l'utente ha selezionato una segnalazione, mostrarne i
+            dettagli è relativamente semplice. Per fare questo abbiamo
+            realizzato un'apposita view \kendomob{} nel progetto \pg{} e una
+            window dedicata nell'applicazione realizzata con \tisdk{}. Entrambi
             i framework, a prescindere dalla piattaforma che vogliamo
             supportare, mettono a disposizione diversi widget per mostrare sia
             dati testuali che immagini, quindi è stato molto semplice realizzare
             l'interfaccia per adempiere a questo scopo. La figura
             \ref{fig:repodetails} mostra le interfacce dei due framework con i
             dettagli di una segnalazione.
-			\begin{figure}[h]
-				\centering
-				\begin{subfigure}[b]{0.9\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG1}
-					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG2}
-					\caption{}
-				\end{subfigure}
-				\begin{subfigure}[b]{0.9\textwidth}
-					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI1}
-					\includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI2}
-					\caption{}
-				\end{subfigure}
-				\caption{
-					Interfaccia per i dettagli di una segnalazione: (a) la view
-					\kendomob{}; (b) la window di \tisdk{}.
-				}
-				\label{fig:repodetails}
-			\end{figure}
-			
-			
-			Realizzare questa funzionalità ci ha permesso di confrontarci con il 
-			problema di dover scaricare un file da un server, in questo caso, 
-			l'immagine allegata alla segnalazione da mostrare. CouchDB 
-			consente di reperire gli allegati multimediali per un documento in 
-			tre modi:
-			\begin{enumerate}
-				\item chiedendogli di inviare il documento completo di allegati 
-				tutto in formato JSON; in questo caso i file vengono codificati 
-				in BASE64 e tutto il documento JSON viene trasportato nel corpo 
-				di un messaggio di risposta HTTP;
-				\item chiedendogli di inviare il documento completo di allegati 
-				ma non specificando il formato; in questo caso il server prepara 
-				un messaggio di risposta HTTP dove nel corpo è presente un 
-				contenuto di dati misto con intestazione 
-				MIME\footnote{Protocollo che permette di estendere semplici 
-				messaggi testuali a contenere dati multimediali. Per maggiori 
-				dettagli consultare RFC2045 
-				(\url{http://tools.ietf.org/html/rfc2045}).} (Multipurpose 
-				Internet Mail Extensions) dove, nella prima parte è presente, 
-				senza allegati, il documento richiesto in formato JSON, mentre 
-				nella seconda sono presenti tutti gli allegati, uno dopo 
-				l'altro, in formato binario;
-				\item chiedendogli direttamente il file dell'allegato mediante 
-				uno specifico URL.
-			\end{enumerate}
-			Il primo caso richiedeva da parte del server del lavoro in più per 
-			codificare l'allegato a scapito del tempo di risposta; nel secondo 
-			caso era necessario un metodo per separare il vari contenuti dal 
-			messaggio MIME che nessun framework forniva. Per questi motivi 
-			abbiamo deciso di scaricare gli allegati direttamente dopo aver 
-			ottenuto tutto il resto della segnalazione con una richiesta 
-			separata.
-			
-			\pg{} fornisce, per tutte le piattaforme che supporta, il plugin 
-			\texttt{File} per manipolare file e il plugin \texttt{FileTransfer} 
-			per inviarli e riceverli dalla rete. A questo punto, una volta 
-			creato un nuovo file è stato possibile scaricarvi l'immagine remota 
-			(vedi esempio \ref{cod:dlFilePG}).
-			\begin{lstlisting}[
-				caption={Una volta ottenuto il filesystem vine creato un nuovo 
-					file che andrà a contenere i dati del file scaricato.},
-				label={cod:dlFilePG}
-			]
-	// richiesta filesystem persistente
-	requestFileSystem(
-		LocalFileSystem.PERSISTENT,
-		0,
-		FileSystemSuccess,
-		null
-	);
-	// eseguita una volta ottenuto il filesystem
-	function FileSystemSuccess(filesystem){
-		var dir = filesystem.root;
-		// crea un nuovo file
-		var newfile = dir.getFile("filename.jpeg",
-			{
-				create: true,
-				exclusive: false,
-			},
-			newFileSuccess,
-			newFileFail
-		);
-		// eseguita una volta creato il file
-		function newFileSuccess(newf){
-			var filepath = newf.fullPath;
-			var ft = new FileTransfert();		
-			// scarica il file
-			ft.download(
-				"http://uri.of.remote.file/img.jpeg",
-				filepath,
-				// gestisce il successo del download
-				function(file){ ... },
-				// gestisce errore di download
-				function(err){ ... },
-				false
-			);
-		}
-	}
-			\end{lstlisting}
-			
-			Anche \tisdk{} consente di accedere al filesystem della piattaforma 
-			e di maneggiare file. Le API necessarie sono contenute nello 
-			spazio dei nomi \texttt{Titanium.Filesystem} e sono compatibili 
-			con tutte le piattaforme supportate da \tisdk{}. Come avevamo 
-			anticipato nella sezione relativa alla comunicazione con il lato 
-			server (sez.~\ref{subsec:comlatoserver}), per creare richieste HTTP 
-			si utilizza in \tisdk{} l'oggetto \texttt{HTTPClient} definito nelle 
-			API \texttt{Titanium.Network}. Anche in questo caso, in maniera 
-			simile a quanto di fa con le API di \pg{}, dopo aver creato un nuovo 
-			file si può procedere con richiedere al server l'allegato da 
-			scaricare e memorizzare. Il segmento di codice \ref{cod:dlFileTi} 
-			mostra un esempio d'uso delle API di \tisdk{} per scaricare un file 
-			e salvarlo nel filesystem.
-			\begin{lstlisting}[
-				caption={
-					L'oggetto \texttt{HTTPClient} esegue una \texttt{GET} di un 
-					file remoto che se scaricato correttamente viene 
-					memorizzato in un file locale nel filesystem.
-				},label={cod:dlFileTi}
-			]
-	// crea un nuovo HTTPClient
-	var httpClt = Titanium.Network.createHTTPClient({
-		onload: function(){ // se il download ha successo
-			var newf = Titanium.Filesystem.getFile(
-				Titanium.Filesystem.applicationDataDirectory,
-				"filename.jpeg"
-			);
-			// scrivo i dati ricevuti nel nuovo file
-			newf.write(this.responseData);
-		},
-		// se il download fallisce
-		onerror: function(e){ ... }
-	});
-	// compongo una 'GET'
-	httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
-	// invio la richiesta
-	httpClt.send();
-			\end{lstlisting}
-			Una differenza sostanziale che c'è nella gestione del filesystem 
-			tra \tisdk{} e \pg{} è che le API del primo consentono di creare 
-			file persistenti solo in precise directory relative 
-			all'applicazione stessa per le quali sono definite delle specifiche 
-			macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
-			l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}). 
-			Con il plugin di \pg{}, a patto di avere i permessi necessari, è 
-			possibile navigare in tutto il filesystem del sistema e creare nuove 
-			cartelle e file dove si vuole.
-		
+            \begin{figure}[h]
+                \centering
+                \begin{subfigure}[b]{0.9\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG1}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG2}
+                    \caption{}
+                \end{subfigure}
+                \begin{subfigure}[b]{0.9\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI1}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI2}
+                    \caption{}
+                \end{subfigure}
+                \caption{
+                    Interfaccia per i dettagli di una segnalazione: (a) la view
+                    \kendomob{}; (b) la window di \tisdk{}.
+                }
+                \label{fig:repodetails}
+            \end{figure}
+
+
+            Realizzare questa funzionalità ci ha permesso di confrontarci con il
+            problema di dover scaricare un file da un server, in questo caso,
+            l'immagine allegata alla segnalazione da mostrare. CouchDB
+            consente di reperire gli allegati multimediali per un documento in
+            tre modi:
+            \begin{enumerate}
+                \item chiedendogli di inviare il documento completo di allegati
+                tutto in formato JSON; in questo caso i file vengono codificati
+                in BASE64 e tutto il documento JSON viene trasportato nel corpo
+                di un messaggio di risposta HTTP;
+                \item chiedendogli di inviare il documento completo di allegati
+                ma non specificando il formato; in questo caso il server prepara
+                un messaggio di risposta HTTP dove nel corpo è presente un
+                contenuto di dati misto con intestazione
+                MIME\footnote{Protocollo che permette di estendere semplici
+                messaggi testuali a contenere dati multimediali. Per maggiori
+                dettagli consultare RFC2045
+                (\url{http://tools.ietf.org/html/rfc2045}).} (Multipurpose
+                Internet Mail Extensions) dove, nella prima parte è presente,
+                senza allegati, il documento richiesto in formato JSON, mentre
+                nella seconda sono presenti tutti gli allegati, uno dopo
+                l'altro, in formato binario;
+                \item chiedendogli direttamente il file dell'allegato mediante
+                uno specifico URL.
+            \end{enumerate}
+            Il primo caso richiedeva da parte del server del lavoro in più per
+            codificare l'allegato a scapito del tempo di risposta; nel secondo
+            caso era necessario un metodo per separare il vari contenuti dal
+            messaggio MIME che nessun framework forniva. Per questi motivi
+            abbiamo deciso di scaricare gli allegati direttamente dopo aver
+            ottenuto tutto il resto della segnalazione con una richiesta
+            separata.
+
+            \pg{} fornisce, per tutte le piattaforme che supporta, il plugin
+            \texttt{File} per manipolare file e il plugin \texttt{FileTransfer}
+            per inviarli e riceverli dalla rete. A questo punto, una volta
+            creato un nuovo file è stato possibile scaricarvi l'immagine remota
+            (vedi esempio \ref{cod:dlFilePG}).
+            \begin{lstlisting}[
+                caption={Una volta ottenuto il filesystem vine creato un nuovo
+                    file che andrà a contenere i dati del file scaricato.},
+                label={cod:dlFilePG}
+            ]
+    // richiesta filesystem persistente
+    requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        FileSystemSuccess,
+        null
+    );
+    // eseguita una volta ottenuto il filesystem
+    function FileSystemSuccess(filesystem){
+        var dir = filesystem.root;
+        // crea un nuovo file
+        var newfile = dir.getFile("filename.jpeg",
+            {
+                create: true,
+                exclusive: false,
+            },
+            newFileSuccess,
+            newFileFail
+        );
+        // eseguita una volta creato il file
+        function newFileSuccess(newf){
+            var filepath = newf.fullPath;
+            var ft = new FileTransfert();
+            // scarica il file
+            ft.download(
+                "http://uri.of.remote.file/img.jpeg",
+                filepath,
+                // gestisce il successo del download
+                function(file){ ... },
+                // gestisce errore di download
+                function(err){ ... },
+                false
+            );
+        }
+    }
+            \end{lstlisting}
+
+            Anche \tisdk{} consente di accedere al filesystem della piattaforma
+            e di maneggiare file. Le API necessarie sono contenute nello
+            spazio dei nomi \texttt{Titanium.Filesystem} e sono compatibili
+            con tutte le piattaforme supportate da \tisdk{}. Come avevamo
+            anticipato nella sezione relativa alla comunicazione con il lato
+            server (sez.~\ref{subsec:comlatoserver}), per creare richieste HTTP
+            si utilizza in \tisdk{} l'oggetto \texttt{HTTPClient} definito nelle
+            API \texttt{Titanium.Network}. Anche in questo caso, in maniera
+            simile a quanto di fa con le API di \pg{}, dopo aver creato un nuovo
+            file si può procedere con richiedere al server l'allegato da
+            scaricare e memorizzare. Il segmento di codice \ref{cod:dlFileTi}
+            mostra un esempio d'uso delle API di \tisdk{} per scaricare un file
+            e salvarlo nel filesystem.
+            \begin{lstlisting}[
+                caption={
+                    L'oggetto \texttt{HTTPClient} esegue una \texttt{GET} di un
+                    file remoto che se scaricato correttamente viene
+                    memorizzato in un file locale nel filesystem.
+                },label={cod:dlFileTi}
+            ]
+    // crea un nuovo HTTPClient
+    var httpClt = Titanium.Network.createHTTPClient({
+        onload: function(){ // se il download ha successo
+            var newf = Titanium.Filesystem.getFile(
+                Titanium.Filesystem.applicationDataDirectory,
+                "filename.jpeg"
+            );
+            // scrivo i dati ricevuti nel nuovo file
+            newf.write(this.responseData);
+        },
+        // se il download fallisce
+        onerror: function(e){ ... }
+    });
+    // compongo una 'GET'
+    httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
+    // invio la richiesta
+    httpClt.send();
+            \end{lstlisting}
+            Una differenza sostanziale che c'è nella gestione del filesystem
+            tra \tisdk{} e \pg{} è che le API del primo consentono di creare
+            file persistenti solo in precise directory relative
+            all'applicazione stessa per le quali sono definite delle specifiche
+            macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
+            l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}).
+            Con il plugin di \pg{}, a patto di avere i permessi necessari, è
+            possibile navigare in tutto il filesystem del sistema e creare nuove
+            cartelle e file dove si vuole.
+
 
         \subsection{Lista delle ultime segnalazioni}
         Questa schermata è quella mostrata all'avvio dell'applicazione se
@@ -1347,36 +1347,36 @@
         molto da aggiungere, se non che nella lista dell'applicazione
         realizzata con \tisdk{} abbiamo inserito anche un'immagine per
         differenziare le proprie segnalazioni da quelle di un altro utente.
-        Questo non siamo però riusciti a farlo con \kendomob{}, non perchè 
-        non fosse possibile, ma perchè questa è stata un'aggiunta non richiesta 
-        dal tutore accademico e nel momento in cui è stata fatta non c'era 
-        più tempo per fare ulteriori modifiche all'altra applicazione. 
+        Questo non siamo però riusciti a farlo con \kendomob{}, non perchè
+        non fosse possibile, ma perchè questa è stata un'aggiunta non richiesta
+        dal tutore accademico e nel momento in cui è stata fatta non c'era
+        più tempo per fare ulteriori modifiche all'altra applicazione.
         Nella figura
         \ref{fig:last} sono visibili le due realizzazioni a confronto.
-        
-        \begin{figure}[h]
-			\centering
-			\begin{subfigure}[b]{0.485\textwidth}
-				\includegraphics[keepaspectratio=true,
-				width=0.95\textwidth]{lastTi}
-				\caption{}
-				\label{fig:tiLast}
-			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.485\textwidth}
-				\includegraphics[keepaspectratio=true,
-				width=0.95\textwidth]{lastPG}
-				\caption{}
-				\label{fig:kendoLast}
-			\end{subfigure}
-			\caption{Lista delle ultime segnalazioni: 
-			In (a) si mostra la realizzazione con \tisdk{}; in (b) si mostra
-			quella con \kendomob{}
-			}
-			\label{fig:last}
-		\end{figure}
 
-        
+        \begin{figure}[h]
+            \centering
+            \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,
+                width=0.95\textwidth]{lastTi}
+                \caption{}
+                \label{fig:tiLast}
+            \end{subfigure}
+            ~
+            \begin{subfigure}[b]{0.485\textwidth}
+                \includegraphics[keepaspectratio=true,
+                width=0.95\textwidth]{lastPG}
+                \caption{}
+                \label{fig:kendoLast}
+            \end{subfigure}
+            \caption{Lista delle ultime segnalazioni:
+            In (a) si mostra la realizzazione con \tisdk{}; in (b) si mostra
+            quella con \kendomob{}
+            }
+            \label{fig:last}
+        \end{figure}
+
+
         \subsection{Salvataggio locale}
         \label{subsec:caching}
             Dopo la consegna della prima versine funzionante delle due
@@ -1446,7 +1446,7 @@
                 \label{fig:noImages}
             \end{figure}
 
-        
+
         \subsection{Dai dettagli alla mappa}
             Come ultimo dettaglio ci è stato chiesto di aggiungere un
             particolare bottone nella schermata di dettaglio della segnalazione
@@ -1465,7 +1465,7 @@
             vogliono supportare più piattaforme, in questo punto è necessario
             differenziare il codice utilizzando le giuste API per ogni
             piattaforma.
-            
+
             Per quanto riguarda la schermata dei dettagli dell'applicazione
             \pg{}, la barra in altro è una navbar \kendomob{}, la stessa per
             ogni piattaforma, e in essa è possibile inserire bottoni per la
@@ -1506,112 +1506,112 @@
             navigazione verso la mappa sono mostrate in figura
             \ref{fig:repodetails}.
 
-	\subsection{Risultato del confronto}
-	Descriviamo ora il risultato del confronto tra i due framework valutando 
-	le seguenti caratteristiche: interfaccia grafica, prestazioni, 
-	funzionalità, strumenti per lo sviluppo, curva di apprendimento, 
-	\crossplat{}. Ricordiamo ancora una 
-	volta che l'applicazione è stata testata soltanto su dispositivi Android.
-		\subsubsection{Interfaccia grafica}
-		La qualità dell'interfaccia grafica è sicuramente migliore in \tisdk{},
-		soprattutto per il fatto che è possibile accedere agli elementi 
-		grafici nativi delle varie piattaforme. \kendomob{} prova tramite i 
-		suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si
-        notano ancora alcune differenze; dalle dimostrazioni disponibili sulla 
-		documentazione di questo framework, invece, sembra che per iOS l'aspetto 
-		rispecchi in maniera più fedele quello nativo. Integrare \pg{} con 
-		altri framework per la realizzazione dell'interfaccia grafica potrebbe 
-		comunque risolvere in parte il problema dell'aspetto.
-		\subsubsection{Prestazioni} 
-		L'applicazione ibrida fornisce buone prestazioni in quasi tutte 
-		le sue funzionalità, soltanto la mappa mostra problemi di fluidità 
-		nelle operazioni di zoom o di spostamento, va però detto che queste 
-		prestazioni sono legate al servizio usato per la mappa.
-		\tisdk{} ha permesso la realizzazione di un'applicazione molto fluida 
-		anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo 
-		di consigliare \tisdk{}.
-		\subsubsection{Funzionalità}
-		Entrambi i framwork sono risultati validi nel realizzare le 
-		funzionalità che ci erano state richieste. Di base \tisdk{} fornisce 
-		sicuramente più strumenti, ma l'estensibilità di \pg{} tramite plugin 
-		permette di ridurre questo gap, molti di questi plugin sono 
-		disponibili in rete e avendo conoscenze del linguaggio nativo è 
-		possibile crearsene di propri. L'unica vera differenza 
-		trovata è stata nell'impossibilità di implementare il servizio di 
-		background (vedi \ref{subsec:nuova}) con \pg{}, questo problema 
-		riguarda proprio il concetto con 
-		il quale sono costruite queste applicazioni: è si possibile lanciare 
-		in \js{}
-		un servizio in background che possa essere eseguito anche quando 
-		l'applicazione è stata chiusa (in rete è disponibile un plugin proprio 
-		per questo scopo) ma, il codice del servizio deve essere comunque 
-		scritto in linguaggio nativo in quanto, un servizio scritto in codice 
-		\js{}, essendo interpretato all'interno della Web View  
-		dell'applicazione, non potrebbe essere eseguito quando questa viene 
-		chiusa.
-		\tisdk{} invece convertendo il codice \js{} in codice nativo non 
-		soffre di questo problema.
-		\subsubsection{Strumenti per lo sviluppo}
-		Di per se \pg{} offre soltanto la CLI per creare, compilare, 
-		installare l'applicazione sul dispositivo e aggiungervi plugin. Non 
-		offre quindi un proprio IDE e nemmeno particolari strumenti per il 
-		debug. Se si decide di non usare il servizio \pg{} Build avendo dovuto 
-		installare gli SDK nativi per le piattaforme di destinazione è 
-		possibile sfruttare gli IDE nativi e gli strumenti che essi offrono, 
-		come il logcat di Android. Inoltre esistono altre soluzioni create 
-		appositamente per fornire strumenti di sviluppo aggiuntivi a quelli di 
-		\pg{}, è il caso di Icenium\footnote{al momento della scrittura di 
-		questa tesi è stato rinominato in app builder. 
-		Maggiori informazioni possono essere trovate sul sito 
-		\url{http://www.telerik.com/appbuilder}} che in particolare offre un 
-		ICE (Integrated Cloud Environment), cioè un IDE che però lavora su una 
-		cloud. Per essere più chiari, Icenium fornisce un moderno ambiente di 
-		code-editing, con un integrata analisi del codice in tempo reale, 
-		debugging, sintassi colorata e formattata, completamento di istruzioni, 
-		refactoring e navigazione nel codice. Con Icenium la compilazione 
-		viene fatta in remoto come con \pg{} Build, e inoltre l'applicazione 
-		può essere testata sia su Android che su iOS senza possedere una 
-		licenza di sviluppatore (che ovviamente serve comunque per distribuire 
-		l'applicazione attraverso gli store), il debug viene fatto sempre 
-		attraverso gli strumenti del web, ma il tutto è integrato in Icenium.
-		Questo potente ICE può essere usato direttamente da un qualsiasi browser 
-		(con alcune limitazioni alle funzionalità) o tramite un apposito 
-		programma per Windows. Per finire Icenium integra di default il 
-		framework \kendomob{} (ma può essere usato anche con altri). Non 
-		l'abbiamo utilizzato per lo sviluppo dell'applicazione ibrida soltanto 
-		perché volevamo capire bene cosa offrisse da solo \pg{} e perché il 
-		suo utilizzo è gratuito solo per il primo mese. Un'altra soluzione di
-		questo tipo è offerta dalla Intel con IntelXDK disponibile sul sito
-		\url{http://xdk-software.intel.com/}. Siamo inoltre sicuri che, 
-		anche se abbiamo trovato il servizio \pg{} Build ancora acerbo, nel 
-		futuro prossimo sarà un ottimo strumento per evitare la complessa 
-		configurazione in locale di tutti gli SDK. In ultimo citiamo la 
-		documentazione di \pg{} che è ben fatta ma a causa del fatto che venga 
-		copiata da quella di Cordova e poi riadattata nel tempo a \pg{} 
-		presenta lacune ed è molto confusionaria sulla descrizione dell'uso 
-		del framework.
-		
-		\tisdk{} come detto offre un proprio IDE che permette anche di fare 
-		debugging del codice \js{} con la possibilità di interrompere 
-		l'esecuzione dell'applicazione e di eseguire la sua logica passo passo 
-		in modo da individuare più facilmente gli errori. Ad ogni modo anche 
-		con \tisdk{} il maggior strumento di testing è stato il logcat di 
-		Android che però è ben integrando nell'IDE. Abbiamo trovato 
-		questi strumenti abbastanza utili, anche se sia in ambiente linux che 
-		windows abbiamo avuto non pochi problemi di configurazione.  
-		\subsubsection{Curva di apprendimento}
-		Sicuramente il tempo per iniziare a scrivere applicazioni ibride con 
-		\pg{} è molto breve, molto dipende anche dal framework usato per 
-		l'interfaccia grafica, ma \kendomob{} si è rivelato tra i più semplici.
-		L'uso delle API è molto semplice ed intuitivo, per non parlare del 
-		fatto che se si desidera creare applicazioni \crossplat{} la curva di 
-		apprendimento è praticamente indipendente dal numero di piattaforme 
-		che si intende supportare.
-		
-		\tisdk{} è sicuramente più complicato da apprendere e soprattutto 
-		bisogna familiarizzare con alcuni concetti tipici delle piattaforme 
-		native, con la conseguenza che spesso ci si ritrova a leggere la 
-		documentazione nativa della piattaforma di destinazione. Per
+    \subsection{Risultato del confronto}
+    Descriviamo ora il risultato del confronto tra i due framework valutando
+    le seguenti caratteristiche: interfaccia grafica, prestazioni,
+    funzionalità, strumenti per lo sviluppo, curva di apprendimento,
+    \crossplat{}. Ricordiamo ancora una
+    volta che l'applicazione è stata testata soltanto su dispositivi Android.
+        \subsubsection{Interfaccia grafica}
+        La qualità dell'interfaccia grafica è sicuramente migliore in \tisdk{},
+        soprattutto per il fatto che è possibile accedere agli elementi
+        grafici nativi delle varie piattaforme. \kendomob{} prova tramite i
+        suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si
+        notano ancora alcune differenze; dalle dimostrazioni disponibili sulla
+        documentazione di questo framework, invece, sembra che per iOS l'aspetto
+        rispecchi in maniera più fedele quello nativo. Integrare \pg{} con
+        altri framework per la realizzazione dell'interfaccia grafica potrebbe
+        comunque risolvere in parte il problema dell'aspetto.
+        \subsubsection{Prestazioni}
+        L'applicazione ibrida fornisce buone prestazioni in quasi tutte
+        le sue funzionalità, soltanto la mappa mostra problemi di fluidità
+        nelle operazioni di zoom o di spostamento, va però detto che queste
+        prestazioni sono legate al servizio usato per la mappa.
+        \tisdk{} ha permesso la realizzazione di un'applicazione molto fluida
+        anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo
+        di consigliare \tisdk{}.
+        \subsubsection{Funzionalità}
+        Entrambi i framwork sono risultati validi nel realizzare le
+        funzionalità che ci erano state richieste. Di base \tisdk{} fornisce
+        sicuramente più strumenti, ma l'estensibilità di \pg{} tramite plugin
+        permette di ridurre questo gap, molti di questi plugin sono
+        disponibili in rete e avendo conoscenze del linguaggio nativo è
+        possibile crearsene di propri. L'unica vera differenza
+        trovata è stata nell'impossibilità di implementare il servizio di
+        background (vedi \ref{subsec:nuova}) con \pg{}, questo problema
+        riguarda proprio il concetto con
+        il quale sono costruite queste applicazioni: è si possibile lanciare
+        in \js{}
+        un servizio in background che possa essere eseguito anche quando
+        l'applicazione è stata chiusa (in rete è disponibile un plugin proprio
+        per questo scopo) ma, il codice del servizio deve essere comunque
+        scritto in linguaggio nativo in quanto, un servizio scritto in codice
+        \js{}, essendo interpretato all'interno della Web View
+        dell'applicazione, non potrebbe essere eseguito quando questa viene
+        chiusa.
+        \tisdk{} invece convertendo il codice \js{} in codice nativo non
+        soffre di questo problema.
+        \subsubsection{Strumenti per lo sviluppo}
+        Di per se \pg{} offre soltanto la CLI per creare, compilare,
+        installare l'applicazione sul dispositivo e aggiungervi plugin. Non
+        offre quindi un proprio IDE e nemmeno particolari strumenti per il
+        debug. Se si decide di non usare il servizio \pg{} Build avendo dovuto
+        installare gli SDK nativi per le piattaforme di destinazione è
+        possibile sfruttare gli IDE nativi e gli strumenti che essi offrono,
+        come il logcat di Android. Inoltre esistono altre soluzioni create
+        appositamente per fornire strumenti di sviluppo aggiuntivi a quelli di
+        \pg{}, è il caso di Icenium\footnote{al momento della scrittura di
+        questa tesi è stato rinominato in app builder.
+        Maggiori informazioni possono essere trovate sul sito
+        \url{http://www.telerik.com/appbuilder}} che in particolare offre un
+        ICE (Integrated Cloud Environment), cioè un IDE che però lavora su una
+        cloud. Per essere più chiari, Icenium fornisce un moderno ambiente di
+        code-editing, con un integrata analisi del codice in tempo reale,
+        debugging, sintassi colorata e formattata, completamento di istruzioni,
+        refactoring e navigazione nel codice. Con Icenium la compilazione
+        viene fatta in remoto come con \pg{} Build, e inoltre l'applicazione
+        può essere testata sia su Android che su iOS senza possedere una
+        licenza di sviluppatore (che ovviamente serve comunque per distribuire
+        l'applicazione attraverso gli store), il debug viene fatto sempre
+        attraverso gli strumenti del web, ma il tutto è integrato in Icenium.
+        Questo potente ICE può essere usato direttamente da un qualsiasi browser
+        (con alcune limitazioni alle funzionalità) o tramite un apposito
+        programma per Windows. Per finire Icenium integra di default il
+        framework \kendomob{} (ma può essere usato anche con altri). Non
+        l'abbiamo utilizzato per lo sviluppo dell'applicazione ibrida soltanto
+        perché volevamo capire bene cosa offrisse da solo \pg{} e perché il
+        suo utilizzo è gratuito solo per il primo mese. Un'altra soluzione di
+        questo tipo è offerta dalla Intel con IntelXDK disponibile sul sito
+        \url{http://xdk-software.intel.com/}. Siamo inoltre sicuri che,
+        anche se abbiamo trovato il servizio \pg{} Build ancora acerbo, nel
+        futuro prossimo sarà un ottimo strumento per evitare la complessa
+        configurazione in locale di tutti gli SDK. In ultimo citiamo la
+        documentazione di \pg{} che è ben fatta ma a causa del fatto che venga
+        copiata da quella di Cordova e poi riadattata nel tempo a \pg{}
+        presenta lacune ed è molto confusionaria sulla descrizione dell'uso
+        del framework.
+
+        \tisdk{} come detto offre un proprio IDE che permette anche di fare
+        debugging del codice \js{} con la possibilità di interrompere
+        l'esecuzione dell'applicazione e di eseguire la sua logica passo passo
+        in modo da individuare più facilmente gli errori. Ad ogni modo anche
+        con \tisdk{} il maggior strumento di testing è stato il logcat di
+        Android che però è ben integrando nell'IDE. Abbiamo trovato
+        questi strumenti abbastanza utili, anche se sia in ambiente linux che
+        windows abbiamo avuto non pochi problemi di configurazione.
+        \subsubsection{Curva di apprendimento}
+        Sicuramente il tempo per iniziare a scrivere applicazioni ibride con
+        \pg{} è molto breve, molto dipende anche dal framework usato per
+        l'interfaccia grafica, ma \kendomob{} si è rivelato tra i più semplici.
+        L'uso delle API è molto semplice ed intuitivo, per non parlare del
+        fatto che se si desidera creare applicazioni \crossplat{} la curva di
+        apprendimento è praticamente indipendente dal numero di piattaforme
+        che si intende supportare.
+
+        \tisdk{} è sicuramente più complicato da apprendere e soprattutto
+        bisogna familiarizzare con alcuni concetti tipici delle piattaforme
+        native, con la conseguenza che spesso ci si ritrova a leggere la
+        documentazione nativa della piattaforma di destinazione. Per
         questo motivo, in un ottica di sviluppo \crossplat{}, sarà necessario
         spendere più tempo per l'apprendimento a seconda del numero di diverse
         piattaforme per le quali si è deciso di sviluppare applicazioni. Ad
@@ -1621,20 +1621,20 @@
         \tisdk{} fornisce un insieme di API ben strutturato che, una volta
         presa familiarità con questo framework, consente di trovare subito
         quello di cui si ha bisogno.
-		\subsubsection{Cross-platform}
-		L'obbiettivo principale del tirocinio era proprio quello di valutare
-		come i due framework si comportassero nello sviluppo di applicazioni
-		\crossplat{}, purtroppo non avendo la possibilità di testare
-		effettivamente l'applicazione su altre piattaforme le conclusioni che
-		possiamo fornire si basano soltanto su ciò che abbiamo appreso dalle
-		documentazioni. L'applicazione ibrida permette sicuramente di
-		condividere la maggior parte del codice sia per quanto riguarda la
-		grafica che la logica, questo grazie alla consistenza delle API \pg{}
-		e alla adattività di quelle \kendomob{}.
+        \subsubsection{Cross-platform}
+        L'obbiettivo principale del tirocinio era proprio quello di valutare
+        come i due framework si comportassero nello sviluppo di applicazioni
+        \crossplat{}, purtroppo non avendo la possibilità di testare
+        effettivamente l'applicazione su altre piattaforme le conclusioni che
+        possiamo fornire si basano soltanto su ciò che abbiamo appreso dalle
+        documentazioni. L'applicazione ibrida permette sicuramente di
+        condividere la maggior parte del codice sia per quanto riguarda la
+        grafica che la logica, questo grazie alla consistenza delle API \pg{}
+        e alla adattività di quelle \kendomob{}.
 
-		Con \tisdk{}, invece, la quantità di codice che è possibile
-		condividere tra le varie piattaforme è minore soprattutto se intendiamo
-		utilizzare delle funzionalità particolari come abbiamo fatto per
-		la action bar di Android. Ad ogni modo la differenziazione del codice
-		è resa semplice dal paradigma MVC e dalle API fornite dal framework
-		allo scopo.
+        Con \tisdk{}, invece, la quantità di codice che è possibile
+        condividere tra le varie piattaforme è minore soprattutto se intendiamo
+        utilizzare delle funzionalità particolari come abbiamo fatto per
+        la action bar di Android. Ad ogni modo la differenziazione del codice
+        è resa semplice dal paradigma MVC e dalle API fornite dal framework
+        allo scopo.
