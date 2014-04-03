@@ -450,7 +450,8 @@
             Questo processo genera numerose cartelle e file (vedi fig. \ref{fig:degradoTiTree}),
             ma come per \pg{} ci concentreremo soltanto sulla descrizione di quelle/i veramente importanti.
             La cartella principale del progetto contiene: il file \texttt{tiapp.xml}, che
-            analogamente al file \texttt{config.xml} di \pg{} specifica i metadati, e
+            analogamente al file \texttt{config.xml} di \pg{} specifica i
+            metadati; e
             la cartella \texttt{app} che contiene il resto dell'applicazione.
             Quest'ultima in particolare contiene le cartelle:
             \begin{description}
@@ -509,7 +510,7 @@
             particolare oggetto \texttt{Titanium.Network.HTTPClient} con il
             quale è possibile comporre ogni genere di richiesta HTTP. \pg{}
             invece non fornisce nulla di tutto ciò e quindi abbiamo dovuto far
-            ricorso alle funzionalità AJAX di \jq{} fornito dal framework
+            ricorso alle funzionalità AJAX di \jq{} fornite dal framework
             \kendomob{}\footnote{Ricordiamo che \kendomob{} è basato proprio su
             \jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
             questi fatti è stata definita un'unica interfaccia di funzioni \js{}
@@ -557,7 +558,7 @@
             modulo \texttt{Titanium.App.Properties} che però, a differenza di
             quella standard di \html{}5, permette di memorizzare tutti i tipi di
             dato di \js{} tranne che funzioni. Facendo riferimento all'esempio
-            precedente, la stessa cosa è realizzabile con \tisdk mediante il
+            precedente, la stessa cosa è realizzabile con \tisdk{} mediante il
             codice
             \begin{lstlisting}
     Titanium.App.Properties.setString("name", "goofy");
@@ -576,7 +577,7 @@
             Questo permette un rapido accesso ai dati, ma al costo di un aumento
             della memoria usata dall'applicazione.
 
-            Dal punto di vista dello sviluppo cross platform \tisdk{} assicura il funzionamento
+            Dal punto di vista dello sviluppo \crossplat{} \tisdk{} assicura il funzionamento
             del sistema di memorizzazione descritto, direttamente senza dover riadattare il codice,
             su tutte le piattaforme supportate. Anche il local storage
             di \html{}5 può essere usato per memorizzare dati su piattaforme diverse
@@ -602,8 +603,9 @@
             imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}}.
             Pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma
             un valore che identifica l'applicazione che però potrebbe essere diverso
-            dopo una reinstallazione o dopo
-            un aggiornamento della stessa o addirittura del sistema operativo.
+            dopo una reinstallazione, dopo
+            un aggiornamento della stessa o addirittura in seguito ad un
+            aggiornamento del sistema operativo.
             Su Android invece UUID
             identifica proprio il dispositivo. La conseguenza di tutto ciò è che
             UUID non è affidabile per iOS e quindi sarebbe stato necessario utilizzare
@@ -702,7 +704,7 @@
                 \label{fig:PGMaps}
             \end{figure}
 
-            Anche per quanto riguarda l'uso delle mappe in progetti Titanium
+            Anche l'uso delle mappe in progetti Titanium
             non comporta grandi difficoltà, in più il paradigma MVC
             offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
             una view con al suo interno la mappa bisogna prima caricare il modulo
@@ -879,9 +881,9 @@
             acquisire foto tramite la funzione \texttt{showCamera} dello spazio
             dei nomi \texttt{Titanium.Media}. La differenza con \pg{} è che i
             dati dell'immagine vengono restituiti solo in formato binario
-            tramite un oggetto \js{} \texttt{Blob} così come vendono acquisiti;
+            tramite un oggetto \js{} \texttt{Blob} così come vengono acquisiti;
             per modificare l'immagine si deve ricorrere ad altre funzionalità
-            magari offerte anche da qualche modulo aggiuntivo\footnote{Appcelerator
+            offerte da qualche modulo aggiuntivo\footnote{Appcelerator
             fornisce il modulo gratuito \texttt{ti.imagefactory} però
             disponibile solo per Android e iOS}.
 
@@ -892,17 +894,17 @@
             \texttt{Geolocation} che permette sia di monitorare in maniera
             continuativa la posizione, sia di inviare una sola richiesta per la
             posizione corrente. In entrambi i casi si possono passare dei
-            parametri di opzione alle rispettive funzioni, per esempio, per
+            parametri di opzione alle rispettive funzioni, con lo scopo ad
+            esempio di
             ottenere la posizione esatta mediante il ricevitore GPS oppure,
-            quella meno accurata, mediante il sistema si approssimazione che
-            impiega le informazioni sulle reti WiFi presenti nella zone e la
-            cella telefonica alla quale si è agganciati per stimare la
-            posizione. In \tisdk{} si accede al sistema di
+            quella meno accurata, ottenuta utilizzando
+            le informazioni sulle reti WiFi presenti nella zone e la
+            cella telefonica alla quale si è agganciati. In \tisdk{} si accede al sistema di
             geolocalizzazione attraverso le API del gruppo
             \texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
             metodi per la richiesta (continua o meno) della posizione corrente,
             offrono anche il servizio di geocoding che da la possibilità di
-            trasformare la posizione data in coordinate geografiche in un
+            trasformare le coordinate geografiche in un
             normale indirizzo postale. L'uso dei metodi per ottenere i dati
             sulla posizione è lo stesso per tutte le piattaforme che si possono
             supportare ma troviamo delle differenze sostanziali per quanto
@@ -912,7 +914,7 @@
             Una volta raccolte tutte le informazione siamo pronti per inviare
             al server la nuova segnalazione tramite le nostre API. Se stiamo
             sviluppando per Android, \tisdk{} ci permette di farlo in un modo
-            più elegante fornendo la possibilità di avviare sevizi in
+            più elegante fornendo la possibilità di avviare servizi in
             background: in questo modo, mentre la segnalazione viene inviata al
             server, l'applicazione può continuare ad essere utilizzata e la
             conclusione dell'operazione può essere mostrata all'utente mediante
@@ -938,13 +940,14 @@
             Questa schermata mostra una lista di titoli delle segnalazioni fatte
             dal proprio dispositivo (non contiene quindi quelle effettuate da altri
             utenti), in modo da poter accedere velocemente ad esse
-            senza dover necessariamente andarle a cercare sulla mappa.
+            senza doverle necessariamente cercare sulla mappa.
             Gli elementi della lista sono cliccabili e premere su uno di questi
             elementi porta all'apertura del dettaglio della corrispondente
             segnalazione (vedi \ref{subsec:dettagli}).
 
             Qui non c'è interazione con gli strumenti offerti dal dispositivo
-            tranne che per il caching descritto nella sezione \ref{subsec:caching}
+            tranne che per il caching, descritto nella sezione
+            \ref{subsec:caching},
             implementato per permettere un uso dell'applicazione
             anche in assenza di connessione alla rete Internet,
             quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
@@ -1028,7 +1031,7 @@
         click: function(e) {
           /* gestore del tocco su un elemento della lista */
         },
-        /* nella lista viengono mostrati solo i campi 'titolo' */
+        /* nella lista viene mostrato solo il campo 'titolo' */
         template: "<h5>#:titolo#</h5>"
       });
     };
@@ -1379,7 +1382,7 @@
 
         \subsection{Salvataggio locale}
         \label{subsec:caching}
-            Dopo la consegna della prima versine funzionante delle due
+            Dopo la consegna della prima versione funzionante delle due
             applizioni, la prima cosa che il nostro tutore aziendale ci ha
             richiesto di aggiungere è stato un meccanismo di caching per
             permettere almeno la visualizzazione delle proprie segnalazioni in
@@ -1400,7 +1403,7 @@
             Per quanto riguarda \tisdk{} le API \texttt{Titanium.Network}
             forniscono, oltre ad altri metodi utili per identificare il tipo di
             connessione in corso, anche il semplice metodo \texttt{getOnline}
-            che con un valore booleano permette di conoscere se il dispoditivo
+            che con un valore booleano permette di conoscere se il dispositivo
             ha attualmente accesso ad Internet.
 
             Sapendo ora accedere alle informazioni di rete, dovevamo decidere
@@ -1526,14 +1529,14 @@
         L'applicazione ibrida fornisce buone prestazioni in quasi tutte
         le sue funzionalità, soltanto la mappa mostra problemi di fluidità
         nelle operazioni di zoom o di spostamento, va però detto che queste
-        prestazioni sono legate al servizio usato per la mappa.
+        prestazioni sono anche legate al servizio usato per la mappa.
         \tisdk{} ha permesso la realizzazione di un'applicazione molto fluida
         anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo
         di consigliare \tisdk{}.
         \subsubsection{Funzionalità}
-        Entrambi i framwork sono risultati validi nel realizzare le
+        Entrambi i framework sono risultati validi nel realizzare le
         funzionalità che ci erano state richieste. Di base \tisdk{} fornisce
-        sicuramente più strumenti, ma l'estensibilità di \pg{} tramite plugin
+        sicuramente più strumenti, ma l'estendibilità di \pg{} tramite plugin
         permette di ridurre questo gap, molti di questi plugin sono
         disponibili in rete e avendo conoscenze del linguaggio nativo è
         possibile crearsene di propri. L'unica vera differenza
