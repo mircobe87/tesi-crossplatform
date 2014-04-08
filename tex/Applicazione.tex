@@ -433,7 +433,7 @@
             interamente in un unico file \js{}. Inoltre come detto più volte
             tutte le schermate e gli elementi all'interno di esse sono state
             definite in un unico file \html{} (vedi fig. \ref{fig:degradoAmbientaleTree}).
-            \begin{figure}[h]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[keepaspectratio=true, width=0.95\textwidth]{degradoAmbientaleTree}
                 \caption{
@@ -459,6 +459,7 @@
                               icone e la schermata di apertura e come per \pg{}
                               sono presenti sottocartelle per inserirvi le stesse
                               immagini in dimensioni diverse a seconda del dispositivo;
+                              \clearpage
                 \item[widgets] contiene tutti i file necessari per utilizzare widget esterni
                                come quello usato per la barra di navigazione ed il menù descritti
                                nel paragrafo \ref{subsec:structgraphic};
@@ -479,16 +480,6 @@
                             ed eseguire la logica dell'applicazione.
             \end{description}
 
-            \begin{figure}[h]
-                \centering
-                \includegraphics[keepaspectratio=true, width=0.80\textwidth]{degradoTiTree}
-                \caption{
-                La figura mostra la gerarchia delle cartelle e dei file che
-                compongono l'applicazione realizzata con \tisdk{}
-                }
-                \label{fig:degradoTiTree}
-            \end{figure}
-
             \noindent Per strutturare realmente l'applicazione secondo il paradigma MVC
             ci sarebbe stato bisogno di usare un'altra cartella di nome \texttt{models}
             nella quale inserire i file \js{} per i modelli, però la documentazione
@@ -499,7 +490,17 @@
             di qualsiasi schermata, rendendolo così un ottimo posto dove fare
             varie inizializzazioni dell'applicazione. Nel nostro progetto è
             stato usato ad esempio per caricare il modulo per la mappa.
-
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[keepaspectratio=true, width=0.80\textwidth]{degradoTiTree}
+                \caption{
+                La figura mostra la gerarchia delle cartelle e dei file che
+                compongono l'applicazione realizzata con \tisdk{}
+                }
+                \label{fig:degradoTiTree}
+            \end{figure}
+            
         \subsection{Comunicare con il lato server}
         \label{subsec:comlatoserver}
             Sia con \tisdk{} che con \pg{} il linguaggio principalmente utilizzato,
@@ -682,7 +683,26 @@
             le prestazioni: rispetto alle mappe che si possono trovare in
             applicazioni native, questa risulta essere molto meno fluida durante
             il suo trascinamento e durante il cambio del livello di zoom.
-            \begin{figure}[h]
+
+            Anche l'uso delle mappe in progetti Titanium
+            non comporta grandi difficoltà, in più il paradigma MVC
+            offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
+            una view con al suo interno la mappa bisogna prima caricare il modulo
+            relativo, questo lo si fa tipicamente all'interno del file
+            \texttt{app/alloy.js} così che il caricamento del modulo venga
+            eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
+            comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
+            in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
+            \begin{lstlisting}[
+                caption={Caricamento del modulo \texttt{ti.map} creando un riferimento
+                        globale nel file \texttt{alloy.js}.},
+                label=cod:alloyglob
+            ]
+    // caricamento modulo mappa
+    Alloy.Globals.Map = require('ti.map');
+            \end{lstlisting}
+            
+            \begin{figure}[H]
                 \centering
                 \begin{subfigure}[b]{0.485\textwidth}
                     \includegraphics[keepaspectratio=true, width=\textwidth]{mapPG}
@@ -703,24 +723,6 @@
                 }
                 \label{fig:PGMaps}
             \end{figure}
-
-            Anche l'uso delle mappe in progetti Titanium
-            non comporta grandi difficoltà, in più il paradigma MVC
-            offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
-            una view con al suo interno la mappa bisogna prima caricare il modulo
-            relativo, questo lo si fa tipicamente all'interno del file
-            \texttt{app/alloy.js} così che il caricamento del modulo venga
-            eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
-            comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
-            in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
-            \begin{lstlisting}[
-                caption={Caricamento del modulo \texttt{ti.map} creando un riferimento
-                        globale nel file \texttt{alloy.js}.},
-                label=cod:alloyglob
-            ]
-    // caricamento modulo mappa
-    Alloy.Globals.Map = require('ti.map');
-            \end{lstlisting}
             Fatto questo abbiamo definito la view in un file XML dedicato, vi abbiamo richiamato
             il modulo per la mappa (vedi codice \ref{cod:alloymapview}) e, in un secondo file \js{} specifico per
             l'implementazione del controllore, sono stati definiti tutti i
@@ -781,26 +783,7 @@
             iOS e Android. Le mappe risultati sono notevolmente più performanti
             rispetto a quelle descritte precedentemente fornendo un esperienza
             utente molto più gradevole.
-
-            Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
-            applicazioni \pg{} non dà nessun problema non essendo necessario
-            interagire con funzionalità del dispositivo; una volta scritto,
-            tutto il codice sarà utilizzabile su tutte le piattaforme per le
-            quali si sta sviluppando l'applicazione. Inoltre non si è
-            costretti ad utilizzare soltanto il servizio mappe di Google, online
-            sono disponibili altre API \js{} open source come Leaflet oppure
-            di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
-            (di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
-            delicato: per supportare sia la piattaforma Android che iOS sono
-            sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
-            Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
-            \texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
-            di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
-            \js{}/\html{} che utilizza le API online del nostro fornitore di
-            mappe preferito, può essere caricato in un'opportuna web view,
-            quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
-            supportano tutte le piattaforme senza alcuna differenza.
-            \begin{figure}[h]
+            \begin{figure}[H]
                 \centering
                 \begin{subfigure}[b]{0.485\textwidth}
                     \includegraphics[keepaspectratio=true, width=\textwidth]{tiMap}
@@ -820,6 +803,25 @@
                 }
                 \label{fig:TiMaps}
             \end{figure}
+            Dal punto di vista dello sviluppo \crossplat{}, l'uso delle mappe in
+            applicazioni \pg{} non dà nessun problema non essendo necessario
+            interagire con funzionalità del dispositivo; una volta scritto,
+            tutto il codice sarà utilizzabile su tutte le piattaforme per le
+            quali si sta sviluppando l'applicazione. Inoltre non si è
+            costretti ad utilizzare soltanto il servizio mappe di Google, online
+            sono disponibili altre API \js{} open source come Leaflet oppure
+            di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
+            (di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
+            delicato: per supportare sia la piattaforma Android che iOS sono
+            sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
+            Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
+            \texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
+            di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
+            \js{}/\html{} che utilizza le API online del nostro fornitore di
+            mappe preferito, può essere caricato in un'opportuna web view,
+            quest'ultima ottenuta attraverso le API di \tisdk{} che stavolta
+            supportano tutte le piattaforme senza alcuna differenza.
+            
 
         \subsection{Creare una nuova segnalazione}
         \label{subsec:nuova}
@@ -848,7 +850,7 @@
             stata realizzata in una nuova view mentre con \tisdk{} la si è
             implementata con una window. La figura \ref{fig:inputs} mostra la
             schermata di input per i due framework.
-            \begin{figure}[h]
+            \begin{figure}[H]
               \centering
               \begin{subfigure}[b]{0.485\textwidth}
                 \includegraphics[keepaspectratio=true,width=\textwidth]{inputPG}
@@ -1031,7 +1033,7 @@
         click: function(e) {
           /* gestore del tocco su un elemento della lista */
         },
-        /* nella lista viene mostrato solo il campo 'titolo' */
+        /* nella lista si mostra solo il campo 'titolo' */
         template: "<h5>#:titolo#</h5>"
       });
     };
@@ -1044,7 +1046,6 @@
     };
   </script>
             \end{lstlisting}
-
             \noindent Mentre le segnalazioni vengono scaricate dal server l'utente si
             troverebbe di fronte ad una lista vuota senza capire effettivamente
             cosa stia succedendo, per evitare questo spiacevole inconveniente
@@ -1057,16 +1058,7 @@
             inoltre su Android lo stile di questa animazione non assomiglia molto
             a quello nativo.
 
-            \begin{figure}[H]
-                \centering
-                \includegraphics[keepaspectratio=true,width=0.5\textwidth]{listaMieLoadPg}
-                \caption{La figura mostra l'animazione di caricamento nella lista
-                delle proprie segnalazioni realizzata con \kendomob{}.
-                }
-                \label{fig:listaMieLoadPg}
-            \end{figure}
-
-            \noindent Come detto con \tisdk{} l'approccio è simile. Dentro
+            Come detto con \tisdk{} l'approccio è simile. Dentro
             il file XML della schermata che contiene la lista deve essere definito
             l'elemento \texttt{ListView} però a differenza di \kendomob{} la struttura
             degli elementi va ancora definita in XML anzichè in \js{}. Nel controllore
@@ -1105,7 +1097,6 @@
         </ListSection>
     </ListView>
             \end{lstlisting}
-
             \begin{lstlisting}[
                 caption = {
                     Codice del controllore della lista. E' importante notare
@@ -1121,13 +1112,19 @@
     var dataToInsert = transformData(data);
     /* Inserisce le segnalazioni trasformate nella lista */
     listSection.appendItems(dataToInsert);
-
     var dataClick = function(){
-        /* codice da eseguire quando viene premuto un elemento della lista */
+        /* da eseguire al tocco su un elemento della lista */
     }
             \end{lstlisting}
-
-            \noindent Per quanto riguarda l'animazione di caricamento \tisdk{} fornisce
+            \begin{figure}[H]
+                \centering
+                \includegraphics[keepaspectratio=true,width=0.5\textwidth]{listaMieLoadPg}
+                \caption{La figura mostra l'animazione di caricamento nella lista
+                delle proprie segnalazioni realizzata con \kendomob{}.
+                }
+                \label{fig:listaMieLoadPg}
+            \end{figure}
+            Per quanto riguarda l'animazione di caricamento \tisdk{} fornisce
             l'API per accedere a quella nativa di Android.
             Tale animazione può essere di due tipi: una semplice da usare quando
             il tempo da attendere è indeterminato e
@@ -1168,6 +1165,7 @@
               \label{fig:mieLoadTi}
             \end{figure}
 
+            \clearpage
             \noindent In generale entrambi i framework hanno soddisfatto tutti
             i nostri requisiti e lo scorrimento delle liste è
             performante anche in presenza di molti elementi. \kendomob{} ha
@@ -1190,25 +1188,6 @@
             l'interfaccia per adempiere a questo scopo. La figura
             \ref{fig:repodetails} mostra le interfacce dei due framework con i
             dettagli di una segnalazione.
-            \begin{figure}[h]
-                \centering
-                \begin{subfigure}[b]{0.9\textwidth}
-                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG1}
-                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG2}
-                    \caption{}
-                \end{subfigure}
-                \begin{subfigure}[b]{0.9\textwidth}
-                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI1}
-                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI2}
-                    \caption{}
-                \end{subfigure}
-                \caption{
-                    Interfaccia per i dettagli di una segnalazione: (a) la view
-                    \kendomob{}; (b) la window di \tisdk{}.
-                }
-                \label{fig:repodetails}
-            \end{figure}
-
 
             Realizzare questa funzionalità ci ha permesso di confrontarci con il
             problema di dover scaricare un file da un server, in questo caso,
@@ -1337,7 +1316,25 @@
             Con il plugin di \pg{}, a patto di avere i permessi necessari, è
             possibile navigare in tutto il filesystem del sistema e creare nuove
             cartelle e file dove si vuole.
-
+            \newpage
+            \begin{figure}[H]
+                \centering
+                \begin{subfigure}[b]{0.9\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG1}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailPG2}
+                    \caption{}
+                \end{subfigure}
+                \begin{subfigure}[b]{0.9\textwidth}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI1}
+                    \includegraphics[keepaspectratio=true, width=0.485\textwidth]{repodetailTI2}
+                    \caption{}
+                \end{subfigure}
+                \caption{
+                    Interfaccia per i dettagli di una segnalazione: (a) la view
+                    \kendomob{}; (b) la window di \tisdk{}.
+                }
+                \label{fig:repodetails}
+            \end{figure}
 
         \subsection{Lista delle ultime segnalazioni}
         Questa schermata è quella mostrata all'avvio dell'applicazione se
