@@ -4,129 +4,141 @@
     funzionalità, strumenti per lo sviluppo, curva di apprendimento,
     \crossplat{}. Ricordiamo ancora una
     volta che l'applicazione è stata testata soltanto su dispositivi Android.
-        \subsubsection{Interfaccia grafica}
-        La qualità dell'interfaccia grafica è sicuramente migliore in \tisdk{},
-        soprattutto per il fatto che è possibile accedere agli elementi
-        grafici nativi delle varie piattaforme. \kendomob{} prova tramite i
-        suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si
-        notano ancora alcune differenze; dalle dimostrazioni disponibili sulla
-        documentazione di questo framework, invece, sembra che per iOS l'aspetto
-        rispecchi in maniera più fedele quello nativo. Integrare \pg{} con
-        altri framework per la realizzazione dell'interfaccia grafica potrebbe
-        comunque risolvere in parte il problema dell'aspetto.
-        \subsubsection{Prestazioni}
-        L'applicazione ibrida fornisce buone prestazioni in quasi tutte
-        le sue funzionalità, soltanto la mappa mostra problemi di fluidità
-        nelle operazioni di zoom o di spostamento, va però detto che queste
-        prestazioni sono anche legate al servizio usato per la mappa.
-        \tisdk{} ha permesso la realizzazione di un'applicazione molto fluida
-        anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo
-        di consigliare \tisdk{}.
-        \subsubsection{Funzionalità}
-        Entrambi i framework sono risultati validi nel realizzare le
-        funzionalità che ci erano state richieste. Di base \tisdk{} fornisce
-        sicuramente più strumenti, ma l'estendibilità di \pg{} tramite plugin
-        permette di ridurre questo gap, molti di questi plugin sono
-        disponibili in rete e avendo conoscenze del linguaggio nativo è
-        possibile crearsene di propri. L'unica vera differenza
-        trovata è stata nell'impossibilità di implementare il servizio di
-        background (vedi \ref{subsec:nuova}) con \pg{}, questo problema
-        riguarda proprio il concetto con
-        il quale sono costruite queste applicazioni: è si possibile lanciare
-        in \js{}
-        un servizio in background che possa essere eseguito anche quando
-        l'applicazione è stata chiusa (in rete è disponibile un plugin proprio
-        per questo scopo) ma, il codice del servizio deve essere comunque
-        scritto in linguaggio nativo in quanto, un servizio scritto in codice
-        \js{}, essendo interpretato all'interno della Web View
-        dell'applicazione, non potrebbe essere eseguito quando questa viene
-        chiusa.
-        \tisdk{} invece convertendo il codice \js{} in codice nativo non
-        soffre di questo problema.
-        \subsubsection{Strumenti per lo sviluppo}
-        Di per se \pg{} offre soltanto la CLI per creare, compilare,
-        installare l'applicazione sul dispositivo e aggiungervi plugin. Non
-        offre quindi un proprio IDE e nemmeno particolari strumenti per il
-        debug. Se si decide di non usare il servizio \pg{} Build avendo dovuto
-        installare gli SDK nativi per le piattaforme di destinazione è
-        possibile sfruttare gli IDE nativi e gli strumenti che essi offrono,
-        come il logcat di Android. Inoltre esistono altre soluzioni create
-        appositamente per fornire strumenti di sviluppo aggiuntivi a quelli di
-        \pg{}, è il caso di Icenium\footnote{al momento della scrittura di
-        questa tesi è stato rinominato in app builder.
-        Maggiori informazioni possono essere trovate sul sito
-        \url{http://www.telerik.com/appbuilder}} che in particolare offre un
-        ICE (Integrated Cloud Environment), cioè un IDE che però lavora su una
-        cloud. Per essere più chiari, Icenium fornisce un moderno ambiente di
-        code-editing, con un integrata analisi del codice in tempo reale,
-        debugging, sintassi colorata e formattata, completamento di istruzioni,
-        refactoring e navigazione nel codice. Con Icenium la compilazione
-        viene fatta in remoto come con \pg{} Build, e inoltre l'applicazione
-        può essere testata sia su Android che su iOS senza possedere una
-        licenza di sviluppatore (che ovviamente serve comunque per distribuire
-        l'applicazione attraverso gli store), il debug viene fatto sempre
-        attraverso gli strumenti del web, ma il tutto è integrato in Icenium.
-        Questo potente ICE può essere usato direttamente da un qualsiasi browser
-        (con alcune limitazioni alle funzionalità) o tramite un apposito
-        programma per Windows. Per finire Icenium integra di default il
-        framework \kendomob{} (ma può essere usato anche con altri). Non
-        l'abbiamo utilizzato per lo sviluppo dell'applicazione ibrida soltanto
-        perché volevamo capire bene cosa offrisse da solo \pg{} e perché il
-        suo utilizzo è gratuito solo per il primo mese. Un'altra soluzione di
-        questo tipo è offerta dalla Intel con IntelXDK disponibile sul sito
-        \url{http://xdk-software.intel.com/}. Siamo inoltre sicuri che,
-        anche se abbiamo trovato il servizio \pg{} Build ancora acerbo, nel
-        futuro prossimo sarà un ottimo strumento per evitare la complessa
-        configurazione in locale di tutti gli SDK. In ultimo citiamo la
-        documentazione di \pg{} che è ben fatta ma a causa del fatto che venga
-        copiata da quella di Cordova e poi riadattata nel tempo a \pg{}
-        presenta lacune ed è molto confusionaria sulla descrizione dell'uso
-        del framework.
 
-        \tisdk{} come detto offre un proprio IDE che permette anche di fare
-        debugging del codice \js{} con la possibilità di interrompere
-        l'esecuzione dell'applicazione e di eseguire la sua logica passo passo
-        in modo da individuare più facilmente gli errori. Ad ogni modo anche
-        con \tisdk{} il maggior strumento di testing è stato il logcat di
-        Android che però è ben integrando nell'IDE. Abbiamo trovato
-        questi strumenti abbastanza utili, anche se sia in ambiente linux che
-        windows abbiamo avuto non pochi problemi di configurazione.
-        \subsubsection{Curva di apprendimento}
-        Sicuramente il tempo per iniziare a scrivere applicazioni ibride con
-        \pg{} è molto breve, molto dipende anche dal framework usato per
-        l'interfaccia grafica, ma \kendomob{} si è rivelato tra i più semplici.
-        L'uso delle API è molto semplice ed intuitivo, per non parlare del
-        fatto che se si desidera creare applicazioni \crossplat{} la curva di
-        apprendimento è praticamente indipendente dal numero di piattaforme
-        che si intende supportare.
 
-        \tisdk{} è sicuramente più complicato da apprendere e soprattutto
-        bisogna familiarizzare con alcuni concetti tipici delle piattaforme
-        native, con la conseguenza che spesso ci si ritrova a leggere la
-        documentazione nativa della piattaforma di destinazione. Per
-        questo motivo, in un ottica di sviluppo \crossplat{}, sarà necessario
-        spendere più tempo per l'apprendimento a seconda del numero di diverse
-        piattaforme per le quali si è deciso di sviluppare applicazioni. Ad
-        ogni modo \tisdk{} è accompagnato da una ricca documentazione ben
-        fatta e da una serie di guide che descrivono concetti
-        importanti relativi all'uso di questo framework; oltre a questo
-        \tisdk{} fornisce un insieme di API ben strutturato che, una volta
-        presa familiarità con questo framework, consente di trovare subito
-        quello di cui si ha bisogno.
-        \subsubsection{Cross-platform}
-        L'obbiettivo principale del tirocinio era proprio quello di valutare
-        come i due framework si comportassero nello sviluppo di applicazioni
-        \crossplat{}, purtroppo non avendo la possibilità di testare
-        effettivamente l'applicazione su altre piattaforme le conclusioni che
-        possiamo fornire si basano soltanto su ciò che abbiamo appreso dalle
-        documentazioni. L'applicazione ibrida permette sicuramente di
-        condividere la maggior parte del codice sia per quanto riguarda la
-        grafica che la logica, questo grazie alla consistenza delle API \pg{}
-        e alla adattività di quelle \kendomob{}.
+    \section{Interfaccia grafica}
+    La qualità dell'interfaccia grafica è sicuramente migliore in \tisdk{},
+    soprattutto per il fatto che è possibile accedere agli elementi
+    grafici nativi delle varie piattaforme. \kendomob{} prova tramite i
+    suoi file \css{} ad emulare l'aspetto nativo, ma effettivamente si
+    notano ancora alcune differenze; dalle dimostrazioni disponibili sulla
+    documentazione di questo framework, invece, sembra che per iOS l'aspetto
+    rispecchi in maniera più fedele quello nativo. Integrare \pg{} con
+    altri framework per la realizzazione dell'interfaccia grafica potrebbe
+    comunque risolvere in parte il problema dell'aspetto.
 
-        Con \tisdk{}, invece, la quantità di codice che è possibile
-        condividere tra le varie piattaforme è minore soprattutto se intendiamo
-        utilizzare delle funzionalità particolari come abbiamo fatto per
-        la action bar di Android. Ad ogni modo la differenziazione del codice
-        è resa semplice dal paradigma MVC e dalle API fornite dal framework
-        allo scopo.
+
+    \section{Prestazioni}
+    L'applicazione ibrida fornisce buone prestazioni in quasi tutte
+    le sue funzionalità, soltanto la mappa mostra problemi di fluidità
+    nelle operazioni di zoom o di spostamento, va però detto che queste
+    prestazioni sono anche legate al servizio usato per la mappa.
+    \tisdk{} ha permesso la realizzazione di un'applicazione molto fluida
+    anche nell'uso della mappa. Per cui anche in questo campo ci sentiamo
+    di consigliare \tisdk{}.
+
+
+    \section{Funzionalità}
+    Entrambi i framework sono risultati validi nel realizzare le
+    funzionalità che ci erano state richieste. Di base \tisdk{} fornisce
+    sicuramente più strumenti, ma l'estendibilità di \pg{} tramite plugin
+    permette di ridurre questo gap, molti di questi plugin sono
+    disponibili in rete e avendo conoscenze del linguaggio nativo è
+    possibile crearsene di propri. L'unica vera differenza
+    trovata è stata nell'impossibilità di implementare il servizio di
+    background (vedi \ref{subsec:nuova}) con \pg{}, questo problema
+    riguarda proprio il concetto con
+    il quale sono costruite queste applicazioni: è si possibile lanciare
+    in \js{}
+    un servizio in background che possa essere eseguito anche quando
+    l'applicazione è stata chiusa (in rete è disponibile un plugin proprio
+    per questo scopo) ma, il codice del servizio deve essere comunque
+    scritto in linguaggio nativo in quanto, un servizio scritto in codice
+    \js{}, essendo interpretato all'interno della Web View
+    dell'applicazione, non potrebbe essere eseguito quando questa viene
+    chiusa.
+    \tisdk{} invece convertendo il codice \js{} in codice nativo non
+    soffre di questo problema.
+
+
+    \section{Strumenti per lo sviluppo}
+    Di per se \pg{} offre soltanto la CLI per creare, compilare,
+    installare l'applicazione sul dispositivo e aggiungervi plugin. Non
+    offre quindi un proprio IDE e nemmeno particolari strumenti per il
+    debug. Se si decide di non usare il servizio \pg{} Build avendo dovuto
+    installare gli SDK nativi per le piattaforme di destinazione è
+    possibile sfruttare gli IDE nativi e gli strumenti che essi offrono,
+    come il logcat di Android. Inoltre esistono altre soluzioni create
+    appositamente per fornire strumenti di sviluppo aggiuntivi a quelli di
+    \pg{}, è il caso di Icenium\footnote{al momento della scrittura di
+    questa tesi è stato rinominato in app builder.
+    Maggiori informazioni possono essere trovate sul sito
+    \url{http://www.telerik.com/appbuilder}} che in particolare offre un
+    ICE (Integrated Cloud Environment), cioè un IDE che però lavora su una
+    cloud. Per essere più chiari, Icenium fornisce un moderno ambiente di
+    code-editing, con un integrata analisi del codice in tempo reale,
+    debugging, sintassi colorata e formattata, completamento di istruzioni,
+    refactoring e navigazione nel codice. Con Icenium la compilazione
+    viene fatta in remoto come con \pg{} Build, e inoltre l'applicazione
+    può essere testata sia su Android che su iOS senza possedere una
+    licenza di sviluppatore (che ovviamente serve comunque per distribuire
+    l'applicazione attraverso gli store), il debug viene fatto sempre
+    attraverso gli strumenti del web, ma il tutto è integrato in Icenium.
+    Questo potente ICE può essere usato direttamente da un qualsiasi browser
+    (con alcune limitazioni alle funzionalità) o tramite un apposito
+    programma per Windows. Per finire Icenium integra di default il
+    framework \kendomob{} (ma può essere usato anche con altri). Non
+    l'abbiamo utilizzato per lo sviluppo dell'applicazione ibrida soltanto
+    perché volevamo capire bene cosa offrisse da solo \pg{} e perché il
+    suo utilizzo è gratuito solo per il primo mese. Un'altra soluzione di
+    questo tipo è offerta dalla Intel con IntelXDK disponibile sul sito
+    \url{http://xdk-software.intel.com/}. Siamo inoltre sicuri che,
+    anche se abbiamo trovato il servizio \pg{} Build ancora acerbo, nel
+    futuro prossimo sarà un ottimo strumento per evitare la complessa
+    configurazione in locale di tutti gli SDK. In ultimo citiamo la
+    documentazione di \pg{} che è ben fatta ma a causa del fatto che venga
+    copiata da quella di Cordova e poi riadattata nel tempo a \pg{}
+    presenta lacune ed è molto confusionaria sulla descrizione dell'uso
+    del framework.
+
+    \tisdk{} come detto offre un proprio IDE che permette anche di fare
+    debugging del codice \js{} con la possibilità di interrompere
+    l'esecuzione dell'applicazione e di eseguire la sua logica passo passo
+    in modo da individuare più facilmente gli errori. Ad ogni modo anche
+    con \tisdk{} il maggior strumento di testing è stato il logcat di
+    Android che però è ben integrando nell'IDE. Abbiamo trovato
+    questi strumenti abbastanza utili, anche se sia in ambiente linux che
+    windows abbiamo avuto non pochi problemi di configurazione.
+
+
+    \section{Curva di apprendimento}
+    Sicuramente il tempo per iniziare a scrivere applicazioni ibride con
+    \pg{} è molto breve, molto dipende anche dal framework usato per
+    l'interfaccia grafica, ma \kendomob{} si è rivelato tra i più semplici.
+    L'uso delle API è molto semplice ed intuitivo, per non parlare del
+    fatto che se si desidera creare applicazioni \crossplat{} la curva di
+    apprendimento è praticamente indipendente dal numero di piattaforme
+    che si intende supportare.
+
+    \tisdk{} è sicuramente più complicato da apprendere e soprattutto
+    bisogna familiarizzare con alcuni concetti tipici delle piattaforme
+    native, con la conseguenza che spesso ci si ritrova a leggere la
+    documentazione nativa della piattaforma di destinazione. Per
+    questo motivo, in un ottica di sviluppo \crossplat{}, sarà necessario
+    spendere più tempo per l'apprendimento a seconda del numero di diverse
+    piattaforme per le quali si è deciso di sviluppare applicazioni. Ad
+    ogni modo \tisdk{} è accompagnato da una ricca documentazione ben
+    fatta e da una serie di guide che descrivono concetti
+    importanti relativi all'uso di questo framework; oltre a questo
+    \tisdk{} fornisce un insieme di API ben strutturato che, una volta
+    presa familiarità con questo framework, consente di trovare subito
+    quello di cui si ha bisogno.
+
+
+    \section{Cross-platform}
+    L'obbiettivo principale del tirocinio era proprio quello di valutare
+    come i due framework si comportassero nello sviluppo di applicazioni
+    \crossplat{}, purtroppo non avendo la possibilità di testare
+    effettivamente l'applicazione su altre piattaforme le conclusioni che
+    possiamo fornire si basano soltanto su ciò che abbiamo appreso dalle
+    documentazioni. L'applicazione ibrida permette sicuramente di
+    condividere la maggior parte del codice sia per quanto riguarda la
+    grafica che la logica, questo grazie alla consistenza delle API \pg{}
+    e alla adattività di quelle \kendomob{}.
+
+    Con \tisdk{}, invece, la quantità di codice che è possibile
+    condividere tra le varie piattaforme è minore soprattutto se intendiamo
+    utilizzare delle funzionalità particolari come abbiamo fatto per
+    la action bar di Android. Ad ogni modo la differenziazione del codice
+    è resa semplice dal paradigma MVC e dalle API fornite dal framework
+    allo scopo.
