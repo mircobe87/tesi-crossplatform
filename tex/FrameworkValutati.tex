@@ -1,22 +1,22 @@
 \chapter{Framework Valutati}
-    Il primo passo necessario nella valutazione di questi framework è stato
+    Il primo passo necessario nella valutazione di questi frame\-work è stato
     chiarire bene quali applicazioni, tra le tre tipologie descritte nel
     capitolo \ref{chap:sam}, fosse possibile realizzare con essi.
     Durante la fase di ricerca abbiamo
-    notato una gran confusione nell'attribuire a ciascun framework il tipo di
+    notato una gran confusione nell'attribuire a ciascun frame\-work il tipo di
     applicazione che permetteva di realizzare. Spesso il fatto che
     l'applicazione venisse eseguita all'interno di una componente nativa veniva
-    pubblicizzato come se il framework fosse in grado di creare una completa
+    pubblicizzato come se il frame\-work fosse in grado di creare una completa
     applicazione nativa anziché ibrida; in altri casi
     veniva confuso il concetto di \crosscomp{} (vedi \ref{sec:nativapp}) con
     quello di
     applicazione ibrida; in altri ancora non veniva mostrata la separazione
-    concettuale che vi è tra framework utili per la sola costruzione della
-    logica e dell'interfaccia grafica dell'applicazione e framework che
+    concettuale che vi è tra frame\-work utili per la sola costruzione della
+    logica e dell'interfaccia grafica dell'applicazione, e frame\-work che
     permettono d'incapsulare il contenuto web in una componente nativa creando
     così un'applicazione ibrida.
 
-    Abbiamo così classificato \tisdk{} come framework per la
+    Abbiamo così classificato \tisdk{} come frame\-work per la
     realizzazione di applicazioni native; Phonegap/Cordova, Rho Mobile e Sencha
     Touch come quelli dediti alla creazione di applicazioni ibride; \jqm{},
     \kendomob{} e \phonejs{} utili per implementare complete
@@ -26,10 +26,10 @@
     \section{Framework per Applicazioni Native}
         \subsection{Titanium Appcelerator}
         \label{sec:titanium}
-            \tisdk{} è una piattaforma gratis e open source di sviluppo di
+            \tisdk{} è una piattaforma gratis e open \mbox{source} di sviluppo di
             applicazioni mobili che permette la creazione di applicazioni native
             \crossplat{} per iOS, Android, BlackBerry e Tizen usando il
-            linguaggio \js{}. Oltre alle applicazioni mobili questo framework
+            linguaggio \js{}. Oltre alle applicazioni mobili questo frame\-work
             può essere utilizzato per creare applicazioni web.
 
             Titanium agisce come un ponte tra i sistemi operativi nativi e il
@@ -48,11 +48,11 @@
             operativo di destinazione: Android, iOS o il browser (per quanto
             riguarda le applicazioni web); sulla cima troviamo il codice
             dell'applicazione scritta in \js{} e in mezzo trova posto
-            Titanium SDK insieme alle proprie APIs. Utilizzando tali interfacce
+            Titanium SDK insieme alle proprie API. Utilizzando tali interfacce
             nella propria applicazione è possibile fare azioni come mostrare la
             fotocamera, aprire nuove finestre, disegnare pulsanti, ecc.
 
-            Titanium è descritto come un framework \crosscomp{}\citep{Web:peptechlearn.blogspot.it} anche se l'uso che si fa di
+            Titanium è descritto come un frame\-work \crosscomp{}\citep{Web:peptechlearn.blogspot.it} anche se l'uso che si fa di
             questo appellativo in questo caso non è del tutto corretto. Come
             spiega lo stesso amministratore delegato di Appcelerator Inc., Jeff
             Haynie, in un intervento online su
@@ -63,6 +63,7 @@
             \url{http://stackoverflow.com/questions/2444001/how-does-appcelerator-titanium-mobile-work}}
             il modo di operare di Titanium è il seguente:
             \begin{quotation}
+                \begin{hyphenrules}{english}
                 Titanium takes your \js{} code, analyzes and preprocesses
                 it and then pre-compiles it into a set of symbols that are
                 resolved based on your applications uses of Titanium APIs. From
@@ -85,6 +86,7 @@
                 mode otherwise things like dynamic code wouldn't work. However,
                 its much faster, much more compact and it's about as close to
                 pure native mapping as you can get. [\ldots]
+                \end{hyphenrules}
             \end{quotation}
             Ciò significa che il sistema fa tutto il possibile per creare codice
             nativo che rappresenti uno a uno quello che si è descritto in
@@ -159,7 +161,7 @@
                 Appcelerator mette anche a disposizione un proprio IDE gratuito
                 per rendere più agevole lo sviluppo. Titanium Studio, appunto, è
                 un ambiente di sviluppo integrato derivato da Eclipse, uno degli
-                IDE open-source più utilizzati. Con Titanium Studio è possibile
+                IDE open \mbox{source} più utilizzati. Con Titanium Studio è possibile
                 scrivere, fare testing e debugging delle proprie applicazioni;
                 inoltre sono presenti anche vari templates e applicazioni di
                 esempio per rendere più semplice cominciare a creare
@@ -222,12 +224,12 @@
 
             \subsubsection{Titanium SDK e il paradigma MVC}
             \label{subsub:alloy}
-                Appcelerator fornisce il framework Alloy che consente agli
+                Appcelerator fornisce il frame\-work Alloy che consente agli
                 sfiluppatori di strutturare le loro applicazioni secondo
                 paradigma MVC (Model-View-Controller)\footnote{Per approfondire
                 si può consultare l'indirizzo\\
                 \url{http://en.wikipedia.org/wiki/Model-view-controller}}. Con
-                questo framework l'interfaccia viene costruita combinando file
+                questo frame\-work l'interfaccia viene costruita combinando file
                 sorgenti scritti con i linguaggi XML e TSS (una versione personalizzata
                 di \css{}) mentre il codice che
                 riguarda la logica dell'applicazione è ancora \js{}.
@@ -245,18 +247,18 @@
     \section{Framework per Applicazioni Web}
     \label{sec:frameworkwebapp}
 
-        Come descritto più volte questi framework hanno una duplice funzionalità.
+        Come descritto più volte questi frame\-work hanno una duplice funzionalità.
         Ognuno di essi può essere utilizzato indipendentemente per realizzare
         applicazioni web (\hyperref[sec:webapp]{vedi~\ref{sec:webapp}}), oppure
-        può essere combinato ai framework descritti nella
+        può essere combinato ai frame\-work descritti nella
         sezione\hyperref[sec:frameworkhybrid]{~\ref{sec:frameworkhybrid}} per
         realizzare un'applicazione ibrida più soddisfacente.
 
         \subsection{JQuery Mobile}
         \label{subsec:jQuery}
-            \jqm{} è un framework per lo sviluppo di applicazioni mobili
+            \jqm{} è un frame\-work per lo sviluppo di applicazioni mobili
             web che sono accessibili da tutti i dispositivi: smartphone, tablet
-            e computer desktop. Esso è stato costruito sopra i robusti framework
+            e computer desktop. Esso è stato costruito sopra i robusti frame\-work
             \jq{} e \jq{} UI, che erano stati sviluppati per potenziare e
             agevolare la creazione dei tradizionali siti web.
 
@@ -281,7 +283,7 @@
                 caption={
                     Semplice applicazione jQuery Mobile. Da notare i riferimenti
                     aggiunti nell'intestazione del documento HTML necessari per
-                    l'uso del framework.
+                    l'uso del frame\-work.
                 }
             ]
     <!DOCTYPE html>
@@ -329,7 +331,7 @@
             pagine sono presenti nel DOM\footnote{Document Object Model: è il
             modello a oggetti \js{} generato dal browser che rappresenta la
             struttura dell'attuale documento \html{} caricato.} e si avrà una
-            veloce transizione animata dagli effetti forniti dal framework;
+            veloce transizione animata dagli effetti forniti dal frame\-work;
             nel caso di navigazione esterna si dovrà attendere il caricamento
             del nuovo documento, durante il quale \jqm{} cerca gli
             elementi \html{} con l'attributo \verb|data-role="page"|, crea il
@@ -353,7 +355,7 @@
             piattaforma sulla quale si sta eseguendo l'applicazione (vedi fig.
             \ref{fig:jquery}).
 
-            Il framework consente di essere esteso tramite l'aggiunta di nuovi
+            Il frame\-work consente di essere esteso tramite l'aggiunta di nuovi
             plug-in e widgets personalizzati. Nuovi plug-in permettono di
             estendere le funzionalità del sistema mentre nuovi widgets
             consentono di arricchire l'interfaccia utente.
@@ -372,16 +374,16 @@
 
         \subsection{KendoUI Mobile}
         \label{subsec:kendo}
-            \kendomob{} è un framework mobile completo che adatta
+            \kendomob{} è un frame\-work mobile completo che adatta
             automaticamente l'aspetto dell'applicazione alla piattaforma sulla
             quale è eseguita. Consiste di estensioni fondamentali per un
-            framework mobile come layouts, views, animazioni di transizione,
+            frame\-work mobile come layouts, views, animazioni di transizione,
             e fornisce un ricco insieme di widgets per la costruzione
             dell'interfaccia grafica tra cui bottoni, liste, aree di input di
             testo e altro. Non è però solo per queste caratteristiche che viene
-            definito un framework completo, infatti \kendomob{} offre anche
+            definito un frame\-work completo, infatti \kendomob{} offre anche
             un utile componente per la gestione di sorgenti data, strumenti di
-            validazione degli input, API per la globalizzazione e un framework
+            validazione degli input, API per la globalizzazione e un frame\-work
             MVVM (Model View ViewModel). Come \jqm{}, \kendomob{} è
             basato sulla libreria \js{} \jq{}.
 
@@ -389,7 +391,7 @@
             \url{http://www.telerik.com/download/kendo-ui-mobile}, quello che si
             ottiene è un pacchetto zip contenente tutti i file \js{} e \css{}
             necessari. La versione di prova può essere usata per apprendere
-            l'uso del framework ma non può essere usata per scopi commerciali
+            l'uso del frame\-work ma non può essere usata per scopi commerciali
             quindi, a differenza di \jqm{}, è necessario    mettere in conto
             la spesa di acquisto della licenza se si intende commercializzare
             l'applicazione. I file \js{} e \css{} scaricati devono essere
@@ -431,7 +433,7 @@
             caratterizzare i vari tag \html{} dando loro un particolare aspetto
             grafico relativo al widget che si vuole definire; la stessa
             operazione può essere fatta direttamente da codice \js{}: nel
-            framework sono presenti le varie API per poter inizializzare ogni
+            frame\-work sono presenti le varie API per poter inizializzare ogni
             widget su un particolare elemento \html{}. Per esempio il frammento di
             codice \ref{cod:htmlbutton} mostra come definire direttamente in
             \html{} un pulsante \kendomob{} mentre nel listato \ref{cod:jsbutton}
@@ -469,7 +471,7 @@
 
             Il punto di forza di \kendomob{} è la possibilità di creare
             applicazioni con aspetto nativo. Scrivendo codice una sola volta
-            sarà infatti il framework, all'avvio dell'applicazione, ad occuparsi
+            sarà infatti il frame\-work, all'avvio dell'applicazione, ad occuparsi
             di identificare la piattaforma e ad applicare il tema corretto. A
             prescindere da questa funzionalità è comunque possibile forzare
             l'utilizzo di uno stesso tema su piattaforme diverse. Attualmente
@@ -512,7 +514,7 @@
             letti da un server o caricati localmente specificando non molto di
             più del formato con cui questi sono strutturati.
 
-            Come detto poco fa \kendomob{} fornisce un framework per lo
+            Come detto poco fa \kendomob{} fornisce un frame\-work per lo
             sviluppo seguendo il paradigma MVVM; per provare a spiegare in cosa
             consiste tale modello ci serviamo di un esempio. Tipicamente in un
             qualsiasi genere di programma o applicazione è cosa comune dover
@@ -561,7 +563,7 @@
             condiviso tra più views.
 
         \subsection{PhoneJS}
-            PhoneJS è un framework per realizzare applicazioni mobili
+            PhoneJS è un frame\-work per realizzare applicazioni mobili
             single page application (SPA), che promette di fornire: un'
             esperienza utente ottimizzata per i dispositivi touch, elementi
             grafici (widgets) con
@@ -575,7 +577,7 @@
             L'obiettivo è sempre quello di realizzare un'applicazione web cross-platform
             riusando completamente il codice.
 
-            Come \kendomob{}, questo framework è in grado di fornire all'applicazione
+            Come \kendomob{}, questo frame\-work è in grado di fornire all'applicazione
             un aspetto differente a seconda del dispositivo senza scrivere codice aggiuntivo.
             PhoneJS, infatti, identifica la piattaforma a tempo di esecuzione
             e applica automaticamente
@@ -609,13 +611,13 @@
             PhoneJS fornisce tutti gli strumenti necessari per realizzare un'applicazione
             SPA: gestione e rendering delle schermate, navigazione attraverso url,
             layout specifico per il dispositivo, caching delle view e gestione degli stati.
-            Il framework usa le familiari regole di navigazione per definire la
+            Il frame\-work usa le familiari regole di navigazione per definire la
             relazione tra l'URL nel quale l'utente naviga e la corrispondente schermata
             da caricare. Lo sviluppatore deve specificare la regola di navigazione e definire
-            la schermata dell'applicazione, il framework a run-time si occuperà di effettuare la
+            la schermata dell'applicazione, il frame\-work a run-time si occuperà di effettuare la
             navigazione.
             Quando si naviga in una view, questa sarà resa visibile attraverso un
-            animazione di transizione, inoltre il framework tiene traccia dell'avvenuta
+            animazione di transizione, inoltre il frame\-work tiene traccia dell'avvenuta
             navigazione e aggiunge un bottone per tornare indietro. Questo comportamento
             di default può comunque essere cancellato.
 
@@ -630,14 +632,14 @@
     \label{sec:frameworkhybrid}
         \subsection{Phonegap}
         \label{subsec:hybridpg}
-            PhoneGap è un mobile development framework prodotto da Nitobi, e
+            PhoneGap è un mobile development frame\-work prodotto da Nitobi, e
             acquistato da Adobe System il 4 ottobre 2011.
             Spesso ci si riferisce a PhoneGap col nome di Apache Cordova, ma è
             necessario fare una distinzione.
             Nel momento dell'acquisto della Nitobi da parte di Adobe, il codice
             di PhoneGap è stato donato all'Apache Software Foundation (ASF),
-            questo per fare in modo che lo sviluppo del framework godesse di
-            tutti i benefici derivanti dalla licenza open source.
+            questo per fare in modo che lo sviluppo del frame\-work godesse di
+            tutti i benefici derivanti dalla licenza open \mbox{source}.
             Quello che avviene in sostanza è che sia le grandi compagnie, sia
             gli sviluppatori indipendenti contribuiscono a potenziare il codice
             di Apache Cordova che viene difatto usato come incubatrice per PhoneGap.
@@ -657,15 +659,15 @@
             differenze.
 
             Con PhoneGap come detto è possibile creare applicazioni ibride e quindi
-            applicazioni in grado di sfruttare fotocamera, GPS, file system e
-            altri sensori del dispositivo. Per fare questo il framework offre
-            delle API JavaScript che combinate con un framework UI come quelli descritti
+            applicazioni in grado di sfruttare fotocamera, GPS, file sys\-tem e
+            altri sensori del dispositivo. Per fare questo il frame\-work offre
+            delle API JavaScript che combinate con un frame\-work UI come quelli descritti
             nel paragrafo\hyperref[sec:frameworkwebapp]{~\ref{sec:frameworkwebapp}}
             permettono di realizzare applicazioni mobili che sono distribuibili
             attraverso gli app store delle varie piattaforme sviluppando
             semplicemente con HTML5, CSS3 e JavaScript.
 
-            Questo framework fornisce inoltre un'interfaccia da riga di comando (CLI)
+            Questo frame\-work fornisce inoltre un'interfaccia da riga di comando (CLI)
             che permette di usare i comandi per: creare l'applicazione, aggiungervi
             plugin, compilarla e installarla su un dispositivo o su un emulatore.
             Se si usa PhoneGap saranno inoltre disponibili comandi per eseguire
@@ -881,7 +883,7 @@
             da PhoneGap.
 
             La qualità dell'intefaccia utente in un'applicazione PhoneGap
-            varia in base al framework usato per realizzare la web app, e al
+            varia in base al frame\-work usato per realizzare la web app, e al
             motore di rendering delle pagine web della piattaforma.
             Il motore di rendering WebKit su iOS fornisce buone prestazioni, le
             Android Web View sono funzionali, ma hanno qualche notabile
@@ -912,14 +914,14 @@
                 eseguita sul dispositivo come se fosse nativa, sviluppandola
                 comunque in codice \html{}, \css{}, \js{} e Ruby. In aggiunta
                 alle funzionalità di questi linguaggi, \rhom{} fornisce
-                framework per l'accesso ai sistemi e ai dispositivi attraverso
+                frame\-work per l'accesso ai sistemi e ai dispositivi attraverso
                 le sue librerie di API Rhodes e RhoElements.
 
                 Rhodes è un insieme di API che consentono a tutte le applicazioni
                 \rhom{} di accedere a funzionalità specifiche del dispositivo
                 come fotocamera, localizzazione gps e uso del file system attraverso
                 due possibili interfacce: una in linguaggio Ruby e l'altra in
-                \js{}. Rhodes è open source e gli sviluppatori possono
+                \js{}. Rhodes è open \mbox{source} e gli sviluppatori possono
                 contribuire al suo sviluppo.
 
                 RhoElements è un insieme di API aggiuntive che ottimizza e personalizza
@@ -957,7 +959,7 @@
 
 
         \subsection{Sencha Touch}
-            \senchat{} è un framework per lo sviluppo \crossplat{} di
+            \senchat{} è un frame\-work per lo sviluppo \crossplat{} di
             applicazioni ad alte performance che impiega le medesime tecnologie
             della programmazione Web; le applicazioni prodotte sono
             impacchettate in file installabili proprio come quelle native ma
@@ -969,12 +971,12 @@
 
             Il produttore distribuisce \senchat{} con due diverse licenze d'uso:
             una per uso commerciale e l'altra per lo sviluppo di progetti open
-            source. In quest'ultimo caso è possibile scaricare il pacchetto
-            software senza spese\footnote{Il download in licenza open source è
+            \mbox{source}. In quest'ultimo caso è possibile scaricare il pacchetto
+            software senza spese\footnote{Il download in licenza open \mbox{source} è
             disponibile all'indirizzo \url{http://www.sencha.com/products/touch/download/}.}
-            ottenendo così il framework completo.
+            ottenendo così il frame\-work completo.
 
-            Oltre al framework, il produttore fornisce \senchacmd{}\footnote{
+            Oltre al frame\-work, il produttore fornisce \senchacmd{}\footnote{
             Questo strumento è scaricabile gratuitamente indipendentemente dalla
             licenza d'uso di \senchat{}. Il pacchetto d'installazione è
             disponibile all'indirizzo \url{http://www.sencha.com/products/sencha-cmd/download}},
@@ -1068,7 +1070,7 @@
             inserito il supporto per lavorare insieme a \pg{} e Cordova così da
             riuscire a supportare anche Windows Phone e BlackBerry. Un aspetto
             importante da sottolineare è che se si decide di lavorare con uno
-            qualunque di questi framework, l'uso delle API \verb|Ext.device.*| per
+            qualunque di questi frame\-work, l'uso delle API \verb|Ext.device.*| per
             l'accesso al dispositivo rimane ancora valido; sarà \senchacmd{} che
             durante il processo di compilazione si occuperà di utilizzare le
             relative API Cordova o \pg{} necessarie. Un altro aspetto da
@@ -1082,11 +1084,11 @@
             fatto questo, i comandi per la compilazione rimarranno gli stessi.
 
             \senchat{}, a differenza di altri della sua categoria, non è un
-            framework che offre solo la propria shell nativa per creare
+            frame\-work che offre solo la propria shell nativa per creare
             applicazioni ibride: tra le proprie APIs sono disponibili numerosi
             widgets per creare una consistente interfaccia grafica
             (vedi fig.~\ref{fig:senchaui}) così da non dover ricorrere a
-            framework aggiuntivi come nel caso di \pg{} e \rhom{}. Sono anche
+            frame\-work aggiuntivi come nel caso di \pg{} e \rhom{}. Sono anche
             forniti numerosi temi con aspetto nativo per le piattaforme che
             supporta, e all'interno del file di configurazione dell'applicazione
             \verb|app.json| è possibile specificare quale tema utilizzare a
@@ -1097,23 +1099,23 @@
                 \includegraphics[keepaspectratio=true, width=0.45\textwidth]{sencha-ui-2}
                 \caption{
                     Esempio di alcuni widget disponibili in \senchat{}.
-                    Il tema grafico mostrato è quello generico del framework e
+                    Il tema grafico mostrato è quello generico del frame\-work e
                     non specifico per nessuna piattaforma.
                 }
                 \label{fig:senchaui}
             \end{figure}
 
     \section{Conclusioni}
-        Classificare e valutare le funzionalità offerte da questi framework
+        Classificare e valutare le funzionalità offerte da questi frame\-work
         ha permesso, a noi e al nostro tutore aziendale, di fare chiarezza su cosa
         li distinguesse realmente, così
         da poter decidere con quali di questi realizzare un'applicazione di prova utile
         per un'analisi più approfondita.
         La scelta naturale è stata quella di creare un'applicazione con due
-        framework che adottassero approcci diversi: sono stati quindi scelti
+        frame\-work che adottassero approcci diversi: sono stati quindi scelti
         \tisdk{} per la creazione di un'applicazione nativa, e
         PhoneGap per la realizzazione di quella ibrida.
-        Il tutore ci ha lasciato libera scelta sul framework per l'interfaccia
+        Il tutore ci ha lasciato libera scelta sul frame\-work per l'interfaccia
         grafica da usare assieme a PhoneGap. Colpiti dalla semplicità d'uso,
         dalla capacità di adattare l'aspetto a quello della piattaforma e
         dalle prestazioni osservate in applicazioni d'esempio, abbiamo deciso
