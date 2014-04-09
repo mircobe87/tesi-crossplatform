@@ -218,10 +218,10 @@
         il campo header \texttt{Authorization} inserito nel messaggio di richiesta HTTP
         come nell'esempio
         \begin{lstlisting}[language=http]
-    GET index.html HTTP/1.1
-    Host: www.someserver.com
-    Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
-     ...
+  GET index.html HTTP/1.1
+  Host: www.someserver.com
+  Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQK
+  ...
         \end{lstlisting}
         dove \texttt{dXNlcm5hbWU6cGFzc3dvcmQK} è la stringa ``name:password''
         codificata in base64\footnote{Per una completa specifica del sistema di
@@ -548,9 +548,9 @@
             chiave - valore di tipo \texttt{String - String}. Per esempio con il
             codice
             \begin{lstlisting}
-    localStorage.setItem("name", "goofy");
-    var n = localStorage.getItem("name");
-    localStorage.removeItem("name");
+  localStorage.setItem("name", "goofy");
+  var n = localStorage.getItem("name");
+  localStorage.removeItem("name");
             \end{lstlisting}
             si memorizza la coppia ``name'' - ``goofy'', si recupera la stringa associata
             alla chiave ``name'' e si elimina tale coppia definitivamente.
@@ -562,9 +562,9 @@
             precedente, la stessa cosa è realizzabile con \tisdk{} mediante il
             codice
             \begin{lstlisting}
-    Titanium.App.Properties.setString("name", "goofy");
-    var n = Titanium.App.Properties.getString("name");
-    Titanium.App.Properties.removeProperty("name");
+  Titanium.App.Properties.setString("name", "goofy");
+  var n = Titanium.App.Properties.getString("name");
+  Titanium.App.Properties.removeProperty("name");
             \end{lstlisting}
 
             La differenza sostanziale tra i due sistemi di memorizzazione risiede
@@ -630,13 +630,13 @@
             Inserire la mappa nella nostra applicazione \pg{} è stato semplice:
             come mostrato nel segmento di codice seguente
             \begin{lstlisting}
-    <div data-role="view" data-title="Degrado Ambientale"
-      id="map-view" data-layout="default"
-      data-stretch="true" data-init="app.initMap"
-      data-show="app.viewMapShow"
-    >
-        <div id="map" style="width:100%;"></div>
-    </div>
+  <div data-role="view" data-title="Degrado Ambientale"
+    id="map-view" data-layout="default"
+    data-stretch="true" data-init="app.initMap"
+    data-show="app.viewMapShow"
+  >
+    <div id="map" style="width:100%;"></div>
+  </div>
             \end{lstlisting}
             sfruttando il framework \kendomob{}, abbiamo definito una specifica
             view con all'interno un particolare elemento \texttt{div}; in fase di
@@ -653,17 +653,17 @@
                 },
                 label={cod:initmapPG}
             ]
-    /** elemento 'div' nel DOM che conterra' la mappa */
-    var mapElement = $("#map")[0];
+  /** elemento 'div' nel DOM che conterra' la mappa */
+  var mapElement = $("#map")[0];
 
-    /** configurazione della mappa */
-    var mapOptions = {
-        center: new google.maps.LatLng(43.720741,10.408413),
-        zoom: 10
-    };
+  /** configurazione della mappa */
+  var mapOptions = {
+    center: new google.maps.LatLng(43.720741,10.408413),
+    zoom: 10
+  };
 
-    /** istanzia la mappa */
-    app.map = new google.maps.Map(mapElement, mapOptions);
+  /** istanzia la mappa */
+  app.map = new google.maps.Map(mapElement, mapOptions);
             \end{lstlisting}
             La mappa così implementata possiede tutte le caratteristiche offerte
             dalle mappe Google, in particolare, la possibilità di ottenere le
@@ -698,8 +698,8 @@
                         globale nel file \texttt{alloy.js}.},
                 label=cod:alloyglob
             ]
-    // caricamento modulo mappa
-    Alloy.Globals.Map = require('ti.map');
+  // caricamento modulo mappa
+  Alloy.Globals.Map = require('ti.map');
             \end{lstlisting}
             
             \begin{figure}[H]
@@ -733,45 +733,45 @@
                 view contenente la mappa.},
                 label=cod:alloymapview
             ]
-    <Alloy>
-        <View
-            id="map" ns="Alloy.Globals.Map" regionFit="true"
-            onClick="markerClick"
-            onRegionchanged="moved"
-            onComplete="mapCompleted"/>
-    </Alloy>
+  <Alloy>
+    <View
+      id="map" ns="Alloy.Globals.Map" regionFit="true"
+      onClick="markerClick"
+      onRegionchanged="moved"
+      onComplete="mapCompleted"/>
+  </Alloy>
             \end{lstlisting}
             \begin{lstlisting}[
                 caption={Parte del file \texttt{map.js}, controllore per la mappa, con le definizioni dei gestori per
                 gli eventi di ``spostamento mappa'', ``click sulla mappa'' e ``caricamento completato''},
                 label=cod:alloymapcontroller
             ]
-    [...]
-    /**
-     * Handler del click su un segnaposto della mappa.
-     * @param {ModulesMapViewEvent} evt evento passato allo
-     *   handler al momento della chiamata.
-     */
-    function markerClick(evt) { ... }
+  [...]
+  /**
+   * Handler del click su un segnaposto della mappa.
+   * @param {ModulesMapViewEvent} evt evento passato allo
+   *   handler al momento della chiamata.
+   */
+  function markerClick(evt) { ... }
 
-    /**
-     * handler dell'evento associato allo spostamento e
-     * ridimensionamento della mappa.
-     * @param {ModulesMapViewEvent} evt evento passato allo
-     *   handler al momento della chiamata.
-     */
-    function moved(evt) { ... }
+  /**
+   * handler dell'evento associato allo spostamento e
+   * ridimensionamento della mappa.
+   * @param {ModulesMapViewEvent} evt evento passato allo
+   *   handler al momento della chiamata.
+   */
+  function moved(evt) { ... }
 
-    /**
-     * Handler dell'evento onComplete scatenato appena la mappa
-     * e' pronta.
-     *
-     * Recupera la posizione corrente e una volta ottenuta
-     * inizializza la mappa con quella posizione.
-     *
-     * @param {ModulesMapViewEvent} evt
-     */
-    function mapCompleted(evt){ ... }
+  /**
+   * Handler dell'evento onComplete scatenato appena la mappa
+   * e' pronta.
+   *
+   * Recupera la posizione corrente e una volta ottenuta
+   * inizializza la mappa con quella posizione.
+   *
+   * @param {ModulesMapViewEvent} evt
+   */
+  function mapCompleted(evt){ ... }
 
             \end{lstlisting}
             Come visto nel caso dell'applicazione \pg{} è possibile, anche qui,
@@ -1082,20 +1082,17 @@
                 },
                 label = {cod:listTiXML}
             ]
-    <ListView id="my" defaultItemTemplate="template" allowsSelection="true" onItemclick="dataClick">
-        <Templates>
-            <!-- definisce l'aspetto delle righe della lista. L'attributo bindId="titolo" indica che verra' mostrato solo il campo titolo -->
-
-            <ItemTemplate name="template">
-                <Label bindId="titolo" id="title" />
-            </ItemTemplate>
-
-        </Templates>
-
-        <!-- In Titanium SDK le liste possono essere divise in piu' sezioni ma per il nostro scopo ne e' stata sufficiente soltanto una -->
-        <ListSection id="listSection">
-        </ListSection>
-    </ListView>
+  <ListView id="my" defaultItemTemplate="template"
+    allowsSelection="true" onItemclick="dataClick">
+    <Templates>
+      <!-- definisce l'aspetto delle righe della lista. L'attributo bindId="titolo" indica che verra' mostrato solo il campo titolo -->
+      <ItemTemplate name="template">
+        <Label bindId="titolo" id="title" />
+      </ItemTemplate>
+    </Templates>
+    <!-- In Titanium SDK le liste possono essere divise in piu' sezioni ma per il nostro scopo ne e' stata sufficiente soltanto una -->
+    <ListSection id="listSection"></ListSection>
+  </ListView>
             \end{lstlisting}
             \begin{lstlisting}[
                 caption = {
@@ -1106,15 +1103,15 @@
                 },
                 label = {cod:listJsTi}
             ]
-    /* Scarica le segnalazioni dal server */
-    var data = getDataFromServer();
-    /* Trasforma le segnalazioni in oggetti inseribili nella lista */
-    var dataToInsert = transformData(data);
-    /* Inserisce le segnalazioni trasformate nella lista */
-    listSection.appendItems(dataToInsert);
-    var dataClick = function(){
-        /* da eseguire al tocco su un elemento della lista */
-    }
+  /* Scarica le segnalazioni dal server */
+  var data = getDataFromServer();
+  /* Trasforma le segnalazioni in oggetti inseribili nella lista */
+  var dataToInsert = transformData(data);
+  /* Inserisce le segnalazioni trasformate nella lista */
+  listSection.appendItems(dataToInsert);
+  var dataClick = function(){
+    /* da eseguire al tocco su un elemento della lista */
+  }
             \end{lstlisting}
             \begin{figure}[H]
                 \centering
@@ -1232,41 +1229,41 @@
                     file che andrà a contenere i dati del file scaricato.},
                 label={cod:dlFilePG}
             ]
-    // richiesta filesystem persistente
-    requestFileSystem(
-        LocalFileSystem.PERSISTENT,
-        0,
-        FileSystemSuccess,
-        null
+  // richiesta filesystem persistente
+  requestFileSystem(
+    LocalFileSystem.PERSISTENT,
+    0,
+    FileSystemSuccess,
+    null
+  );
+  // eseguita una volta ottenuto il filesystem
+  function FileSystemSuccess(filesystem){
+    var dir = filesystem.root;
+    // crea un nuovo file
+    var newfile = dir.getFile("filename.jpeg",
+      {
+        create: true,
+        exclusive: false,
+      },
+      newFileSuccess,
+      newFileFail
     );
-    // eseguita una volta ottenuto il filesystem
-    function FileSystemSuccess(filesystem){
-        var dir = filesystem.root;
-        // crea un nuovo file
-        var newfile = dir.getFile("filename.jpeg",
-            {
-                create: true,
-                exclusive: false,
-            },
-            newFileSuccess,
-            newFileFail
-        );
-        // eseguita una volta creato il file
-        function newFileSuccess(newf){
-            var filepath = newf.fullPath;
-            var ft = new FileTransfert();
-            // scarica il file
-            ft.download(
-                "http://uri.of.remote.file/img.jpeg",
-                filepath,
-                // gestisce il successo del download
-                function(file){ ... },
-                // gestisce errore di download
-                function(err){ ... },
-                false
-            );
-        }
+    // eseguita una volta creato il file
+    function newFileSuccess(newf){
+      var filepath = newf.fullPath;
+      var ft = new FileTransfert();
+      // scarica il file
+      ft.download(
+        "http://uri.of.remote.file/img.jpeg",
+        filepath,
+        // gestisce il successo del download
+        function(file){ ... },
+        // gestisce errore di download
+        function(err){ ... },
+        false
+      );
     }
+  }
             \end{lstlisting}
 
             Anche \tisdk{} consente di accedere al filesystem della piattaforma
@@ -1289,23 +1286,23 @@
                     memorizzato in un file locale nel filesystem.
                 },label={cod:dlFileTi}
             ]
-    // crea un nuovo HTTPClient
-    var httpClt = Titanium.Network.createHTTPClient({
-        onload: function(){ // se il download ha successo
-            var newf = Titanium.Filesystem.getFile(
-                Titanium.Filesystem.applicationDataDirectory,
-                "filename.jpeg"
-            );
-            // scrivo i dati ricevuti nel nuovo file
-            newf.write(this.responseData);
-        },
-        // se il download fallisce
-        onerror: function(e){ ... }
-    });
-    // compongo una 'GET'
-    httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
-    // invio la richiesta
-    httpClt.send();
+  // crea un nuovo HTTPClient
+  var httpClt = Titanium.Network.createHTTPClient({
+    onload: function(){ // se il download ha successo
+      var newf = Titanium.Filesystem.getFile(
+        Titanium.Filesystem.applicationDataDirectory,
+        "filename.jpeg"
+      );
+      // scrivo i dati ricevuti nel nuovo file
+      newf.write(this.responseData);
+    },
+    // se il download fallisce
+    onerror: function(e){ ... }
+  });
+  // compongo una 'GET'
+  httpClt.open("GET", "http://uri.of.remote.file/img.jpeg");
+  // invio la richiesta
+  httpClt.send();
             \end{lstlisting}
             Una differenza sostanziale che c'è nella gestione del filesystem
             tra \tisdk{} e \pg{} è che le API del primo consentono di creare
@@ -1485,20 +1482,20 @@
     style="width: 100%; height: 100%"
     data-show="app.loadRepo" data-hide="app.hideRepo"
   >
-      <div data-role="header">
-        <div data-role="navbar">
-          <span id="repoDetail-title"><h3>Titolo</h3></span>
-          <a
-            id="back-button" data-align="left" href="#:back"
-            data-role="backbutton"
-          >Back</a>
-          <a
-            id="jumpMap-button" data-align="right"
-            data-role="button" data-click="app.jumpToMap"
-          >Map</a>
-        </div>
+    <div data-role="header">
+      <div data-role="navbar">
+        <span id="repoDetail-title"><h3>Titolo</h3></span>
+        <a
+          id="back-button" data-align="left" href="#:back"
+          data-role="backbutton"
+        >Back</a>
+        <a
+          id="jumpMap-button" data-align="right"
+          data-role="button" data-click="app.jumpToMap"
+        >Map</a>
       </div>
-      [ ... ]
+    </div>
+    [ ... ]
   </div>
             \end{lstlisting}
 
