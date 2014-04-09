@@ -286,25 +286,26 @@
                     l'uso del frame\-work.
                 }
             ]
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-            <link
-                rel="stylesheet"
-                href="jquery.mobile-1.4.2.min.css" />
-            <script src="jquery-1.9.1.min.js"></script>
-            <script src="jquery.mobile-1.4.2.min.js"></script>
-        </head>
-        <body>
-            <div data-role="page">
-                <div data-role="header">
-                    <h1>jQuery Mob. App</h1>
-                </div>
-                <a data-icon="gear" class="ui-btn">Options</a>
-            </div>
-        </body>
-    </html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta name="viewport" content="initial-scale=1,
+        maximum-scale=1">
+      <link
+        rel="stylesheet"
+        href="jquery.mobile-1.4.2.min.css" />
+      <script src="jquery-1.9.1.min.js"></script>
+      <script src="jquery.mobile-1.4.2.min.js"></script>
+    </head>
+    <body>
+      <div data-role="page">
+        <div data-role="header">
+          <h1>jQuery Mob. App</h1>
+        </div>
+        <a data-icon="gear" class="ui-btn">Options</a>
+      </div>
+    </body>
+  </html>
             \end{lstlisting}
             \jqm{} in fase di inizializzazione seleziona gli elementi in
             base ai loro attributi \verb|data-*| e li potenzia inserendo dei markup
@@ -409,25 +410,26 @@
                     Esempio di inizializzazione di un'applicazione KendoUI Mobile
                 }
             ]
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <link href="kendo.mobile.all.min.css" rel="stylesheet" />
-            <script src="jquery.min.js"></script>
-            <script src="kendo.mobile.min.js"></script>
-        </head>
-        <body>
-            <div data-role="view" data-title="Home"> ... </div>
-            <div data-role="view" data-title="Opzioni"> ... </div>
-            ...
-            <script>
-                // Inizializza la nuova applicazione KendoUI Mobile
-                var app = new kendo.mobile.Application(
-                    $(document.body)
-                );
-            </script>
-        </body>
-    </html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <link href="kendo.mobile.all.min.css"
+        rel="stylesheet" />
+      <script src="jquery.min.js"></script>
+      <script src="kendo.mobile.min.js"></script>
+    </head>
+    <body>
+      <div data-role="view" data-title="Home"> ... </div>
+      <div data-role="view" data-title="Opzioni"> ... </div>
+      ...
+      <script>
+        // Inizializza la nuova applicazione KendoUI Mobile
+        var app = new kendo.mobile.Application(
+          $(document.body)
+        );
+      </script>
+    </body>
+  </html>
             \end{lstlisting}
             Anche \kendomob{} sfrutta gli attributi \verb|data-*| per
             caratterizzare i vari tag \html{} dando loro un particolare aspetto
@@ -446,11 +448,11 @@
                     attributo {\texttt{data-*}}.
                 }
             ]
+  ...
+  <div id="foo" data-role="view">
     ...
-    <div id="foo" data-role="view">
-        ...
-        <a data-role="button">Click Me</a>
-    </div>
+    <a data-role="button">Click Me</a>
+  </div>
             \end{lstlisting}
             \begin{lstlisting}[
                 label={cod:jsbutton},
@@ -459,14 +461,14 @@
                     tramite l'uso delle apposite API.
                 }
             ]
+  ...
+  <div id="foo" data-role="view">
     ...
-    <div id="foo" data-role="view">
-        ...
-        <a id="btnClickMe">Click Me</a>
-    </div>
-    <script>
-        $("#btnClickMe").kendoMobileButton();
-    </script>
+    <a id="btnClickMe">Click Me</a>
+  </div>
+  <script>
+    $("#btnClickMe").kendoMobileButton();
+  </script>
             \end{lstlisting}
 
             Il punto di forza di \kendomob{} è la possibilità di creare
@@ -770,7 +772,7 @@
             Ad esempio su Android la Web View è realizzata con una classe Java
             che fornisce il metodo
     \begin{lstlisting}[language=MyJava]
-    addJavascriptInterface(Object object, String name)
+  addJavascriptInterface(Object object, String name)
     \end{lstlisting}
             per permettere
             di scrivere codice JavaScript che attraverso la stringa name ha accesso
@@ -795,7 +797,7 @@
             Descriviamo ora il processo di sviluppo da usare con PhoneGap.
             La prima cosa da fare è usare il CLI con il comando
     \begin{lstlisting}[language=MyBash]
-    phonegap create "hello" "com.example.hello" "HelloWorld"
+  phonegap create "hello" "com.example.hello" "HelloWorld"
     \end{lstlisting}
             per creare l'applicazione di nome \verb|HelloWorld| all'interno della cartella
             \verb|hello|. Il parametro \verb|com.example.hello| serve per
@@ -809,7 +811,7 @@
             Per usare le API bisogna aggiungerle al progetto come plugin. Ad
             esempio per ottenere l'accesso alla fotocamera bisogna usare il comando
     \begin{lstlisting}[language=MyBash]
-    phonegap local plugin add "org.apache.cordova.camera"
+  phonegap local plugin add "org.apache.cordova.camera"
     \end{lstlisting}
 
             Dopo aver aggiunto tutti i plugin necessari l'applicazione può
@@ -817,7 +819,7 @@
             In questo caso è necessario specificare la piattaforma di destinazione,
             quindi se si vuole installare l'applicazione su Android il comando è
     \begin{lstlisting}[language=MyBash]
-    phonegap run "android"
+  phonegap run "android"
     \end{lstlisting}
 
             Il processo di compilazione di Phonegap come detto
@@ -848,7 +850,7 @@
             il file \verb|config.xml|. Riferendosi sempre all'uso dell'API per
             l'accesso alla fotocamera, la riga da inserire nel file è la seguente
     \begin{lstlisting}[]
-    <gap:plugin name="org.apache.cordova.camera"/>
+  <gap:plugin name="org.apache.cordova.camera"/>
     \end{lstlisting}
 
             Oltre alla possibilità di fare compilazione PhoneGap Build fornisce
@@ -985,7 +987,7 @@
             Tale strumento è disponibile per piattaforme Windows, Mac OS X, e Linux;
             una volta installato, con il semplice comando
             \begin{lstlisting}[language=MyBash]
-    sencha generate app 'MyApp' './MyApp'
+  sencha generate app 'MyApp' './MyApp'
             \end{lstlisting}
             è possibile creare, per esempio, una nuova applicazione di nome
             \verb|MyApp| nella cartella \verb|./MyAppDir|.
@@ -1016,7 +1018,7 @@
             A questo punto, una volta modificato il file \verb|packager.json| con
             le proprie preferenze è sufficiente dare il comando
             \begin{lstlisting}[language=MyBash]
-    sencha app package build 'packager.json'
+  sencha app package build 'packager.json'
             \end{lstlisting}
             per creare il pacchetto per la piattaforma desiderata.
 
