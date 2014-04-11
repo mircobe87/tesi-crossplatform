@@ -540,7 +540,7 @@
             che l'applicazione è stata chiusa.
 
             \pg{}, tramite il plugin
-            \texttt{FileSystem}, offre la possibilità di accedere al file system
+            \texttt{FileSystem}, offre la possibilità di accedere al filesys\-tem
             del dispositivo così da poter creare ed eliminare file; in questa
             situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
             di \html{}5. In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
@@ -1226,7 +1226,7 @@
             creato un nuovo file è stato possibile scaricarvi l'immagine remota
             (vedi esempio \ref{cod:dlFilePG}).
             \begin{lstlisting}[
-                caption={Una volta ottenuto il filesystem viene creato un nuovo
+                caption={Una volta ottenuto il filesys\-tem viene creato un nuovo
                     file che andrà a contenere i dati del file scaricato.},
                 label={cod:dlFilePG}
             ]
@@ -1267,7 +1267,7 @@
   }
             \end{lstlisting}
 
-            Anche \tisdk{} consente di accedere al filesystem della piattaforma
+            Anche \tisdk{} consente di accedere al filesys\-tem della piattaforma
             e di maneggiare file. Le API necessarie sono contenute nello
             spazio dei nomi \texttt{Titanium.Filesystem} e sono compatibili
             con tutte le piattaforme supportate da \tisdk{}. Come avevamo
@@ -1279,12 +1279,12 @@
             file si può procedere con richiedere al server l'allegato da
             scaricare e memorizzare. Il segmento di codice \ref{cod:dlFileTi}
             mostra un esempio d'uso delle API di \tisdk{} per scaricare un file
-            e salvarlo nel filesystem.
+            e salvarlo nel filesys\-tem.
             \begin{lstlisting}[
                 caption={
                     L'oggetto \texttt{HTTPClient} esegue una \texttt{GET} di un
                     file remoto che se scaricato correttamente viene
-                    memorizzato in un file locale nel filesystem.
+                    memorizzato in un file locale nel filesys\-tem.
                 },label={cod:dlFileTi}
             ]
   // crea un nuovo HTTPClient
@@ -1305,14 +1305,14 @@
   // invio la richiesta
   httpClt.send();
             \end{lstlisting}
-            Una differenza sostanziale che c'è nella gestione del filesystem
+            Una differenza sostanziale che c'è nella gestione del filesys\-tem
             tra \tisdk{} e \pg{} è che le API del primo consentono di creare
             file persistenti solo in precise directory relative
             all'applicazione stessa per le quali sono definite delle specifiche
             macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
             l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}).
             Con il plugin di \pg{}, a patto di avere i permessi necessari, è
-            possibile navigare in tutto il filesystem del sistema e creare nuove
+            possibile navigare in tutto il filesys\-tem del sistema e creare nuove
             cartelle e file dove si vuole.
             \newpage
             \begin{figure}[H]
@@ -1403,7 +1403,7 @@
 
             Sapendo ora accedere alle informazioni di rete, dovevamo decidere
             come memorizzare le segnalazioni locali: avendo già fatto
-            esperienza con il salvataggio di immagini sul file system (vedi
+            esperienza con il salvataggio di immagini sul filesys\-tem (vedi
             sez. \ref{subsec:nuova}) e con il meccanismo di web
             storage (vedi sez. \ref{subsec:registrazione}), abbiamo deciso di
             utilizzare quest'ultimo per salvare tutte le informazioni sulla
@@ -1413,7 +1413,7 @@
             memorizzare anche le due liste, in modo da rendere le applicazioni
             il più possibile utilizzabili offline.
 
-            Una volta che le immagini vengono salvate sul file system è
+            Una volta che le immagini vengono salvate sul filesys\-tem è
             possibile che altre applicazioni, come la galleria di Android,
             possano mostrarle all'utente il quale potrebbe decidere di
             rimuoverle. Un altra possibile causa di mancanza dell'allegato di
