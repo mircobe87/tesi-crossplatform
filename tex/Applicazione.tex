@@ -1446,26 +1446,26 @@
 
 
         \subsection{Dai dettagli alla mappa}
-            Come ultimo dettaglio ci è stato chiesto di aggiungere un
-            particolare bottone nella schermata di dettaglio della segnalazione
+            Come ultimo particolare ci è stato chiesto di aggiungere un
+            specifico bottone nella schermata di dettaglio della segnalazione
             con la funzionalità di aprire la mappa mostrandone la
             posizione. Nel navigare alla schermata e centrare la mappa in
             corrispondenza di una data posizione non ci sono osservazioni
-            importanti da fare; quello che è più interessante da notare è come
-            si è aggiunto il bottone nelle barre di intestazione delle schermate
+            importanti da fare; quello che è più interessante da notare è
+            l'aggiunta del bottone nelle barre di intestazione delle schermate
             nei due framework.
 
             Nell'applicazione \tisdk{} la barra in alto della window dei
             dettagli è una action bar nativa di Android e per tale oggetto sono
             definite le API per aggiungervi bottoni come per l'accesso ad un
             menù. Questo è tipico nell'interfaccia Android ma non è prevista
-            nelle altre piattaforme e sicuramente non per iOS; così se si
+            nelle altre piattaforme; sicuramente non per iOS. Così se si
             vogliono supportare più piattaforme, in questo punto è necessario
             differenziare il codice utilizzando le giuste API per ogni
             piattaforma.
 
             Per quanto riguarda la schermata dei dettagli dell'applicazione
-            \pg{}, la barra in altro è una navbar \kendomob{}, la stessa per
+            \pg{}, la barra in alto è una navbar \kendomob{}, la stessa per
             ogni piattaforma, e in essa è possibile inserire bottoni per la
             navigazione, nel nostro caso per saltare alla view della mappa. Nel
             frammento di codice \ref{cod:tomapPG} si può vedere la definizione
