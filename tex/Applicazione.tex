@@ -535,7 +535,7 @@
             Come avevamo già anticipato, la prima cosa di cui deve occuparsi
             il client al suo primo avvio è quella di registrare un nuovo utente. Per
             poter distinguere ogni volta se l'applicazione è stata avviata
-            per la prima volta o meno c'è la
+            per la prima volta o meno, c'è la
             necessità di avere qualche informazione in grado di permanere una volta
             che l'applicazione è stata chiusa.
 
@@ -545,7 +545,7 @@
             situazione però è più comodo affidarsi al sistema di ``lo\-cal stor\-age''
             di \html{}5. In questo modo attraverso l'oggetto \js{} \texttt{localStorage}
             è possibile memorizzare, in maniera permanente tra varie sessioni, coppie
-            chiave - valore di tipo \texttt{String - String}. Per esempio con il
+            chiave - valore di tipo \texttt{String - String}. Per esempio, con il
             codice
             \begin{lstlisting}
   localStorage.setItem("name", "goofy");
@@ -570,16 +570,16 @@
             La differenza sostanziale tra i due sistemi di memorizzazione risiede
             nella quantità di dati che possono essere salvati.
             Le specifiche di \html{}5 suggeriscono un limite di 5MB, ma la dimensione
-            può variare tra le varie piattaforme; mentre come afferma la documentazione
-            di \tisdk{} non c'è un limite specifico alla quantità di dati memorizzabili
-            in Properties, bisogna però notare che questi dati sono caricati in
+            può variare tra le varie piattaforme mentre, come afferma la documentazione
+            di \tisdk{}, non c'è un limite specifico alla quantità di dati memorizzabili
+            in \texttt{Properties}; bisogna però notare che questi dati sono caricati in
             memoria principale quando
             viene lanciata l'applicazione, e vi rimangono fino alla sua chiusura.
             Questo permette un rapido accesso ai dati, ma al costo di un aumento
             della memoria usata dall'applicazione.
 
-            Dal punto di vista dello sviluppo \crossplat{} \tisdk{} assicura il funzionamento
-            del sistema di memorizzazione descritto, direttamente senza dover riadattare il codice,
+            Dal punto di vista dello sviluppo \crossplat{}, \tisdk{} assicura direttamente il funzionamento
+            del sistema di memorizzazione descritto, senza dover riadattare il codice
             su tutte le piattaforme supportate. Anche il local storage
             di \html{}5 può essere usato per memorizzare dati su piattaforme diverse
             usando lo stesso codice, ma il fatto di incorrere in diversi limiti di quota,
@@ -590,7 +590,7 @@
 
             Come descritto più volte, la registrazione doveva avvenire utilizzando
             come credenziali il codice IMEI del dispositivo oppure il numero di telefono.
-            Nè con \pg{} nè con \tisdk{} questo è stato possibile. Nativamente
+            Né con \pg{} né con \tisdk{} questo è stato possibile. Nativamente
             Android permette di accedere al codice IMEI, mentre iOS no; è stato
             comunque possibile ottenere un identificatore con entrambi i
             framework. \pg{} tramite il plugin \texttt{device} permette di accedere
@@ -598,22 +598,22 @@
             modo \tisdk{} fornisce una funzione per ottenere lo stesso UUID.
             Dobbiamo però fare una distinzione particolare sul valore di questo
             UUID tra Android e iOS.
-            Le documentazioni di entrambi i framework affermano che date le limitazioni
-            imposte da iOS non è possibile ottenere un valore in grado di identificare
+            Le documentazioni di entrambi i framework affermano che, date le limitazioni
+            imposte da iOS, non è possibile ottenere un valore in grado di identificare
             univocamente il dispositivo\footnote{Approfondimenti sulle limitazioni
-            imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}}.
-            Pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma
-            un valore che identifica l'applicazione che però potrebbe essere diverso
+            imposte da iOS si trovano su \url{https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/DeprecationAppendix/AppendixADeprecatedAPI.html\#//apple_ref/occ/instp/UIDevice/uniqueIdentifier}};
+            pertanto \pg{} e \tisdk{} hanno assegnato a UUID su questa piattaforma
+            un valore che identifica l'applicazione che però potrebbe essere diverso:
             dopo una reinstallazione, dopo
             un aggiornamento della stessa o addirittura in seguito ad un
             aggiornamento del sistema operativo.
-            Su Android invece UUID
+            Invece, su Android, UUID
             identifica proprio il dispositivo. La conseguenza di tutto ciò è che
             UUID non è affidabile per iOS e quindi sarebbe stato necessario utilizzare
             un meccanismo di registrazione basato su credenziali differenti;
-            dato che però come detto l'applicazione è stata sviluppata solo per Android
-            abbiamo ritenuto opportuno prendere nota della differenza, ma abbiamo
-            continuato ad usare UUID.
+            come già detto, dato che l'applicazione è stata sviluppata solo per Android,
+            abbiamo ritenuto opportuno prendere nota della differenza, continuando però
+            ad usare UUID.
 
 
         \subsection{La mappa delle segnalazioni}
