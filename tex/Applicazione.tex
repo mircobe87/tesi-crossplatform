@@ -1378,8 +1378,8 @@
         \subsection{Salvataggio locale}
         \label{subsec:caching}
             Dopo la consegna della prima versione funzionante delle due
-            applicazioni, la prima cosa che il nostro tutore aziendale ci ha
-            richiesto di aggiungere è stato un meccanismo di caching per
+            applicazioni, il nostro tutore aziendale ci ha
+            richiesto di aggiungere un meccanismo di caching per
             permettere almeno la visualizzazione delle proprie segnalazioni in
             modalità offline.
 
@@ -1388,7 +1388,7 @@
             presente o meno una connessione Internet in modo da poter
             decidere se accedere ai dati locali o a quelli remoti;
             fortunatamente entrambi i framework forniscono le API per ottenere
-            questo genere d'informazioni.
+            questo tipo d'informazione.
 
             Con il plugin \texttt{Connection} di \pg{}, che supporta tutte le
             piattaforme, attraverso il valore di \texttt{connection.type} è
@@ -1415,13 +1415,13 @@
 
             Una volta che le immagini vengono salvate sul filesys\-tem è
             possibile che altre applicazioni, come la galleria di Android,
-            possano mostrarle all'utente il quale potrebbe decidere di
+            possano mostrarle all'utente che potrebbe decidere di
             rimuoverle. Un altra possibile causa di mancanza dell'allegato di
             una segnalazione nella cache è dovuta ad un fortuito errore durante
             il download dal server. In entrambi questi casi il caching verrebbe
             compromesso ma, quando si visualizzeranno i dettagli di una
-            segnalazione che avrà la foto mancante, verrà mostrata un immagine
-            predefinita sulla quale, un tocco dell'utente scatenerà un nuovo
+            segnalazione che avrà la foto mancante, verrà mostrata un'immagine
+            predefinita, sulla quale un tocco dell'utente scatenerà un nuovo
             download di tale allegato ovviando così alla ``falla'' nella cache
             (vedi fig. \ref{fig:noImages}).
             \begin{figure}[h]
