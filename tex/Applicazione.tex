@@ -405,22 +405,22 @@
             Per schermata di apertura si intende un'immagine che compare per qualche
             secondo durante l'avvio dell'applicazione in attesa che vengano eseguite
             le operazioni di inizializzazione della stessa} va fatto
-            un discorso a parte. Come noto esistendo
-            dispositivi con dimensioni dello schermo e risoluzioni differenti
+            un discorso a parte. Come noto, esistendo
+            dispositivi con dimensioni dello schermo e risoluzioni differenti,
             è necessario utilizzare immagini di dimensioni diverse a seconda
-            del dispositivo, \pg{} permette di facilitare tutto ciò fornendo
+            del dispositivo. \pg{} permette di facilitare tutto ciò fornendo
             opportune cartelle per ogni categoria di dispositivi disponibili sul
-            mercato, è quindi sufficiente creare tali immagini con lo stesso nome
-            ed inserirle nelle cartelle opportune sarà poi il framework a caricare
+            mercato; è quindi sufficiente creare tali immagini con lo stesso nome
+            ed inserirle nelle cartelle opportune: sarà poi il framework a caricare
             quella adatta alla risoluzione dello schermo del dispositivo.
             La cartella \texttt{merges} serve per personalizzare il codice su piattaforme
-            diverse, essa contiene una sottocartella per ogni piattaforma di destinazione
+            diverse: essa contiene una sottocartella per ogni piattaforma di destinazione
             (es. una per Android, una per iOS e una per Windows Phone)
-            al cui interno è replicata la cartella \texttt{www} descritta precedentemente,
+            al cui interno è replicata la cartella \texttt{www} descritta precedentemente;
             se si vuole utilizzare del codice diverso a seconda della piattaforma
             basta modificare i file nelle rispettive cartelle \texttt{www}.
 
-            L'integrazione con \kendomob{} è semplicissima, dopo aver inserito
+            L'integrazione con \kendomob{} è semplicissima: dopo aver inserito
             i file \js{} e \css{} dentro le opportune cartelle è stato sufficiente
             caricarli dentro al file \texttt{index.html} per mezzo dei tag
             \texttt{<script>} e \texttt{<link>}.
@@ -428,8 +428,8 @@
             utilizzare il paradigma MVVM su alcuni elementi grafici forniti dal
             framework, ma al momento dell'inizio della scrittura dell'applicazione
             non tutti i widget erano supportati da MVVM e quindi abbiamo preferito
-            non usarlo, di conseguenza la logica dell'applicazione è stata gestita
-            interamente in un unico file \js{}. Inoltre come detto più volte
+            non usarlo; di conseguenza la logica dell'applicazione è stata gestita
+            interamente in un unico file \js{}. Inoltre, come detto più volte,
             tutte le schermate e gli elementi all'interno di esse sono state
             definite in un unico file \html{} (vedi fig. \ref{fig:degradoAmbientaleTree}).
             \begin{figure}[H]
@@ -443,14 +443,14 @@
             \end{figure}
 
             Lo sviluppo dell'applicazione con \tisdk{} è stato fatto sfruttando
-            l'IDE Titanium Studio, con esso è stato possibile creare direttamente
+            l'IDE Titanium Studio; con esso è stato possibile creare direttamente
             un'applicazione Alloy (vedi sezione \ref{subsub:alloy}) strutturandola
             così secondo il paradigma MVC.
             Questo processo genera numerose cartelle e file (vedi fig. \ref{fig:degradoTiTree}),
             ma come per \pg{} ci concentreremo soltanto sulla descrizione di quelle/i veramente importanti.
             La cartella principale del progetto contiene: il file \texttt{tiapp.xml}, che
             analogamente al file \texttt{config.xml} di \pg{} specifica i
-            metadati; e
+            metadati;
             la cartella \texttt{app} che contiene il resto dell'applicazione.
             Quest'ultima in particolare contiene le cartelle:
             \begin{description}
@@ -462,7 +462,7 @@
                 \item[widgets] contiene tutti i file necessari per utilizzare widget esterni
                                come quello usato per la barra di navigazione ed il menù descritti
                                nel paragrafo \ref{subsec:structgraphic};
-                \item[lib] qui dentro vanno inseriti i file javaScript che definiscono
+                \item[lib] qui dentro vanno inseriti i file \js{} che definiscono
                            moduli CommonJS\footnote{http://www.commonjs.org/}. Nel
                            nostro caso è servito per creare una libreria per fornire
                            le API di comunicazione verso il lato server (vedi \ref{subsec:comlatoserver});
@@ -472,7 +472,7 @@
                             dell'applicazione e comprende un file XML e uno TSS.
                             Il primo definisce la struttura della schermata, mentre il
                             secondo contiene gli stili da applicare ai vari elementi
-                            che essa contiene, la relazione tra XML e tss è la stessa
+                            che essa contiene. La relazione tra XML e TSS è la stessa
                             che si ha tra HTML e CSS.
                             Il file dentro \texttt{controllers} esegue chiamate dirette
                             alle API di \tisdk{} per manipolare gli oggetti grafici
@@ -481,14 +481,15 @@
 
             \noindent Per strutturare realmente l'applicazione secondo il paradigma MVC
             ci sarebbe stato bisogno di usare un'altra cartella di nome \texttt{models}
-            nella quale inserire i file \js{} per i modelli, però la documentazione
+            nella quale inserire i file \js{} per i modelli; tuttavia la documentazione
             di \tisdk{} non è molto chiara su come utilizzarli, per cui
             abbiamo gestito i dati completamente nel controllore.
-            \noindent La cartella \texttt{app} contiene anche il file \texttt{alloy.js}, un particolare file
+            
+            La cartella \texttt{app} contiene anche il file \texttt{alloy.js}, un particolare file
             \js{} il cui codice viene eseguito prima di quello del controllore
             di qualsiasi schermata, rendendolo così un ottimo posto dove fare
             varie inizializzazioni dell'applicazione. Nel nostro progetto è
-            stato usato ad esempio per caricare il modulo per la mappa.
+            stato usato, ad esempio, per caricare il modulo per la mappa.
 
             \begin{figure}[H]
                 \centering
