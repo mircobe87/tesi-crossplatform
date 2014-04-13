@@ -825,7 +825,7 @@
 
         \subsection{Creare una nuova segnalazione}
         \label{subsec:nuova}
-            Creare una segnalazione sembra una cosa semplice ma per
+            Creare una segnalazione sembra una cosa semplice, ma per
             comporne una c'è bisogno di una sostanziale interazione con il
             dispositivo. Quello che andremo a descrivere ed a valutare sarà
             come \pg{} e \tisdk{} si sono comportati quando abbiamo avuto
@@ -843,7 +843,7 @@
             considerazioni da fare: sia \tisdk{} che
             \kendomob{}\footnote{Rilevare input testuale non compete \pg{}, non
             è un interazione con funzionalità del dispositivo; riguarda invece
-            funzionalità dei widget di cui è comporta l'interfaccia grafica.}
+            funzionalità dei widget di cui è composta l'interfaccia grafica.}
             mettono a disposizione i propri widget di ``input'' per i quali sono
             definiti gli opportuni metodi per ottenere il valore immesso
             dall'utente. Su \kendomob{} la schermata che raccoglie l'input è
@@ -870,7 +870,7 @@
             compito banale; \pg{} lo rende possibile attraverso le API del
             proprio plugin \texttt{Camera}. Tramite la funzione
             \texttt{getPicture} viene avviata l'applicazione nativa della
-            fotocamera dove l'utente, una volta scattata la foto ha la
+            fotocamera dove l'utente, una volta scattata la foto, ha la
             possibilità di accettarla o di rifiutarla. Le azioni da
             intraprendere nei due casi sono specificate in due rispettive
             funzioni \js{} che vengono passate come parametri al momento della
@@ -901,16 +901,16 @@
             esempio di
             ottenere la posizione esatta mediante il ricevitore GPS oppure,
             quella meno accurata, ottenuta utilizzando
-            le informazioni sulle reti WiFi presenti nella zone e la
+            le informazioni sulle reti WiFi presenti nella zona e la
             cella telefonica alla quale si è agganciati. In \tisdk{} si accede al sistema di
             geolocalizzazione attraverso le API del gruppo
-            \texttt{Titanium.Geolocation} che oltre a mettere a disposizione i
+            \texttt{Titanium.Geolocation} che, oltre a mettere a disposizione i
             metodi per la richiesta (continua o meno) della posizione corrente,
             offrono anche il servizio di geocoding che da la possibilità di
             trasformare le coordinate geografiche in un
             normale indirizzo postale. L'uso dei metodi per ottenere i dati
             sulla posizione è lo stesso per tutte le piattaforme che si possono
-            supportare ma troviamo delle differenze sostanziali per quanto
+            supportare, ma troviamo delle differenze sostanziali per quanto
             riguarda la configurazione del servizio, questo perché le diverse
             piattaforme ne danno una differente implementazione.
 
@@ -924,8 +924,8 @@
             notifica nell'apposita barra. Tutto questo non è realizzabile sulle
             altre piattaforme e nemmeno con \pg{} si è in grado di farlo.
 
-            Concludiamo facendo notare che al momento della realizzazione della
-            nostra applicazione \pg{} ha mostrato qualche problema con
+            Concludiamo facendo notare che, al momento della realizzazione della
+            nostra applicazione, \pg{} ha mostrato qualche problema con
             l'attivazione del GPS: se si tentava di ottenere la posizione
             accurata, il GPS veniva attivato correttamente e disattivato una
             volta ottenuta la posizione ma, da quel momento in poi, il servizio
