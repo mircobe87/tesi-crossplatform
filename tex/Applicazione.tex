@@ -516,7 +516,7 @@
             \jq{} e fornisce quindi tutte le sue funzionalità.}. Alla luce di
             questi fatti è stata definita un'unica interfaccia di funzioni \js{}
             e ne sono state realizzate due diverse implementazioni: una
-            fruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
+            sfruttando gli oggetti HTTPClient di \tisdk{} e l'altra basandoci
             sulla funzione \verb|$.ajax(...)| di \jq{}\footnote{Maggiori
             dettagli sull'uso di HTTPClinet e \texttt{\$.ajax(...)} sono
             disponibili nelle rispettive documentazioni online:\\
@@ -524,7 +524,7 @@
             e\\ \url{http://api.jquery.com/jQuery.ajax/}.}.
             È importante far notare
             che, sia HTTPClient che \verb|$.ajax(...)| implementano un sistema
-            di comunicazione asincrono, ciò significa che una volta inviate le
+            di comunicazione asincrono: ciò significa che una volta inviate le
             richieste HTTP, il programma continuerà ad essere eseguito in attesa
             che dal server tornino le relative risposte; a questo punto verrà
             eseguito l'opportuno codice che gestirà tale evento.
