@@ -668,7 +668,7 @@
             La mappa così implementata possiede tutte le caratteristiche offerte
             dalle mappe Google, in particolare, la possibilità di ottenere le
             coordinate dei punti in basso a sinistra e in alto a destra che
-            delimitano l'area rettangolare mostrata e, la possibilità di
+            delimitano l'area rettangolare mostrata, e la possibilità di
             disegnare dei segnaposto cliccabili con icone personalizzabili.
             Sfruttando queste funzionalità, una volta ottenute dal database
             tutte le segnalazioni riguardanti l'area attualmente visualizzata, è
@@ -676,8 +676,8 @@
             passarlo alla mappa per veder apparire tutte le segnalazioni sopra
             di essa. Un problema che però ci siamo trovati ad affrontare è stato
             il fatto che lo spostare la mappa verso destra entrava in conflitto
-            con il gesto di swipe per l'apertura del menù. \kendomob{} non
-            fornendo la possibilità di configurare la sensibilità dello swipe ci
+            con il gesto di swipe per l'apertura del menù. \kendomob{}, non
+            fornendo la possibilità di configurare la sensibilità dello swipe, ci
             ha costretti a dover rinunciare all'uso di tale gesto per l'apertura
             e chiusura del drawer. Un altro appunto che dobbiamo fare riguarda
             le prestazioni: rispetto alle mappe che si possono trovare in
@@ -688,8 +688,8 @@
             non comporta grandi difficoltà, in più il paradigma MVC
             offerto da Alloy rende tutto più modulare e strutturato. Per ottenere
             una view con al suo interno la mappa bisogna prima caricare il modulo
-            relativo, questo lo si fa tipicamente all'interno del file
-            \texttt{app/alloy.js} così che il caricamento del modulo venga
+            relativo; questo lo si fa tipicamente all'interno del file
+            \texttt{app/alloy.js} cosicché il caricamento del modulo venga
             eseguito immediatamente dopo l'avvio dell'applicazione; in più è cosa
             comune creare il riferimento nello spazio dei nomi \texttt{Alloy.Globals}
             in modo da essere reperibile da ogni punto del progetto (vedi codice \ref{cod:alloyglob}).
@@ -778,8 +778,8 @@
             disegnare segnaposto sulla mappa e reperire le informazioni
             necessarie alla composizione delle query spaziali per scaricare le
             segnalazioni da mostrare (vedi fig. \ref{fig:TiMaps}). Il modulo
-            \texttt{ti.map} fornisce sostanzialmente un'interfaccia che permette
-            tramite \js{} l'uso delle rispettive mappe native per le piattaforme
+            \texttt{ti.map} fornisce sostanzialmente un'interfaccia che permette,
+            tramite \js{}, l'uso delle rispettive mappe native per le piattaforme
             iOS e Android. Le mappe risultanti sono notevolmente più performanti
             rispetto a quelle descritte precedentemente fornendo un'esperienza
             utente molto più gradevole.
@@ -808,14 +808,14 @@
             interagire con funzionalità del dispositivo; una volta scritto,
             tutto il codice sarà utilizzabile su tutte le piattaforme per le
             quali si sta sviluppando l'applicazione. Inoltre non si è
-            costretti ad utilizzare soltanto il servizio mappe di Google, online
+            costretti ad utilizzare soltanto il servizio mappe di Google, poiché online
             sono disponibili altre API \js{} open source come Leaflet oppure
             di proprietà di marchi conosciuti come Bing (di Microsoft) o HERE
             (di Nokia). Per applicazioni \tisdk{} il discorso è un po' più
             delicato: per supportare sia la piattaforma Android che iOS sono
-            sufficienti le API del modulo \texttt{ti.map} mentre per BlackBerry,
+            sufficienti le API del modulo \texttt{ti.map}, mentre per BlackBerry,
             Tizen e Web bisogna specializzare il codice per l'uso dell'oggetto
-            \texttt{Titanium.Map}. Ad ogni modo abbiamo comunque la possibilità
+            \texttt{Titanium.Map}. Ad ogni modo, abbiamo comunque la possibilità
             di rinunciare alle API delle mappe offerte da \tisdk{}: il codice
             \js{}/\html{} che utilizza le API online del nostro fornitore di
             mappe preferito, può essere caricato in un'opportuna web view,
