@@ -778,19 +778,19 @@
   addJavascriptInterface(Object object, String name)
     \end{lstlisting}
             per permettere
-            di scrivere codice \js{} che attraverso la stringa name ha accesso
-            ai metodi Java del parametro object.
+            di scrivere codice \js{} che attraverso la stringa \texttt{name} ha accesso
+            ai metodi Java del parametro \texttt{object}.
 
             \pg{} sfrutta tutto ciò per creare in fase di compilazione la
             cosiddetta shell, cioè una particolare
             Web View estesa con un livello che funge da ponte
-            tra codice JavaScript e codice nativo, rendendo così possibile esporre
-            agli sviluppatori dell'applicazione mobile un'interfaccia JavaScript
+            tra codice \js{} e codice nativo, rendendo così possibile esporre
+            agli sviluppatori dell'applicazione mobile un'interfaccia \js{}
             che sfruttando il ponte sia in grado di invocare codice nativo.
             La shell rende la piattaforma \pg{} estendibile tramite i cosiddetti
             plugins, cioè pacchetti creati per accedere al dispositivo e a quelle
             funzionalità che normalmente non sono disponibili per le applicazioni
-            web. Un plugin è composto da un'interfaccia JavaScript che
+            web. Un plugin è composto da un'interfaccia \js{} che
             verrà usata per tutte le piattaforme, e da un'implementazione
             in codice nativo (ovviamente diversa per ogni piattaforma)
             della funzionalità offerta.
