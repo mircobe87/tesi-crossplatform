@@ -1187,18 +1187,18 @@
             \ref{fig:repodetails} mostra le interfacce dei due framework con i
             dettagli di una segnalazione.
 
-            Realizzare questa funzionalità ci ha permesso di confrontarci con il
-            problema di dover scaricare un file da un server, in questo caso,
-            l'immagine allegata alla segnalazione da mostrare. CouchDB
+            Realizzare questa funzionalità ha permesso di confrontarci con il
+            problema di dover scaricare un file da un server che, in questo caso,
+            è l'immagine allegata alla segnalazione da mostrare. CouchDB
             consente di reperire gli allegati multimediali per un documento in
             tre modi:
             \begin{enumerate}
                 \item chiedendogli di inviare il documento completo di allegati
-                tutto in formato JSON; in questo caso i file vengono codificati
+                tutto in formato JSON. In questo caso i file vengono codificati
                 in BASE64 e tutto il documento JSON viene trasportato nel corpo
                 di un messaggio di risposta HTTP;
                 \item chiedendogli di inviare il documento completo di allegati
-                ma non specificando il formato; in questo caso il server prepara
+                ma non specificando il formato. In questo caso il server prepara
                 un messaggio di risposta HTTP dove nel corpo è presente un
                 contenuto di dati misto con intestazione
                 MIME\footnote{Protocollo che permette di estendere semplici
@@ -1212,10 +1212,10 @@
                 \item chiedendogli direttamente il file dell'allegato mediante
                 uno specifico URL.
             \end{enumerate}
-            Il primo caso richiedeva da parte del server del lavoro in più per
+            Il primo caso richiedeva, da parte del server, del lavoro in più per
             codificare l'allegato a scapito del tempo di risposta; nel secondo
             caso era necessario un metodo per separare i vari contenuti dal
-            messaggio MIME che nessun framework forniva. Per questi motivi
+            messaggio MIME che nessun frame\-work forniva. Per questi motivi
             abbiamo deciso di scaricare gli allegati direttamente, dopo aver
             ottenuto tutto il resto della segnalazione, con una richiesta
             separata.
@@ -1273,10 +1273,10 @@
             con tutte le piattaforme supportate da \tisdk{}. Come avevamo
             anticipato nella sezione relativa alla comunicazione con il lato
             server (sez.~\ref{subsec:comlatoserver}), per creare richieste HTTP
-            si utilizza in \tisdk{} l'oggetto \texttt{HTTPClient} definito nelle
+            in \tisdk{} si utilizza l'oggetto \texttt{HTTPClient} definito nelle
             API \texttt{Titanium.Network}. Anche in questo caso, in maniera
             simile a quanto si fa con le API di \pg{}, dopo aver creato un nuovo
-            file si può procedere con richiedere al server l'allegato da
+            file si può procedere col richiedere al server l'allegato da
             scaricare e memorizzare. Il segmento di codice \ref{cod:dlFileTi}
             mostra un esempio d'uso delle API di \tisdk{} per scaricare un file
             e salvarlo nel filesys\-tem.
@@ -1305,10 +1305,10 @@
   // invio la richiesta
   httpClt.send();
             \end{lstlisting}
-            Una differenza sostanziale che c'è nella gestione del filesys\-tem
-            tra \tisdk{} e \pg{} è che le API del primo consentono di creare
+            Una differenza sostanziale che c'è tra \tisdk{} e \pg{} nella
+            gestione del filesys\-tem, è che le API del primo consentono di creare
             file persistenti solo in precise directory relative
-            all'applicazione stessa per le quali sono definite delle specifiche
+            all'applicazione stessa per i cui nomi sono definite delle specifiche
             macro (nel codice di esempio \ref{cod:dlFileTi} possiamo vedere
             l'uso della macro \texttt{Ti.Filesystem.applicationDataDirectory}).
             Con il plugin di \pg{}, a patto di avere i permessi necessari, è
