@@ -191,9 +191,9 @@
         Abbiamo quindi deciso di realizzare un semplice web server implementato
         con Node.js che lavori a fianco di Apache CouchDB\texttrademark{}
         (vedi fig.~\ref{fig:latoserver}) con il
-        compito: di ascoltare richieste di registrazione provenienti dal lato
-        client, di inoltrarle al DBMS aggiungendovi le credenziali di amministratore
-        e di controllare che il \texttt{nickname} scelto dall'utente non sia già
+        compito di: ascoltare richieste di registrazione provenienti dal lato
+        client, inoltrarle al DBMS aggiungendovi le credenziali di amministratore
+        e controllare che il \texttt{nickname} scelto dall'utente non sia già
         stato usato da un altro. Così facendo le credenziali di amministratore
         del DBMS sono contenute all'interno del web server Node.js e non sono più
         reperibili direttamente dal codice del lato client.
