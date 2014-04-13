@@ -636,33 +636,34 @@
     \label{sec:frameworkhybrid}
         \subsection{Phonegap}
         \label{subsec:hybridpg}
-            PhoneGap è un mobile development frame\-work prodotto da Nitobi, e
+            \pg{} è un mobile development frame\-work prodotto da Nitobi, e
             acquistato da Adobe System il 4 ottobre 2011.
-            Spesso ci si riferisce a PhoneGap col nome di Apache Cordova, ma è
+            Spesso ci si riferisce a \pg{} col nome di Apache Cordova, ma è
             necessario fare una distinzione.
             Nel momento dell'acquisto della Nitobi da parte di Adobe, il codice
-            di PhoneGap è stato donato all'Apache Software Foundation (ASF),
+            di \pg{} è stato donato all'Apache Software Foundation (ASF),
             questo per fare in modo che lo sviluppo del frame\-work godesse di
             tutti i benefici derivanti dalla licenza open \mbox{source}.
             Quello che avviene in sostanza è che sia le grandi compagnie, sia
             gli sviluppatori indipendenti contribuiscono a potenziare il codice
-            di Apache Cordova che viene di fatto usato come incubatrice per PhoneGap.
-            PhoneGap è diventato così una distribuzione di Apache Cordova\footnote{
+            di Apache Cordova che viene di fatto usato come incubatrice per
+            \pg{}.
+            \pg{} è diventato così una distribuzione di Apache Cordova\footnote{
             L'ipotesi più accreditata sulla scelta del nome Cordova
-            è che quando il progetto PhoneGap è nato la Nitobi aveva gli uffici
+            è che quando il progetto \pg{} è nato la Nitobi aveva gli uffici
             nella Cordova Street di Vancouver.}. All'inizio la differenza tra
-            i due era solo nel nome, ma nel tempo PhoneGap ha reso disponibili
+            i due era solo nel nome, ma nel tempo \pg{} ha reso disponibili
             strumenti addizionali per collegarsi ai servizi di Adobe, un esempio
-            di questi è PhoneGap Build che verrà
+            di questi è \pg{} Build che verrà
             descritto successivamente. Le istruzioni per iniziare ad usare
-            Apache Cordova e PhoneGap sono presenti rispettivamente su
+            Apache Cordova e \pg{} sono presenti rispettivamente su
             \url{https://cordova.apache.org/} e su
             \url{http://phonegap.com/}. Dal punto di vista dello sviluppatore di
-            applicazioni mobili usare Apache Cordova o PhoneGap differisce solo
+            applicazioni mobili usare Apache Cordova o \pg{} differisce solo
             per l'integrazione dei suddetti servizi, per il resto non ci sono
             differenze.
 
-            Con PhoneGap come detto è possibile creare applicazioni ibride e quindi
+            Con \pg{} come detto è possibile creare applicazioni ibride e quindi
             applicazioni in grado di sfruttare fotocamera, GPS, filesys\-tem e
             altri sensori del dispositivo. Per fare questo il frame\-work offre
             delle API JavaScript che combinate con un frame\-work UI come quelli descritti
@@ -674,15 +675,15 @@
             Questo frame\-work fornisce inoltre un'interfaccia da riga di comando (CLI)
             che permette di usare i comandi per: creare l'applicazione, aggiungervi
             plugin, compilarla e installarla su un dispositivo o su un emulatore.
-            Se si usa PhoneGap saranno inoltre disponibili comandi per eseguire
-            la compilazione remota attraverso PhoneGap Build.
+            Se si usa \pg{} saranno inoltre disponibili comandi per eseguire
+            la compilazione remota attraverso \pg{} Build.
 
-            Le APIs di PhoneGap sono consistenti tra le varie piattaforme mobili,
+            Le APIs di \pg{} sono consistenti tra le varie piattaforme mobili,
             l'applicazione può essere quindi portata su più dispositivi con
             sistemi operativi diversi attraverso piccoli accorgimenti, questa
             caratteristica rende quindi particolarmente semplice scrivere
             applicazioni mobili cross-platform.
-            Attualmente PhoneGap è disponibile per le seguenti piattaforme:
+            Attualmente \pg{} è disponibile per le seguenti piattaforme:
             Amazon-Fireos, Android, Blackberry10, iOS, Windows Phone 7,
             Windows Phone 8, Tizen, Ubuntu \hyperref[fig:platformsupport]{(Vedi
             tab.~\ref{fig:platformsupport}).}
@@ -756,12 +757,12 @@
                     \caption{Insieme degli strumenti e le
                     APIs disponibili per alcune delle piattaforme supportate.
                     La tabella completa è disponibile nella documentazione
-                    di PhoneGap alla pagina \url{http://docs.phonegap.com/en/3.3.0/guide_support_index.md.html\#Platform\%20Support}}
+                    di \pg{} alla pagina \url{http://docs.phonegap.com/en/3.3.0/guide_support_index.md.html\#Platform\%20Support}}
                     \label{fig:platformsupport}
                 \end{table}
             }
 
-            E' interessante vedere come PhoneGap è riuscito a permettere la
+            E' interessante vedere come \pg{} è riuscito a permettere la
             realizzazione di API JavaScript per accedere alle funzionalità
             dei dispositivi.
             Molti SDKs nativi forniscono una particolare componente chiamata
@@ -780,23 +781,23 @@
             di scrivere codice JavaScript che attraverso la stringa name ha accesso
             ai metodi Java del parametro object.
 
-            PhoneGap sfrutta tutto ciò per creare in fase di compilazione la
+            \pg{} sfrutta tutto ciò per creare in fase di compilazione la
             cosiddetta shell, cioè una particolare
             Web View estesa con un livello che funge da ponte
             tra codice JavaScript e codice nativo, rendendo così possibile esporre
             agli sviluppatori dell'applicazione mobile un'interfaccia JavaScript
             che sfruttando il ponte sia in grado di invocare codice nativo.
-            La shell rende la piattaforma PhoneGap estendibile tramite i cosiddetti
+            La shell rende la piattaforma \pg{} estendibile tramite i cosiddetti
             plugins, cioè pacchetti creati per accedere al dispositivo e a quelle
             funzionalità che normalmente non sono disponibili per le applicazioni
             web. Un plugin è composto da un'interfaccia JavaScript che
             verrà usata per tutte le piattaforme, e da un'implementazione
             in codice nativo (ovviamente diversa per ogni piattaforma)
             della funzionalità offerta.
-            E' importante notare che tutte le principali API di PhoneGap sono
+            E' importante notare che tutte le principali API di \pg{} sono
             implementate come plugins.
 
-            Descriviamo ora il processo di sviluppo da usare con PhoneGap.
+            Descriviamo ora il processo di sviluppo da usare con \pg{}.
             La prima cosa da fare è usare il CLI con il comando
     \begin{lstlisting}[language=MyBash]
   phonegap create "hello" "com.example.hello" "HelloWorld"
@@ -824,26 +825,26 @@
   phonegap run "android"
     \end{lstlisting}
 
-            Il processo di compilazione di Phonegap come detto
+            Il processo di compilazione di \pg{} come detto
             crea la shell nativa nella quale vengono interpretati i file HTML5, CSS3, e
             JavaScript che compongono l'applicazione. Il pacchetto
             risultante è un file che può essere distribuito attraverso gli stores
             delle varie piattaforme.
 
-            Per creare il pacchetto nativo PhoneGap usa gli strumenti di compilazione
+            Per creare il pacchetto nativo \pg{} usa gli strumenti di compilazione
             degli SDKs nativi, è quindi necessario avere installato e configurato,
             sulla macchina
             usata per lo sviluppo, i Software Development Kits delle piattaforme
             di destinazione dell'applicazione.
 
             Per superare questa necessità Adobe ha creato un servizio chiamato
-            PhoneGap Build\footnote{Il servizio è accessibile dal sito
+            \pg{} Build\footnote{Il servizio è accessibile dal sito
             \url{https://build.phonegap.com}}.
             Inviando i file sorgenti al servizio, attraverso un
             pacchetto .zip o attraverso il repository GitHub, il processo di
-            compilazione sarà eseguito direttamente da PhoneGap Build, permettendo
+            compilazione sarà eseguito direttamente da \pg{} Build, permettendo
             poi di scaricare l'applicazione installabile sulle varie piattaforme.
-            L'attuale versione di PhoneGap Build è la 3.3.0 ed è in grado di compilare
+            L'attuale versione di \pg{} Build è la 3.3.0 ed è in grado di compilare
             applicazioni per iOS, Android e WindowsPhone 8. Per iOS serve comunque
             essere registrati tra gli sviluppatori Apple questo consentirà di
             testare le app su iPhone e iPad.
@@ -855,15 +856,15 @@
   <gap:plugin name="org.apache.cordova.camera"/>
     \end{lstlisting}
 
-            Oltre alla possibilità di fare compilazione PhoneGap Build fornisce
+            Oltre alla possibilità di fare compilazione \pg{} Build fornisce
             il cosiddetto Hydration, un'opzione di compilazione che se abilitata
             permette di testare le modifiche fatte all'applicazione senza doverla
             reinstallare sul dispositivo (attenzione non tutte le modifiche
-            funzionano). Infine PhoneGap Build offre un server weinre per fare
+            funzionano). Infine \pg{} Build offre un server weinre per fare
             debugging in remoto, usando gli strumenti di debug tipici dello
             sviluppo web.
 
-            Il processo di sviluppo con PhoneGap Build da una parte permette di
+            Il processo di sviluppo con \pg{} Build da una parte permette di
             poter iniziare a realizzare l'applicazione senza perder tempo a
             installare e configurare tutti gli SDKs nativi~\footnote{Si pensi
             che tecnicamente non è nemmeno necessario usare il comando
@@ -875,18 +876,18 @@
             il processo di compilazione non sembra essere molto performante e
             spesso il sito mostra
             dei disservizi. Inoltre bisogna tener conto che non tutti i plugin
-            esistenti per PhoneGap sono utilizzabili con il servizio
-            PhoneGap Build, anche se la possibilità di aggiungere plugin di terze
+            esistenti per \pg{} sono utilizzabili con il servizio
+            \pg{} Build, anche se la possibilità di aggiungere plugin di terze
             parti sta facendo crescere il numero di quelli disponibili.
 
-            La principale forza di PhoneGap risiede nella sua semplicità.
-            Il team di sviluppatori di PhoneGap ha intenzionalmente implementato
+            La principale forza di \pg{} risiede nella sua semplicità.
+            Il team di sviluppatori di \pg{} ha intenzionalmente implementato
             solo il minimo comune denominatore delle APIs native. In questo modo
-            è facile per PhoneGap supportare molte piattaforme. Potenzialmente
+            è facile per \pg{} supportare molte piattaforme. Potenzialmente
             una qualsiasi piattaforma che offre una web view può essere supportata
-            da PhoneGap.
+            da \pg{}.
 
-            La qualità dell'interfaccia utente in un'applicazione PhoneGap
+            La qualità dell'interfaccia utente in un'applicazione \pg{}
             varia in base al frame\-work usato per realizzare la web app, e al
             motore di rendering delle pagine web della piattaforma.
             Il motore di rendering WebKit su iOS fornisce buone prestazioni, le
