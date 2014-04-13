@@ -944,7 +944,7 @@
             dal proprio dispositivo (non contiene quindi quelle effettuate da altri
             utenti), in modo da poter accedere velocemente ad esse
             senza doverle necessariamente cercare sulla mappa.
-            Gli elementi della lista sono cliccabili e premere su uno di questi
+            Gli elementi della lista sono cliccabili, e premere su uno di questi
             elementi porta all'apertura del dettaglio della corrispondente
             segnalazione (vedi \ref{subsec:dettagli}).
 
@@ -952,13 +952,13 @@
             tranne che per il caching, descritto nella sezione
             \ref{subsec:caching},
             implementato per permettere un uso dell'applicazione
-            anche in assenza di connessione alla rete Internet,
+            anche in assenza di connessione alla rete Internet;
             quindi, per la realizzazione della lista nell'applicazione ibrida, non sono
-            state utilizzate le API di \pg{} bensì sono stati sfruttati gli
+            state utilizzate le API di \pg{}, bensì sono stati sfruttati gli
             strumenti offerti da \kendomob{}.
 
             Sia \kendomob{} che \tisdk{} forniscono un elemento di nome \texttt{listview}
-            che permette di presentare informazioni, in una schermata scorrevole
+            che permette di presentare informazioni in una schermata scorrevole
             verticalmente, organizzandole in sezioni ed elementi (vedi fig. \ref{fig:mieTiPg}).
 
             \begin{figure}[H]
@@ -982,16 +982,16 @@
             \noindent Usando la libreria creata per comunicare col server (\ref{subsec:comlatoserver})
             siamo in grado di ottenere un vettore contenente le segnalazioni in formato JSON che
             rappresentano solo le segnalazioni fatte appunto dal proprio dispositivo.
-            Ovviamente dato che nella lista non ci interessa mostrare l'immagine della segnalazione
-            questa non viene scaricata velocizzando così il
-            trasferimento dei dati, bisogna però notare che, anche se la lista
+            Ovviamente, dato che nella lista non ci interessa mostrare l'immagine della segnalazione,
+            questa non viene scaricata, velocizzando così il
+            trasferimento dei dati. Bisogna però notare che, anche se la lista
             ne mostrerà soltanto il titolo, le segnalazioni scaricate contengono
             anche altri campi come il loro identificatore e quello dell'utente
-            che le ha inviate, queste ultime informazioni sono necessarie per
+            che le ha inviate; queste ultime informazioni sono necessarie per
             poter poi visualizzare la segnalazione nel dettaglio.
 
             Una volta scaricati i dati c'è appunto il problema di come inserirli
-            nella lista, e il problema di far visualizzare solo il titolo
+            nella lista e il problema di far visualizzare solo il titolo
             "scartando" le altre informazioni.
             \kendomob{} offre una pratica funzione \js{} tramite la quale è
             possibile definire il comportamento dell'applicazione in seguito
@@ -1047,29 +1047,29 @@
     };
   </script>
             \end{lstlisting}
-            \noindent Mentre le segnalazioni vengono scaricate dal server l'utente si
+            \noindent Mentre le segnalazioni vengono scaricate dal server, l'utente si
             troverebbe di fronte ad una lista vuota senza capire effettivamente
-            cosa stia succedendo, per evitare questo spiacevole inconveniente
+            cosa stia succedendo. Per evitare questo spiacevole inconveniente,
             la cosa migliore da fare è stata quella di mostrare all'utente un'animazione
             di caricamento (vedi fig. \ref{fig:listaMieLoadPg}). \kendomob{} offre a tal proposito le funzioni
             \texttt{showLoading()} e \texttt{hideLoading()} rispettivamente per
             avviare e interrompere l'animazione. Questa animazione però non blocca
-            l'interfaccia grafica e l'utente può ad esempio decidere
-            di cambiare schermata creando dei problemi nella logica dell'applicazione,
-            inoltre su Android lo stile di questa animazione non assomiglia molto
+            l'interfaccia grafica e l'utente può, ad esempio, decidere
+            di cambiare schermata creando dei problemi nella logica dell'applicazione;
+            inoltre su Android lo stile di questa animazione non assomiglia per niente
             a quello nativo.
 
-            Come detto con \tisdk{} l'approccio è simile. Dentro
-            il file XML della schermata che contiene la lista deve essere definito
-            l'elemento \texttt{ListView} però a differenza di \kendomob{} la struttura
+            Come già detto, costruire una lista con \tisdk{} è simile a \kendomob{}. Dentro
+            il file XML della schermata che contiene la lista, deve essere definito
+            l'elemento \texttt{ListView} però, a differenza di \kendomob{}, la struttura
             degli elementi va ancora definita in XML anzichè in \js{}. Nel controllore
             bisogna quindi occuparsi di scaricare i dati dal
             server, di inserirli nella lista e di implementare la funzione
-            da eseguire alla pressione degli elementi. Il tutto però non è così immediato,
+            da eseguire alla pressione sugli elementi. Il tutto però non è così immediato:
             infatti non è possibile inserire i dati nella lista usando direttamente
-            il vettore delle segnalazioni, ogni elemento deve prima essere convertito
-            da JSON ad un oggetto \js{} e inoltre questo oggetto deve avere dei
-            campi particolari imposti dal framework. Nel codice \ref{cod:listTiXML} si mostra il
+            il vettore delle segnalazioni. Ogni elemento deve prima essere convertito
+            da JSON ad un oggetto \js{} e, inoltre, questo oggetto deve avere dei
+            campi particolari imposti dal framework. Nel frammento \ref{cod:listTiXML} si mostra il
             codice XML per creare una lista, mentre nel \ref{cod:listJsTi} è presente il codice
             \js{} del controllore eseguito automaticamente ogni volta che si
             accede alla schermata.
@@ -1077,7 +1077,7 @@
                 caption = {
                     Tag XML da usare in \tisdk{} per creare una lista. Da notare
                     che il formato delle righe è descritto ancora tramite tag
-                    XML, in particolare in questo esempio le righe della lista
+                    XML; in particolare, in questo esempio, le righe della lista
                     mostreranno una sola riga di testo contenente il titolo
                     della segnalazione.
                 },
@@ -1122,25 +1122,25 @@
                 }
                 \label{fig:listaMieLoadPg}
             \end{figure}
-            Per quanto riguarda l'animazione di caricamento \tisdk{} fornisce
+            Per quanto riguarda l'animazione di caricamento, \tisdk{} fornisce
             l'API per accedere a quella nativa di Android.
             Tale animazione può essere di due tipi: una semplice da usare quando
-            il tempo da attendere è indeterminato e
+            il tempo da attendere è indeterminato, e
             una che mostra anche la percentuale di caricamento nel caso si conosca
             lo stato di attesa.
             Anche per le altre piattaforme sono disponibili API con lo stesso scopo,
-            è quindi necessario dover scrivere codice diverso per ogni piattaforma
+            e quindi è necessario dover scrivere codice diverso per ogni piattaforma
             se si intende creare un'applicazione cross-platform.
-            Un'aspetto positivo di questa animazione di caricamento è la possibilità
-            di bloccare l'interfaccia grafica durante la sua visualizzazione,
-            in questo modo non ci si deve preoccupare delle azioni dell'utente,
-            ovviamente il contro è che l'utente si troverà bloccato di fronte
+            Un aspetto positivo di questa animazione di caricamento è la possibilità
+            di bloccare l'interfaccia grafica durante la sua visualizzazione cosicché
+            non ci si debba preoccupare delle azioni intraprese dall'utente.
+            Ovviamente il contro è che l'utente si troverà bloccato di fronte
             all'animazione e quindi questa non dovrebbe provocare un'attesa troppo
-            lunga, per questo abbiamo deciso che se i dati impiegano troppo tempo
-            ad essere recuperati dal server terminiamo l'animazione e mostriamo
+            lunga. Per questo abbiamo deciso che, se i dati impiegano troppo tempo
+            ad essere recuperati dal server, terminiamo l'animazione e mostriamo
             un avviso all'utente. Inoltre abbiamo fatto uso di entrambe le animazioni:
             quella indeterminata è stata fatta visualizzare mentre le segnalazioni
-            venivano scaricate dal server, mentre l'altra quando i dati venivano
+            venivano scaricate dal server, l'altra invece quando i dati venivano
             convertiti negli oggetti da poter inserire nella lista. Il risultato
             è mostato in figura \ref{fig:mieLoadTi}.
 
@@ -1164,7 +1164,7 @@
             \end{figure}
 
             \clearpage
-            \noindent In generale entrambi i framework hanno soddisfatto tutti
+            \noindent In generale, entrambi i frame\-work hanno soddisfatto tutti
             i nostri requisiti e lo scorrimento delle liste è
             performante anche in presenza di molti elementi. \kendomob{} ha
             anche introdotto, per tutte le piattaforme supportate, la
