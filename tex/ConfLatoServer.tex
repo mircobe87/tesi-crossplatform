@@ -7,14 +7,14 @@
     
     \section{CouchDB}
         
-        Come prima cosa dobbiamo tenera a mente che Apache 
-        CouchDB\texttrademark{} non prevede la possibilità di cestire query 
+        Come prima cosa dobbiamo tenere a mente che Apache 
+        CouchDB\texttrademark{} non prevede la possibilità di gestire query 
         spaziali e per questo motivo sarà necessario installare l'estensione 
         Geocouch\footnote{Il repository GIT è reperibile all'indirizzo 
         \url{https://github.com/couchbase/geocouch/tree/couchdb1.3.x}}.
         
         Nel nostro caso abbiamo installato tutto il lato server 
-        dell'applicazione su una macchia Arch Linux in quanto, per questo 
+        dell'applicazione su una macchina Arch Linux in quanto, per questo 
         sistema, era presente tra i suoi repository software ufficiali la 
         versione più aggiornata del DBMS (versione 1.5). Per installare Apache 
         CouchDB\texttrademark{} è stato sufficiente il comando:
@@ -38,7 +38,7 @@
         \end{lstlisting}
         A questo punto, una volta riavviato il servizio, il server è 
         raggiungibile dall'esterno e può essere configurato comodamente dalla 
-        proprio interfaccia web che in questo caso è raggiungibile con l'url 
+        propria interfaccia web che in questo caso è raggiungibile dall'url 
         \begin{lstlisting}
  http://192.168.0.5:5984/_utils/config.html
         \end{lstlisting}
@@ -54,14 +54,14 @@
                 server controlli le credenziali di accesso allegate al 
                 messaggio HTTP che riceve;
                 \item[headers] deve contenere l'elenco degli header HTTP che 
-                vogliamo siano accettati e nel nostro caso sono: 
+                vogliamo siano accettati che nel nostro caso sono: 
                 \texttt{accept}, \texttt{authorization},\\
                 \texttt{content-type}, \texttt{origin}, \texttt{x-titanium-id};
                 \item[methods] devo contenere l'elenco dei metodi HTTP che 
-                voglamo siano accettati e nel nostro caso sono: \texttt{HEAD}, 
+                vogliamo siano accettati e nel nostro caso sono: \texttt{HEAD}, 
                 \texttt{GET}, \texttt{PUT}, \texttt{POST}, \texttt{DELETE};
                 \item[origins] deve essere configurato in modo che vengano 
-                accettate richieste HTTP provenienti da qualsiasi domine, per 
+                accettate richieste HTTP provenienti da qualsiasi dominio, per 
                 questo motivo abbiamo settato il valore ad \texttt{*}.
             \end{description}
             \item[couch\_httpd\_auth] in modo che vengano accettate solo richieste 
@@ -71,7 +71,7 @@
                     \item[require\_valid\_user] va impostato a \texttt{true} 
                     proprio per il suddetto motivo;
                     \item[public\_fields] va impostato con un elenco dei campi 
-                    utente che vegliamo rendere pubblici; per la nostra 
+                    utente che vogliamo rendere pubblici; per la nostra 
                     applicazione avevamo la necessità di avere i campi 
                     \texttt{nick}, \texttt{mail} reperibili da qualsiasi altro utente;
                 \end{description}
