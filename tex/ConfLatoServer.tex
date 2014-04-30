@@ -1,0 +1,88 @@
+\appendix
+\chapter{Installazione e Configurazione del lato Server}
+
+    In questa sezione vediamo in maniera molto rapida come siamo riusciti a 
+    mettere in piedi il lato server per l'applicazione.
+    
+    
+    \section{CouchDB}
+        
+        Come prima cosa dobbiamo tenera a mente che Apache 
+        CouchDB\texttrademark{} non prevede la possibilità di cestire query 
+        spaziali e per questo motivo sarà necessario installare l'estensione 
+        Geocouch\footnote{Il repository GIT è reperibile all'indirizzo 
+        \url{https://github.com/couchbase/geocouch/tree/couchdb1.3.x}}.
+        
+        Nel noscro caso abbiamo installato tutto il lato server 
+        dell'applicazione su una macchia Arch Linux in quanto, per questo 
+        sistema, era presente tra i suoi repository software ufficiali la 
+        versione più aggiornata del DBMS (versione 1.5). Per installare Apache 
+        CouchDB\texttrademark{} è stato sufficiente il comando:
+        \begin{lstlisting}
+    sudo pacman -S couchdb
+        \end{lstlisting}
+        
+        Una volta terminata l'installazione abbiamo reso 
+        il server raggiungibile dall'esterno modificando il file di 
+        configurazine \texttt{/etc/couchdb/default.ini}: all'interno della 
+        sezione \verb|[httpd]| abbiamo inserito l'indirizzo IP della macchina 
+        come mostrato nel segmento del file seguente.
+        \begin{lstlisting}
+[...]
+    keyvalue_buffer_size = 2097152 ; value in bytes
+    [httpd]
+    port = 5984
+    bind_address = 192.168.0.5
+    authentication_handlers = {couch_httpd_oauth,oauth_authentication_handler},{couch_httpd_auth,cookie_authentication_handler},{couch_httpd_auth, default_authentication_handler}
+[...]
+        \end{lstlisting}
+        A questo punto, una volta riavviato il servizio, il server è 
+        raggiungibile dall'esterno e può essere configurato comodamente dalla 
+        proprio interfaccia web che in questo caso è raggiungibile con l'url 
+        \begin{lstlisting}
+ http://192.168.0.5:5984/_utils/config.html
+        \end{lstlisting}
+        
+        \noindent Adesso è necessario configurare:
+        \begin{description}
+            \item[cors] in modo che il server accetti messaggi \html{} 
+            particolari provenienti da un dominio differente da quello locale. 
+            In particolare , all'interno della sezione \texttt{cors}, bisogna 
+            settare i seguenti parametri:
+            \begin{description}
+                \item[credentials] va impostato a \texttt{true} in modo che il 
+                server controlli le credenziali di accesso allegate al 
+                messaggio HTTP che riceve;
+                \item[headers] deve contenere l'elenco degli header HTTP che 
+                vogliamo siano accettati e nel nostro caso sono: 
+                \texttt{accept}, \texttt{authorization},\\
+                \texttt{content-type}, \texttt{origin}, \texttt{x-titanium-id};
+                \item[methods] devo contenere l'elenco dei metodi HTTP che 
+                voglamo siano accettati e nel nostro caso sono: \texttt{HEAD}, 
+                \texttt{GET}, \texttt{PUT}, \texttt{POST}, \texttt{DELETE};
+                \item[origins] deve essere configurato in modo che vengano 
+                accettate richieste HTTP provenieni da qualsiasi domine, per 
+                questo motivo abbiamo settato il valore ad \texttt{*}.
+            \end{description}
+            \item[couch\_httpd\_auth] in modo che vengano accettate solo richieste 
+            provenienti da utenti registrati; in particolare i parametri da 
+            configurare sono:
+                \begin{description}
+                    \item[require\_valid\_user] va impostato a \texttt{true} 
+                    proprio per il suddetto motivo;
+                    \item[public\_fields] va impostato con un elenco dei campi 
+                    utente che vegliamo rendere pubblici; per la nostra 
+                    applicazione avevamo la necessità di avere i campi 
+                    \texttt{nick}, \texttt{mail} reperibili da qualsiasi altro utente;
+                \end{description}
+        \end{description}
+        La configurazione completa è mostrata in fig. \ref{fig:confCouch1}.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[keepaspectratio=true, width=0.99\textwidth]{couchConf1}
+            \caption{
+                Configurazione essenziale per rendere possibile la comunicazione
+                della app con il server.
+            }
+            \label{fig:confCouch1}
+        \end{figure}
