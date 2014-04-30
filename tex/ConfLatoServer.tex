@@ -13,7 +13,7 @@
         Geocouch\footnote{Il repository GIT è reperibile all'indirizzo 
         \url{https://github.com/couchbase/geocouch/tree/couchdb1.3.x}}.
         
-        Nel noscro caso abbiamo installato tutto il lato server 
+        Nel nostro caso abbiamo installato tutto il lato server 
         dell'applicazione su una macchia Arch Linux in quanto, per questo 
         sistema, era presente tra i suoi repository software ufficiali la 
         versione più aggiornata del DBMS (versione 1.5). Per installare Apache 
@@ -24,7 +24,7 @@
         
         Una volta terminata l'installazione abbiamo reso 
         il server raggiungibile dall'esterno modificando il file di 
-        configurazine \texttt{/etc/couchdb/default.ini}: all'interno della 
+        configurazione \texttt{/etc/couchdb/default.ini}: all'interno della 
         sezione \verb|[httpd]| abbiamo inserito l'indirizzo IP della macchina 
         come mostrato nel segmento del file seguente.
         \begin{lstlisting}
@@ -47,7 +47,7 @@
         \begin{description}
             \item[cors] in modo che il server accetti messaggi \html{} 
             particolari provenienti da un dominio differente da quello locale. 
-            In particolare , all'interno della sezione \texttt{cors}, bisogna 
+            In particolare, all'interno della sezione \texttt{cors}, bisogna 
             settare i seguenti parametri:
             \begin{description}
                 \item[credentials] va impostato a \texttt{true} in modo che il 
@@ -61,7 +61,7 @@
                 voglamo siano accettati e nel nostro caso sono: \texttt{HEAD}, 
                 \texttt{GET}, \texttt{PUT}, \texttt{POST}, \texttt{DELETE};
                 \item[origins] deve essere configurato in modo che vengano 
-                accettate richieste HTTP provenieni da qualsiasi domine, per 
+                accettate richieste HTTP provenienti da qualsiasi domine, per 
                 questo motivo abbiamo settato il valore ad \texttt{*}.
             \end{description}
             \item[couch\_httpd\_auth] in modo che vengano accettate solo richieste 
