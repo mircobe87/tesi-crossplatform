@@ -18,7 +18,7 @@
         sistema, era presente tra i suoi repository software ufficiali la 
         versione più aggiornata del DBMS (versione 1.5). Per installare Apache 
         CouchDB\texttrademark{} è stato sufficiente il comando:
-        \begin{lstlisting}
+        \begin{lstlisting}[language=plane]
     sudo pacman -S couchdb
         \end{lstlisting}
         
@@ -27,7 +27,7 @@
         configurazione \texttt{/etc/couchdb/default.ini}: all'interno della 
         sezione \verb|[httpd]| abbiamo inserito l'indirizzo IP della macchina 
         come mostrato nel segmento del file seguente.
-        \begin{lstlisting}
+        \begin{lstlisting}[language=plane]
 [...]
     keyvalue_buffer_size = 2097152 ; value in bytes
     [httpd]
@@ -39,8 +39,8 @@
         A questo punto, una volta riavviato il servizio, il server è 
         raggiungibile dall'esterno e può essere configurato comodamente dalla 
         propria interfaccia web che in questo caso è raggiungibile dall'url 
-        \begin{lstlisting}
- http://192.168.0.5:5984/_utils/config.html
+        \begin{lstlisting}[language=plane]
+    http://192.168.0.5:5984/_utils/config.html
         \end{lstlisting}
         
         \noindent Adesso è necessario configurare:
@@ -108,7 +108,7 @@
                 \item[estrarre il pacchetto]
                 Estrarre il tarball (preferibilmente in una cartella da tenere 
                 da parte solo per le compilazioni di AUR) con il comando
-                \begin{lstlisting}
+                \begin{lstlisting}[language=plane]
     tar -xzf geocouch.tar.gz
                 \end{lstlisting}
                 \item[compilare il pacchetto installabile]
@@ -117,13 +117,13 @@
                 occuperà di risolvere automaticamente le dipendenze tramite 
                 pacman). Questo scaricherà e compilerà il codice, infine 
                 creerà il pacchetto.
-                \begin{lstlisting}
+                \begin{lstlisting}[language=plane]
     cd geocouch/
     makepkg -s
                 \end{lstlisting}
                 \item[Intallare Geocouch]
                 Installare il pacchetto ottenuto tramite \texttt{pacman}:
-                \begin{lstlisting}
+                \begin{lstlisting}[language=plane]
     sudo pacman -U geocouch-1.3.1-1-armv6h.pkg.tar.xz
                 \end{lstlisting}
             \end{description}

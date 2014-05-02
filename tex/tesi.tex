@@ -72,6 +72,9 @@
 % per inserire codice sorgente
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Codice}% Listing -> Codice
+\lstdefinelanguage{plane}{
+    morekeywords={}
+}
 %Java personalizzato
 \lstdefinestyle{MyJavaStyle}{
 	keywordstyle=\color{bordeaux}\bfseries,
@@ -93,14 +96,15 @@
   language=bash,
   sensitive=true,
   otherkeywords={
-    sencha, phonegap, titanium, ti
+    sencha, phonegap, titanium, ti, sudo, pacman, makepkg, cd, tar
   },
   deletekeywords={local},
   morestring=[b]',
   morestring=[b]",
   morecomment=[l]\#,
+  alsoletter={-},
   ndkeywords={
-  	create, local, plugin, add, run, generate, app, package, build
+  	create, local, plugin, add, run, generate, app, package, build, -D, -s, -xvf, -U, -S
   }
 }
 % JavaScript
@@ -185,7 +189,7 @@
   	GET, HEAD, DELETE, PUT, POST
   },
   morekeywords=[2]{
-  	HTTP/1.0, HTTP/1.1
+  	HTTP/1.0, HTTP/1.1, http://
   },
   morekeywords=[3]{
   	Authorization:, Host:, Content-type:, Connection:, Cookie:, Set-cookie:
