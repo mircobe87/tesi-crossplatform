@@ -239,3 +239,124 @@
                 \texttt{\_users}, mentre quelle relative alle segnalazioni 
                 sono memorizzate nel documento \texttt{\_design/queries} del 
                 DB \texttt{degradi}.
+                
+                \paragraph{queries} Queste view sono quelle che operano sulle 
+                segnalazioni. Il documento le raccoglie in due gruppi diversi: 
+                \texttt{views} che sono le normali view e \texttt{spatial} che 
+                sono le query spaziali rese possibili da Geocouch.
+                
+                All'interno di \texttt{views} abbiamo:
+                \begin{description}
+                    \item[allDocsByUser] che restituisce record composti da i 
+                    campi \texttt{\_id}, \texttt{userId} e \texttt{title} di 
+                    tutte le segnalazioni ordinate per \texttt{userId};
+                    \item[allDocsByDate] che restituisce tutte le segnalazioni 
+                    ordinate per il valore del loro campo \texttt{date}.
+                \end{description}
+                
+                Per quanto riguarda le query spaziali, all'interno di 
+                \texttt{spatial} abbiamo:
+                \begin{description}
+                    \item[allDocsByLoc] che restituisce tutte le segnalazioni 
+                    ordinate sui valori di latitudine e longitudine.
+                \end{description}
+                
+                La struttura completa dei questo documento è mostrata in 
+                figura \ref{fig:queries} mentre la sua definizione completa 
+                JSON è mostrata di seguito.
+                \begin{lstlisting}[language=plane] 
+    {
+      "_id": "_design/queries",
+      "_rev": "13-a1bad8844225a755e1582d74493c5f8d",
+      "spatial": {
+        "allDocsByLoc": "function(doc) {
+          if (doc.loc) {
+            emit({
+              type: \"Point\",
+              coordinates: [doc.loc.longitude, doc.loc.latitude]
+            },{
+              userId: doc.userId,
+              title: doc.title
+            });
+          }
+        };"
+      },
+      "language": "javascript",
+      "views": {
+        "allDocsByUser": {
+          "map": "function(doc) {
+            emit(doc.userId, doc.title);
+          }"
+        },
+        "allDocsByDate": {
+          "map": "function(doc) {
+            emit(doc.date, {
+              _id: doc._id,
+              userId: doc.userId,
+              title: doc.title
+            });
+          }"
+        }
+      }
+    }
+                \end{lstlisting}
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[keepaspectratio=true, 
+                    width=0.99\textwidth]{queries}
+                    \caption{
+                        Struttura del design document \texttt{queries} che 
+                        contiene le definizioni delle view applicabili alle 
+                        segnalazioni.
+                    }
+                    \label{fig:queries}
+                \end{figure}
+                Queste query possono sembrare poco utili ma, nei messaggi HTTP 
+                che vengono inviati al server per chiederne l'esecuzione, 
+                possono essere ineriti dei parametri per filtrare i risultati: 
+                in particolare è possibile ordinare tutte le segnalazioni per 
+                posizione e poi far restituire solo quelle presenti in una 
+                certa area. Per vedere quali parametri possono essere 
+                utilizzati nei messaggi HTTP di richiesta, fare riferimento 
+                alla documentazione di Apache CouchDB\texttrademark{} 
+                (\url{http://docs.couchdb.org/en/latest/api/ddoc/views.html}).
+
+                \paragraph{userQueries} Queste view sono eseguibili sul 
+                databade degli utenti. In questo caso è presente solo una sola 
+                view definita nel gruppo \texttt{views}:
+                \begin{description}
+                    \item[allNickandMail] Questa view ritorna tutti gli utenti 
+                    mostrando solo i loro campi pubblici, e cioè \texttt{nick} 
+                    e \texttt{mail}, ordinati per nickname.
+                \end{description}
+                La struttura completa dei questo documento è mostrata in 
+                figura \ref{fig:userQueries} mentre la sua definizione completa 
+                JSON è mostrata di seguito.
+                \begin{lstlisting}[language=plane] 
+    {
+      "_id": "_design/usersQueries",
+      "_rev": "2-d4c13f3a6e2b1f34c42c2a2224aef890",
+      "language": "javascript",
+      "views": {
+        "allNickandMail": {
+          "map": "function(doc) {
+            emit(doc.nick, doc.mail);
+          }"
+        }
+      }
+    }
+                \end{lstlisting}
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[keepaspectratio=true, width=0.99\textwidth]{userQueries}
+                    \caption{
+                        Struttura del design document \texttt{userQueries} che 
+                        contiene le definizioni delle view applicabili agli 
+                        utenti.
+                    }
+                    \label{fig:userQueries}
+                \end{figure}
+    
+    
+    \section{Node.js Web Server}
+        
