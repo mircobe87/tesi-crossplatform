@@ -5,7 +5,7 @@
     mettere in piedi il lato server per l'applicazione.
     
     
-    \section{CouchDB}
+    \section{Apache CouchDB\texttrademark{}}
         
         Come prima cosa dobbiamo tenere a mente che Apache 
         CouchDB\texttrademark{} non prevede la possibilità di gestire query 
@@ -129,3 +129,113 @@
             \end{description}
             Terminata l'installazione è sufficiente un riavvio del servizio 
             CouchDB per rendere operativa l'estensione installata.
+
+        \subsection{Database e View}
+            Vediamo ora come sono stati memorizzati i dati all'interno del 
+            DBMS, i DB utilizzati e quali view sono state definite per
+            implementare le query a noi necessarie.
+            
+            \subsubsection{I dati memorizzati}
+                Le entità che dovevano essere maneggiate sono state due: le 
+                segnalazioni e gli utenti. Andiamo a vedere come sono 
+                strutturare queste entità e in quali database sono collezionate
+                
+                \paragraph{Segnalazioni}
+                Tutte le segnalazioni sono state memorizzate del database di 
+                nome \texttt{degradi} ed ognuna di esse e composta dai seguenti 
+                campi:
+                \begin{description}
+                    \item[\_id] Un identificatore unico progressivo assegnato 
+                    dal server alla segnalazione una volta che questa viene 
+                    creata;
+                    \item[\_rev] Un identificatore di revisione unico creato 
+                    dal server utilizzato per tenere traccia delle modifiche 
+                    fatte ad una certa segnalazione;
+                    \item[\_attachments] Contiene l'immagine allegata alla 
+                    segnalazione. Per tutte le segnalazioni, la propria 
+                    immagine è nominata semplicemente \texttt{img};
+                    \item[date] Contiene la data di creazione della 
+                    segnalazione espressa in millisecondi trascorsi da 
+                    EPOCH\footnote{Ore 00:00 del 1° gennaio 1970 (UTC); 
+                    maggiori dettagli a 
+                    \url{http://it.wikipedia.org/wiki/Tempo_(Unix)}.};
+                    \item[loc] Contiene le coordinate geografiche della 
+                    posizione del degrado segnalato da questa segnalazione. 
+                    \texttt{loc} è composto da due valori:
+                    \begin{description}
+                        \item[latitude] La latitudine Nord espressa in gradi 
+                        decimali;
+                        \item[longitude] La longitudine Est espressa in gradi 
+                        decimali.
+                    \end{description}
+                    \item[msg] Contiene una descrizione testuale del degrado 
+                    associato a questa segnalazione;
+                    \item[title] Contiene un breve titolo per il degrado 
+                    associato a questa segnalazione;
+                    \item[userId] Contiene l'identificatore unico dell'utente 
+                    che ha sottoposto questa segnalazione. Questo valore verrà 
+                    utilizzato per recuperare tutte le altre informazioni 
+                    dell'utente dal database degli utenti.
+                \end{description}
+                
+                \paragraph{Utenti}
+                Tutti gli utenti sono stati memorizzati nell'apposito DB di 
+                nome \texttt{\_users} già presente di default in Apache 
+                CouchDB\texttrademark{}. Ogni utente è composta da:
+                \begin{description}
+                    \item[\_id] Identificatore unico per un utente in Apache 
+                    CouchDB\texttrademark{} realizzato dall'applicazione al 
+                    momento della registrazione dell'utente stesso; è 
+                    realizzato concatenando la stringa 
+                    \texttt{org.couchdb.user:} con l'username scelto per 
+                    l'utente (nel nostro caso questo è lo UUID del dispositivo).
+                    Il valore di \texttt{\_id} è quello inserito nel campo 
+                    \texttt{userId} nelle segnalazioni;
+                    \item[\_rev] Un identificatore di revisione unico creato 
+                    dal server utilizzato per tenere traccia delle modifiche 
+                    fatte all'utente;
+                    \item[derived\_key] Questo valore è creato dal server ed 
+                    è l'hash della concatenazione della password dell'utente e 
+                    del valore di salt;
+                    \item[iteration] Questo valore è aggiunto dal server ed è 
+                    un parametro utilizzato nel calcolo dell'hash tra password 
+                    e salt;
+                    \item[mail] Contiene l'indirizzo e-mail inserito 
+                    dell'utente al momento della sua registrazione; questo 
+                    valore come anche \texttt{nick} è pubblico e può essere 
+                    visualizzato anche da altri utenti;
+                    \item[name] Username dell'utente registrato; nel nostro 
+                    caso corrisponde all'UUID del dispositivo che ha 
+                    registrato l'utente;
+                    \item[nick] Nickname scelto dall'utente durante la fase di 
+                    registrazione; questo valore come anche \texttt{mail} è 
+                    pubblico e può essere visualizzato anche da altri utenti;
+                    \item[password_scheme] Valore scelto dal server e indica 
+                    il modo utilizzato dal server per calcolare l'hash tra 
+                    password e salt;
+                    \item[roles] Vettore dei ruoli che l'utente ha nel 
+                    sistema. Questo campo è obbligatorio, ma non essendo a noi
+                    necessario abbiamo specificato un vettore vuoto;
+                    \item[salt] Questo valore è scelto a caso dal server e 
+                    viene utilizzato nel calcolo del'hash della password;
+                    \item[type] Specifica il tipo di utente che nel nostro 
+                    caso è un \texttt{user} e cioè un normalissimo utente. 
+                \end{description}
+                Come password per un utente viene ancora utilizzato lo UUID 
+                del dispositivo che lo registra; questa, una volta fatta la 
+                registrazione, non compare mai nel database e viene 
+                memorizzata mediante i campi \texttt{derived\_key}, 
+                \texttt{iterations}, \texttt{password\_scheme} e \texttt{salt}.
+                
+            \subsubsection{Le view}
+                Per poter eseguire delle query è necessario prima definire 
+                delle view che sostanzialmente sono delle funzioni che 
+                implementano delle proiezioni sul specifici campi eseguite, in 
+                questo caso, su tutti gli utenti o su tutte le segnalazioni.
+                La definizione di queste view memorizzate in appositi 
+                documenti all'interno dei DB sui quali queste view operano: in 
+                particolare, le view relative agli utenti sono memorizzate del 
+                documento \texttt{\_design/userQueries} all'interno del DB 
+                \texttt{\_users}, mentre quelle relative alle segnalazioni 
+                sono memorizzate nel documento \texttt{\_design/queries} del 
+                DB \texttt{degradi}.
