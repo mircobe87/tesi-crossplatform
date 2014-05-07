@@ -370,3 +370,57 @@
         per avviare l'interprete o per eseguire un programma tramite file con
         codice sorgente, e \texttt{npm} che consente di installare nuovi
         moduli software per Node.js.
+
+        Il codice del server consiste semplicemente di un unico file
+        JavaScript di nome \texttt{degradoAmbientale.js} disponibile nel
+        repository github al link:
+        \url{https://github.com/pratesim/nodeServerDegradoAmbientale/blob/master/degradoAmbientale.js}
+        Questo server sfrutta i moduli \texttt{http} e \texttt{httpdispatcher}
+        per accettare solamente richieste di registrazione provenienti
+        dall'applicazione, e per comunicare all'applicazione
+        stessa se l'utente è stato registrato correttamente oppure se esiste
+        già un utente con il \texttt{nickname} presente nella richiesta di
+        registrazione.
+
+        Per poter utilizzare il server è quindi necessario installare i due
+        suddetti moduli. Questo può essere fatto semplicemente tramite i comandi:
+        \begin{lstlisting}[language=plane]
+    sudo npm install -g http
+    sudo npm install -g httpdispatcher
+        \end{lstlisting}
+
+        Inoltre bisogna personalizzare il codice del file
+        \texttt{degradoAmbientale.js} con le credenziali dell'amministratore
+        del server \couchdb{}, con il numero della porta e l'ip della
+        macchina sulla quale è presente il server \couchdb{}, e con il numero
+        di porta e l'ip della macchina sulla quale si intende eseguire il
+        server Node.js.
+        In particolare vanno modificate le seguenti righe di codice
+        \begin{lstlisting}[language=plane]
+
+    var admin = {
+        name : '', /* username dell'amministratore del server couchdb */
+        password : '' /*password dell'amministratore del server couchdb */
+    };
+
+    var options = {
+        host:'192.168.0.111', /*ip del server couchdb*/
+        port: 5984, /* porta del server couchdb*/
+        auth: admin.name+':'+admin.password,
+        path: '/_users',
+        headers: {
+            'Content-type':'application/json'
+        },
+        method: 'POST'
+    };
+
+    [...]
+
+    /*porta e ip della macchina dove viene eseguito il server Node.js*/
+    server.listen(1338, '192.168.0.103');
+        \end{lstlisting}
+
+        Infine per avviare il server è sufficiente eseguire il comando
+        \begin{lstlisting}[language=plane]
+    node degradoAmbientale.js
+        \end{lstlisting}
