@@ -372,9 +372,9 @@
         moduli software per Node.js.
 
         Il codice del server consiste semplicemente di un unico file
-        JavaScript di nome \texttt{degradoAmbientale.js} disponibile nel
-        repository github al link:
-        \url{https://github.com/pratesim/nodeServerDegradoAmbientale/blob/master/degradoAmbientale.js}
+        JavaScript di nome \texttt{degradoAmbientale.js}\footnote{Il file
+        \texttt{degradoAmbientale.js} è disponibile al link:
+        \url{https://github.com/pratesim/nodeServerDegradoAmbientale/blob/master/degradoAmbientale.js}}
         Questo server sfrutta i moduli \texttt{http} e \texttt{httpdispatcher}
         per accettare solamente richieste di registrazione provenienti
         dall'applicazione, e per comunicare all'applicazione
@@ -390,22 +390,22 @@
         \end{lstlisting}
 
         Inoltre bisogna personalizzare il codice del file
-        \texttt{degradoAmbientale.js} con le credenziali dell'amministratore
+        \texttt{degradoAmbientale.js} con: le credenziali dell'amministratore
         del server CouchDB, con il numero della porta e l'ip della
-        macchina sulla quale è presente il server CouchDB, e con il numero
+        macchina sulla quale è presente il server CouchDB; e con il numero
         di porta e l'ip della macchina sulla quale si intende eseguire il
         server Node.js.
         In particolare vanno modificate le seguenti righe di codice
         \begin{lstlisting}[language=plane]
 
     var admin = {
-        name : '', /* username dell'amministratore del server couchdb */
-        password : '' /*password dell'amministratore del server couchdb */
+        name : '', //username admin server couchdb
+        password : '' //password admin server couchdb
     };
 
     var options = {
-        host:'192.168.0.111', /*ip del server couchdb*/
-        port: 5984, /* porta del server couchdb*/
+        host:'192.168.0.111', //ip del server couchdb
+        port: 5984, //porta del server couchdb
         auth: admin.name+':'+admin.password,
         path: '/_users',
         headers: {
@@ -416,7 +416,7 @@
 
     [...]
 
-    /*porta e ip della macchina dove viene eseguito il server Node.js*/
+    //porta e ip della macchina contenente il server Node.js
     server.listen(1338, '192.168.0.103');
         \end{lstlisting}
 
