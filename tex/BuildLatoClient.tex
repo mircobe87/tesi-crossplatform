@@ -23,7 +23,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     tool di compilazione ed installazione di Android SDK; questo è possibile 
     farlo con il seguente comando:
     \begin{lstlisting}[language=plane]
- echo 'export PATH=\$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
+ echo 'export PATH=$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
  source ~/.bashrc
     \end{lstlisting}
     A questo punto dobbiamo installare la versione delle API di Android che 
@@ -58,12 +58,12 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
             Il codice sorgente dell'applicazione \pg{} è disponibile al 
             repository git 
             \url{https://github.com/mircobe87/degradoAmbientale}; se si ha 
-            \texttt{git} installato è sufficente dare il comando seguente per 
+            \texttt{git} installato è sufficiente dare il comando seguente per 
             ottenere i sorgenti necessari:
             \begin{lstlisting}[language=plane]
  git clone https://github.com/mircobe87/degradoAmbientale.git
             \end{lstlisting}
-            Al termine del dowload tutto il progetto sarà presente nella 
+            Al termine del download tutto il progetto sarà presente nella 
             cartella \texttt{degradoAmbientale}.
             
         \subsubsection{Installare i plugin necessari}
@@ -96,17 +96,17 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
  phonegap local plugin add "plugin-name"
             \end{lstlisting}
             
-            È importante sottolineare che tutti i comandi \texttt{phonegap 
-            \ldots} vanno dati all'interno della cartella ''root`` del 
-            progetto.
+            È importante sottolineare che tutti i comandi
+            \texttt{phonegap\ldots} vanno dati all'interno della cartella 
+            ``root'' del progetto.
             
             Un altro accorgimento da notare è che per poter installare 
             l'applicazione sul dispositivo è necessario che l'opzione di 
             sviluppo \texttt{Debug USB} si attiva. 
             
         \subsubsection{Compilare e installare}
-            Adesso siamo pronti per creare l'applicazione. \pg{} da la 
-            possibilità di compilare l'applicazione e succisivamente 
+            Adesso siamo pronti per creare l'applicazione. \pg{} dà la 
+            possibilità di compilare l'applicazione e successivamente 
             installarla oppure è possibile con un unico comando eseguire 
             entrambe le operazione. Per compilare l'applicazione per Android 
             bisogna dare il comando:
