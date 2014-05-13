@@ -23,7 +23,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     tool di compilazione ed installazione di Android SDK; questo è possibile 
     farlo con il seguente comando:
     \begin{lstlisting}[language=plane]
- echo 'export PATH=$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
+ echo 'export PATH=\$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
  source ~/.bashrc
     \end{lstlisting}
     A questo punto dobbiamo installare la versione delle API di Android che 
@@ -76,9 +76,54 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
  cd degradoAmbientale
  ./install-plugins.sh
             \end{lstlisting}
+            Questo provvederà ad installare tutti i plugin ma se si vuole 
+            eseguire l'operazione manualmente allora è necessario prima creare 
+            l'apposita cartella \texttt{degradoAmbientale/plugins} e 
+            successivamente installare uno alla volta i plugin:
+            \begin{itemize}
+                \item org.apache.cordova.device@0.2.7
+                \item org.apache.cordova.network-information@0.2.6
+                \item org.apache.cordova.geolocation@0.3.5
+                \item org.apache.cordova.camera@0.2.6
+                \item org.apache.cordova.file@0.2.5
+                \item org.apache.cordova.file-transfer@0.4.0
+                \item org.apache.cordova.splashscreen@0.2.6
+                \item org.apache.cordova.console@0.2.6
+            \end{itemize}
+            Per installare un plugin dal nome \texttt{"plugin-name"} è 
+            sufficiente usare il comando
+            \begin{lstlisting}[language=plane]
+ phonegap local plugin add "plugin-name"
+            \end{lstlisting}
+            
+            È importante sottolineare che tutti i comandi \texttt{phonegap 
+            \ldots} vanno dati all'interno della cartella ''root`` del 
+            progetto.
+            
+            Un altro accorgimento da notare è che per poter installare 
+            l'applicazione sul dispositivo è necessario che l'opzione di 
+            sviluppo \texttt{Debug USB} si attiva. 
             
         \subsubsection{Compilare e installare}
-
+            Adesso siamo pronti per creare l'applicazione. \pg{} da la 
+            possibilità di compilare l'applicazione e succisivamente 
+            installarla oppure è possibile con un unico comando eseguire 
+            entrambe le operazione. Per compilare l'applicazione per Android 
+            bisogna dare il comando:
+            \begin{lstlisting}[language=plane]
+ phonegap build android
+            \end{lstlisting}
+            Al termine dell'operazione, una volta connesso il dispositivo alla 
+            macchina, è possibile installare l'applicazione con il comando:
+            \begin{lstlisting}[language=plane]
+ phonegap install android
+            \end{lstlisting}
+            
+            Se si vogliono eseguire insieme queste due operazioni si può 
+            utilizzare il comando:
+            \begin{lstlisting}[language=plane]
+ phonegap run android
+            \end{lstlisting}
 
 \section{\tisdk{}}
 
