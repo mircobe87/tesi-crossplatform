@@ -8,7 +8,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     Come dicevamo, compilando l'applicazione per Android abbiamo la necessità di
     dover installare nel sistema l'SDK nativo di Android.
     
-    Il pacchetto software è disponibili in rete all'url
+    Il pacchetto software è disponibile in rete all'url
     \url{http://dl.google.com/android/android-sdk_r22.6.2-linux.tgz} e, una
     volta scaricato, dobbiamo estrarlo all'interno di una directory a piacere;
     il comando seguente mostra come estrarre il pacchetto scaricato dalla 
@@ -23,23 +23,60 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     tool di compilazione ed installazione di Android SDK; questo è possibile 
     farlo con il seguente comando:
     \begin{lstlisting}[language=plane]
-    echo 'export PATH="$PATH:~/android-sdk-linux/tool:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
+    echo 'export PATH=$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
     source ~/.bashrc
     \end{lstlisting}
     A questo punto dobbiamo installare la versione delle API di Android che 
-    vogliamo e per avviare il tool è sufficiente usare il seguante comando:
+    vogliamo e per avviare il tool è sufficiente usare il seguente comando:
     \begin{lstlisting}[language=plane]
     android &
     \end{lstlisting}
-    
-    
+     
+
 \section{\pg{}}
-
+    Vediamo ora come istallare e configurare \pg{}.
+    
     \subsection{Installare \pg{}}
-
+        Prima di tutto è necessario aver installato Node.js come descritto in 
+        \ref{sec:nodejs}.
+        
+        Installare \pg{} è molto semplice, basta installare il relativo modulo 
+        Node.js con il seguente comando:
+        \begin{lstlisting}[language=plane]
+    sudo npm install -g phonegap
+        \end{lstlisting}
+        Al termine dell'installazione il comando \texttt{phonegap} sarà 
+        disponibile.
+        
     \subsection{Compilare L'Applicazione}
+        Ora che \pg{} è installato dobbiamo scaricare il codice sorgente 
+        dell'applicazione, installare i plugin di \pg{} necessari e a questo 
+        punto si può procedere con la compilazione ed eventuale installazione 
+        sul dispositivo.
+        
         \subsubsection{Scaricare il codice sorgente}
+            Il codice sorgente dell'applicazione \pg{} è disponibile al 
+            repository git 
+            \url{https://github.com/mircobe87/degradoAmbientale}; se si ha 
+            \texttt{git} installato è sufficente dare il comando seguente per 
+            ottenere i sorgenti necessari:
+            \begin{lstlisting}[language=plane]
+    git clone https://github.com/mircobe87/degradoAmbientale.git
+            \end{lstlisting}
+            Al termine del dowload tutto il progetto sarà presente nella 
+            cartella \texttt{degradoAmbientale}.
+            
         \subsubsection{Installare i plugin necessari}
+            Prima di procedere con la compilazione è necessario installare i 
+            plugin utilizzati dall'applicazione. Per agevolare 
+            l'installazione, all'interno della cartella 
+            \texttt{degradoAmbientale}, è presente lo script Bash 
+            \texttt{install-plugins.sh} da lanciare con il seguente comando:
+            \begin{lstlisting}[language=plane]
+    cd degradoAmbientale
+    ./install-plugins.sh
+            \end{lstlisting}
+            
         \subsubsection{Compilare e installare}
 
 
