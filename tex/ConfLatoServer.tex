@@ -18,7 +18,7 @@
         versione più aggiornata del DBMS (versione 1.5). Per installare Apache
         CouchDB\texttrademark{} è stato sufficiente il comando:
         \begin{lstlisting}[language=plane]
-    sudo pacman -S couchdb
+ sudo pacman -S couchdb
         \end{lstlisting}
 
         Una volta terminata l'installazione abbiamo reso
@@ -28,18 +28,18 @@
         come mostrato nel segmento del file seguente.
         \begin{lstlisting}[language=plane]
 [...]
-    keyvalue_buffer_size = 2097152 ; value in bytes
-    [httpd]
-    port = 5984
-    bind_address = 192.168.0.5
-    authentication_handlers = {couch_httpd_oauth,oauth_authentication_handler},{couch_httpd_auth,cookie_authentication_handler},{couch_httpd_auth, default_authentication_handler}
+ keyvalue_buffer_size = 2097152 ; value in bytes
+ [httpd]
+ port = 5984
+ bind_address = 192.168.0.5
+ authentication_handlers = {couch_httpd_oauth,oauth_authentication_handler},{couch_httpd_auth,cookie_authentication_handler},{couch_httpd_auth, default_authentication_handler}
 [...]
         \end{lstlisting}
         A questo punto, una volta riavviato il servizio, il server è
         raggiungibile dall'esterno e può essere configurato comodamente dalla
         propria interfaccia web che in questo caso è raggiungibile dall'url
         \begin{lstlisting}[language=plane]
-    http://192.168.0.5:5984/_utils/config.html
+ http://192.168.0.5:5984/_utils/config.html
         \end{lstlisting}
 
         \noindent Adesso è necessario configurare:
@@ -108,7 +108,7 @@
                 Estrarre il tarball (preferibilmente in una cartella da tenere
                 da parte solo per le compilazioni di AUR) con il comando
                 \begin{lstlisting}[language=plane]
-    tar -xzf geocouch.tar.gz
+ tar -xzf geocouch.tar.gz
                 \end{lstlisting}
                 \item[compilare il pacchetto installabile]
                 Lanciare il comando \texttt{makepkg} all'interno della directory
@@ -117,13 +117,13 @@
                 pacman). Questo scaricherà e compilerà il codice, infine
                 creerà il pacchetto.
                 \begin{lstlisting}[language=plane]
-    cd geocouch/
-    makepkg -s
+ cd geocouch/
+ makepkg -s
                 \end{lstlisting}
                 \item[Intallare Geocouch]
                 Installare il pacchetto ottenuto tramite \texttt{pacman}:
                 \begin{lstlisting}[language=plane]
-    sudo pacman -U geocouch-1.3.1-1-armv6h.pkg.tar.xz
+ sudo pacman -U geocouch-1.3.1-1-armv6h.pkg.tar.xz
                 \end{lstlisting}
             \end{description}
             Terminata l'installazione è sufficiente un riavvio del servizio
@@ -264,40 +264,40 @@
                 figura \ref{fig:queries} mentre la sua definizione completa
                 JSON è mostrata di seguito.
                 \begin{lstlisting}[language=plane]
-    {
-      "_id": "_design/queries",
-      "_rev": "13-a1bad8844225a755e1582d74493c5f8d",
-      "spatial": {
-        "allDocsByLoc": "function(doc) {
-          if (doc.loc) {
-            emit({
-              type: \"Point\",
-              coordinates: [doc.loc.longitude, doc.loc.latitude]
-            },{
-              userId: doc.userId,
-              title: doc.title
-            });
-          }
-        };"
-      },
-      "language": "javascript",
-      "views": {
-        "allDocsByUser": {
-          "map": "function(doc) {
-            emit(doc.userId, doc.title);
-          }"
-        },
-        "allDocsByDate": {
-          "map": "function(doc) {
-            emit(doc.date, {
-              _id: doc._id,
-              userId: doc.userId,
-              title: doc.title
-            });
-          }"
-        }
-      }
-    }
+ {
+   "_id": "_design/queries",
+   "_rev": "13-a1bad8844225a755e1582d74493c5f8d",
+   "spatial": {
+     "allDocsByLoc": "function(doc) {
+       if (doc.loc) {
+         emit({
+           type: \"Point\",
+           coordinates: [doc.loc.longitude, doc.loc.latitude]
+         },{
+           userId: doc.userId,
+           title: doc.title
+         });
+       }
+     };"
+   },
+   "language": "javascript",
+   "views": {
+     "allDocsByUser": {
+       "map": "function(doc) {
+         emit(doc.userId, doc.title);
+       }"
+     },
+     "allDocsByDate": {
+       "map": "function(doc) {
+         emit(doc.date, {
+           _id: doc._id,
+           userId: doc.userId,
+           title: doc.title
+         });
+       }"
+     }
+   }
+ }
                 \end{lstlisting}
                 \begin{figure}[H]
                     \centering
@@ -332,18 +332,18 @@
                 figura \ref{fig:userQueries} mentre la sua definizione completa
                 JSON è mostrata di seguito.
                 \begin{lstlisting}[language=plane]
-    {
-      "_id": "_design/usersQueries",
-      "_rev": "2-d4c13f3a6e2b1f34c42c2a2224aef890",
-      "language": "javascript",
-      "views": {
-        "allNickandMail": {
-          "map": "function(doc) {
-            emit(doc.nick, doc.mail);
-          }"
-        }
-      }
-    }
+ {
+   "_id": "_design/usersQueries",
+   "_rev": "2-d4c13f3a6e2b1f34c42c2a2224aef890",
+   "language": "javascript",
+   "views": {
+     "allNickandMail": {
+       "map": "function(doc) {
+         emit(doc.nick, doc.mail);
+       }"
+     }
+   }
+ }
                 \end{lstlisting}
                 \begin{figure}[H]
                     \centering
@@ -363,7 +363,7 @@
         presente nei repository ufficiali di Arch Linux quindi è sufficiente
         dare il comando
         \begin{lstlisting}
-    sudo pacman -S nodejs
+ sudo pacman -S nodejs
         \end{lstlisting}
         per avere a disposizione la versione 0.10.28-1. Una volta completata
         l'installazione si avranno a disposizione i comandi: \texttt{node}
@@ -385,8 +385,8 @@
         Per poter utilizzare il server è quindi necessario installare i due
         suddetti moduli. Questo può essere fatto semplicemente tramite i comandi:
         \begin{lstlisting}[language=plane]
-    sudo npm install -g http
-    sudo npm install -g httpdispatcher
+ sudo npm install -g http
+ sudo npm install -g httpdispatcher
         \end{lstlisting}
 
         Inoltre bisogna personalizzare il codice del file
@@ -397,30 +397,29 @@
         server Node.js.
         In particolare vanno modificate le seguenti righe di codice
         \begin{lstlisting}[language=JavaScript]
+ var admin = {
+     name : '', //username admin server couchdb
+     password : '' //password admin server couchdb
+ };
 
-    var admin = {
-        name : '', //username admin server couchdb
-        password : '' //password admin server couchdb
-    };
+ var options = {
+     host:'192.168.0.111', //ip del server couchdb
+     port: 5984, //porta del server couchdb
+     auth: admin.name+':'+admin.password,
+     path: '/_users',
+     headers: {
+         'Content-type':'application/json'
+     },
+     method: 'POST'
+ };
 
-    var options = {
-        host:'192.168.0.111', //ip del server couchdb
-        port: 5984, //porta del server couchdb
-        auth: admin.name+':'+admin.password,
-        path: '/_users',
-        headers: {
-            'Content-type':'application/json'
-        },
-        method: 'POST'
-    };
+ [...]
 
-    [...]
-
-    //porta e ip della macchina contenente il server Node.js
-    server.listen(1338, '192.168.0.103');
+ //porta e ip della macchina contenente il server Node.js
+ server.listen(1338, '192.168.0.103');
         \end{lstlisting}
 
         Infine per avviare il server è sufficiente eseguire il comando
         \begin{lstlisting}[language=plane]
-    node degradoAmbientale.js
+ node degradoAmbientale.js
         \end{lstlisting}
