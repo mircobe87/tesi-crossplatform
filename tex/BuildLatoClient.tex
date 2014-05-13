@@ -11,12 +11,28 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     Il pacchetto software è disponibili in rete all'url
     \url{http://dl.google.com/android/android-sdk_r22.6.2-linux.tgz} e, una
     volta scaricato, dobbiamo estrarlo all'interno di una directory a piacere;
-    il comando seguente mostra come estrarre il pacchetto nella cartella home:
+    il comando seguente mostra come estrarre il pacchetto scaricato dalla 
+    cartella \texttt{Scaricati} nella cartella home:
     \begin{lstlisting}[language=plane]
     cd ~
     tar -xvf ./Scaricati/android-sdk_r22.6.2-linux.tgz
     \end{lstlisting}
-
+    Terminata l'estrazione, troveremo la nuova cartella
+    \texttt{android-sdk-linux}. Adesso è necessario aggiungere alla 
+    variabile d'ambiente \texttt{PATH} i percorsi alle cartelle contenenti i 
+    tool di compilazione ed installazione di Android SDK; questo è possibile 
+    farlo con il seguente comando:
+    \begin{lstlisting}[language=plane]
+    echo 'export PATH="$PATH:~/android-sdk-linux/tool:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
+    source ~/.bashrc
+    \end{lstlisting}
+    A questo punto dobbiamo installare la versione delle API di Android che 
+    vogliamo e per avviare il tool è sufficiente usare il seguante comando:
+    \begin{lstlisting}[language=plane]
+    android &
+    \end{lstlisting}
+    
+    
 \section{\pg{}}
 
     \subsection{Installare \pg{}}
