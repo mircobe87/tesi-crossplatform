@@ -14,8 +14,8 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     il comando seguente mostra come estrarre il pacchetto scaricato dalla 
     cartella \texttt{Scaricati} nella cartella home:
     \begin{lstlisting}[language=plane]
-    cd ~
-    tar -xvf ./Scaricati/android-sdk_r22.6.2-linux.tgz
+ cd ~
+ tar -xvf ./Scaricati/android-sdk_r22.6.2-linux.tgz
     \end{lstlisting}
     Terminata l'estrazione, troveremo la nuova cartella
     \texttt{android-sdk-linux}. Adesso è necessario aggiungere alla 
@@ -23,8 +23,8 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     tool di compilazione ed installazione di Android SDK; questo è possibile 
     farlo con il seguente comando:
     \begin{lstlisting}[language=plane]
-    echo 'export PATH=$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
-    source ~/.bashrc
+ echo 'export PATH=$PATH:~/android-sdk-linux/tools:~/android-sdk-linux/platform-tools"' >> ~/.bashrc
+ source ~/.bashrc
     \end{lstlisting}
     A questo punto dobbiamo installare la versione delle API di Android che 
     vogliamo e per avviare il tool è sufficiente usare il seguente comando:
@@ -43,7 +43,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
         Installare \pg{} è molto semplice, basta installare il relativo modulo 
         Node.js con il seguente comando:
         \begin{lstlisting}[language=plane]
-    sudo npm install -g phonegap
+ sudo npm install -g phonegap
         \end{lstlisting}
         Al termine dell'installazione il comando \texttt{phonegap} sarà 
         disponibile.
@@ -61,7 +61,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
             \texttt{git} installato è sufficente dare il comando seguente per 
             ottenere i sorgenti necessari:
             \begin{lstlisting}[language=plane]
-    git clone https://github.com/mircobe87/degradoAmbientale.git
+ git clone https://github.com/mircobe87/degradoAmbientale.git
             \end{lstlisting}
             Al termine del dowload tutto il progetto sarà presente nella 
             cartella \texttt{degradoAmbientale}.
@@ -73,8 +73,8 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
             \texttt{degradoAmbientale}, è presente lo script Bash 
             \texttt{install-plugins.sh} da lanciare con il seguente comando:
             \begin{lstlisting}[language=plane]
-    cd degradoAmbientale
-    ./install-plugins.sh
+ cd degradoAmbientale
+ ./install-plugins.sh
             \end{lstlisting}
             
         \subsubsection{Compilare e installare}
@@ -87,14 +87,14 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     paragrafi precedenti. I comandi per installare l'ultima versione stabile
     di \tisdk{} sono i seguenti:
     \begin{lstlisting}[language=plane]
-sudo npm install -g titanium
-titanium sdk install --default
+ sudo npm install -g titanium
+ titanium sdk install --default
     \end{lstlisting}
         \subsubsection{Configurare Titanium CLI}
         Prima di poter utilizzare Titanium CLI è necessario configurarlo con
         il comando:
-        begin{lstlisting}[language=plane]
-titanium setup
+    \begin{lstlisting}[language=plane]
+ titanium setup
     \end{lstlisting}
     Esso mostrerà alcune domande come l'indirizzo mail, il percorso nel quale
     è memorizzato l'Android SDK, e altre cose.
