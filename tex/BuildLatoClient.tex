@@ -46,10 +46,22 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
 \section{\tisdk{}}
 
     \subsection{Installare e Configurare \tisdk{}}
-        \subsubsection{Installare Titanium CLI}
-        \subsubsection{Installare \tisdk{}}
-        \subsubsection{Configurare \tisdk{}}
-        
+    Anch'esso richiede l'installazione di Node.js descritta più volte nei
+    paragrafi precedenti. I comandi per installare l'ultima versione stabile
+    di \tisdk{} sono i seguenti:
+    \begin{lstlisting}[language=plane]
+sudo npm install -g titanium
+titanium sdk install --default
+    \end{lstlisting}
+        \subsubsection{Configurare Titanium CLI}
+        Prima di poter utilizzare Titanium CLI è necessario configurarlo con
+        il comando:
+        begin{lstlisting}[language=plane]
+titanium setup
+    \end{lstlisting}
+    Esso mostrerà alcune domande come l'indirizzo mail, il percorso nel quale
+    è memorizzato l'Android SDK, e altre cose.
+    
     \subsection{Compilare L'Applicazione}
         \subsubsection{Scaricare il codice sorgente}
         \subsubsection{Compilare e installare}
