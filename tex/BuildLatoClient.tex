@@ -108,7 +108,7 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
             Adesso siamo pronti per creare l'applicazione. \pg{} dà la 
             possibilità di compilare l'applicazione e successivamente 
             installarla oppure è possibile con un unico comando eseguire 
-            entrambe le operazione. Per compilare l'applicazione per Android 
+            entrambe le operazioni. Per compilare l'applicazione per Android 
             bisogna dare il comando:
             \begin{lstlisting}[language=plane]
  phonegap build android
@@ -143,7 +143,38 @@ per Android del lato client dell'applicazione, prima la versione realizzata con
     \end{lstlisting}
     Esso mostrerà alcune domande come l'indirizzo mail, il percorso nel quale
     è memorizzato l'Android SDK, e altre cose.
-    
+
+    Inoltre è possibile (anche se non necessario) installare l'IDE Titanium
+    Studio seguendo le istruzioni dal link \url{http://docs.appcelerator.com/titanium/latest/#!/guide/Quick_Start}
     \subsection{Compilare L'Applicazione}
+    In seguito verrà mostrato come compilare ed installare l'applicazione
+    utilizzando la Titanium CLI.
         \subsubsection{Scaricare il codice sorgente}
+        Il codice sorgente dell'applicazione \tisdk{} è disponibile al 
+            repository git 
+            \url{https://github.com/pratesim/drawerTitanium.git}; se si ha 
+            \texttt{git} installato è sufficiente dare il comando seguente per 
+            ottenere i sorgenti necessari:
+            \begin{lstlisting}[language=plane]
+ git clone https://github.com/pratesim/drawerTitanium.git
+            \end{lstlisting}
+            Al termine del download tutto il progetto sarà presente nella 
+            cartella \texttt{drawerTitanium}.
         \subsubsection{Compilare e installare}
+            Con \tisdk{} è possibile compilare e installare direttamente
+            l'applicazione su un dispositivo fisico o su un emulatore, oppure
+            è possibile eseguire solo la compilazione.
+            Per compilare ed installare l'applicazione per Android 
+            bisogna dare il comando:
+        \begin{lstlisting}[language=plane]
+ titanium build --platform android
+        \end{lstlisting}
+        In questo modo se vi è un dispositivo Android collegato al PC
+        l'applicazione viene installata su tale dispositivo, mentre se questo
+        non è presente allora viene avviato un emulatore.
+
+        Se vogliamo evitare l'installazione e limitarci alla sola compilazione
+        bisogna eseguire il comando:
+        \begin{lstlisting}[language=plane]
+ titanium build --build-only --platform android
+        \end{lstlisting}
